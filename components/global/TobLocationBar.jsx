@@ -8,7 +8,7 @@ export default function TopLocationBar() {
     { name: "Cart", url: "/" },
   ];
   return (
-    <section className="text-[#3E445A] text-md container px-5 py-3 hidden md:grid grid-cols-2 justify-between items-center border shadow-sm">
+    <section className="text-[#3E445A] text-md container px-5 md:px-20 py-3 hidden md:grid grid-cols-2 justify-between items-center border shadow-sm">
       <div>
         <ul className="flex justify-start items-center gap-5">
           {linkData.map((link, index) => (
