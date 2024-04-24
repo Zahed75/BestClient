@@ -1,0 +1,7 @@
+export default function Welcome() {
+  return (
+    <section className="bg-[#F16521] text-md text-white text-center py-2">
+      <p>বেস্ট ইলেক্ট্রনিকসের অফিসিয়াল অনলাইন স্টোরে স্বাগতম</p>
+    </section>
+  );
+}
