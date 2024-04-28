@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Welcome from "@/components/global/Welcome";
 import TopLocationBar from "@/components/global/TobLocationBar";
+import Search from "@/components/global/Search";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,8 +17,9 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <Welcome />
         <TopLocationBar />
+        <Search />
         {children}
-        </body>
+      </body>
     </html>
   );
 }

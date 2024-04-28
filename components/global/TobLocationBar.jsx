@@ -1,4 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
+import locationIcon from "@/public/images/locationIcon.svg";
 
 export default function TopLocationBar() {
   const linkData = [
@@ -8,7 +10,7 @@ export default function TopLocationBar() {
     { name: "Cart", url: "/" },
   ];
   return (
-    <section className="text-[#3E445A] text-md container px-5 md:px-20 py-3 hidden md:grid grid-cols-2 justify-between items-center border shadow-sm">
+    <section className="text-[#3E445A] text-md container px-5 md:px-28 py-3 hidden md:grid grid-cols-2 justify-between items-center border shadow-sm">
       <div>
         <ul className="flex justify-start items-center gap-5">
           {linkData.map((link, index) => (
@@ -25,10 +27,17 @@ export default function TopLocationBar() {
       </div>
       <div className="flex justify-end items-center gap-5 divide-x-2">
         <div>
-          <div>
+          <div className="flex justify-start items-center">
+            <Image
+              src={locationIcon}
+              width={20}
+              height={20}
+              alt="location Icon"
+              className="mr-2"
+            />
             To Locate Store:{" "}
             <Link className="text-[#F16521]" href="/">
-              <strong>Click Here</strong>
+              <strong> Click Here</strong>
             </Link>
           </div>
         </div>
