@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export default function Search() {
   return (
-    <main className="container px-5 md:px-28 grid grid-cols-4 justify-center items-center gap-5 my-5">
+    <main className="px-5 md:px-44 grid grid-cols-4 justify-center items-center gap-5 my-5">
       <div className="col-span-2 md:col-span-1">
         <Image
           src={bestLogo}
@@ -17,7 +17,7 @@ export default function Search() {
       </div>
 
       <div className="w-full mx-auto col-span-2 hidden md:block">
-        <div className="relative flex items-center w-full h-12 rounded-lg bg-[#F3F4F7] overflow-hidden">
+        <div className="relative flex items-center w-full h-14 rounded-lg bg-[#F3F4F7] overflow-hidden">
           <div className="grid place-items-center h-full w-12 text-gray-300">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +55,7 @@ export default function Search() {
           </Link>
         </div>
         <div className="text-md font-bold ">
-          <h3>৳ 532</h3>
+          <h3>৳ 50000</h3>
         </div>
         <div className="w-[42px] h-[42px] rounded-full border border-[#FFF1EE] bg-[#FFF1EE] p-2 relative ">
           <Link href="/">
