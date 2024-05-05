@@ -52,7 +52,7 @@ export default function NavigationBar() {
   ];
 
   return (
-    <nav className="px-5 md:px-44 lg:px-40 min-w-full md:flex justify-stretch items-center">
+    <nav className="px-5 md:px-44 lg:px-28 min-w-full md:flex justify-stretch items-center">
       <div className="relative">
         <button className="bg-[#F16521] text-sm font-normal px-5 py-4 uppercase text-white rounded-full flex justify-start items-center relative">
           <Image src={treeDot} className="w-4 h-4 mr-5" alt="Tree Dot" /> All
