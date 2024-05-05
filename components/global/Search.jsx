@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export default function Search() {
   return (
-    <main className="px-5 md:px-44 grid grid-cols-4 justify-center items-center gap-5 my-5">
+    <main className="px-5 md:px-44 lg:px-40 grid grid-cols-4 justify-center items-center gap-5 my-5">
       <div className="col-span-2 md:col-span-1">
         <Image
           src={bestLogo}
