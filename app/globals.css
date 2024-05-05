@@ -2,3 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* --------------------------------
+group2 styles
+-------------------------------- */
+.group2:hover .group2-hover\:visible {
+    visibility: visible;
+  }
