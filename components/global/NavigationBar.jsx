@@ -97,7 +97,10 @@ export default function NavigationBar() {
                 <li
                   className="py-2 px-3 relative"
                   onMouseEnter={() => setIsElectronicsSubMenuOpen(true)}
-                  onMouseLeave={() => setIsElectronicsSubMenuOpen(false)}
+                  // onMouseLeave={() => setIsElectronicsSubMenuOpen(false)}
+                  onClick={() => {
+                    setIsElectronicsSubMenuOpen(!isElectronicsSubMenuOpen);
+                  }}
                 >
                   <span className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer">
                     <span>Electronics</span>
@@ -123,7 +126,10 @@ export default function NavigationBar() {
                       </li>
                       <li
                         onMouseEnter={() => setIsSmartSubMenuOpen(true)}
-                        onMouseLeave={() => setIsSmartSubMenuOpen(false)}
+                        // onMouseLeave={() => setIsSmartSubMenuOpen(false)}
+                        onClick={() => {
+                          setIsSmartSubMenuOpen(!isSmartSubMenuOpen);
+                        }}
                         className="py-2 cursor-pointer relative"
                       >
                         <span className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer">
