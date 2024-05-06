@@ -52,7 +52,7 @@ export default function NavigationBar() {
   ];
 
   return (
-    <nav className="px-5 md:px-44 lg:px-28 min-w-full md:flex justify-stretch items-center">
+    <nav className="px-5 md:px-44 lg:px-28 min-w-full hidden md:flex justify-stretch items-center">
       <div className="relative">
         <button className="bg-[#F16521] text-sm font-normal px-5 py-4 uppercase text-white rounded-full flex justify-start items-center relative">
           <Image src={treeDot} className="w-4 h-4 mr-5" alt="Tree Dot" /> All
@@ -68,7 +68,7 @@ export default function NavigationBar() {
         </button>
       </div>
 
-      <div className="hidden md:flex ml-auto">
+      <div className="flex ml-auto">
         <div className="flex justify-end items-center uppercase text-sm gap-x-1">
           <span className="bg-[#F0FAFF] text-[#F16521] px-3 py-2 rounded-full cursor-pointer">
             <Link href="/">Home</Link>
