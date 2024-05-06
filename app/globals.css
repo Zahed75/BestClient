@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 /* --------------------------------
-group2 styles
+slider image styles
 -------------------------------- */
+.slider-container {
+    position: relative;
+    width: 100%;
+    height: 450px;
+    overflow: hidden;
+    object-fit: cover;
+  }
+  
+ 

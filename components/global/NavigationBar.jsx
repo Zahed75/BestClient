@@ -86,9 +86,11 @@ export default function NavigationBar() {
               />
             </button>
             <div
+              onMouseEnter={() => setIsBrowseProducts(true)}
+              onMouseLeave={() => setIsBrowseProducts(false)}
               className={`${
                 isBrowseProducts ? "block" : "hidden"
-              } absolute left-0 mt-2 w-64 bg-white rounded-lg border border-gray-200 shadow-xl`}
+              } group-hover:block absolute left-0 mt-2 w-64 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
             >
               <ul className="text-sm">
                 <li className="py-2 px-3 hover:text-[#F16521] cursor-pointer">
@@ -97,10 +99,7 @@ export default function NavigationBar() {
                 <li
                   className="py-2 px-3 relative"
                   onMouseEnter={() => setIsElectronicsSubMenuOpen(true)}
-                  // onMouseLeave={() => setIsElectronicsSubMenuOpen(false)}
-                  onClick={() => {
-                    setIsElectronicsSubMenuOpen(!isElectronicsSubMenuOpen);
-                  }}
+                  onMouseLeave={() => setIsElectronicsSubMenuOpen(false)}
                 >
                   <span className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer">
                     <span>Electronics</span>
@@ -120,17 +119,14 @@ export default function NavigationBar() {
                   </span>
 
                   {isElectronicsSubMenuOpen && (
-                    <ul className="absolute left-full top-0 mt-0 ml-1 p-3 w-48 bg-white rounded-lg border border-gray-200 shadow-xl">
-                      <li className="py-2 hover:text-[#F16521] cursor-pointer">
+                    <ul className="absolute left-full top-0 mt-0 w-auto min-w-48 bg-white rounded-lg border border-gray-200 shadow-xl">
+                      <li className="py-2 px-3 hover:text-[#F16521] cursor-pointer">
                         Laptops
                       </li>
                       <li
                         onMouseEnter={() => setIsSmartSubMenuOpen(true)}
-                        // onMouseLeave={() => setIsSmartSubMenuOpen(false)}
-                        onClick={() => {
-                          setIsSmartSubMenuOpen(!isSmartSubMenuOpen);
-                        }}
-                        className="py-2 cursor-pointer relative"
+                        onMouseLeave={() => setIsSmartSubMenuOpen(false)}
+                        className="py-2 px-3 cursor-pointer relative"
                       >
                         <span className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer">
                           <span>Smartphone</span>
@@ -150,7 +146,11 @@ export default function NavigationBar() {
                         </span>
 
                         {isSmartSubMenuOpen && (
-                          <ul className="absolute left-full top-0 mt-0 ml-4 p-3 w-48 bg-white rounded-lg border border-gray-200 shadow-xl">
+                          <ul
+                            onMouseEnter={() => setIsSmartSubMenuOpen(true)}
+                            onMouseLeave={() => setIsSmartSubMenuOpen(false)}
+                            className="absolute left-full top-0 p-3 w-auto min-w-48 bg-white rounded-lg border border-gray-200 shadow-xl"
+                          >
                             <li className="py-2 hover:text-[#F16521] cursor-pointer">
                               I Phone
                             </li>
@@ -163,7 +163,7 @@ export default function NavigationBar() {
                           </ul>
                         )}
                       </li>
-                      <li className="py-2 hover:text-[#F16521] cursor-pointer">
+                      <li className="py-2 px-3 hover:text-[#F16521] cursor-pointer">
                         Cameras
                       </li>
                     </ul>
