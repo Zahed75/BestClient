@@ -1,11 +1,20 @@
+"use client";
 import Image from "next/image";
-
 import bestLogo from "@/public/images/bestElectronicsLogo.svg";
 import userIcon from "@/public/images/userIcon.svg";
 import cartIcon from "@/public/images/cartIcon.svg";
+import CloseIcon from '@mui/icons-material/Close';
+import EmptyCart from "@/public/images/emptyCart.png";
 import Link from "next/link";
+import { Box, Drawer } from "@mui/material";
+import { useState } from "react";
 
 export default function Search() {
+  const [open, setOpen] = useState(false);
+
+  const toggleDrawer = (newOpen) => () => {
+    setOpen(newOpen);
+  };
   return (
     <main className="px-5 md:px-44 lg:px-28 grid grid-cols-4 justify-center items-center gap-5 my-5">
       <div className="col-span-2 md:col-span-1">
@@ -58,13 +67,15 @@ export default function Search() {
           <h3>৳ 50000</h3>
         </div>
         <div className="w-[42px] h-[42px] rounded-full border border-[#FFF1EE] bg-[#FFF1EE] p-2 relative ">
-          <Link href="/">
+          <button 
+          className="flex justify-center mx-auto w-full h-full"
+           onClick={toggleDrawer(true)}>
             <Image
               src={cartIcon}
               alt="User Icon"
               className="flex justify-center mx-auto w-full h-full"
             />
-          </Link>
+          </button>
           <div>
             <span className="absolute top-0 -right-2 bg-[#F16521] text-white rounded-full text-xs px-1">
               2
@@ -72,6 +83,28 @@ export default function Search() {
           </div>
         </div>
       </div>
+      <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
+        <Box
+          sx={{ width: 350 }}
+          role="presentation"
+          className=""
+        >
+        <div className="flex justify-between items-center border-b-2 p-3">
+          <h3 className="text-xl">Shopping Cart</h3>
+          <button className="inline-block" onClick={toggleDrawer(false)}>
+            <CloseIcon />
+          </button>
+        </div>
+        <div className="flex flex-col justify-center items-center mt-10">
+          <Image 
+          className="w-40 h-40"
+          src={EmptyCart} 
+          alt="Empty Cart" />
+
+          <span>No products in the cart</span>
+        </div>
+        </Box>
+      </Drawer>
     </main>
   );
 }
