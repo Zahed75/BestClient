@@ -6,6 +6,7 @@ import Search from "@/components/global/Search";
 import NavigationBar from "@/components/global/NavigationBar";
 import ImageSlider from "@/components/global/ImageSlider";
 import Footer from "@/components/global/Footer";
+import LastFooter from "@/components/global/LastFooter";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
         <NavigationBar />
         <ImageSlider />
         <Footer />
+        <LastFooter />
         {children}
       </body>
     </html>
