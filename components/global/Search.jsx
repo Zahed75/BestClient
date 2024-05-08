@@ -1,9 +1,10 @@
 "use client";
 import Image from "next/image";
 import bestLogo from "@/public/images/bestElectronicsLogo.svg";
+import sony from "@/public/images/sony_tv.jpg";
 import userIcon from "@/public/images/userIcon.svg";
 import cartIcon from "@/public/images/cartIcon.svg";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 import EmptyCart from "@/public/images/emptyCart.png";
 import Link from "next/link";
 import { Box, Drawer } from "@mui/material";
@@ -67,9 +68,10 @@ export default function Search() {
           <h3>৳ 50000</h3>
         </div>
         <div className="w-[42px] h-[42px] rounded-full border border-[#FFF1EE] bg-[#FFF1EE] p-2 relative ">
-          <button 
-          className="flex justify-center mx-auto w-full h-full"
-           onClick={toggleDrawer(true)}>
+          <button
+            className="flex justify-center mx-auto w-full h-full"
+            onClick={toggleDrawer(true)}
+          >
             <Image
               src={cartIcon}
               alt="User Icon"
@@ -84,25 +86,77 @@ export default function Search() {
         </div>
       </div>
       <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
-        <Box
-          sx={{ width: 350 }}
-          role="presentation"
-          className=""
-        >
-        <div className="flex justify-between items-center border-b-2 p-3">
-          <h3 className="text-xl">Shopping Cart</h3>
-          <button className="inline-block" onClick={toggleDrawer(false)}>
-            <CloseIcon />
-          </button>
-        </div>
-        <div className="flex flex-col justify-center items-center mt-10">
-          <Image 
-          className="w-40 h-40"
-          src={EmptyCart} 
-          alt="Empty Cart" />
+        <Box sx={{ width: 400 }} role="presentation" className="">
+          <div className="flex justify-between items-center border-b-2 p-3">
+            <h3 className="text-xl">Shopping Cart</h3>
+            <button className="inline-block" onClick={toggleDrawer(false)}>
+              <CloseIcon />
+            </button>
+          </div>
+          <div className="flex flex-col justify-center items-center mt-10">
+            <Image className="w-40 h-40" src={EmptyCart} alt="Empty Cart" />
 
-          <span>No products in the cart</span>
-        </div>
+            <span>No products in the cart</span>
+          </div>
+          <div className="grid grid-cols-4 justify-between items-center gap-3 p-3 hover:bg-slate-50 duration-700 border-b-2">
+            <div>
+              <Image className="w-20 h-20" src={sony} alt="sony" />
+            </div>
+            <div className="col-span-3 flex justify-between items-center">
+              <div>
+                <h3 className="text-md">
+                  Sony 45&ldquo; Kd -32W830K Smart TV (Google TV)
+                </h3>
+                <div>
+                  <span className="text-slate-500">৳ 55,000</span>
+                  <span className="ml-2 text-slate-500"> X 1</span>
+                </div>
+              </div>
+              <button className="flex justify-center bg-[#F16521] w-5 h-5 rounded-full p-1">
+                <CloseIcon
+                  className="text-white pb-1"
+                  style={{ fontSize: 17 }}
+                />
+              </button>
+            </div>
+          </div>
+          <div className="grid grid-cols-4 justify-between items-center gap-3 p-3 hover:bg-slate-50 duration-700 border-b-2">
+            <div>
+              <Image className="w-20 h-20" src={sony} alt="sony" />
+            </div>
+            <div className="col-span-3 flex justify-between items-center">
+              <div>
+                <h3 className="text-md">
+                  Sony 32&ldquo; Kd -32W830K Smart TV (Google TV)
+                </h3>
+                <div>
+                  <span className="text-slate-500">৳ 55,000</span>
+                  <span className="ml-2 text-slate-500"> X 1</span>
+                </div>
+              </div>
+              <button className="flex justify-center bg-[#F16521] w-5 h-5 rounded-full p-1">
+                <CloseIcon
+                  className="text-white pb-1"
+                  style={{ fontSize: 17 }}
+                />
+              </button>
+            </div>
+          </div>
+          <div className="p-3 my-3">
+            <div className="flex justify-between items-center">
+              <h3 className="text-slate-500">Subtotal (2 items):</h3>
+              <h3 className="text-md font-semibold">৳ 110,000</h3>
+            </div>
+
+            <div className="flex flex-col justify-between items-center">
+              <button className="border py-3 rounded-md w-full my-3">
+                <Link href="/">View Cart</Link>
+              </button>
+              <button className="text-white bg-[#F16521] py-3 rounded-md w-full">
+                <Link href="/">Checkout</Link>
+              </button>
+            </div>
+          </div>
         </Box>
       </Drawer>
     </main>
