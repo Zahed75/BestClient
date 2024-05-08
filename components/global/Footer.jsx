@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import callIcon from "@/public/images/callIcon.svg";
-import facebookLink from "@/public/images/facebookLInk.svg";
+import facebookLink from "@/public/images/facebookLink.svg";
 import linkedinLink from "@/public/images/linkedinLink.svg";
 import instagramLink from "@/public/images/instagramLink.svg";
 
