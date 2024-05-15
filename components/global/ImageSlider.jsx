@@ -110,10 +110,10 @@ const ImageSlider = () => {
   };
 
   return (
-    <section className="slider-container my-5">
+    <section className="slider-container mt-5">
       <Slider {...settings}>
         {imageUrls.map((imageUrl, index) => (
-          <div key={index} className=" lg:h-[450px] overflow-hidden">
+          <div key={index} className=" lg:h-[450px] overflow-hidden object-cover">
             <img
               src={imageUrl}
               alt={`Slide ${index + 1}`}

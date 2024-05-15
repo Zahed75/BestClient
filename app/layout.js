@@ -4,7 +4,6 @@ import Welcome from "@/components/global/Welcome";
 import TopLocationBar from "@/components/global/TobLocationBar";
 import Search from "@/components/global/Search";
 import NavigationBar from "@/components/global/NavigationBar";
-import ImageSlider from "@/components/global/ImageSlider";
 import Footer from "@/components/global/Footer";
 import LastFooter from "@/components/global/LastFooter";
 
@@ -23,10 +22,11 @@ export default function RootLayout({ children }) {
         <TopLocationBar />
         <Search />
         <NavigationBar />
-        <ImageSlider />
+        
+        
+        {children}
         <Footer />
         <LastFooter />
-        {children}
       </body>
     </html>
   );
