@@ -15,4 +15,9 @@ slider image styles
     object-fit: cover;
   }
   
- 
+  @media (max-width: 600px) { 
+    .slider-container {
+      height: auto; 
+    }
+  }
+  
