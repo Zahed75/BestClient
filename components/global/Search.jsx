@@ -86,7 +86,7 @@ export default function Search() {
         </div>
       </div>
       <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
-        <Box sx={{ width: 400 }} role="presentation" className="">
+        <Box role="presentation" className="w-[350px] md:w-[400px]">
           <div className="flex justify-between items-center border-b-2 p-3">
             <h3 className="text-xl">Shopping Cart</h3>
             <button className="inline-block" onClick={toggleDrawer(false)}>
