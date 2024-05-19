@@ -20,6 +20,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <Welcome />
         <TopLocationBar />
+        <div className="border-b shadow-md"></div>
         <Search />
         <NavigationBar />
 
