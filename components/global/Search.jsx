@@ -17,7 +17,7 @@ export default function Search() {
     setOpen(newOpen);
   };
   return (
-    <main className="container px-5 md:px-44 lg:px-28 grid grid-cols-4 justify-center items-center gap-5 my-5">
+    <main className="container mx-auto px-5 md:px-44 lg:px-28 grid grid-cols-4 justify-center items-center gap-5 my-5">
       <div className="col-span-2 md:col-span-1">
         <Image
           src={bestLogo}
