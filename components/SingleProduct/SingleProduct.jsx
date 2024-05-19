@@ -11,6 +11,7 @@ import LinkedinLogo from "@/public/images/linkedin.png";
 import Link from "next/link";
 import { useState } from "react";
 import ProductTabs from "./ProductTabs";
+import CompareProduct from "./CompareProduct";
 
 const productData = {
   name: "Conion BEW-DC24KRNV 2 Ton Inverter (DynaCool) Air Conditioner",
@@ -66,6 +67,9 @@ const productData = {
 export default function SingleProduct() {
   const [favorite, setFavorite] = useState(false);
   const [offerPrice, setOfferPrice] = useState(productData.offerPrice.default);
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(true);
 
   const logoSrc = [
     { src: FacebookLogo, alt: "Facebook Logo", link: "/product" },
@@ -150,8 +154,6 @@ export default function SingleProduct() {
     },
   ];
 
-
-
   return (
     <section className="px-5 md:px-44 lg:px-28 my-10">
       <TagLine tagValues={tagValues} />
@@ -195,19 +197,31 @@ export default function SingleProduct() {
                 onClick={() =>
                   setOfferPrice(productData.offerPrice.colors.white)
                 }
-                className="text-sm bg-[#9B9BB4] border w-6 h-6 rounded-full flex justify-center items-center uppercase"
+                className={`text-sm bg-[#f4c4c4] border w-6 h-6 rounded-full flex justify-center items-center uppercase ${
+                  offerPrice === productData.offerPrice.colors.white
+                    ? "border-[#F16521]"
+                    : "border-[#E5E5E5]"
+                }`}
               ></button>
               <button
                 onClick={() =>
                   setOfferPrice(productData.offerPrice.colors.black)
                 }
-                className="text-sm bg-[#0c0a09] border w-6 h-6 rounded-full flex justify-center items-center uppercase"
+                className={`text-sm bg-[#000000] border w-6 h-6 rounded-full flex justify-center items-center uppercase ${
+                  offerPrice === productData.offerPrice.colors.black
+                    ? "border-[#F16521]"
+                    : "border-[#E5E5E5]"
+                }`}
               ></button>
               <button
                 onClick={() =>
                   setOfferPrice(productData.offerPrice.colors.silver)
                 }
-                className="text-sm bg-[#a8a29e] border w-6 h-6 rounded-full flex justify-center items-center uppercase"
+                className={`text-sm bg-[#C0C0C0] border w-6 h-6 rounded-full flex justify-center items-center uppercase ${
+                  offerPrice === productData.offerPrice.colors.silver
+                    ? "border-[#F16521]"
+                    : "border-[#E5E5E5]"
+                }`}
               ></button>
             </div>
 
@@ -233,7 +247,7 @@ export default function SingleProduct() {
                 </svg>
                 Add to Wishlist
               </button>
-              <button className="text-sm text-[#9B9BB4] px-5 py-2 flex justify-center items-center uppercase">
+              <button  onClick={handleOpen} className="text-sm text-[#9B9BB4] px-5 py-2 flex justify-center items-center uppercase">
                 <Image
                   src={CompareIcon}
                   className="w-5 h-5 mr-3"
@@ -241,6 +255,7 @@ export default function SingleProduct() {
                 />
                 Compare
               </button>
+              <CompareProduct open={open} setOpen={setOpen} />
             </div>
 
             <div className="mt-10">

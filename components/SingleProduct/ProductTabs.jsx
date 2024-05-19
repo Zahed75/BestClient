@@ -14,8 +14,8 @@ export default function ProductTabs({ tabs }) {
             className={`${
               index === activeTab
                 ? "bg-[#f1662129] text-[#F16521] "
-                : "border-transparent text-gray-500 hover:text-[#F16521] hover:border-gray-300"
-            } flex justify-center items-center py-2 px-4 text-center text-nowrap font-semibold focus:outline-none w-full rounded-md `}
+                : "border-transparent text-gray-500 hover:text-[#F16521]"
+            } flex justify-center items-center py-2 px-4 text-center text-nowrap font-semibold focus:outline-0 focus:ring-0 w-full rounded-md duration-700`}
             onClick={() => setActiveTab(index)}
           >
             {tab.title}
