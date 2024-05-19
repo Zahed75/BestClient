@@ -54,7 +54,7 @@ export default function NavigationBar() {
   ];
 
   return (
-    <nav className="container mx-auto px-5 md:px-44 lg:px-20 hidden md:flex justify-stretch items-center">
+    <nav className="container mx-auto px-5 md:px-44 lg:px-16 hidden md:flex justify-stretch items-center">
       <div className="relative">
         <button
           onMouseEnter={() => setIsAllCategoriesOpen(true)}
