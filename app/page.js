@@ -7,11 +7,15 @@ export default function Home() {
   return (
     <main>
       <ImageSlider />
-      <EventProduct event={"TOP SELLING AIRCONDITIONAR"} />
-      <EventProduct event={"Our best sells in this month"} />
-      <Categories />
-      <RecentAdded />
-      <EventProduct event={"TOP SELLING WASHERS"} />
+      <div className="container">
+        <div className="px-5 md:px-10 lg:px-16">
+          <EventProduct event={"TOP SELLING AIRCONDITIONAR"} />
+          <EventProduct event={"Our best sells in this month"} />
+          <Categories />
+          <RecentAdded />
+          <EventProduct event={"TOP SELLING WASHERS"} />
+        </div>
+      </div>
     </main>
   );
 }

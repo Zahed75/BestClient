@@ -3,7 +3,7 @@ import ProductCard from "./ProductCard";
 
 export default function EventProduct({ event }) {
   return (
-    <main className="px-5 md:px-44 lg:px-28 my-5 md:my-10">
+    <main className="my-5 md:my-10">
       <section className="grid grid-cols-2 justify-between items-center">
         <div>
           <h4 className="text-[#202435] text-xl font-semibold uppercase">

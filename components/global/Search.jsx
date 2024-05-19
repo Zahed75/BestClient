@@ -20,11 +20,14 @@ export default function Search() {
     <main className="container">
       <div className="px-5 md:px-10 lg:px-16 grid grid-cols-4 justify-center items-center gap-5 my-5">
         <div className="col-span-2 md:col-span-1">
-          <Image
-            src={bestLogo}
-            className="w-full md:w-fit"
-            alt="Best Electronics Icon"
-          />
+          <Link href="/">
+            <Image
+              src={bestLogo}
+              className="w-full md:w-fit"
+              alt="
+            Best Electronics Icon"
+            />
+          </Link>
         </div>
 
         <div className="w-full mx-auto col-span-2 hidden md:block">
