@@ -23,23 +23,26 @@ export default function ImageShow() {
   ];
   const [wordData, setWordData] = useState(imgs[0]);
   const [val, setVal] = useState(0);
+
   const handleClick = (index) => {
     setVal(index);
     const wordSlider = imgs[index];
     setWordData(wordSlider);
   };
-  const handleNext = () => {
-    let index = val < imgs.length - 1 ? val + 1 : val;
+
+  const autoPlay = () => {
+    let index = val < imgs.length - 1 ? val + 1 : 0;
     setVal(index);
     const wordSlider = imgs[index];
     setWordData(wordSlider);
   };
-  const handlePrevious = () => {
-    let index = val <= imgs.length - 1 && val > 0 ? val - 1 : val;
-    setVal(index);
-    const wordSlider = imgs[index];
-    setWordData(wordSlider);
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      autoPlay();
+    }, 5000);
+    return () => clearInterval(interval);
+  });
+
   return (
     <div className="flex justify-center items-start gap-5 my-5">
       <div className="flex flex-col gap-2">
@@ -60,19 +63,18 @@ export default function ImageShow() {
         ))}
       </div>
       <div>
-        <div className="w-full object-cover border rounded-md group overflow-hidden">
+        <div className="w-full object-cover border rounded-md group overflow-hidden group">
           <Zoom>
-            {" "}
             <img
-              className="rounded-md transition duration-1000 ease-in-out transform group-hover:scale-125"
+              data-aos="zoom-in"
+              data-aos-once="false"
+              className="rounded-md group-hover:scale-110 duration-700"
               src={wordData.value}
             />
           </Zoom>
         </div>
         <div className="flex justify-between gap-3 my-5">
-          <button
-            className="flex justify-center w-full py-2 bg-[#FFCD00] rounded-md text-sm"
-          >
+          <button className="flex justify-center w-full py-2 bg-[#FFCD00] rounded-md text-sm">
             Add to Cart
           </button>
           <button className="flex justify-center w-full py-2 text-white bg-[#F16521] rounded-md text-sm">

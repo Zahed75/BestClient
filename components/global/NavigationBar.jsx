@@ -282,6 +282,7 @@ export default function NavigationBar() {
           <div className="group relative">
             <button
               onMouseEnter={() => setIsOrderMenuOpen(true)}
+              onMouseLeave={() => setIsOrderMenuOpen(false)}
               className="flex justify-start items-center group-hover:bg-[#F0FAFF] group-hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700 uppercase"
             >
               Your Order

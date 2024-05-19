@@ -3,7 +3,7 @@ import arraymood from "@/public/images/arraymood.png";
 import Link from "next/link";
 
 export default function TagLine({ tagValues }) {
-  console.log(tagValues);
+  
   return (
     <section className="my-5">
       {tagValues && tagValues.length > 0 ? (
