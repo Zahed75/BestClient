@@ -10,7 +10,6 @@ const style = {
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
   boxShadow: 24,
-  p: 5,
 };
 
 export default function CompareProduct({ open, setOpen }) {
@@ -27,7 +26,7 @@ export default function CompareProduct({ open, setOpen }) {
         aria-describedby="modal-modal-description"
       >
         <Box className="rounded-lg" sx={style}>
-          <table className="w-full">
+          <table className="table-auto">
             <tbody>
               <tr>
                 <td className="border px-5 py-2">Picture</td>

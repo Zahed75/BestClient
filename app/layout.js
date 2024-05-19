@@ -22,8 +22,7 @@ export default function RootLayout({ children }) {
         <TopLocationBar />
         <Search />
         <NavigationBar />
-        
-        
+
         {children}
         <Footer />
         <LastFooter />
