@@ -2,6 +2,7 @@ import SectionButton from "../global/SectionButton";
 import ProductCard from "./ProductCard";
 
 export default function EventProduct({ event }) {
+  const products = [1, 2, 3];
   return (
     <main className="my-5 md:my-10">
       <section className="flex justify-between items-center gap-1">
@@ -15,10 +16,10 @@ export default function EventProduct({ event }) {
         </div>
         <SectionButton url="/" />
       </section>
-      <section className="grid grid-cols-1 md:grid-cols-3 justify-evenly items-center gap-2 my-10">
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+      <section className="grid grid-cols-2 md:grid-cols-3 justify-evenly items-center gap-2 my-10">
+        {products.map((index) => (
+          <ProductCard index={index} key={index} />
+        ))}
       </section>
     </main>
   );

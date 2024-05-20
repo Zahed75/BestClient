@@ -3,12 +3,11 @@ import Image from "next/image";
 import dynacool from "@/public/images/dynacool.jpg";
 import { useState } from "react";
 
-export default function ProductCard() {
-  const [cartClicked, setCartClicked] = useState(false);
+export default function ProductCard({index}) {
   const [cartCount, setCartCount] = useState(0);
 
   return (
-    <div className="w-full overflow-hidden border rounded-md p-5">
+    <div className={`w-full overflow-hidden border rounded-md p-5 ${index === 3 ? " col-span-2 md:col-span-1": ""}`}>
       <div className="relative">
         <div className="absolute top-0 left-0 bg-[#F16521] rounded-full text-white z-10">
           <p className="text-sm px-3 py-1">5%</p>
