@@ -55,7 +55,7 @@ export default function NavigationBar() {
 
   return (
     <nav className="container">
-      <div className="px-5 md:px-10 lg:px-16 hidden sm:hidden md:flex lg:flex justify-stretch items-center">
+      <div className="px-5 md:px-10 lg:px-16 xl:px-44 hidden sm:hidden md:flex lg:flex justify-stretch items-center">
         <div className="relative">
           <button
             onMouseEnter={() => setIsAllCategoriesOpen(true)}
