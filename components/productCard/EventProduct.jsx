@@ -5,7 +5,7 @@ export default function EventProduct({ event }) {
   const products = [1, 2, 3];
   return (
     <main className="my-5 md:my-10">
-      <section className="flex justify-between items-center gap-1">
+      <section className="flex justify-between items-center gap-x-2">
         <div>
           <h4 className="text-[#202435] text-md md:text-xl font-semibold uppercase">
             {event}
