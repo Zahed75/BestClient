@@ -8,7 +8,7 @@ export default function Home() {
     <main>
       <ImageSlider />
       <div className="container">
-        <div className="px-5 md:px-10 lg:px-16">
+        <div className="">
           <EventProduct event={"TOP SELLING AIRCONDITIONAR"} />
           <EventProduct event={"Our best sells in this month"} />
           <Categories />

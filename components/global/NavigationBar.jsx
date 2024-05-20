@@ -55,18 +55,18 @@ export default function NavigationBar() {
 
   return (
     <nav className="container">
-      <div className="px-5 hidden sm:hidden md:flex lg:flex justify-stretch items-center">
+      <div className="hidden sm:hidden md:flex lg:flex justify-stretch items-center">
         <div className="relative">
           <button
             onMouseEnter={() => setIsAllCategoriesOpen(true)}
             onMouseLeave={() => setIsAllCategoriesOpen(false)}
             className="group bg-[#F16521] text-sm font-normal px-5 py-4 uppercase text-white rounded-full flex justify-start items-center relative"
           >
-            <Image src={treeDot} className="w-4 h-4 mr-5" alt="Tree Dot" /> All
-            Categories
+            <Image src={treeDot} className="w-4 h-4 " alt="Tree Dot" /> 
+            <span className="mx-3">All Categories</span>
             <Image
               src={arrayBottom}
-              className="w-4 h-4 ml-5"
+              className="w-4 h-4 "
               alt="Array Bottom"
             />
             <span className="bg-gray-100 text-[#71778E] text-[10px] text-nowrap px-1 border border-white rounded-xl absolute -bottom-[10px] left-[22%] mx-auto z-20">
@@ -165,7 +165,7 @@ export default function NavigationBar() {
         </div>
 
         <div className="flex ml-auto">
-          <div className="flex justify-end items-center uppercase text-sm gap-x-1">
+          <div className="flex justify-end items-center uppercase text-sm font-normal gap-x-1">
             <span className="bg-[#F0FAFF] text-[#F16521] px-3 py-2 rounded-full cursor-pointer">
               <Link href="/">Home</Link>
             </span>
@@ -177,7 +177,7 @@ export default function NavigationBar() {
                 Browse Products
                 <Image
                   src={arrayBottomBlack}
-                  className="w-4 h-4 ml-5 -rotate-90 group-hover:rotate-1 duration-700"
+                  className="w-4 h-4 ml-2 -rotate-90 group-hover:rotate-1 duration-700"
                   alt="Array Bottom"
                 />
               </button>
@@ -289,7 +289,7 @@ export default function NavigationBar() {
                 Your Order
                 <Image
                   src={arrayBottomBlack}
-                  className="w-4 h-4 ml-5 -rotate-90 group-hover:rotate-1 duration-700"
+                  className="w-4 h-4 ml-2 -rotate-90 group-hover:rotate-1 duration-700"
                   alt="Array Bottom"
                 />
               </button>

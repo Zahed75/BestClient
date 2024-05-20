@@ -18,7 +18,7 @@ export default function Search() {
   };
   return (
     <main className="container">
-      <div className="px-5 grid grid-cols-4 justify-center items-center gap-5 my-5">
+      <div className="grid grid-cols-4 justify-center items-center gap-5 my-5">
         <div className="col-span-2 md:col-span-1">
           <Link href="/">
             <Image

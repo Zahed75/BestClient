@@ -67,7 +67,7 @@ export default function Footer() {
   return (
     <footer className="bg-[#F16521]">
       <div className="container">
-        <div className="px-5 md:px-10 lg:px-16">
+        <div className="">
           <section className="grid grid-cols-1 md:grid-cols-5 justify-between items-start pt-20 text-white">
             {footerData.map((data, index) => (
               <div

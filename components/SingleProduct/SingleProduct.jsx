@@ -156,7 +156,7 @@ export default function SingleProduct() {
 
   return (
     <section className="container">
-      <div className="px-5 md:px-10 lg:px-16 my-10">
+      <div className="my-10">
         <TagLine tagValues={tagValues} />
         <div className="bg-white rounded-md shadow-md p-5 border-t">
           <h1 className="text-[#202435] text-lg font-semibold">

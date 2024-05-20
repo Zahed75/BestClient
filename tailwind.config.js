@@ -22,6 +22,14 @@ module.exports = {
         xl: "5rem",
         "2xl": "6rem",
       },
+      maxWidth: {
+        DEFAULT: "100%",
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
+        "2xl": "1536px",
+      },
   },
   plugins: [],
 }

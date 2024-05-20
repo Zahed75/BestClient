@@ -4,7 +4,7 @@ import sslImage from "@/public/images/ssl.png";
 export default function LastFooter() {
   return (
     <section className="container">
-      <div className="px-5 md:px-10 lg:px-16 flex flex-col-reverse md:flex-row justify-between items-center py-10">
+      <div className="flex flex-col-reverse md:flex-row justify-between items-center py-10">
         <div>
           <span>
             © Best Electronics - All Rights Reserved. Payment Partner:
