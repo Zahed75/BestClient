@@ -21,7 +21,14 @@ const productData = {
     "image3.jpg", // Replace with actual image URLs
   ],
   stock: true,
-  mrp: 92900,
+  mrpPrice: {
+    default: 89000,
+    colors: {
+      white: 88000,
+      black: 90000,
+      silver: 89000,
+    },
+  },
   offerPrice: {
     default: 86500,
     colors: {
@@ -67,6 +74,7 @@ const productData = {
 export default function SingleProduct() {
   const [favorite, setFavorite] = useState(false);
   const [offerPrice, setOfferPrice] = useState(productData.offerPrice.default);
+  const [mrpPrice, setMrpPrice] = useState(productData.mrpPrice.default);
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -171,7 +179,7 @@ export default function SingleProduct() {
                 IN STOCK
               </p>
               <p className="text-[#202435] text-md font-semibold my-2">
-                MRP Price: ৳{productData.mrp}
+                MRP Price: ৳{mrpPrice}
               </p>
               <p className="text-[#F16521] text-md font-semibold mb-2">
                 Offer Price: ৳{offerPrice}
@@ -196,7 +204,8 @@ export default function SingleProduct() {
               <div className="mb-5 flex justify-start items-center gap-3">
                 <button
                   onClick={() =>
-                    setOfferPrice(productData.offerPrice.colors.white)
+                    setOfferPrice(productData.offerPrice.colors.white) ||
+                    setMrpPrice(productData.mrpPrice.colors.white)
                   }
                   className={`text-sm bg-[#f4c4c4] border w-6 h-6 rounded-full flex justify-center items-center uppercase ${
                     offerPrice === productData.offerPrice.colors.white
@@ -206,7 +215,8 @@ export default function SingleProduct() {
                 ></button>
                 <button
                   onClick={() =>
-                    setOfferPrice(productData.offerPrice.colors.black)
+                    setOfferPrice(productData.offerPrice.colors.black) ||
+                    setMrpPrice(productData.mrpPrice.colors.black)
                   }
                   className={`text-sm bg-[#000000] border w-6 h-6 rounded-full flex justify-center items-center uppercase ${
                     offerPrice === productData.offerPrice.colors.black
@@ -216,7 +226,8 @@ export default function SingleProduct() {
                 ></button>
                 <button
                   onClick={() =>
-                    setOfferPrice(productData.offerPrice.colors.silver)
+                    setOfferPrice(productData.offerPrice.colors.silver) ||
+                    setMrpPrice(productData.mrpPrice.colors.silver)
                   }
                   className={`text-sm bg-[#C0C0C0] border w-6 h-6 rounded-full flex justify-center items-center uppercase ${
                     offerPrice === productData.offerPrice.colors.silver
