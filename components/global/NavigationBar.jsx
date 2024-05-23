@@ -275,10 +275,10 @@ export default function NavigationBar() {
               <Link href="/product">All Products</Link>
             </span>
             <span className="hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700">
-              <Link href="/cart">Quick emi</Link>
+              <Link href="/success">Quick emi</Link>
             </span>
             <span className="hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700">
-              <Link href="/checkout">super kisti</Link>
+              <Link href="/">super kisti</Link>
             </span>
             <div className="group relative">
               <button

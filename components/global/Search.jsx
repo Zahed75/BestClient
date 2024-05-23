@@ -60,7 +60,7 @@ export default function Search() {
 
         <div className="flex justify-end items-center gap-5 col-span-2 md:col-span-1">
           <div className="w-[42px] h-[42px] rounded-full border hover:border-[#FFF1EE] p-2 hover:bg-[#FFF1EE] duration-700 hidden md:block">
-            <Link href="/">
+            <Link href="/signup">
               <Image
                 src={userIcon}
                 alt="User Icon"
@@ -154,10 +154,10 @@ export default function Search() {
 
               <div className="flex flex-col justify-between items-center">
                 <button className="border py-3 rounded-md w-full my-3">
-                  <Link href="/">View Cart</Link>
+                  <Link href="/cart">View Cart</Link>
                 </button>
                 <button className="text-white bg-[#F16521] py-3 rounded-md w-full">
-                  <Link href="/">Checkout</Link>
+                  <Link href="/checkout">Checkout</Link>
                 </button>
               </div>
             </div>

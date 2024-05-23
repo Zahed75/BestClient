@@ -1,7 +1,7 @@
 import freeze from "@/public/images/freeze.png";
 import Image from "next/image";
 
-export default function CardProduct() {
+export default function CartProduct() {
   return (
     <div className="flex justify-start items-start gap-5">
       <div className="w-1=[150px] h-[150px] ">
