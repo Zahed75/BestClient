@@ -81,3 +81,5 @@ export default function BottomNavigation() {
     </div>
   );
 }
+
+// only for mobile version
