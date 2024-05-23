@@ -14,7 +14,7 @@ export default function UserRegistration() {
   const onSubmit = (e) => {
     e.preventDefault();
     const email = formRef.current.email.value;
-    if (email === "mdshaiadul@gmail.com") {
+    if (email) {
       router.push("/createpassword");
     }
   };
