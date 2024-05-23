@@ -1,4 +1,4 @@
-import UserRegistration from "@/components/users/userRegistration";
+import UserRegistration from "@/components/users/UserRegistration";
 
 
 export default function page() {
