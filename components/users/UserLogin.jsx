@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { fetchApi } from "@/utils/FetchApi";
 
-export default function UserRegistration() {
+export default function UserLogin() {
   const router = useRouter();
   const formRef = useRef(null);
 
@@ -28,29 +28,25 @@ export default function UserRegistration() {
     setError("");
 
     const email = formRef.current.email.value;
-    const phoneNumber = formRef.current.mobile.value;
     const password = formRef.current.password.value;
 
-  
-
-    if (email && password && mobile) {
+    if (email && password) {
       try {
-        const data = { email, password, phoneNumber, role: "CUS" };
+        const data = { email, password };
         const response = await fetchApi(
-          "/customer/createCustomer",
+          "/customer/customerSignIn",
           "POST",
           data
         );
 
         if (response) {
-          localStorage.setItem("customer", JSON.stringify(response.customer));
+          localStorage.setItem("customer", JSON.stringify(response.user));
           setIsLoading(false);
-          router.push("/otp");
+          router.push("/checkout");
         } else {
           setError("Something went wrong. Please try again.");
         }
       } catch (error) {
-        console.error(error);
         setError("An error occurred. Please try again.");
       }
     }
@@ -65,11 +61,7 @@ export default function UserRegistration() {
             <h1 className="text-xl font-semibold">
               Sign in or Create an account
             </h1>
-            <form
-              ref={formRef}
-              onSubmit={(e) => onSubmit(e)}
-              className="space-y-5"
-            >
+            <form ref={formRef} onSubmit={onSubmit} className="space-y-5">
               <div>
                 <label className="text-sm" htmlFor="email">
                   Email Address
@@ -110,30 +102,22 @@ export default function UserRegistration() {
                   </span>
                 </div>
               </div>
-              <div>
-                <label className="text-sm" htmlFor="mobile">
-                  Mobile Number
-                </label>
-                <input
-                  className="border-2 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
-                  type="tel"
-                  name="mobile"
-                  id="mobile"
-                  required
-                  defaultValue={"880"}
-                  placeholder="Enter your mobile number"
-                />
+              <div className="flex justify-between items-center text-sm">
+                <Link href="/signup" className="text-[#F16521]">
+                  Create an account
+                </Link>
+                <Link href="/forgot" className="text-[#F16521]">
+                  Forgot Password?
+                </Link>
               </div>
-
+              {error && <div className="text-red-500 text-sm">{error}</div>}
               <button
                 type="submit"
                 className="flex justify-center w-full py-3 text-white bg-[#F16521] rounded-md text-sm"
               >
-                {isLoading ? "Loading..." : "Continue"}
+                {isLoading ? "Submitting..." : "Sign in"}
               </button>
             </form>
-
-            {error && <div className="text-red-500 text-sm">{error}</div>}
 
             <div className="flex justify-center items-center gap-2 mb-5">
               <div className="border w-20 h-0"></div>
@@ -172,7 +156,7 @@ export default function UserRegistration() {
               <Link href="/" className="text-[#F16521] pl-1">
                 Terms & Conditions
               </Link>{" "}
-              and{" "}
+              and
               <Link href="/" className="text-[#F16521]">
                 Privacy Statement
               </Link>

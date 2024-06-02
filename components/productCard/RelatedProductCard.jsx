@@ -1,6 +1,8 @@
 "use client";
 import Image from "next/image";
 import dynacool from "@/public/images/dynacool.jpg";
+import bisalmullochar from "@/public/images/bisalmullochar.png";
+import dhamaka from "@/public/images/dhamaka.png";
 import { useState } from "react";
 
 export default function RelatedProductCard({ index }) {
@@ -8,10 +10,13 @@ export default function RelatedProductCard({ index }) {
 
   return (
     <div
-      className={`w-full overflow-hidden border rounded-md p-5 ${
+      className={`w-full overflow-hidden border rounded-md p-5 relative ${
         index === 5 ? " col-span-2 md:col-span-1" : ""
       }`}
     >
+      <div className="absolute top-0 right-0 w-28 object-cover rounded-full text-white z-10 ">
+        <Image className="" src={dhamaka} alt="product" />
+      </div>
       <div className="relative">
         <div className="absolute top-0 left-0 bg-[#F16521] rounded-full text-white z-10">
           <p className="text-sm px-3 py-1">5%</p>

@@ -58,3 +58,21 @@ input[type="radio"]:checked:after {
   visibility: visible;
   border: 3px solid #d1d3d1;
 }
+/* scroll bar hidden */
+.scrollbar_hidden::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge add Firefox */
+.scrollbar_hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none; /* Firefox */
+}
+
+
+/* number input array hidden */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
