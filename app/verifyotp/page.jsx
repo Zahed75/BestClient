@@ -38,11 +38,11 @@ export default function VerifyOtp() {
     setIsLoading(true);
     try {
       const data = { email, otp };
-      const response = await fetchApi("/auth/otpVerification", "POST", data);
+      const response = await fetchApi("/customer/otpverify", "POST", data);
       setIsLoading(false);
 
       if (response) {
-        router.push("/authentication/setpassword");
+        router.push("/setpassword");
       } else {
         setError("Invalid OTP. Please try again.");
       }
@@ -57,7 +57,7 @@ export default function VerifyOtp() {
     setMessage("");
     setIsLoading(true);
     try {
-      const response = await fetchApi("/user/resetUser", "POST", { email });
+      const response = await fetchApi("/auth/otpResend", "POST", { email });
       if (response) {
         setMessage("OTP resent successfully.");
         setIsLoading(false);
@@ -73,9 +73,14 @@ export default function VerifyOtp() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const user = localStorage.getItem("user");
-      const storedEmail = user ? JSON.parse(user).email : "";
-      if (storedEmail) setEmail(storedEmail);
+      const customer = localStorage.getItem("customer");
+      const email = customer ? JSON.parse(customer).email : "";
+      if (email) {
+        setEmail(email);
+        console.log(email);
+      } else {
+        setError("Email not found.");
+      }
     }
   }, []);
 
@@ -153,5 +158,4 @@ export default function VerifyOtp() {
       </section>
     </section>
   );
-};
-
+}

@@ -99,7 +99,7 @@ export default function Forgot() {
                 </p>
               </div>
               <Link
-                href="/authentication/otp"
+                href="/verifyotp"
                 className="bg-[#F16521] text-white py-2 px-3 my-10 rounded-md"
               >
                 Go to OTP

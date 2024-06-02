@@ -31,8 +31,6 @@ export default function UserRegistration() {
     const phoneNumber = formRef.current.mobile.value;
     const password = formRef.current.password.value;
 
-  
-
     if (email && password && mobile) {
       try {
         const data = { email, password, phoneNumber, role: "CUS" };
