@@ -12,6 +12,7 @@ import Link from "next/link";
 import { useState } from "react";
 import ProductTabs from "./ProductTabs";
 import CompareProduct from "./CompareProduct";
+import ExcelUploader from "../fileUpload/ExcelUploader";
 
 const productData = {
   name: "Conion BEW-DC24KRNV 2 Ton Inverter (DynaCool) Air Conditioner",
@@ -133,7 +134,7 @@ export default function SingleProduct() {
       title: "Specifications",
       content: (
         <section className="my-5">
-          <table className="w-full">
+          {/* <table className="w-full">
             <tbody>
               <tr>
                 <td className="border px-5 py-2">Type</td>
@@ -156,7 +157,10 @@ export default function SingleProduct() {
                 <td className="border px-5 py-2">Up To 52°C</td>
               </tr>
             </tbody>
-          </table>
+          </table> */}
+          <div className="my-20">
+            <ExcelUploader />
+          </div>
         </section>
       ),
     },
