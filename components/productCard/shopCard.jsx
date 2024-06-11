@@ -46,10 +46,10 @@ export default function ShopCard({ product }) {
           </div>
 
           <div className="mt-3">
-            <h4 className="text-[#202435] text-md font-semibold h-10">
+            <h4 className="text-[#202435] text-md font-semibold h-14">
               {product?.productName}
             </h4>
-            <div className="mt-5 text-slate-500 text-sm">
+            <div className="mt-5 text-slate-500 text-md">
               <div className=" ">
                 Offer Price:{" "}
                 <span className="font-semibold ml-1">

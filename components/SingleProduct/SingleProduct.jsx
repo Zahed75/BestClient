@@ -72,7 +72,7 @@ const productData = {
   ],
 };
 
-export default function SingleProduct() {
+export default function SingleProduct({ product }) {
   const [favorite, setFavorite] = useState(false);
   const [offerPrice, setOfferPrice] = useState(productData.offerPrice.default);
   const [mrpPrice, setMrpPrice] = useState(productData.mrpPrice.default);
@@ -88,46 +88,16 @@ export default function SingleProduct() {
     { src: LinkedinLogo, alt: "Linkedin Logo", link: "/product" },
   ];
 
-  const tagValues = [
-    "Home",
-    "Home Appliances",
-    "Refrigerator",
-    "Samsung",
-    "Samsung 345L Refrigerator",
-  ];
-
-  const productImages = [
-    {
-      src: "https://www.bestelectronics.com.bd/wp-content/uploads/2023/01/Ref-2.jpg",
-      alt: "Product 1",
-    },
-    {
-      src: "https://www.bestelectronics.com.bd/wp-content/uploads/2023/02/Whirlpool-Refrugerators.jpg",
-      alt: "Product 2",
-    },
-  ];
+  const tagValues = ["Home", "Shop", `${product?.productName}`];
 
   const productDataTabs = [
     {
       title: "Descriptions",
       content: (
-        <section className="my-5">
-          <span>
-            Experience unparalleled performance with Conion DynaCool air
-            conditioners in Bangladesh. Engineered for efficiency, our inverter
-            ACs boast up to 60% energy savings, ensuring optimal cooling while
-            minimizing electricity bills. With heavy-duty cooling capabilities
-            of up to 52°C, Conion ACs provide relentless comfort even in
-            scorching heat. Prioritizing sustainability, our ACs use
-            eco-friendly refrigerants, reducing greenhouse gas emissions.
-            Featuring a 100% copper condenser and gold fin coating, our ACs
-            offer durability and corrosion resistance, ensuring long-lasting
-            performance. Activate Eco Mode Energy Saving for intelligent power
-            management, reducing energy consumption without compromising
-            comfort. Choose Conion DynaCool for superior cooling and
-            environmental responsibility.
-          </span>
-        </section>
+        <section
+          className="my-5"
+          dangerouslySetInnerHTML={{ __html: product?.productDescription }}
+        />
       ),
     },
     {
@@ -172,11 +142,14 @@ export default function SingleProduct() {
         <TagLine tagValues={tagValues} />
         <div className="bg-white rounded-md shadow-md p-5 border-t">
           <h1 className="text-[#202435] text-lg font-semibold">
-            {productData.name}
+            {product?.productName}
           </h1>
           <div className="flex flex-col md:flex-row justify-between items-start gap-x-10">
             <div className="">
-              <ImageShow baseUrl={productImages} />
+              <ImageShow
+                productImage={product?.productImage}
+                productGallery={product?.productGallery}
+              />
             </div>
             <div className="my-5">
               <p className="text-[#70BE38] bg-[#E5F8ED] text-xs font-semibold px-3 py-1 inline-block rounded-full">

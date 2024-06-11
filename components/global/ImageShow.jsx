@@ -1,39 +1,24 @@
 "use client";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 
-export default function ImageShow() {
-  const imgs = [
-    {
-      id: 0,
-      value:
-        "https://www.bestelectronics.com.bd/wp-content/uploads/2024/04/ac-new-4-9-24-500x500.jpg",
-    },
-    {
-      id: 1,
-      value:
-        "https://www.bestelectronics.com.bd/wp-content/uploads/2024/04/as-12tr4ryetd00a_copy_1-500x500.jpg",
-    },
-    {
-      id: 2,
-      value:
-        "https://www.bestelectronics.com.bd/wp-content/uploads/2024/04/as-12tr4ryetd00a-2_copy_1-500x500.jpg",
-    },
-  ];
-  const [wordData, setWordData] = useState(imgs[0]);
+export default function ImageShow({ productImage, productGallery }) {
+
+  const [wordData, setWordData] = useState(productGallery[0]);
   const [val, setVal] = useState(0);
 
   const handleClick = (index) => {
     setVal(index);
-    const wordSlider = imgs[index];
+    const wordSlider = productGallery[index];
     setWordData(wordSlider);
   };
 
   const autoPlay = () => {
-    let index = val < imgs.length - 1 ? val + 1 : 0;
+    let index = val < productGallery?.length - 1 ? val + 1 : 0;
     setVal(index);
-    const wordSlider = imgs[index];
+    const wordSlider = productGallery[index];
     setWordData(wordSlider);
   };
   useEffect(() => {
@@ -43,21 +28,22 @@ export default function ImageShow() {
     return () => clearInterval(interval);
   });
 
+
   return (
     <div className="flex justify-center items-start gap-5 my-5">
       <div className="flex flex-col gap-2">
-        {imgs.map((data, i) => (
+        {productGallery?.map((src, i) => (
           <div className="" key={i}>
-            <img
+            <Image
               className={
-                wordData.id == i
+                wordData.index == i
                   ? "border border-[#F16521] rounded-md"
                   : "border rounded-md"
               }
-              src={data.value}
-              onClick={() => handleClick(i)}
-              height="70"
               width="100"
+              height="70"
+              src={src}
+              onClick={() => handleClick(i)}
             />
           </div>
         ))}
@@ -65,11 +51,13 @@ export default function ImageShow() {
       <div>
         <div className="w-full object-cover border rounded-md group overflow-hidden group">
           <Zoom>
-            <img
+            <Image
+              width="400"
+              height="400"
               data-aos="zoom-in"
               data-aos-once="false"
               className="rounded-md group-hover:scale-110 duration-700"
-              src={wordData.value}
+              src={wordData}
             />
           </Zoom>
         </div>
