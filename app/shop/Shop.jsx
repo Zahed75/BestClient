@@ -68,13 +68,11 @@ export default function Shop({ products }) {
     }
   };
 
-  console.log(products);
-
   return (
     <main className="container">
       <div className="my-10">
         <TagLine tagValues={tagValues} />
-        <section className="grid grid-cols-1 md:grid-cols-4 justify-between items-start gap-5">
+        <section className="grid grid-cols-1 md:grid-cols-6 justify-between items-start gap-5">
           <div>
             <div>
               <h1 className="uppercase">FILTER BY CATEGORIES</h1>
@@ -137,7 +135,7 @@ export default function Shop({ products }) {
               </div>
             </div>
           </div>
-          <div className="md:col-span-3">
+          <div className="md:col-span-5">
             <div className="bg-[#f7f8fd] py-4 px-5 w-full rounded-md flex justify-between items-center">
               <div className="flex justify-start items-center gap-5">
                 <TiThMenu
