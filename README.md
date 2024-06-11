@@ -13,18 +13,61 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:9000](http://localhost:9000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+const productData = {
+  name: "Conion BEW-DC24KRNV 2 Ton Inverter (DynaCool) Air Conditioner",
+  images: [
+    "image1.jpg",
+    "image2.jpg",
+    "image3.jpg", // Replace with actual image URLs
+  ],
+  stock: true,
+  mrpPrice: {
+    default: 89000,
+    colors: {
+      white: 88000,
+      black: 90000,
+      silver: 89000,
+    },
+  },
+  offerPrice: {
+    default: 86500,
+    colors: {
+      white: 85900,
+      black: 87100,
+      silver: 86200,
+    },
+  },
+  description:
+    "Heavy Duty Cooling Up To 52°C. R32 Green Refrigerant. 100% Copper Condenser. Warranty: Compressor- 12 years, Mainboard- 2 years, Spare parts- 2 years, Service- 2 years",
+  specifications: [
+    { type: "Inverter" },
+    { capacity: "2 Ton" },
+    { model: "BEW-DC24KRNV" },
+    { brand: "Conion" },
+  ],
+  highlights: [
+    "Heavy Duty Cooling Up To 52°C",
+    "R32 Green Refrigerant",
+    "100% Copper Condenser",
+  ],
+  favorite: false,
+  categories: [
+    "Air Conditioner",
+    "Hisense",
+    "Hisense Air Conditioner (AC)",
+    "Home Appliances",
+  ],
+  logos: [
+    {
+      src: "logo1.png",
+      alt: "Logo 1",
+      link: "https://www.example.com/logo1",
+    },
+    {
+      src: "logo2.png",
+      alt: "Logo 2",
+      link: "https://www.example.com/logo2",
+    },
+  ],
+};
 
