@@ -15,9 +15,15 @@ export default async function Page({ params }) {
   const id = params.id;
   const res = await fetchApi(`/product/getProductById/${id}`, "GET");
   const product = await res?.data;
+  const category = await fetchApi(
+    `/category/getCategoryById/${product?.categoryId}`,
+    "GET"
+  );
+  const categoryName = await category?.category?.categoryName;
+
   return (
     <>
-      <SingleProduct product={product} />
+      <SingleProduct product={product} categoryName={categoryName} />
     </>
   );
 }

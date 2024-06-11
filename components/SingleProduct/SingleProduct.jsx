@@ -9,73 +9,14 @@ import PinterestLogo from "@/public/images/pinterest.png";
 import WhatsAppLogo from "@/public/images/whatsapp.png";
 import LinkedinLogo from "@/public/images/linkedin.png";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductTabs from "./ProductTabs";
 import CompareProduct from "./CompareProduct";
 import ExcelUploader from "../fileUpload/ExcelUploader";
+import { fetchApi } from "@/utils/FetchApi";
 
-const productData = {
-  name: "Conion BEW-DC24KRNV 2 Ton Inverter (DynaCool) Air Conditioner",
-  images: [
-    "image1.jpg",
-    "image2.jpg",
-    "image3.jpg", // Replace with actual image URLs
-  ],
-  stock: true,
-  mrpPrice: {
-    default: 89000,
-    colors: {
-      white: 88000,
-      black: 90000,
-      silver: 89000,
-    },
-  },
-  offerPrice: {
-    default: 86500,
-    colors: {
-      white: 85900,
-      black: 87100,
-      silver: 86200,
-    },
-  },
-  description:
-    "Heavy Duty Cooling Up To 52°C. R32 Green Refrigerant. 100% Copper Condenser. Warranty: Compressor- 12 years, Mainboard- 2 years, Spare parts- 2 years, Service- 2 years",
-  specifications: [
-    { type: "Inverter" },
-    { capacity: "2 Ton" },
-    { model: "BEW-DC24KRNV" },
-    { brand: "Conion" },
-  ],
-  highlights: [
-    "Heavy Duty Cooling Up To 52°C",
-    "R32 Green Refrigerant",
-    "100% Copper Condenser",
-  ],
-  favorite: false,
-  categories: [
-    "Air Conditioner",
-    "Hisense",
-    "Hisense Air Conditioner (AC)",
-    "Home Appliances",
-  ],
-  logos: [
-    {
-      src: "logo1.png",
-      alt: "Logo 1",
-      link: "https://www.example.com/logo1",
-    },
-    {
-      src: "logo2.png",
-      alt: "Logo 2",
-      link: "https://www.example.com/logo2",
-    },
-  ],
-};
-
-export default function SingleProduct({ product }) {
+export default function SingleProduct({ product, categoryName }) {
   const [favorite, setFavorite] = useState(false);
-  const [offerPrice, setOfferPrice] = useState(productData.offerPrice.default);
-  const [mrpPrice, setMrpPrice] = useState(productData.mrpPrice.default);
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -136,6 +77,7 @@ export default function SingleProduct({ product }) {
     },
   ];
 
+
   return (
     <section className="container">
       <div className="my-10">
@@ -151,68 +93,30 @@ export default function SingleProduct({ product }) {
                 productGallery={product?.productGallery}
               />
             </div>
-            <div className="my-5">
-              <p className="text-[#70BE38] bg-[#E5F8ED] text-xs font-semibold px-3 py-1 inline-block rounded-full">
-                IN STOCK
+            <div className="my-5 md:min-w-max">
+              <p
+                className={`
+                ${
+                  product?.inventory?.stockStatus === "In Stock"
+                    ? "text-[#70BE38]"
+                    : "text-red-400"
+                } bg-[#E5F8ED] text-xs font-semibold px-3 py-1 inline-block rounded-full
+                `}
+              >
+                {product?.inventory?.stockStatus}
               </p>
               <p className="text-[#202435] text-md font-semibold my-2">
-                MRP Price: ৳{mrpPrice}
+                MRP Price: ৳{product?.general?.regularPrice}
               </p>
               <p className="text-[#F16521] text-md font-semibold mb-2">
-                Offer Price: ৳{offerPrice}
+                Offer Price: ৳{product?.general?.salePrice}
               </p>
-              <div className="my-5 text-sm">
-                <ul>
-                  <li>Type: Inverter</li>
-                  <li>Capacity: 2 Ton</li>
-                  <li>Model: BEW-DC24KRNV</li>
-                  <li>Brand: Conion</li>
-                  <li>Heavy Duty Cooling: Up To 52°C</li>
-                  <li>R32 Green Refrigerant</li>
-                  <li>100% Copper Condenser</li>
-                  <li>
-                    Warranty: Compressor- 12 years Mainboard- 2 years Spare
-                    parts- 2 years Service- 2 years
-                  </li>
-                  <li className="text-[#F16521]">নিজস্ব Super কিস্তি সুবিধা</li>
-                </ul>
-              </div>
-
-              <div className="mb-5 flex justify-start items-center gap-3">
-                <button
-                  onClick={() =>
-                    setOfferPrice(productData.offerPrice.colors.white) ||
-                    setMrpPrice(productData.mrpPrice.colors.white)
-                  }
-                  className={`text-sm bg-[#f4c4c4] border w-6 h-6 rounded-full flex justify-center items-center uppercase ${
-                    offerPrice === productData.offerPrice.colors.white
-                      ? "border-[#F16521]"
-                      : "border-[#E5E5E5]"
-                  }`}
-                ></button>
-                <button
-                  onClick={() =>
-                    setOfferPrice(productData.offerPrice.colors.black) ||
-                    setMrpPrice(productData.mrpPrice.colors.black)
-                  }
-                  className={`text-sm bg-[#000000] border w-6 h-6 rounded-full flex justify-center items-center uppercase ${
-                    offerPrice === productData.offerPrice.colors.black
-                      ? "border-[#F16521]"
-                      : "border-[#E5E5E5]"
-                  }`}
-                ></button>
-                <button
-                  onClick={() =>
-                    setOfferPrice(productData.offerPrice.colors.silver) ||
-                    setMrpPrice(productData.mrpPrice.colors.silver)
-                  }
-                  className={`text-sm bg-[#C0C0C0] border w-6 h-6 rounded-full flex justify-center items-center uppercase ${
-                    offerPrice === productData.offerPrice.colors.silver
-                      ? "border-[#F16521]"
-                      : "border-[#E5E5E5]"
-                  }`}
-                ></button>
-              </div>
+              <section
+                className="my-5 min-h-48"
+                dangerouslySetInnerHTML={{
+                  __html: product?.productShortDescription,
+                }}
+              />
 
               <div className="flex justify-start items-center border-b-2 pb-10">
                 <button
@@ -252,9 +156,7 @@ export default function SingleProduct({ product }) {
 
               <div className="mt-10">
                 <p>
-                  <span className="text-[#9B9BB4] mr-1">Categories:</span> Air
-                  Conditioner, Hisense, Hisense Air Conditioner (AC), Home
-                  Appliances
+                  <span className="text-[#9B9BB4] mr-1">Categories:</span> {categoryName}
                 </p>
               </div>
 
@@ -275,7 +177,7 @@ export default function SingleProduct({ product }) {
               </div>
             </div>
 
-            <div className="my-5">
+            <div className="my-5 md:max-w-80">
               <div className="text-[#BE143C] bg-[#FFEEF2] p-5 text-xs rounded-md mb-5">
                 <span>Largest Collection of World Class Home Appliances</span>
               </div>

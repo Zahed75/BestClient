@@ -5,44 +5,45 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 
 export default function ImageShow({ productImage, productGallery }) {
-
-  const [wordData, setWordData] = useState(productGallery[0]);
-  const [val, setVal] = useState(0);
+  const combinedGallery = [productImage, ...productGallery];
+  const initialIndex = combinedGallery.length - 1;
+  const [wordData, setWordData] = useState(combinedGallery[initialIndex]);
+  const [val, setVal] = useState(initialIndex);
 
   const handleClick = (index) => {
     setVal(index);
-    const wordSlider = productGallery[index];
-    setWordData(wordSlider);
+    setWordData(combinedGallery[index]);
   };
 
   const autoPlay = () => {
-    let index = val < productGallery?.length - 1 ? val + 1 : 0;
+    let index = val < combinedGallery.length - 1 ? val + 1 : 0;
     setVal(index);
-    const wordSlider = productGallery[index];
-    setWordData(wordSlider);
+    setWordData(combinedGallery[index]);
   };
+
   useEffect(() => {
     const interval = setInterval(() => {
       autoPlay();
     }, 5000);
     return () => clearInterval(interval);
-  });
+  }, [val]);
 
 
   return (
-    <div className="flex justify-center items-start gap-5 my-5">
+    <section className="flex justify-center items-start gap-5 my-5">
       <div className="flex flex-col gap-2">
-        {productGallery?.map((src, i) => (
+        {combinedGallery?.map((src, i) => (
           <div className="" key={i}>
             <Image
               className={
-                wordData.index == i
+                wordData === src
                   ? "border border-[#F16521] rounded-md"
                   : "border rounded-md"
               }
               width="100"
               height="70"
               src={src}
+              alt="product"
               onClick={() => handleClick(i)}
             />
           </div>
@@ -58,6 +59,7 @@ export default function ImageShow({ productImage, productGallery }) {
               data-aos-once="false"
               className="rounded-md group-hover:scale-110 duration-700"
               src={wordData}
+              alt="product"
             />
           </Zoom>
         </div>
@@ -70,6 +72,6 @@ export default function ImageShow({ productImage, productGallery }) {
           </button>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

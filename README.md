@@ -71,3 +71,42 @@ const productData = {
   ],
 };
 
+  const [offerPrice, setOfferPrice] = useState(productData.offerPrice.default);
+  const [mrpPrice, setMrpPrice] = useState(productData.mrpPrice.default);
+
+
+         {/* <div className="mb-5 flex justify-start items-center gap-3">
+                <button
+                  onClick={() =>
+                    setOfferPrice(productData.offerPrice.colors.white) ||
+                    setMrpPrice(productData.mrpPrice.colors.white)
+                  }
+                  className={`text-sm bg-[#f4c4c4] border w-6 h-6 rounded-full flex justify-center items-center uppercase ${
+                    offerPrice === productData.offerPrice.colors.white
+                      ? "border-[#F16521]"
+                      : "border-[#E5E5E5]"
+                  }`}
+                ></button>
+                <button
+                  onClick={() =>
+                    setOfferPrice(productData.offerPrice.colors.black) ||
+                    setMrpPrice(productData.mrpPrice.colors.black)
+                  }
+                  className={`text-sm bg-[#000000] border w-6 h-6 rounded-full flex justify-center items-center uppercase ${
+                    offerPrice === productData.offerPrice.colors.black
+                      ? "border-[#F16521]"
+                      : "border-[#E5E5E5]"
+                  }`}
+                ></button>
+                <button
+                  onClick={() =>
+                    setOfferPrice(productData.offerPrice.colors.silver) ||
+                    setMrpPrice(productData.mrpPrice.colors.silver)
+                  }
+                  className={`text-sm bg-[#C0C0C0] border w-6 h-6 rounded-full flex justify-center items-center uppercase ${
+                    offerPrice === productData.offerPrice.colors.silver
+                      ? "border-[#F16521]"
+                      : "border-[#E5E5E5]"
+                  }`}
+                ></button>
+              </div> */}
