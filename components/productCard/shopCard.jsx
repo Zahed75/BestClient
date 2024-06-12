@@ -110,7 +110,8 @@ export default function ShopCard({ product }) {
             </span>
           </div>
           <div className="hidden group-hover:block duration-700 justify-between items-center mt-5 absolute bottom-0 right-0 w-full bg-white">
-            {cart.find((item) => item._id === product?._id) ? (
+            {Array.isArray(cart) &&
+            cart.find((item) => item._id === product?._id) ? (
               <div className="bg-[#F16521] border rounded-full w-full flex justify-between items-center">
                 <button
                   onClick={() => {
@@ -127,9 +128,7 @@ export default function ShopCard({ product }) {
                 </button>
                 <button
                   onClick={() => {
-                    dispatch(
-                      updateQuantity({ id: product?._id, quantity: 1 })
-                    );
+                    dispatch(updateQuantity({ id: product?._id, quantity: 1 }));
                   }}
                   className="px-3 py-1 text-lg"
                 >
@@ -138,7 +137,10 @@ export default function ShopCard({ product }) {
               </div>
             ) : (
               <button
-                onClick={() => dispatch(addToCart(product)) && setCartCount(1)}
+                onClick={() => {
+                  dispatch(addToCart(product));
+                  setCartCount(1);
+                }}
                 className="bg-[#FFCD00] px-3 py-2 rounded-full w-full"
               >
                 Add to Cart

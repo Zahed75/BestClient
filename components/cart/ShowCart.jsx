@@ -1,8 +1,11 @@
+"use client";
 import CardProduct from "@/components/productCard/CartProduct";
+import Image from "next/image";
+import EmptyCart from "@/public/images/emptyCart.png";
 import { useDispatch, useSelector } from "react-redux";
 export default function ShowCart() {
-  // const cart = useSelector((state) => state.cart.items);
-  // const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart.items);
+  const dispatch = useDispatch();
   return (
     <section className="">
       <div className="my-10 grid grid-cols-1 md:grid-cols-3 justify-between items-start gap-10">
@@ -95,11 +98,18 @@ export default function ShowCart() {
                 <span className="font-semibold">Pickup from Outlet</span>
               </button>
             </div>
-            <div className="my-10">
-              <CardProduct />
-              <div className="border my-5"></div>
-              <CardProduct />
-            </div>
+            {cart?.length > 0 ? (
+              <div className="my-10">
+                {cart?.map((product) => (
+                  <CardProduct key={product._id} product={product} />
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col justify-center items-center my-10">
+                <Image className="w-40 h-40" src={EmptyCart} alt="Empty Cart" />
+                <span className="text-[#F16521] font-semibold font-serif text-lg">Your cart is empty</span>
+              </div>
+            )}
           </div>
         </div>
         <div className="bg-[#F8F9FD] p-5 rounded-md shadow-md">

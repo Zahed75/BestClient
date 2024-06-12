@@ -17,17 +17,6 @@ export default function Search() {
   const cart = useSelector((state) => state.cart.items) || [];
   const dispatch = useDispatch();
 
-  const SubTotal = () => {
-    return cart.reduce(
-      (acc, item) => acc + item?.general?.salePrice * item?.quantity,
-      0
-    );
-  };
-
-  useEffect(() => {
-    SubTotal();
-  }, [cart]);
-
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
@@ -158,12 +147,19 @@ export default function Search() {
             )}
 
             <div className="p-3 my-3">
-              <div className="flex justify-between items-center">
-                <h3 className="text-slate-500">Subtotal (2 items):</h3>
-                <h3 className="text-md font-semibold">৳
-                  {SubTotal()}
-                </h3>
-              </div>
+              {cart.length > 0 ? (
+                <div className="flex justify-between items-center">
+                  <h3 className="text-slate-500">Subtotal ({cart.length} items):</h3>
+                  <h3 className="text-md font-semibold">
+                    ৳
+                    {cart
+                      .map((item) => item?.general?.salePrice * item?.quantity)
+                      .reduce((a, b) => a + b, 0)}
+                  </h3>
+                </div>
+              ) : (
+                <div></div>
+              )}
 
               <div className="flex flex-col justify-between items-center">
                 <button className="border py-3 rounded-md w-full my-3">
