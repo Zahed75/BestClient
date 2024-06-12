@@ -14,10 +14,31 @@ import ProductTabs from "./ProductTabs";
 import CompareProduct from "./CompareProduct";
 import ExcelUploader from "../fileUpload/ExcelUploader";
 import { fetchApi } from "@/utils/FetchApi";
+import { useSelector } from "react-redux";
 
 export default function SingleProduct({ product, categoryName }) {
   const [favorite, setFavorite] = useState(false);
   const [open, setOpen] = useState(false);
+  const [productIdForWishlist, setProductIdForWishlist] = useState("");
+
+  const customer = useSelector((state) => state.customer);
+
+  const customerId = customer.items.userId;
+
+  const addToWishlist = () => {
+    const data = {
+      productId: productIdForWishlist,
+    };
+    try {
+      const res = fetchApi(`/customer/addWishList/${customerId}`, "POST", data);
+      if (res) {
+        setFavorite(true);
+        console.log(res);
+      }
+    } catch (error) {
+      console.log();
+    }
+  };
 
   const handleOpen = () => setOpen(true);
 
@@ -125,7 +146,10 @@ export default function SingleProduct({ product, categoryName }) {
 
               <div className="flex justify-start items-center border-b-2 pb-10">
                 <button
-                  onClick={() => setFavorite(!favorite)}
+                  onClick={() => {
+                    setProductIdForWishlist(product?._id);
+                    addToWishlist();
+                  }}
                   className="text-sm text-[#9B9BB4] border px-5 py-2 rounded-full flex justify-center items-center uppercase"
                 >
                   <svg

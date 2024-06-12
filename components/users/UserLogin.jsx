@@ -9,6 +9,8 @@ import hidden from "@/public/images/view-off.svg";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { fetchApi } from "@/utils/FetchApi";
+import { useDispatch } from "react-redux";
+import { addCustomerInfo } from "@/redux/slice/customerSlice";
 
 export default function UserLogin() {
   const router = useRouter();
@@ -17,6 +19,8 @@ export default function UserLogin() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const dispatch = useDispatch();
 
   const handlePasswordToggle = () => {
     setShowPassword(!showPassword);
@@ -40,7 +44,7 @@ export default function UserLogin() {
         );
 
         if (response) {
-          localStorage.setItem("customer", JSON.stringify(response.user));
+          dispatch(addCustomerInfo(response?.user));
           setIsLoading(false);
           router.push("/checkout");
         } else {

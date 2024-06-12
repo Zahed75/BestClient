@@ -4,14 +4,16 @@ import React, { useEffect, useState } from "react";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeFromCart, updateQuantity } from '@/redux/slice/cartSlice';
+import {
+  addToCart,
+} from "@/redux/slice/cartSlice";
 
 export default function ImageShow({ productImage, productGallery, product }) {
   const combinedGallery = [productImage, ...productGallery];
   const initialIndex = combinedGallery.length - 1;
   const [wordData, setWordData] = useState(combinedGallery[initialIndex]);
   const [val, setVal] = useState(initialIndex);
-  
+
   const dispatch = useDispatch();
 
   const handleClick = (index) => {
@@ -31,27 +33,6 @@ export default function ImageShow({ productImage, productGallery, product }) {
     }, 5000);
     return () => clearInterval(interval);
   }, [val]);
-
-  // const handleAddToCart = () => {
-  //   const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  //   const existingProduct = cart.find((item) => item._id === product._id);
-
-  //   if (existingProduct) {
-  //     existingProduct.quantity += 1;
-  //     if (existingProduct.quantity === 0) {
-  //       const index = cart.findIndex((item) => item._id === product._id);
-  //       cart.splice(index, 1);
-  //     }
-  //   } else {
-  //     cart.push({ ...product, quantity: 1 });
-  //   }
-
-  //   localStorage.setItem("cart", JSON.stringify(cart));
-  // };
-
-  useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  }, []);
 
   return (
     <section className="flex justify-center items-start gap-5 my-5">

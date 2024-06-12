@@ -10,26 +10,23 @@ import { Box, Drawer } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart } from "@/redux/slice/cartSlice";
+
 export default function Search() {
   const [open, setOpen] = useState(false);
-  // const [cart, setCart] = useState([]);
 
-  const cart = useSelector((state) => state.cart.items);
+  const cart = useSelector((state) => state.cart.items) || [];
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  //   setCart(cart);
-  // }, []);
+  const SubTotal = () => {
+    return cart.reduce(
+      (acc, item) => acc + item?.general?.salePrice * item?.quantity,
+      0
+    );
+  };
 
-  // const handleRemoveFromCart = (id) => {
-  //   let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  //   cart = cart.filter(item => item._id !== id);
-  //   localStorage.setItem("cart", JSON.stringify(cart));
-  //   // Trigger a state update or re-fetch the cart to update the UI
-
-  //   setCart(cart);
-  // };
+  useEffect(() => {
+    SubTotal();
+  }, [cart]);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -147,7 +144,6 @@ export default function Search() {
                       <CloseIcon
                         className="text-white pb-1"
                         style={{ fontSize: 17 }}
-                        // onClick={() => handleRemoveFromCart(product?._id)}
                         onClick={() => dispatch(removeFromCart(product?._id))}
                       />
                     </button>
@@ -164,13 +160,8 @@ export default function Search() {
             <div className="p-3 my-3">
               <div className="flex justify-between items-center">
                 <h3 className="text-slate-500">Subtotal (2 items):</h3>
-                <h3 className="text-md font-semibold">
-                  ৳
-                  {cart?.reduce(
-                    (acc, item) =>
-                      acc + item?.general?.salePrice * item?.quantity,
-                    0
-                  )}
+                <h3 className="text-md font-semibold">৳
+                  {SubTotal()}
                 </h3>
               </div>
 

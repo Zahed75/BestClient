@@ -1,5 +1,8 @@
 import CardProduct from "@/components/productCard/CartProduct";
+import { useDispatch, useSelector } from "react-redux";
 export default function ShowCart() {
+  // const cart = useSelector((state) => state.cart.items);
+  // const dispatch = useDispatch();
   return (
     <section className="">
       <div className="my-10 grid grid-cols-1 md:grid-cols-3 justify-between items-start gap-10">
@@ -171,7 +174,6 @@ export default function ShowCart() {
                 >
                   Submit
                 </button>
-                
               </form>
             </div>
 
