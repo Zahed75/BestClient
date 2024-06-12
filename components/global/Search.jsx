@@ -1,17 +1,35 @@
 "use client";
 import Image from "next/image";
 import bestLogo from "@/public/images/bestElectronicsLogo.svg";
-import sony from "@/public/images/sony_tv.jpg";
 import userIcon from "@/public/images/userIcon.svg";
 import cartIcon from "@/public/images/cartIcon.svg";
 import CloseIcon from "@mui/icons-material/Close";
 import EmptyCart from "@/public/images/emptyCart.png";
 import Link from "next/link";
 import { Box, Drawer } from "@mui/material";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { removeFromCart } from "@/redux/slice/cartSlice";
 export default function Search() {
   const [open, setOpen] = useState(false);
+  // const [cart, setCart] = useState([]);
+
+  const cart = useSelector((state) => state.cart.items);
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  //   setCart(cart);
+  // }, []);
+
+  // const handleRemoveFromCart = (id) => {
+  //   let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  //   cart = cart.filter(item => item._id !== id);
+  //   localStorage.setItem("cart", JSON.stringify(cart));
+  //   // Trigger a state update or re-fetch the cart to update the UI
+
+  //   setCart(cart);
+  // };
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -84,7 +102,7 @@ export default function Search() {
             </button>
             <div>
               <span className="absolute top-0 -right-2 bg-[#F16521] text-white rounded-full text-xs px-1">
-                2
+                {cart?.length}
               </span>
             </div>
           </div>
@@ -97,59 +115,63 @@ export default function Search() {
                 <CloseIcon />
               </button>
             </div>
-            <div className="flex flex-col justify-center items-center mt-10">
-              <Image className="w-40 h-40" src={EmptyCart} alt="Empty Cart" />
+            {cart.length > 0 ? (
+              cart.map((product, i) => (
+                <div
+                  key={i}
+                  className="grid grid-cols-4 justify-between items-center gap-3 p-3 hover:bg-slate-50 duration-700 border-b-2"
+                >
+                  <div>
+                    <Image
+                      className="w-20 h-20"
+                      src={product?.productImage}
+                      alt={product?.productName}
+                      width={80}
+                      height={80}
+                    />
+                  </div>
+                  <div className="col-span-3 flex justify-between items-center">
+                    <div>
+                      <h3 className="text-md">{product?.productName}</h3>
+                      <div>
+                        <span className="text-slate-500">
+                          ৳ {product?.general?.salePrice}
+                        </span>
+                        <span className="ml-2 text-slate-500">
+                          {" "}
+                          X {product?.quantity}
+                        </span>
+                      </div>
+                    </div>
+                    <button className="flex justify-center bg-[#F16521] w-5 h-5 rounded-full p-1">
+                      <CloseIcon
+                        className="text-white pb-1"
+                        style={{ fontSize: 17 }}
+                        // onClick={() => handleRemoveFromCart(product?._id)}
+                        onClick={() => dispatch(removeFromCart(product?._id))}
+                      />
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="flex flex-col justify-center items-center mt-10">
+                <Image className="w-40 h-40" src={EmptyCart} alt="Empty Cart" />
+                <span>No products in the cart</span>
+              </div>
+            )}
 
-              <span>No products in the cart</span>
-            </div>
-            <div className="grid grid-cols-4 justify-between items-center gap-3 p-3 hover:bg-slate-50 duration-700 border-b-2">
-              <div>
-                <Image className="w-20 h-20" src={sony} alt="sony" />
-              </div>
-              <div className="col-span-3 flex justify-between items-center">
-                <div>
-                  <h3 className="text-md">
-                    Sony 45&ldquo; Kd -32W830K Smart TV (Google TV)
-                  </h3>
-                  <div>
-                    <span className="text-slate-500">৳ 55,000</span>
-                    <span className="ml-2 text-slate-500"> X 1</span>
-                  </div>
-                </div>
-                <button className="flex justify-center bg-[#F16521] w-5 h-5 rounded-full p-1">
-                  <CloseIcon
-                    className="text-white pb-1"
-                    style={{ fontSize: 17 }}
-                  />
-                </button>
-              </div>
-            </div>
-            <div className="grid grid-cols-4 justify-between items-center gap-3 p-3 hover:bg-slate-50 duration-700 border-b-2">
-              <div>
-                <Image className="w-20 h-20" src={sony} alt="sony" />
-              </div>
-              <div className="col-span-3 flex justify-between items-center">
-                <div>
-                  <h3 className="text-md">
-                    Sony 32&ldquo; Kd -32W830K Smart TV (Google TV)
-                  </h3>
-                  <div>
-                    <span className="text-slate-500">৳ 55,000</span>
-                    <span className="ml-2 text-slate-500"> X 1</span>
-                  </div>
-                </div>
-                <button className="flex justify-center bg-[#F16521] w-5 h-5 rounded-full p-1">
-                  <CloseIcon
-                    className="text-white pb-1"
-                    style={{ fontSize: 17 }}
-                  />
-                </button>
-              </div>
-            </div>
             <div className="p-3 my-3">
               <div className="flex justify-between items-center">
                 <h3 className="text-slate-500">Subtotal (2 items):</h3>
-                <h3 className="text-md font-semibold">৳ 110,000</h3>
+                <h3 className="text-md font-semibold">
+                  ৳
+                  {cart?.reduce(
+                    (acc, item) =>
+                      acc + item?.general?.salePrice * item?.quantity,
+                    0
+                  )}
+                </h3>
               </div>
 
               <div className="flex flex-col justify-between items-center">

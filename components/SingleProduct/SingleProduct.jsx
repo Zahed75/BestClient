@@ -29,7 +29,12 @@ export default function SingleProduct({ product, categoryName }) {
     { src: LinkedinLogo, alt: "Linkedin Logo", link: "/product" },
   ];
 
-  const tagValues = ["Home", "Shop", `${product?.productName}`];
+  const tagValues = [
+    "Home",
+    "Shop",
+    `${categoryName}`,
+    `${product?.productName}`,
+  ];
 
   const productDataTabs = [
     {
@@ -77,7 +82,6 @@ export default function SingleProduct({ product, categoryName }) {
     },
   ];
 
-
   return (
     <section className="container">
       <div className="my-10">
@@ -89,6 +93,7 @@ export default function SingleProduct({ product, categoryName }) {
           <div className="flex flex-col md:flex-row justify-between items-start gap-x-10">
             <div className="">
               <ImageShow
+                product={product}
                 productImage={product?.productImage}
                 productGallery={product?.productGallery}
               />
@@ -156,7 +161,8 @@ export default function SingleProduct({ product, categoryName }) {
 
               <div className="mt-10">
                 <p>
-                  <span className="text-[#9B9BB4] mr-1">Categories:</span> {categoryName}
+                  <span className="text-[#9B9BB4] mr-1">Categories:</span>{" "}
+                  {categoryName}
                 </p>
               </div>
 

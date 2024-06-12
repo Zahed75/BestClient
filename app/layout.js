@@ -7,6 +7,7 @@ import NavigationBar from "@/components/global/NavigationBar";
 import Footer from "@/components/global/Footer";
 import LastFooter from "@/components/global/LastFooter";
 import BottomNavigation from "@/components/global/BottomNavigation";
+import { Providers } from "@/redux/providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,16 +20,17 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Welcome />
-        <TopLocationBar />
-        <div className="border-b shadow-md"></div>
-        <Search />
-        <NavigationBar />
-
-        {children}
-        <BottomNavigation />
-        <Footer />
-        <LastFooter />
+        <Providers>
+          <Welcome />
+          <TopLocationBar />
+          <div className="border-b shadow-md"></div>
+          <Search />
+          <NavigationBar />
+          {children}
+          <BottomNavigation />
+          <Footer />
+          <LastFooter />
+        </Providers>
       </body>
     </html>
   );
