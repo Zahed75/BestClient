@@ -29,7 +29,7 @@ export default function ShortBrand() {
             </defs>
           </svg>
 
-          <span>Largest Collection of World Class Home Appliances</span>
+          <p>Largest Collection of World Class Home Appliances</p>
         </div>
         <div className="flex justify-start md:justify-between items-center gap-5">
           <svg
@@ -58,7 +58,7 @@ export default function ShortBrand() {
             </defs>
           </svg>
 
-          <span>Carefully Delivering Products at Your Door Step</span>
+          <p>Carefully Delivering Products at Your Door Step</p>
         </div>
         <div className="flex justify-start md:justify-between items-center gap-5">
           <svg
@@ -87,7 +87,7 @@ export default function ShortBrand() {
             </defs>
           </svg>
 
-          <span>Follow Us for Every Occasional Campaign Discounts</span>
+          <p>Follow Us for Every Occasional Campaign Discounts</p>
         </div>
         <div className="flex justify-start md:justify-between items-center gap-5">
           <svg
@@ -116,7 +116,7 @@ export default function ShortBrand() {
             </defs>
           </svg>
 
-          <span>We Assure Best Quality & Competitive Price in the Market</span>
+          <p>We Assure Best Quality & Competitive Price in the Market</p>
         </div>
       </div>
     </section>

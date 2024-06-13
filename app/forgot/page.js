@@ -5,7 +5,7 @@ import { fetchApi } from "@/utils/FetchApi";
 
 export default function Forgot() {
   const [confirm, setConfirm] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState("something wrong");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleForgotPassword = async (e) => {

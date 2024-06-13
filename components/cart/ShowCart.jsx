@@ -3,9 +3,20 @@ import CardProduct from "@/components/productCard/CartProduct";
 import Image from "next/image";
 import EmptyCart from "@/public/images/emptyCart.png";
 import { useDispatch, useSelector } from "react-redux";
+import Link from "next/link";
 export default function ShowCart() {
-  const cart = useSelector((state) => state.cart.items);
-  const dispatch = useDispatch();
+  
+  const cart = useSelector((state) => state.cart.items) || [];
+
+
+  const totalProductPrice = cart?.reduce(
+    (acc, item) => acc + item.general.salePrice * item.quantity,
+    0
+  );
+  const deliveryCharge = 100;
+  const vat = 50;
+  const totalPrice = totalProductPrice + deliveryCharge + vat;
+
   return (
     <section className="">
       <div className="my-10 grid grid-cols-1 md:grid-cols-3 justify-between items-start gap-10">
@@ -14,9 +25,9 @@ export default function ShowCart() {
             Shopping Cart
           </h1>
           <div className="my-5">
-            <span className="font-semibold">
+            <p className="font-semibold">
               How would you like to receive your order?
-            </span>
+            </p>
             <div className="grid grid-cols-2 justify-start items-center gap-x-5 my-5 max-w-screen-md">
               <button className="flex justify-center items-center gap-5 py-2 px-3 border-2 border-black rounded-md w-full">
                 <svg
@@ -51,7 +62,7 @@ export default function ShowCart() {
                     strokeLinejoin="round"
                   />
                 </svg>
-                <span className="font-semibold">Delivery To Home</span>
+                <p className="font-semibold">Delivery To Home</p>
               </button>
               <button className="flex justify-center items-center gap-5 py-2 px-3 border-2 border-[#71778E] text-[#71778E] rounded-md w-full">
                 <svg
@@ -95,7 +106,7 @@ export default function ShowCart() {
                   />
                 </svg>
 
-                <span className="font-semibold">Pickup from Outlet</span>
+                <p className="font-semibold">Pickup from Outlet</p>
               </button>
             </div>
             {cart?.length > 0 ? (
@@ -107,32 +118,50 @@ export default function ShowCart() {
             ) : (
               <div className="flex flex-col justify-center items-center my-10">
                 <Image className="w-40 h-40" src={EmptyCart} alt="Empty Cart" />
-                <span className="text-[#F16521] font-semibold font-serif text-lg">Your cart is empty</span>
+                <p className="text-[#F16521] font-semibold font-serif text-lg">
+                  Your cart is empty
+                </p>
               </div>
             )}
           </div>
         </div>
         <div className="bg-[#F8F9FD] p-5 rounded-md shadow-md">
-          <h4 className="text-lg font-semibold">Order summary</h4>
-          <div className="my-5">
-            <div className="flex justify-between items-center my-3">
-              <span>Products price</span>
-              <span className="font-semibold">৳1840</span>
+          <h3 className="text-lg font-semibold">Order summary</h3>
+          {cart?.length > 0 ? (
+            <div className="my-5">
+              <div className="flex justify-between items-center my-3">
+                <p>Products price</p>
+                <p className="font-semibold">
+                  ৳
+                  {totalProductPrice.toFixed(2)}
+                </p>
+              </div>
+              <div className="flex justify-between items-center my-3">
+                <p>Delivery</p>
+                <p className="font-semibold">৳100</p>
+              </div>
+              <div className="flex justify-between items-center my-3">
+                <p>VAT</p>
+                <p className="font-semibold">৳50</p>
+              </div>
+              <div className="border"></div>
+              <div className="flex justify-between items-center my-3">
+                <p>Total (Incl. VAT)</p>
+                {cart && (
+                  <p className="font-semibold">
+                    ৳
+                    {totalPrice}
+                  </p>
+                )}
+              </div>
             </div>
-            <div className="flex justify-between items-center my-3">
-              <span>Delivery</span>
-              <span className="font-semibold">৳40</span>
+          ) : (
+            <div className="flex justify-center items-center my-10">
+              <p className="text-[#F16521] font-semibold font-serif text-lg">
+                Your cart is empty
+              </p>
             </div>
-            <div className="flex justify-between items-center my-3">
-              <span>VAT</span>
-              <span className="font-semibold">৳40</span>
-            </div>
-            <div className="border"></div>
-            <div className="flex justify-between items-center my-3">
-              <span>Total (Incl. VAT)</span>
-              <span className="font-semibold">৳2240</span>
-            </div>
-          </div>
+          )}
           <div className="flex justify-start items-center gap-5 my-10">
             <svg
               width="20"
@@ -159,7 +188,7 @@ export default function ShowCart() {
                 </clipPath>
               </defs>
             </svg>
-            <span>Have a Coupon Code ?</span>
+            <p>Have a Coupon Code ?</p>
           </div>
           <div className="">
             <span>
@@ -168,10 +197,7 @@ export default function ShowCart() {
               can exchange these later in the process.
             </span>
             <div className="my-5 w-full">
-              <form
-                className="flex justify-between items-center gap-5 "
-                action=""
-              >
+              <form className="flex justify-between items-center gap-5 ">
                 <input
                   className="border-2 border-gray-400 bg-transparent rounded-md w-full py-1 px-3 focus:outline-0"
                   type="text"
@@ -187,9 +213,12 @@ export default function ShowCart() {
               </form>
             </div>
 
-            <button className="flex justify-center w-full py-3 text-white bg-[#F16521] rounded-md text-sm">
+            <Link
+              href="/checkout"
+              className="flex justify-center w-full py-3 text-white bg-[#F16521] rounded-md text-sm"
+            >
               Continue
-            </button>
+            </Link>
           </div>
         </div>
       </div>

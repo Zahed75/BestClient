@@ -16,27 +16,36 @@ import ExcelUploader from "../fileUpload/ExcelUploader";
 import { fetchApi } from "@/utils/FetchApi";
 import { useSelector } from "react-redux";
 
-export default function SingleProduct({ product, categoryName }) {
+export default function SingleProduct({ product, categoryName, wishlist }) {
   const [favorite, setFavorite] = useState(false);
   const [open, setOpen] = useState(false);
-  const [productIdForWishlist, setProductIdForWishlist] = useState("");
 
   const customer = useSelector((state) => state.customer);
-
   const customerId = customer.items.userId;
 
-  const addToWishlist = () => {
+  // Check if the product is in the wishlist
+  useEffect(() => {
+    if (wishlist.products)
+      wishlist.products.map((item) => {
+        if (item._id === product._id) {
+          setFavorite(true);
+        }
+      });
+  }, [product._id]);
+
+  const addToWishlist = async () => {
     const data = {
-      productId: productIdForWishlist,
+      productId: product?._id,
+      customerId: customerId,
     };
+    console.log(data);
     try {
-      const res = fetchApi(`/customer/addWishList/${customerId}`, "POST", data);
+      const res = await fetchApi(`/wishlist/addWishList`, "POST", data);
       if (res) {
-        setFavorite(true);
         console.log(res);
       }
     } catch (error) {
-      console.log();
+      console.error(error);
     }
   };
 
@@ -146,11 +155,11 @@ export default function SingleProduct({ product, categoryName }) {
 
               <div className="flex justify-start items-center border-b-2 pb-10">
                 <button
-                  onClick={() => {
-                    setProductIdForWishlist(product?._id);
-                    addToWishlist();
-                  }}
-                  className="text-sm text-[#9B9BB4] border px-5 py-2 rounded-full flex justify-center items-center uppercase"
+                  onClick={() => addToWishlist(product._id)}
+                  disabled={favorite}
+                  className={`text-sm text-[#9B9BB4] border px-5 py-2 rounded-full flex justify-center items-center uppercase ${
+                    favorite ? "cursor-not-allowed" : "cursor-pointer"
+                  }`}
                 >
                   <svg
                     width="20"

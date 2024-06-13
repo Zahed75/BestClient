@@ -83,16 +83,16 @@ export default function ShopCard({ product }) {
                 ) : (
                   <></>
                 )}
-                <span>
+                <p>
                   (৳
                   {product?.general?.regularPrice - product?.general?.salePrice}
                   )
-                </span>
+                </p>
               </div>
             </div>
           </div>
           <div className="mt-5 flex justify-start items-center">
-            <span
+            <p
               className={`${
                 product?.inventory?.stockStatus === "In Stock"
                   ? "text-[#70BE38]"
@@ -104,7 +104,7 @@ export default function ShopCard({ product }) {
               } rounded-md px-3 py-1`}
             >
               {product?.inventory?.stockStatus}
-            </span>
+            </p>
             <span className="text-[#F16521] text-xs font-semibold ml-3 px-3 py-1 border border-[#F16521] rounded-md">
               {product?.inventory?.inventoryStatus}
             </span>

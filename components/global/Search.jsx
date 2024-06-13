@@ -120,13 +120,13 @@ export default function Search() {
                     <div>
                       <h3 className="text-md">{product?.productName}</h3>
                       <div>
-                        <span className="text-slate-500">
+                        <p className="text-slate-500">
                           ৳ {product?.general?.salePrice}
-                        </span>
-                        <span className="ml-2 text-slate-500">
+                        </p>
+                        <p className="ml-2 text-slate-500">
                           {" "}
                           X {product?.quantity}
-                        </span>
+                        </p>
                       </div>
                     </div>
                     <button className="flex justify-center bg-[#F16521] w-5 h-5 rounded-full p-1">
@@ -142,12 +142,12 @@ export default function Search() {
             ) : (
               <div className="flex flex-col justify-center items-center mt-10">
                 <Image className="w-40 h-40" src={EmptyCart} alt="Empty Cart" />
-                <span>No products in the cart</span>
+                <p>No products in the cart</p>
               </div>
             )}
 
             <div className="p-3 my-3">
-              {cart.length > 0 ? (
+              {cart?.length > 0 ? (
                 <div className="flex justify-between items-center">
                   <h3 className="text-slate-500">Subtotal ({cart.length} items):</h3>
                   <h3 className="text-md font-semibold">
@@ -158,7 +158,9 @@ export default function Search() {
                   </h3>
                 </div>
               ) : (
-                <div></div>
+                <div>
+                  <p>No Product In Cart</p>
+                </div>
               )}
 
               <div className="flex flex-col justify-between items-center">

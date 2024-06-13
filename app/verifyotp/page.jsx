@@ -131,7 +131,7 @@ export default function VerifyOtp() {
             {error && <div className="text-red-500 text-sm">{error}</div>}
             {message && <div className="text-green-500 text-sm">{message}</div>}
             <div className="">
-              <span>
+              <div>
                 Did not receive code?
                 <span
                   className="font-semibold hover:opacity-75 pl-1 cursor-pointer"
@@ -144,7 +144,7 @@ export default function VerifyOtp() {
                     ({formatTime(countdown)})
                   </span>
                 )}
-              </span>
+              </div>
             </div>
             <button
               type="submit"

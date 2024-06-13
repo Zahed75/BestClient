@@ -6,7 +6,7 @@ import { fetchApi } from "@/utils/FetchApi";
 export default function Otp() {
   const [otpValues, setOtpValues] = useState(["", "", "", ""]);
   const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState("Something wrong");
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
@@ -131,7 +131,7 @@ export default function Otp() {
             {error && <div className="text-red-500 text-sm">{error}</div>}
             {message && <div className="text-green-500 text-sm">{message}</div>}
             <div className="">
-              <span>
+              <div>
                 Did not receive code?
                 <span
                   className="font-semibold hover:opacity-75 pl-1 cursor-pointer"
@@ -144,7 +144,7 @@ export default function Otp() {
                     ({formatTime(countdown)})
                   </span>
                 )}
-              </span>
+              </div>
             </div>
             <button
               type="submit"

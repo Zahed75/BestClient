@@ -89,7 +89,7 @@ export default function NavigationBar() {
                 onMouseEnter={() => setIsElectronicsSubMenuOpen(true)}
                 onMouseLeave={() => setIsElectronicsSubMenuOpen(false)}
               >
-                <span className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer">
+                <div className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer">
                   <span>Electronics</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -104,7 +104,7 @@ export default function NavigationBar() {
                       d="M6.293 7.707a1 1 0 0 1 1.414 0L10 10.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z"
                     />
                   </svg>
-                </span>
+                </div>
 
                 {isElectronicsSubMenuOpen && (
                   <ul className="absolute left-full top-0 mt-0 w-auto min-w-48 bg-white rounded-lg border border-gray-200 shadow-xl">
@@ -116,7 +116,7 @@ export default function NavigationBar() {
                       onMouseLeave={() => setIsSmartSubMenuOpen(false)}
                       className="py-2 px-3 cursor-pointer relative"
                     >
-                      <span className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer">
+                      <div className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer">
                         <span>Smartphone</span>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -131,7 +131,7 @@ export default function NavigationBar() {
                             d="M6.293 7.707a1 1 0 0 1 1.414 0L10 10.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z"
                           />
                         </svg>
-                      </span>
+                      </div>
 
                       {isSmartSubMenuOpen && (
                         <ul
@@ -197,7 +197,7 @@ export default function NavigationBar() {
                     onMouseEnter={() => setIsElectronicsSubMenuOpen(true)}
                     onMouseLeave={() => setIsElectronicsSubMenuOpen(false)}
                   >
-                    <span className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer">
+                    <div className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer">
                       <span>Electronics</span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -212,7 +212,7 @@ export default function NavigationBar() {
                           d="M6.293 7.707a1 1 0 0 1 1.414 0L10 10.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z"
                         />
                       </svg>
-                    </span>
+                    </div>
 
                     {isElectronicsSubMenuOpen && (
                       <ul className="absolute left-full top-0 mt-0 w-auto min-w-48 bg-white rounded-lg border border-gray-200 shadow-xl">
@@ -224,7 +224,7 @@ export default function NavigationBar() {
                           onMouseLeave={() => setIsSmartSubMenuOpen(false)}
                           className="py-2 px-3 cursor-pointer relative"
                         >
-                          <span className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer">
+                          <div className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer">
                             <span>Smartphone</span>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -239,7 +239,7 @@ export default function NavigationBar() {
                                 d="M6.293 7.707a1 1 0 0 1 1.414 0L10 10.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z"
                               />
                             </svg>
-                          </span>
+                          </div>
 
                           {isSmartSubMenuOpen && (
                             <ul

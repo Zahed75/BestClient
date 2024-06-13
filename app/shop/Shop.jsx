@@ -129,7 +129,7 @@ export default function Shop({ products }) {
                     className="flex justify-between items-center gap-3 py-1"
                   >
                     {brand.name}
-                    <span>({brand.count})</span>
+                    <p>({brand.count})</p>
                   </button>
                 ))}
               </div>
@@ -144,12 +144,7 @@ export default function Shop({ products }) {
                     dynamicGrid == 1 ? "text-gray-700" : ""
                   } duration-700`}
                 />
-                {/* <BiSolidGridAlt
-                  onClick={() => handleDynamicGrid({ value: 2 })}
-                  className={`text-2xl text-gray-400 hover:text-gray-700 ${
-                    dynamicGrid == 2 ? "text-gray-700" : ""
-                  } duration-700`}
-                /> */}
+
                 <RiGridFill
                   onClick={() => handleDynamicGrid({ value: 3 })}
                   className={`text-2xl text-gray-400 hover:text-gray-700 ${

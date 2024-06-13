@@ -1,4 +1,4 @@
-import { updateQuantity } from "@/redux/slice/cartSlice";
+import { removeFromCart, updateQuantity } from "@/redux/slice/cartSlice";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
 
@@ -7,9 +7,7 @@ export default function CartProduct({ product }) {
   return (
     <section>
       {product && (
-        <div className={`flex justify-start items-start gap-5
-        ${product?.quantity >= 1 ? "border-b pb-5" : ""}
-         `}>
+        <div className={`flex justify-start items-start gap-5`}>
           <div className="w-1=[150px] h-[150px] ">
             <Image
               src={product?.productImage}
@@ -23,9 +21,9 @@ export default function CartProduct({ product }) {
               <h3 className="text-lg font-semibold md:min-w-[500px]">
                 {product?.productName}
               </h3>
-              <h3 className="text-lg font-semibold self-end ">
+              <h4 className="text-lg font-semibold self-end ">
                 ৳{product?.general?.salePrice}
-              </h3>
+              </h4>
             </div>
             <div className="my-3">
               Previous Price : <del>৳{product?.general?.regularPrice}</del>
@@ -58,6 +56,7 @@ export default function CartProduct({ product }) {
                   height="24"
                   viewBox="0 0 24 24"
                   fill="none"
+                  onClick={() => dispatch(removeFromCart(product?._id))}
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path

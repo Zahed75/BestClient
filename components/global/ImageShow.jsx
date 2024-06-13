@@ -4,9 +4,8 @@ import React, { useEffect, useState } from "react";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addToCart,
-} from "@/redux/slice/cartSlice";
+import { addToCart } from "@/redux/slice/cartSlice";
+import Link from "next/link";
 
 export default function ImageShow({ productImage, productGallery, product }) {
   const combinedGallery = [productImage, ...productGallery];
@@ -76,9 +75,12 @@ export default function ImageShow({ productImage, productGallery, product }) {
           >
             Add to Cart
           </button>
-          <button className="flex justify-center w-full py-2 text-white bg-[#F16521] rounded-md text-sm">
+          <Link
+            href="/checkout"
+            className="flex justify-center w-full py-2 text-white bg-[#F16521] rounded-md text-sm"
+          >
             Buy Now
-          </button>
+          </Link>
         </div>
       </div>
     </section>
