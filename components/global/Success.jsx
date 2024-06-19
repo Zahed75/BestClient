@@ -2,6 +2,7 @@ import checkMark from "@/public/images/checkmark.png";
 import Image from "next/image";
 import CardProduct from "../productCard/CartProduct";
 import CartProductSuccess from "../productCard/CartProductSuccess";
+import Link from "next/link";
 export default function Success() {
   return (
     <section className="my-10">
@@ -13,14 +14,11 @@ export default function Success() {
           Order Placed Successfully!
         </h2>
 
-        <button
-          type="submit"
-          className="flex justify-center mx-auto px-10 py-3 text-white bg-[#F16521] rounded-md text-sm"
-        >
-          Continue Shopping
+        <button className="flex justify-center mx-auto px-10 py-3 text-white bg-[#F16521] rounded-md text-sm">
+          <Link href="/shop"> Continue Shopping</Link>
         </button>
       </div>
-      <div className="mt-36 grid grid-cols-1 md:grid-cols-3 justify-between items-start gap-10">
+      {/* <div className="mt-36 grid grid-cols-1 md:grid-cols-3 justify-between items-start gap-10">
         <div className="bg-[#F8F9FD] p-5 rounded-md shadow-md">
           <h4 className="text-lg font-semibold">Order summary</h4>
           <div className="my-5">
@@ -58,7 +56,7 @@ export default function Success() {
           <div className="border my-5"></div>
           <CartProductSuccess />
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }

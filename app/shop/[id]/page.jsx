@@ -20,15 +20,13 @@ export default async function Page({ params }) {
     "GET"
   );
   const categoryName = await category?.category?.categoryName;
-  const data = await fetchApi(`/wishlist/getWishlist`, "GET");
-  const wishlist = await data?.wishlist;
+
 
   return (
     <>
       <SingleProduct
         product={product}
         categoryName={categoryName}
-        wishlist={wishlist}
       />
     </>
   );

@@ -13,41 +13,32 @@ import { useEffect, useState } from "react";
 import ProductTabs from "./ProductTabs";
 import CompareProduct from "./CompareProduct";
 import ExcelUploader from "../fileUpload/ExcelUploader";
-import { fetchApi } from "@/utils/FetchApi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addToWishlist } from "@/redux/slice/wishListSlice";
 
-export default function SingleProduct({ product, categoryName, wishlist }) {
+export default function SingleProduct({ product, categoryName }) {
   const [favorite, setFavorite] = useState(false);
   const [open, setOpen] = useState(false);
 
+  const dispatch = useDispatch();
+
   const customer = useSelector((state) => state.customer);
   const customerId = customer.items.userId;
+  const wishlist = useSelector((state) => state.wishlist.items);
+  const favoriteProduct = wishlist.find(
+    (item) => item._id === product?._id
+  );
 
-  // Check if the product is in the wishlist
   useEffect(() => {
-    if (wishlist.products)
-      wishlist.products.map((item) => {
-        if (item._id === product._id) {
-          setFavorite(true);
-        }
-      });
-  }, [product._id]);
-
-  const addToWishlist = async () => {
-    const data = {
-      productId: product?._id,
-      customerId: customerId,
-    };
-    console.log(data);
-    try {
-      const res = await fetchApi(`/wishlist/addWishList`, "POST", data);
-      if (res) {
-        console.log(res);
-      }
-    } catch (error) {
-      console.error(error);
+    if (favoriteProduct) {
+      setFavorite(true);
+    } else {
+      setFavorite(false);
     }
-  };
+  }, [favoriteProduct]);
+
+
+
 
   const handleOpen = () => setOpen(true);
 
@@ -155,7 +146,7 @@ export default function SingleProduct({ product, categoryName, wishlist }) {
 
               <div className="flex justify-start items-center border-b-2 pb-10">
                 <button
-                  onClick={() => addToWishlist(product._id)}
+                  onClick={() => {dispatch(addToWishlist(product))}}
                   disabled={favorite}
                   className={`text-sm text-[#9B9BB4] border px-5 py-2 rounded-full flex justify-center items-center uppercase ${
                     favorite ? "cursor-not-allowed" : "cursor-pointer"
@@ -165,7 +156,7 @@ export default function SingleProduct({ product, categoryName, wishlist }) {
                     width="20"
                     height="20"
                     viewBox="0 0 14 15"
-                    fill={favorite ? "#71778E" : "none"}
+                    fill= {favorite ? "#868B9F" : "none"}
                     className="mr-3"
                     xmlns="http://www.w3.org/2000/svg"
                   >
