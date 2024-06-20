@@ -52,8 +52,8 @@ export default function CheckOutCart() {
     const data = {
       customer: userId,
       orderType: "Delivery",
-      // firstName: formData.get("firstName"),
-      // lastName: formData.get("lastName"),
+      firstName: formData.get("firstName"),
+      lastName: formData.get("lastName"),
       deliveryAddress: formData.get("fullAddress"),
       district: formData.get("district"),
       phoneNumber: formData.get("phone"),
