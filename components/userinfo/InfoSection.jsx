@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import CartProductSuccess from "../productCard/CartProductSuccess";
 
 export default function InfoSection() {
   const [active, setActive] = useState("personal");
@@ -264,9 +265,7 @@ export default function InfoSection() {
             </div>
 
             <div className="my-10">
-              <h5 className="text-md font-bold mb-3 mt-10">
-                Change Password
-              </h5>
+              <h5 className="text-md font-bold mb-3 mt-10">Change Password</h5>
               <div className="grid grid-cols-1 md:grid-cols-4 justify-start items-center">
                 <h5 className="text-gray-600 text-sm">Current Password</h5>
                 <div className="flex">
@@ -306,6 +305,44 @@ export default function InfoSection() {
                   Send Password Reset Link
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className={`grid grid-cols-1 justify-between items-start gap-5 w-full my-10 
+        ${active === "orders" ? "block" : "hidden"} 
+        `}
+        >
+          <div className="w-full p-5 shadow-md rounded-md border ">
+            <div className="grid grid-cols-1 md:grid-cols-5 justify-between items-center">
+              <div>
+                <span className="text-slate-400">Order</span>
+                <p className="text-[#F16521]">#F16521</p>
+              </div>
+              <div>
+                <span className="text-slate-400">Date</span>
+                <p className=""> 5 May 2023</p>
+              </div>
+              <div>
+                <span className="text-slate-400">Status</span>
+                <p className="">Delivered</p>
+              </div>
+              <div>
+                <span className="text-slate-400">Total</span>
+                <p className="">৳ 86500 for 2 item</p>
+              </div>
+              <div>
+                <button
+                  type="button"
+                  className="bg-[#F16521] text-white px-3 py-1 rounded-md"
+                >
+                  View
+                </button>
+              </div>
+            </div>
+            <div className="my-10">
+              <CartProductSuccess />
+              <CartProductSuccess />
             </div>
           </div>
         </div>

@@ -4,8 +4,13 @@ import Image from "next/image";
 export default function CartProductSuccess() {
   return (
     <div className="flex justify-start items-start gap-5">
-      <div className="w-1=[150px] h-[150px] ">
-        <Image src={freeze} alt="product" />
+      <div className="w-[150px] h-[150px] ">
+        <Image 
+        src={freeze}
+        width={100}
+        height={100}
+
+         alt="product" />
       </div>
       <div className="">
         <div className="flex justify-between items-start gap-x-10">
