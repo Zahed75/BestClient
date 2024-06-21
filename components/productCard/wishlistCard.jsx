@@ -12,7 +12,6 @@ export default function WishlistCard({ product }) {
     product?.productImage || Dynamo
   );
 
-
   const cart = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
 
@@ -40,6 +39,21 @@ export default function WishlistCard({ product }) {
         ) : (
           <></>
         )}
+        <div className="absolute top-0 right-0 p-2 rounded-full shadow-md">
+          <svg
+            width="22"
+            height="21"
+            viewBox="0 0 18 17"
+            fill="none"
+            className=""
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15.0789 1.18277C11.5408 -0.714809 9.00042 2.08244 9.00042 2.08244C9.00042 2.08244 6.45986 -0.714818 2.92177 1.18276C-1.36355 3.4811 -1.67127 12.4815 9.00042 16.4773C19.6721 12.4815 19.3642 3.48111 15.0789 1.18277Z"
+              fill="#F26522"
+            />
+          </svg>
+        </div>
         <Link href={`/shop/${product?._id}`}>
           <div className="object-cover min-h-[200px] flex justify-center overflow-hidden">
             <Image
