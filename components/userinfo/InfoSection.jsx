@@ -1,10 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
 import CartProductSuccess from "../productCard/CartProductSuccess";
+import WishlistCard from "../productCard/wishlistCard";
+import { useSelector } from "react-redux";
 
 export default function InfoSection() {
   const [active, setActive] = useState("personal");
   const [districts, setDistricts] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     const fetchDistricts = async () => {
@@ -19,10 +22,13 @@ export default function InfoSection() {
 
     fetchDistricts();
   }, []);
+
+  const products = useSelector((state) => state.wishlist.items);
+
   return (
     <section className="bg-[#F4F4F4]">
       <div className="bg-white shadow-md p-5 my-10 rounded-md">
-        <div className="flex justify-start items-center uppercase text-slate-500">
+        <div className="flex justify-start items-center uppercase text-slate-500 text-xs">
           <div
             onClick={() => setActive("personal")}
             className={`cursor-pointer inline-block px-5 py-2 rounded-md duration-700 ${
@@ -149,7 +155,7 @@ export default function InfoSection() {
                     className="border border-gray-300 rounded-md p-2 focus:outline-none "
                   />
                 </div>
-                <div className="flex flex-col space-y-1 w-full">
+                <div className="flex flex-col md:col-span-2 lg:col-span-2 space-y-1 w-full">
                   <label
                     htmlFor="outletLocation"
                     className="text-sm font-semibold text-gray-600"
@@ -157,9 +163,9 @@ export default function InfoSection() {
                     Email
                   </label>
                   <input
-                    type="text"
+                    type="email"
                     id="email"
-                    defaultValue={"managerbanani@best.com.bd"}
+                    placeholder="example@gmail.com"
                     className="border border-gray-300 rounded-md p-2 focus:outline-none "
                   />
                 </div>
@@ -334,6 +340,7 @@ export default function InfoSection() {
               <div>
                 <button
                   type="button"
+                  onClick={() => setOpenModal(true)}
                   className="bg-[#F16521] text-white px-3 py-1 rounded-md"
                 >
                   View
@@ -344,6 +351,103 @@ export default function InfoSection() {
               <CartProductSuccess />
               <CartProductSuccess />
             </div>
+          </div>
+        </div>
+        <div
+          className={`grid grid-cols-1 justify-between items-start gap-5 w-full my-10
+        ${active === "wishlist" ? "block" : "hidden"}
+        `}
+        >
+          <div className="grid grid-cols-2 md:grid-cols-4 justify-between items-center">
+            {
+              products?.map((product, index) => (
+                <WishlistCard key={index} product={product} />
+              ))
+            }
+          </div>
+        </div>
+      </div>
+      {/* Modal */}
+      <div
+        className={`fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50 ${
+          openModal ? "block" : "hidden"
+        }`}
+      >
+        <div className="bg-white p-5 rounded-md relative w-11/12 sm:w-3/4 md:w-1/2 lg:w-2/3">
+          <div className="flex justify-between items-center">
+            <button
+              onClick={() => setOpenModal(false)}
+              className="text-xl font-bold text-slate-500 flex flex-col items-center justify-center w-10 h-10 rounded-full bg-gray-200 hover:bg-gray-300 duration-700 ml-auto absolute right-1 top-1"
+            >
+              X
+            </button>
+          </div>
+          <div className="text-md my-5">
+            Order <span className="text-[#F26522]">#8016</span> was placed on
+            March 9, 2024 and is currently{" "}
+            <span className="text-[#F26522]">Cancelled</span>.
+          </div>
+          <h1 className="font-semibold my-5">Order details</h1>
+          <div>
+            <div className="overflow-x-auto">
+              <table className="w-full p-6 text-xs sm:text-sm md:text-base text-left whitespace-nowrap">
+                <thead>
+                  <tr className="dark:bg-gray-300">
+                    <th className="p-3">Product</th>
+                    <th className="p-3">Total</th>
+                  </tr>
+                </thead>
+                <tbody className="border-b dark:bg-gray-50 dark:border-gray-300">
+                  <tr>
+                    <td className="px-3 py-2 flex justify-start items-center">
+                      <span className="mr-1">x1</span>
+                      <p className="text-[#F26522]">
+                        Conion BEW-DC24KRNV 2 Ton Inverter (DynaCool) Air
+                        Conditioner
+                      </p>
+                    </td>
+                    <td className="px-3 py-2">
+                      <p>৳ 86,500</p>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody className="border-b dark:bg-gray-50 dark:border-gray-300">
+                  <tr>
+                    <td className="px-3 py-2 flex justify-start items-center">
+                      Subtotal
+                    </td>
+                    <td className="px-3 py-2">
+                      <p>৳ 86,500</p>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody className="border-b dark:bg-gray-50 dark:border-gray-300">
+                  <tr>
+                    <td className="px-3 py-2 flex justify-start items-center">
+                      Payment Method
+                    </td>
+                    <td className="px-3 py-2">
+                      <p>Cash on delivery</p>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody className="border-b dark:bg-gray-50 dark:border-gray-300">
+                  <tr>
+                    <td className="px-3 py-2 flex justify-start items-center">
+                      Total
+                    </td>
+                    <td className="px-3 py-2">৳ 86,500</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div>
+            <h1 className="font-semibold my-5">Billing Details</h1>
+            <p>Md Kasem Mia</p>
+            <p>mdkasem@gmail.com</p>
+            <p>016548413</p>
+            <p>baridhara, 5th floor-501 Dhaka, 1209 Bangladesh</p>
           </div>
         </div>
       </div>
