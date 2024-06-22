@@ -1,4 +1,5 @@
 import SingleProduct from "@/components/SingleProduct/SingleProduct";
+import Skeleton from "@/components/global/Skeleton";
 import { fetchApi } from "@/utils/FetchApi";
 
 export async function generateMetadata({ params, searchParams }) {
@@ -21,13 +22,13 @@ export default async function Page({ params }) {
   );
   const categoryName = await category?.category?.categoryName;
 
-
   return (
     <>
-      <SingleProduct
-        product={product}
-        categoryName={categoryName}
-      />
+      {product ? (
+        <SingleProduct product={product} categoryName={categoryName} />
+      ) : (
+        <Skeleton />
+      )}
     </>
   );
 }

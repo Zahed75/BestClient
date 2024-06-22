@@ -3,9 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const getInitialState = () => {
   if (typeof window !== "undefined") {
     const storedWishlist = localStorage.getItem("wishlistItems");
-    return storedWishlist ? JSON.parse(storedWishlist) : {};
+    return storedWishlist ? JSON.parse(storedWishlist) : [];
   }
-  return {};
+  return [];
 };
 
 const initialState = {
@@ -25,10 +25,8 @@ const wishlistSlice = createSlice({
       const existingProduct = state.items.find(
         (item) => item._id === product._id
       );
-      if (existingProduct) {
-        existingProduct.quantity += 1;
-      } else {
-        state.items.push({ ...product, quantity: 1 });
+      if (!existingProduct) {
+        state.items.push({ ...product });
       }
       saveToLocalStorage(state.items);
     },
@@ -40,7 +38,6 @@ const wishlistSlice = createSlice({
   },
 });
 
-export const { addToWishlist, removeFromWishlist } =
-wishlistSlice.actions;
+export const { addToWishlist, removeFromWishlist } = wishlistSlice.actions;
 
 export default wishlistSlice.reducer;

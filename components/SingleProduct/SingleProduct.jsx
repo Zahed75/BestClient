@@ -14,7 +14,7 @@ import ProductTabs from "./ProductTabs";
 import CompareProduct from "./CompareProduct";
 import ExcelUploader from "../fileUpload/ExcelUploader";
 import { useDispatch, useSelector } from "react-redux";
-import { addToWishlist } from "@/redux/slice/wishListSlice";
+import { addToWishlist } from "@/redux/slice/wishlistSlice";
 
 export default function SingleProduct({ product, categoryName }) {
   const [favorite, setFavorite] = useState(false);
@@ -25,9 +25,7 @@ export default function SingleProduct({ product, categoryName }) {
   const customer = useSelector((state) => state.customer);
   const customerId = customer.items.userId;
   const wishlist = useSelector((state) => state.wishlist.items);
-  const favoriteProduct = wishlist.find(
-    (item) => item._id === product?._id
-  );
+  const favoriteProduct = wishlist.find((item) => item._id === product?._id);
 
   useEffect(() => {
     if (favoriteProduct) {
@@ -36,9 +34,6 @@ export default function SingleProduct({ product, categoryName }) {
       setFavorite(false);
     }
   }, [favoriteProduct]);
-
-
-
 
   const handleOpen = () => setOpen(true);
 
@@ -146,7 +141,9 @@ export default function SingleProduct({ product, categoryName }) {
 
               <div className="flex justify-start items-center border-b-2 pb-10">
                 <button
-                  onClick={() => {dispatch(addToWishlist(product))}}
+                  onClick={() => {
+                    dispatch(addToWishlist(product));
+                  }}
                   disabled={favorite}
                   className={`text-sm text-[#9B9BB4] border px-5 py-2 rounded-full flex justify-center items-center uppercase ${
                     favorite ? "cursor-not-allowed" : "cursor-pointer"
@@ -156,7 +153,7 @@ export default function SingleProduct({ product, categoryName }) {
                     width="20"
                     height="20"
                     viewBox="0 0 14 15"
-                    fill= {favorite ? "#868B9F" : "none"}
+                    fill={favorite ? "#868B9F" : "none"}
                     className="mr-3"
                     xmlns="http://www.w3.org/2000/svg"
                   >
