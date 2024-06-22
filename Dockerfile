@@ -1,30 +1,38 @@
-# Use the official Node.js image as the base image
-FROM node:18
+# Install dependencies only when needed
+FROM node:16-alpine
 
-# Set the working directory in the container
-WORKDIR /app
+RUN mkdir -p /usr/app/
+WORKDIR /usr/app
 
-# Copy package.json and package-lock.json to the container's working directory
-COPY package*.json ./
+COPY ./ ./
 
-# Install the application's dependencies
+
 RUN npm install --legacy-peer-deps
 
-# Copy the Next.js application code to the container's working directory
-COPY . .
-
-# Set environment variables
 ARG NODE_ENV
 ARG NEXT_PUBLIC_API_ENDPOINT
+
 
 ENV NODE_ENV=${NODE_ENV}
 ENV NEXT_PUBLIC_API_ENDPOINT=${NEXT_PUBLIC_API_ENDPOINT}
 
-# Build the Next.js application
+
 RUN npm run build
 
-# Expose the port on which the Next.js application is listening
-EXPOSE 3005
+EXPOSE 3006
 
-# Command to run your Next.js application in production mode
 CMD ["npm", "start"]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
