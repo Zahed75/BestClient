@@ -13,10 +13,12 @@ export default function CheckOutCart() {
 
   const router = useRouter();
 
-  const totalProductPrice = cart?.reduce(
-    (acc, item) => acc + item.general.salePrice * item.quantity,
-    0
-  );
+  const totalProductPrice = Array.isArray(cart)
+    ? cart.reduce(
+        (acc, item) => acc + item.general.salePrice * item.quantity,
+        0
+      )
+    : 0;
   const deliveryCharge = 100;
   const vat = 50;
   const totalPrice = totalProductPrice + deliveryCharge + vat;
@@ -37,11 +39,13 @@ export default function CheckOutCart() {
   }, []);
 
   useEffect(() => {
-    const updatedItems = cart.map((item) => ({
-      _id: item._id,
-      quantity: item.quantity,
-    }));
-    setProductItems(updatedItems);
+    if (Array.isArray(cart)) {
+      const updatedItems = cart?.map((item) => ({
+        _id: item._id,
+        quantity: item.quantity,
+      }));
+      setProductItems(updatedItems);
+    }
   }, []);
 
   const handlePlaceOrder = async (e) => {
@@ -77,7 +81,6 @@ export default function CheckOutCart() {
       console.error("Order creation error:", error);
     }
   };
-
   return (
     <section className="">
       <form
@@ -165,18 +168,19 @@ export default function CheckOutCart() {
         <div className="bg-[#F8F9FD] p-5 rounded-md shadow-md">
           <h4 className="text-lg font-semibold">Products</h4>
           <div className="my-5">
-            {cart.map((item, index) => (
-              <div
-                key={index}
-                className="flex justify-between items-start gap-5 my-3"
-              >
-                <p className="font-semibold">{item.quantity} x</p>
-                <p className="font-semibold max-w-52">{item.productName}</p>
-                <p className="font-semibold">
-                  ৳{item.general.salePrice * item.quantity}
-                </p>
-              </div>
-            ))}
+            {Array.isArray(cart) &&
+              cart.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex justify-between items-start gap-5 my-3"
+                >
+                  <p className="font-semibold">{item.quantity} x</p>
+                  <p className="font-semibold max-w-52">{item.productName}</p>
+                  <p className="font-semibold">
+                    ৳{item.general.salePrice * item.quantity}
+                  </p>
+                </div>
+              ))}
           </div>
           <h4 className="text-lg font-semibold">Payment Method</h4>
           <div className="my-5">

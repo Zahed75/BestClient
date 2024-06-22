@@ -9,10 +9,9 @@ export default function ShowCart() {
   const cart = useSelector((state) => state.cart.items) || [];
 
 
-  const totalProductPrice = cart?.reduce(
-    (acc, item) => acc + item.general.salePrice * item.quantity,
-    0
-  );
+  const totalProductPrice = Array.isArray(cart)
+  ? cart.reduce((acc, item) => acc + item.general.salePrice * item.quantity, 0)
+  : 0;
   const deliveryCharge = 100;
   const vat = 50;
   const totalPrice = totalProductPrice + deliveryCharge + vat;
