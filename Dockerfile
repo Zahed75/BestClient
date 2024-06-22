@@ -25,7 +25,7 @@ ENV NEXT_PUBLIC_API_ENDPOINT=${NEXT_PUBLIC_API_ENDPOINT}
 RUN npm run build
 
 # Expose the port on which the Next.js application is listening
-EXPOSE 3005
+EXPOSE 7000
 
 # Command to run your Next.js application in production mode
 CMD ["npm", "start"]
