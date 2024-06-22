@@ -13,19 +13,18 @@ RUN npm install --legacy-peer-deps
 # Copy the Next.js application code to the container's working directory
 COPY . .
 
+# Set environment variables
 ARG NODE_ENV
 ARG NEXT_PUBLIC_API_ENDPOINT
 
 ENV NODE_ENV=${NODE_ENV}
 ENV NEXT_PUBLIC_API_ENDPOINT=${NEXT_PUBLIC_API_ENDPOINT}
 
-
-
 # Build the Next.js application
 RUN npm run build
 
 # Expose the port on which the Next.js application is listening
-EXPOSE 7000
+EXPOSE 3005
 
 # Command to run your Next.js application in production mode
 CMD ["npm", "start"]
