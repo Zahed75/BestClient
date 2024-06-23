@@ -1,5 +1,6 @@
 "use client";
 import { fetchApi } from "@/utils/FetchApi";
+import { getIPAddress } from "@/utils/getIP";
 import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -7,6 +8,7 @@ import { useSelector } from "react-redux";
 export default function CheckOutCart() {
   const [districts, setDistricts] = useState([]);
   const [productItems, setProductItems] = useState([]);
+  const [IP, setIP] = useState("");
 
   const cart = useSelector((state) => state.cart.items) || [];
   const customer = useSelector((state) => state.customer) || {};
@@ -49,6 +51,19 @@ export default function CheckOutCart() {
     }
   }, []);
 
+  useEffect(() => {
+    const fetchIp = async () => {
+      try {
+        const ip = await getIPAddress();
+        setIP(ip);
+      } catch (error) {
+        console.log("Failed to fetch IP address.");
+      }
+    };
+
+    fetchIp();
+  }, []);
+
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -63,8 +78,7 @@ export default function CheckOutCart() {
       customer: userId,
       email: email,
       orderType: "Delivery",
-      customerIp: " ",
-
+      customerIp: IP,
       firstName: formData.get("firstName"),
       lastName: formData.get("lastName"),
       deliveryAddress: formData.get("fullAddress"),
