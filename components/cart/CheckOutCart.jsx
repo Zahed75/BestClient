@@ -23,6 +23,7 @@ export default function CheckOutCart() {
   const vat = 50;
   const totalPrice = totalProductPrice + deliveryCharge + vat;
   const userId = customer?.items?.userId;
+  const email = customer?.items?.email;
 
   useEffect(() => {
     const fetchDistricts = async () => {
@@ -53,9 +54,16 @@ export default function CheckOutCart() {
     const form = e.target;
     const formData = new FormData(form);
 
+    if (!userId) {
+      router.push("/signin");
+      return;
+    }
+
     const data = {
       customer: userId,
+      email: email,
       orderType: "Delivery",
+      customerIp: " ",
       firstName: formData.get("firstName"),
       lastName: formData.get("lastName"),
       deliveryAddress: formData.get("fullAddress"),
@@ -63,11 +71,13 @@ export default function CheckOutCart() {
       phoneNumber: formData.get("phone"),
       paymentMethod: formData.get("payment"),
       products: productItems,
-      totalProductPrice,
+      totalPrice: totalProductPrice,
       deliveryCharge: deliveryCharge,
       vatRate: vat,
       couponId: "",
     };
+
+    console.log("Order Data:", data);
 
     try {
       const response = await fetchApi("/order/orderCreate", "POST", data);
