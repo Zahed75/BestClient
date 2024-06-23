@@ -64,6 +64,7 @@ export default function CheckOutCart() {
       email: email,
       orderType: "Delivery",
       customerIp: " ",
+
       firstName: formData.get("firstName"),
       lastName: formData.get("lastName"),
       deliveryAddress: formData.get("fullAddress"),
