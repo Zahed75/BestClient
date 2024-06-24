@@ -33,11 +33,11 @@ export default async function Page({ params }) {
   );
 }
 
-export async function generateStaticParams() {
-  const res = await fetchApi(`/product/getAllProducts`, "GET");
-  const products = res?.products;
+// export async function generateStaticParams() {
+//   const res = await fetchApi(`/product/getAllProducts`, "GET");
+//   const products = res?.products;
 
-  return products.map((product) => ({
-    id: product?._id.toString(),
-  }));
-}
+//   return products.map((product) => ({
+//     id: product?._id.toString(),
+//   }));
+// }
