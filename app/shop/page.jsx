@@ -8,6 +8,7 @@ export default async function Page() {
   return (
     <main>
       <Shop products={products} />
+      {/* <Shop /> */}
     </main>
   );
 }

@@ -6,7 +6,10 @@ import { RiGridFill } from "react-icons/ri";
 import { useState } from "react";
 import ShopCard from "@/components/productCard/shopCard";
 
-export default function Shop({ products }) {
+export default function Shop() {
+  // const products =  fetchApi("/product/getAllProducts", "GET");
+  // console.log(products);
+
   const tagValues = ["Home", "Shop"];
   const brands = [
     {
