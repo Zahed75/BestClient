@@ -19,9 +19,7 @@ export const fetchApi = async (path, method, data = null) => {
     switch (method) {
       case "GET":
         response = await axios.get(url, {
-          headers: {
-            "Cache-Control": "no-store",
-          },
+          cache: "no-store",
         });
         break;
       case "POST":
