@@ -1,6 +1,7 @@
 "use client";
 import { fetchApi } from "@/utils/FetchApi";
 import { getIPAddress } from "@/utils/getIP";
+import { ResponseCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -96,11 +97,11 @@ export default function CheckOutCart() {
 
     try {
       const response = await fetchApi("/order/orderCreate", "POST", data);
-      console.log("Order Response:", response.createdOrder.createdOrder);
-      if (response.createdOrder.createdOrder) {
+      console.log("Order Response:", ResponseCookies);
+      if (response) {
         router.push("/success");
       } else {
-        console.error("Order creation error:", response.createdOrder.error);
+        console.error("Order creation error:", response);
       }
     } catch (error) {
       console.error("Order creation error:", error);

@@ -8,9 +8,6 @@ import ShopCard from "@/components/productCard/shopCard";
 import Skeleton from "@/components/global/Skeleton";
 
 export default function Shop({ products }) {
-  // const products =  fetchApi("/product/getAllProducts", "GET");
-  console.log("ssr product: ", products);
-
   const tagValues = ["Home", "Shop"];
   const brands = [
     {

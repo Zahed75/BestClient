@@ -185,7 +185,7 @@ export default function InfoSection() {
                   <input
                     type="text"
                     id="firstName"
-                    defaultValue={"Md Shaiful"}
+                    name="firstName"
                     className="border border-gray-300 rounded-md p-2 focus:outline-none "
                   />
                 </div>
@@ -199,7 +199,7 @@ export default function InfoSection() {
                   <input
                     type="text"
                     id="lastName"
-                    defaultValue={"Islam"}
+                    name="lastName"
                     className="border border-gray-300 rounded-md p-2 focus:outline-none "
                   />
                 </div>
@@ -226,6 +226,20 @@ export default function InfoSection() {
                 </div>
                 <div className="flex flex-col space-y-1 w-full">
                   <label
+                    htmlFor="zipCode"
+                    className="text-sm font-semibold text-gray-600"
+                  >
+                    PostalCode / Zip
+                  </label>
+                  <input
+                    type="text"
+                    id="zipCode"
+                    name="zipCode"
+                    className="border border-gray-300 rounded-md p-2 focus:outline-none "
+                  />
+                </div>
+                <div className="flex flex-col space-y-1 w-full">
+                  <label
                     htmlFor="fullAddress"
                     className="text-sm font-semibold text-gray-600"
                   >
@@ -234,11 +248,11 @@ export default function InfoSection() {
                   <input
                     type="text"
                     id="fullAddress"
+                    name="fullAddress"
                     placeholder="House No, Road No, Area"
                     className="border border-gray-300 rounded-md p-2 focus:outline-none "
                   />
                 </div>
-
                 <div className="flex flex-col space-y-1 w-full">
                   <label
                     htmlFor="outletName"
@@ -249,7 +263,7 @@ export default function InfoSection() {
                   <input
                     type="text"
                     id="phoneNumber"
-                    defaultValue={"0165428413"}
+                    name="phoneNumber"
                     className="border border-gray-300 rounded-md p-2 focus:outline-none "
                   />
                 </div>
@@ -261,9 +275,9 @@ export default function InfoSection() {
                     Email
                   </label>
                   <input
-                    type="text"
+                    type="email"
                     id="email"
-                    defaultValue={"managerbanani@best.com.bd"}
+                    name="email"
                     className="border border-gray-300 rounded-md p-2 focus:outline-none "
                   />
                 </div>
@@ -359,11 +373,9 @@ export default function InfoSection() {
         `}
         >
           <div className="grid grid-cols-2 md:grid-cols-4 justify-between items-center">
-            {
-              products?.map((product, index) => (
-                <WishlistCard key={index} product={product} />
-              ))
-            }
+            {products?.map((product, index) => (
+              <WishlistCard key={index} product={product} />
+            ))}
           </div>
         </div>
       </div>
