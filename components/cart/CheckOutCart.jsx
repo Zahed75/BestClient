@@ -1,5 +1,6 @@
 "use client";
 import { fetchApi } from "@/utils/FetchApi";
+import isMobileDevice from "@/utils/deviceDetection";
 import { getIPAddress } from "@/utils/getIP";
 import { ResponseCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import { redirect, useRouter } from "next/navigation";
@@ -91,6 +92,8 @@ export default function CheckOutCart() {
       deliveryCharge: deliveryCharge,
       vatRate: vat,
       couponId: "",
+      channel: isMobileDevice() ? "Mobile" : "Web",
+      outlet: "",
     };
 
     console.log("Order Data:", data);
@@ -107,6 +110,8 @@ export default function CheckOutCart() {
       console.error("Order creation error:", error);
     }
   };
+
+  console.log("channels", isMobileDevice() ? "Mobile" : "Web");
   return (
     <section className="">
       <form
@@ -184,7 +189,7 @@ export default function CheckOutCart() {
                   type="tel"
                   name="phone"
                   id="phone"
-                  placeholder="+880 "
+                  defaultValue={880}
                   required
                 />
               </div>
@@ -201,7 +206,7 @@ export default function CheckOutCart() {
                   className="flex justify-between items-start gap-5 my-3"
                 >
                   <p className="font-semibold">{item.quantity} x</p>
-                  <p className="font-semibold max-w-52">{item.productName}</p>
+                  <p className="font-semibold max-w-52">{item?.productName}</p>
                   <p className="font-semibold">
                     ৳{item.general.salePrice * item.quantity}
                   </p>
