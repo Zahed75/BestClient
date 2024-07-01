@@ -92,7 +92,7 @@ export default function CheckOutCart() {
       deliveryCharge: deliveryCharge,
       vatRate: vat,
       couponId: "",
-      channel: isMobileDevice() ? "Mobile" : "Web",
+      channel: isMobileDevice() ? "mobile" : "web",
       outlet: "",
     };
 
