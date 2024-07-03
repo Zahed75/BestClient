@@ -10,7 +10,7 @@ export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
     const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
-    const path = "/product/getAllProducts";
+    const path = "/product/getProductByproductStatus";
     const url = `${API_ENDPOINT}${path}`;
 
     const user = localStorage.getItem("user");

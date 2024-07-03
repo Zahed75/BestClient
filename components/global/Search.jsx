@@ -68,6 +68,7 @@ export default function Search() {
               className="peer h-full w-full outline-none text-sm text-gray-700 pr-2 bg-[#F3F4F7]"
               type="text"
               id="search"
+              name="search"
               placeholder="Search for products.."
             />
           </div>

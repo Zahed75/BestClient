@@ -3,9 +3,9 @@ import Skeleton from "@/components/global/Skeleton";
 import { fetchApi } from "@/utils/FetchApi";
 
 export async function generateMetadata({ params, searchParams }) {
-  const id = params.id;
-  const res = await fetchApi(`/product/getProductById/${id}`, "GET");
-  const product = await res?.data;
+  const { slug } = params;
+  const res = await fetchApi(`/product/getProductBySlugHandler/${slug}`, "GET");
+  const product = await res?.product;
   return {
     title: product?.seo?.productTitle,
     description: product?.seo?.prodDescription,
@@ -13,9 +13,9 @@ export async function generateMetadata({ params, searchParams }) {
 }
 
 export default async function Page({ params }) {
-  const id = params.id;
-  const res = await fetchApi(`/product/getProductById/${id}`, "GET");
-  const product = await res?.data;
+  const { slug } = params;
+  const res = await fetchApi(`/product/getProductBySlugHandler/${slug}`, "GET");
+  const product = await res?.product[0];
   const category = await fetchApi(
     `/category/getCategoryById/${product?.categoryId}`,
     "GET"

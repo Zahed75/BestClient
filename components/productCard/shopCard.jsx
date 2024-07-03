@@ -39,7 +39,7 @@ export default function ShopCard({ product }) {
         ) : (
           <></>
         )}
-        <Link href={`/shop/${product?._id}`}>
+        <Link href={`/shop/${product?.productSlug}`}>
           <div className="object-cover min-h-[200px] flex justify-center overflow-hidden">
             <Image
               src={productImage}
@@ -51,7 +51,7 @@ export default function ShopCard({ product }) {
           </div>
         </Link>
         <div className="mt-3">
-          <Link href={`/shop/${product?._id}`}>
+          <Link href={`/shop/${product?.productSlug}`}>
             <h4 className="text-[#202435] hover:text-[#F16521] duration-700 text-md font-semibold h-14">
               {product?.productName}
             </h4>
