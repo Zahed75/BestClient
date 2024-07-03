@@ -11,13 +11,22 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart } from "@/redux/slice/cartSlice";
 import { useRouter } from "next/navigation";
+import { fetchProducts } from "@/redux/slice/productsSlice";
 
 export default function Search() {
   const [open, setOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const cart = useSelector((state) => state.cart.items) || [];
+  const products = useSelector((state) => state.products.products);
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const allProducts = products?.products || [];
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, []);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -27,10 +36,25 @@ export default function Search() {
     setOpen(false);
     router.push("/checkout");
   };
+
   const handleGoToCart = () => {
     setOpen(false);
     router.push("/cart");
   };
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredProducts = allProducts.filter((product) =>
+    product.productName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleProductClick = (productSlug) => {
+    router.push(`/shop/${productSlug}`);
+    setSearchTerm("");
+  };
+
   return (
     <main className="container">
       <div className="grid grid-cols-4 justify-center items-center gap-5 my-5">
@@ -39,13 +63,12 @@ export default function Search() {
             <Image
               src={bestLogo}
               className="w-full md:w-fit"
-              alt="
-            Best Electronics Icon"
+              alt="Best Electronics Icon"
             />
           </Link>
         </div>
 
-        <div className="w-full mx-auto col-span-2 hidden md:block">
+        <div className="w-full mx-auto col-span-2 hidden md:block relative">
           <div className="relative flex items-center w-full h-14 rounded-lg bg-[#F3F4F7] overflow-hidden">
             <div className="grid place-items-center h-full w-12 text-gray-300">
               <svg
@@ -69,9 +92,28 @@ export default function Search() {
               type="text"
               id="search"
               name="search"
-              placeholder="Search for products.."
+              placeholder="Search for products..."
+              value={searchTerm}
+              onChange={handleSearchChange}
             />
           </div>
+          {searchTerm && (
+            <div className="absolute z-10 bg-white shadow-md rounded-lg w-full max-h-60 overflow-y-auto">
+              {filteredProducts.length > 0 ? (
+                filteredProducts.map((product) => (
+                  <div
+                    key={product._id}
+                    className="p-3 hover:bg-gray-200 cursor-pointer"
+                    onClick={() => handleProductClick(product?.productSlug)}
+                  >
+                    {product.productName}
+                  </div>
+                ))
+              ) : (
+                <div className="p-3 text-center">No products found</div>
+              )}
+            </div>
+          )}
         </div>
 
         <div className="flex justify-end items-center gap-5 col-span-2 md:col-span-1">

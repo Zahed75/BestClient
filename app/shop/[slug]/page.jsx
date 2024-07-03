@@ -15,7 +15,7 @@ export async function generateMetadata({ params, searchParams }) {
 export default async function Page({ params }) {
   const { slug } = params;
   const res = await fetchApi(`/product/getProductBySlugHandler/${slug}`, "GET");
-  const product = await res?.product[0];
+  const product = await res?.product;
   const category = await fetchApi(
     `/category/getCategoryById/${product?.categoryId}`,
     "GET"

@@ -17,7 +17,7 @@ export default async function Page() {
     .then((data) => data.products)
     .catch((error) => console.error(error));
 
-  // console.log(products);
+
   return (
     <main>
       <Shop products={products} />
