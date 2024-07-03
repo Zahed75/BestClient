@@ -10,15 +10,22 @@ import { Box, Drawer } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart } from "@/redux/slice/cartSlice";
+import { useRouter } from "next/navigation";
 
 export default function Search() {
   const [open, setOpen] = useState(false);
 
   const cart = useSelector((state) => state.cart.items) || [];
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
+  };
+
+  const handleGoToCheckout = () => {
+    setOpen(false);
+    router.push("/checkout");
   };
   return (
     <main className="container">
@@ -93,6 +100,7 @@ export default function Search() {
             </div>
           </div>
         </div>
+
         <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
           <Box role="presentation" className="w-[350px] md:w-[400px]">
             <div className="flex justify-between items-center border-b-2 p-3">
@@ -149,7 +157,9 @@ export default function Search() {
             <div className="p-3 my-3">
               {cart?.length > 0 ? (
                 <div className="flex justify-between items-center">
-                  <h3 className="text-slate-500">Subtotal ({cart.length} items):</h3>
+                  <h3 className="text-slate-500">
+                    Subtotal ({cart.length} items):
+                  </h3>
                   <h3 className="text-md font-semibold">
                     ৳
                     {cart
@@ -167,8 +177,11 @@ export default function Search() {
                 <button className="border py-3 rounded-md w-full my-3">
                   <Link href="/cart">View Cart</Link>
                 </button>
-                <button className="text-white bg-[#F16521] py-3 rounded-md w-full">
-                  <Link href="/checkout">Checkout</Link>
+                <button
+                  onClick={handleGoToCheckout}
+                  className="text-white bg-[#F16521] py-3 rounded-md w-full"
+                >
+                  Checkout
                 </button>
               </div>
             </div>
