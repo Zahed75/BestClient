@@ -27,6 +27,10 @@ export default function Search() {
     setOpen(false);
     router.push("/checkout");
   };
+  const handleGoToCart = () => {
+    setOpen(false);
+    router.push("/cart");
+  };
   return (
     <main className="container">
       <div className="grid grid-cols-4 justify-center items-center gap-5 my-5">
@@ -174,8 +178,11 @@ export default function Search() {
               )}
 
               <div className="flex flex-col justify-between items-center">
-                <button className="border py-3 rounded-md w-full my-3">
-                  <Link href="/cart">View Cart</Link>
+                <button
+                  onClick={handleGoToCart}
+                  className="border py-3 rounded-md w-full my-3"
+                >
+                  View Cart
                 </button>
                 <button
                   onClick={handleGoToCheckout}
