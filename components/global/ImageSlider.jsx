@@ -96,7 +96,6 @@ const ImageSlider = () => {
     );
   }
 
-
   const settings = {
     dots: false,
     infinite: true,
@@ -111,7 +110,7 @@ const ImageSlider = () => {
   };
 
   return (
-    <section className="mt-5 h-auto">
+    <section className="mt-5 h-auto w-full">
       <Slider {...settings}>
         {imageUrls.map((imageUrl, index) => (
           <div key={index} className="w-full h-[150px] lg:h-[450px]">
