@@ -8,7 +8,6 @@ const ImageSlider = () => {
   const imageUrls = [
     "https://www.bestelectronics.com.bd/wp-content/uploads/2023/03/365-exchange1920x600.jpg",
     "https://www.bestelectronics.com.bd/wp-content/uploads/2023/05/Facebook-1.jpg",
-    "https://www.bestelectronics.com.bd/wp-content/uploads/2023/03/Super-KISTIEMI-Banner1920x480.jpg",
     "https://www.bestelectronics.com.bd/wp-content/uploads/2023/09/600-1.jpeg",
   ];
 
@@ -113,7 +112,10 @@ const ImageSlider = () => {
     <section className="mt-5 h-auto w-full">
       <Slider {...settings}>
         {imageUrls.map((imageUrl, index) => (
-          <div key={index} className="w-full h-[150px] lg:h-[450px] relative object-cover">
+          <div
+            key={index}
+            className="w-full h-[150px] lg:h-[450px] relative object-cover"
+          >
             <img
               src={imageUrl}
               alt={`Slide ${index + 1}`}
