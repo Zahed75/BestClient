@@ -2,7 +2,7 @@ import { fetchApi } from "@/utils/FetchApi";
 import Shop from "./Shop";
 
 export default async function Page() {
-  // const products = await fetchApi("/product/getAllProducts", "GET");
+  
   const products = await fetch(
     `${process.env.NEXT_PUBLIC_API_ENDPOINT}/product/getProductByproductStatus`,
     {

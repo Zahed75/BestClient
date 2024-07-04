@@ -1,9 +1,8 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import Image from "next/image";
 
 const ImageSlider = () => {
   const imageUrls = [
@@ -97,6 +96,7 @@ const ImageSlider = () => {
     );
   }
 
+
   const settings = {
     dots: false,
     infinite: true,
@@ -111,17 +111,14 @@ const ImageSlider = () => {
   };
 
   return (
-    <section className="h-[150px] lg:h-[450px] mt-5">
+    <section className="mt-5 h-auto">
       <Slider {...settings}>
         {imageUrls.map((imageUrl, index) => (
-          <div
-            key={index}
-            className="h-[150px] lg:h-[450px] overflow-hidden object-cover w-full"
-          >
+          <div key={index} className="w-full h-[150px] lg:h-[450px]">
             <img
               src={imageUrl}
               alt={`Slide ${index + 1}`}
-              className="h-[150px] lg:h-[450px] w-full object-cover"
+              className="w-full h-full object-cover"
             />
           </div>
         ))}
