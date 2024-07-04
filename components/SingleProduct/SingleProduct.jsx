@@ -114,7 +114,7 @@ export default function SingleProduct({ product, categoryName }) {
                 productGallery={product?.productGallery}
               />
             </div>
-            <div className="my-5 md:w-1/3">
+            <div className="my-5 md:w-1/3 lg:w-1/4">
               <p
                 className={`
                 ${
