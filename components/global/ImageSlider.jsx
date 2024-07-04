@@ -113,11 +113,11 @@ const ImageSlider = () => {
     <section className="mt-5 h-auto w-full">
       <Slider {...settings}>
         {imageUrls.map((imageUrl, index) => (
-          <div key={index} className="w-full h-[150px] lg:h-[450px]">
+          <div key={index} className="w-full h-[150px] lg:h-[450px] relative object-cover">
             <img
               src={imageUrl}
               alt={`Slide ${index + 1}`}
-              className="w-full h-full object-cover"
+              className="w-full h-full"
             />
           </div>
         ))}
