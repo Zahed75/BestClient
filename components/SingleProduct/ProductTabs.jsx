@@ -7,7 +7,7 @@ export default function ProductTabs({ tabs }) {
 
   return (
     <div className="">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-x-2 border p-1 rounded-md">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-x-2 border p-1 rounded-md">
         {tabs.map((tab, index) => (
           <button
             key={index}

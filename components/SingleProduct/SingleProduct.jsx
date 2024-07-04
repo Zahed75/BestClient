@@ -91,7 +91,7 @@ export default function SingleProduct({ product, categoryName }) {
             </tbody>
           </table> */}
           <div className="my-20">
-            <ExcelUploader />
+            {/* <ExcelUploader /> */}
           </div>
         </section>
       ),
@@ -102,7 +102,7 @@ export default function SingleProduct({ product, categoryName }) {
     <section className="container">
       <div className="my-10">
         <TagLine tagValues={tagValues} />
-        <div className="bg-white rounded-md shadow-md p-5 border-t">
+        <section className="bg-white rounded-md shadow-md p-5 border-t">
           <h1 className="text-[#202435] text-lg font-semibold">
             {product?.productName}
           </h1>
@@ -303,7 +303,7 @@ export default function SingleProduct({ product, categoryName }) {
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
         <section className="bg-white rounded-md shadow-md p-5 border-t my-10">
           <ProductTabs tabs={productDataTabs} />
