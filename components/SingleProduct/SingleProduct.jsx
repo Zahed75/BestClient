@@ -107,6 +107,7 @@ export default function SingleProduct({ product, categoryName }) {
             {product?.productName}
           </h1>
           <div className="flex flex-col md:flex-row justify-between items-start gap-x-10">
+
             <div className="">
               <ImageShow
                 product={product}
@@ -114,7 +115,8 @@ export default function SingleProduct({ product, categoryName }) {
                 productGallery={product?.productGallery}
               />
             </div>
-            <div className="my-5 md:w-1/3 lg:w-1/3">
+
+            <div className="my-5 md:w-1/3 lg:w-1/3 ">
               <p
                 className={`
                 ${
@@ -145,7 +147,7 @@ export default function SingleProduct({ product, categoryName }) {
                     dispatch(addToWishlist(product));
                   }}
                   disabled={favorite}
-                  className={`text-xs text-[#9B9BB4] border px-5 py-2 rounded-full flex justify-center items-center uppercase ${
+                  className={`text-xs text-[#9B9BB4] border px-3 py-2 rounded-full flex justify-center items-center uppercase ${
                     favorite ? "cursor-not-allowed" : "cursor-pointer"
                   }`}
                 >
@@ -154,7 +156,7 @@ export default function SingleProduct({ product, categoryName }) {
                     height="20"
                     viewBox="0 0 14 15"
                     fill={favorite ? "#868B9F" : "none"}
-                    className="mr-3"
+                    className="mr-2"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
@@ -204,7 +206,7 @@ export default function SingleProduct({ product, categoryName }) {
               </div>
             </div>
 
-            <div className="my-5 md:max-w-72 lg:w-1/3">
+            <div className="my-5 md:max-w-72 lg:w-1/4">
               <div className="text-[#BE143C] bg-[#FFEEF2] p-5 text-xs rounded-md mb-5">
                 <span>Largest Collection of World Class Home Appliances</span>
               </div>
