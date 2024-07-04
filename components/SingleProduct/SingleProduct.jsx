@@ -126,10 +126,10 @@ export default function SingleProduct({ product, categoryName }) {
               >
                 {product?.inventory?.stockStatus}
               </p>
-              <p className="text-[#202435] text-md font-semibold my-2">
+              <p className="text-[#202435] font-semibold my-2">
                 MRP Price: ৳{product?.general?.regularPrice}
               </p>
-              <p className="text-[#F16521] text-md font-semibold mb-2">
+              <p className="text-[#F16521] font-semibold mb-2">
                 Offer Price: ৳{product?.general?.salePrice}
               </p>
               <section
@@ -145,7 +145,7 @@ export default function SingleProduct({ product, categoryName }) {
                     dispatch(addToWishlist(product));
                   }}
                   disabled={favorite}
-                  className={`text-sm text-[#9B9BB4] border px-5 py-2 rounded-full flex justify-center items-center uppercase ${
+                  className={`text-xs text-[#9B9BB4] border px-5 py-2 rounded-full flex justify-center items-center uppercase ${
                     favorite ? "cursor-not-allowed" : "cursor-pointer"
                   }`}
                 >
@@ -168,7 +168,7 @@ export default function SingleProduct({ product, categoryName }) {
                 </button>
                 <button
                   onClick={handleOpen}
-                  className="text-sm text-[#9B9BB4] px-5 py-2 flex justify-center items-center uppercase"
+                  className="text-xs text-[#9B9BB4] px-5 py-2 flex justify-center items-center uppercase"
                 >
                   <Image
                     src={CompareIcon}
@@ -204,7 +204,7 @@ export default function SingleProduct({ product, categoryName }) {
               </div>
             </div>
 
-            <div className="my-5 md:max-w-80">
+            <div className="my-5 md:max-w-72">
               <div className="text-[#BE143C] bg-[#FFEEF2] p-5 text-xs rounded-md mb-5">
                 <span>Largest Collection of World Class Home Appliances</span>
               </div>
