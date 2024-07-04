@@ -114,7 +114,7 @@ const ImageSlider = () => {
         {imageUrls.map((imageUrl, index) => (
           <div
             key={index}
-            className="w-full h-[150px] lg:h-[450px] relative object-cover"
+            className="w-full h-full relative object-cover"
           >
             <img
               src={imageUrl}
