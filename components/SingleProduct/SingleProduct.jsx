@@ -204,7 +204,7 @@ export default function SingleProduct({ product, categoryName }) {
               </div>
             </div>
 
-            <div className="my-5 md:max-w-72">
+            <div className="my-5 md:max-w-72 lg:w-1/3">
               <div className="text-[#BE143C] bg-[#FFEEF2] p-5 text-xs rounded-md mb-5">
                 <span>Largest Collection of World Class Home Appliances</span>
               </div>
