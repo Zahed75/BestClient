@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 export default function CheckOutCart() {
   const [districts, setDistricts] = useState([]);
   const [productItems, setProductItems] = useState([]);
+  const [customerInfo, setCustomerInfo] = useState({});
   const [IP, setIP] = useState("");
 
   const cart = useSelector((state) => state.cart.items) || [];
@@ -66,6 +67,24 @@ export default function CheckOutCart() {
     fetchIp();
   }, []);
 
+  useEffect(() => {
+    const customerId = customer?.items?.userId;
+    if (!customerId || customerId === "") {
+      router.push("/signin");
+    } else {
+      const fetchData = async () => {
+        try {
+          const data = await fetchApi(`/customer/info/${customerId}`, "GET");
+          setCustomerInfo(data?.customerInfo);
+        } catch (error) {
+          console.error("Error fetching product data:", error);
+        }
+      };
+
+      fetchData();
+    }
+  }, []);
+
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -86,7 +105,10 @@ export default function CheckOutCart() {
       deliveryAddress: formData.get("fullAddress"),
       district: formData.get("district"),
       phoneNumber: formData.get("phone"),
-      paymentMethod: formData.get("payment"),
+      paymentMethod:
+        formData.get("paymentMethod") === "cashOnDelivery"
+          ? "Cash on Delivery"
+          : "Online Payment",
       products: productItems,
       totalPrice: totalProductPrice,
       deliveryCharge: deliveryCharge,
@@ -111,7 +133,6 @@ export default function CheckOutCart() {
     }
   };
 
-
   return (
     <section className="">
       <form
@@ -134,6 +155,7 @@ export default function CheckOutCart() {
                   type="text"
                   name="firstName"
                   id="firstName"
+                  defaultValue={customerInfo?.billingInfo?.firstName || ""}
                   required
                 />
               </div>
@@ -146,6 +168,7 @@ export default function CheckOutCart() {
                   type="text"
                   name="lastName"
                   id="lastName"
+                  defaultValue={customerInfo?.billingInfo?.lastName || ""}
                   required
                 />
               </div>
@@ -158,6 +181,7 @@ export default function CheckOutCart() {
                   type="text"
                   name="fullAddress"
                   id="fullAddress"
+                  defaultValue={customerInfo?.billingInfo?.fullAddress || ""}
                   required
                   placeholder="House name & no., Road no., Village name, Ward no., Thana, Upazilla"
                 />
@@ -170,6 +194,7 @@ export default function CheckOutCart() {
                   className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
                   name="district"
                   id="district"
+                  defaultValue={customerInfo?.billingInfo?.district || ""}
                   required
                 >
                   <option value="">Select District</option>
@@ -182,6 +207,19 @@ export default function CheckOutCart() {
               </div>
               <div className="col-span-2">
                 <label className="text-sm" htmlFor="phone">
+                  PostalCode *
+                </label>
+                <input
+                  className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
+                  type="text"
+                  name="postalCode"
+                  id="postalCode"
+                  defaultValue={customerInfo?.billingInfo?.zipCode || ""}
+                  required
+                />
+              </div>
+              <div className="col-span-2">
+                <label className="text-sm" htmlFor="phone">
                   Enter Your Phone Number *
                 </label>
                 <input
@@ -189,7 +227,9 @@ export default function CheckOutCart() {
                   type="tel"
                   name="phone"
                   id="phone"
-                  defaultValue={880}
+                  defaultValue={
+                    88 + customerInfo?.billingInfo?.phoneNumber || ""
+                  }
                   required
                 />
               </div>
@@ -219,12 +259,12 @@ export default function CheckOutCart() {
               <input
                 className="rounded-md mr-3 focus:outline-0"
                 type="radio"
-                name="payment"
-                id="cash"
+                name="paymentMethod"
+                id="cashOnDelivery"
                 required
                 defaultChecked={true}
               />
-              <label className="text-sm" htmlFor="cash">
+              <label className="text-sm" htmlFor="cashOnDelivery">
                 Cash on Delivery
               </label>
             </div>
@@ -232,16 +272,19 @@ export default function CheckOutCart() {
               <input
                 className="rounded-md mr-3 focus:outline-0"
                 type="radio"
-                name="payment"
-                id="card"
+                name="paymentMethod"
+                id="onlinePayment"
                 required
               />
-              <label className="text-sm" htmlFor="card">
-                Debit/Credit Cards, Mobile Banking, Internet Banking (Conditions
-                Apply on Free Home Delivery)
+              <label className="text-sm" htmlFor="onlinePayment">
+                Debit/Credit Cards, Mobile Banking, Internet Banking
+                <span className="block text-xs">
+                  (Conditions Apply on Free Home Delivery)
+                </span>
               </label>
             </div>
           </div>
+
           <h4 className="text-lg font-semibold">Order summary</h4>
           <div className="my-5">
             <div className="flex justify-between items-center my-3">
