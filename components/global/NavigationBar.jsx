@@ -275,7 +275,7 @@ export default function NavigationBar() {
               <Link href="/shop">All Products</Link>
             </span>
             <span className="hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700">
-              <Link href="/success">Quick emi</Link>
+              <Link href="/">Quick emi</Link>
             </span>
             <span className="hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700">
               <Link href="/">super kisti</Link>

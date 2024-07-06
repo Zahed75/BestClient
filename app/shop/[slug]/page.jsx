@@ -16,11 +16,24 @@ export default async function Page({ params }) {
   const { slug } = params;
   const res = await fetchApi(`/product/getProductBySlugHandler/${slug}`, "GET");
   const product = await res?.product;
-  const category = await fetchApi(
-    `/category/getCategoryById/${product?.categoryId}`,
-    "GET"
+  // all categories
+  const categories = product?.categoryId?.map((category) => 
+    fetchApi(`/category/getCategoryById/${category}`, "GET")
   );
-  const categoryName = await category?.category?.categoryName;
+  // const category = await fetchApi(
+  //   `/category/getCategoryById/${product?.categoryId}`,
+  //   "GET"
+  // );
+  // const categoryName = await category?.category?.categoryName;
+
+  const category = await Promise.all(categories);
+  const categoryName = category?.map((cat) => cat?.category?.categoryName);
+
+  console.log("categoryName", categoryName);
+
+
+
+
 
   return (
     <>
@@ -32,6 +45,9 @@ export default async function Page({ params }) {
     </>
   );
 }
+
+
+
 
 // export async function generateStaticParams() {
 //   const res = await fetchApi(`/product/getAllProducts`, "GET");

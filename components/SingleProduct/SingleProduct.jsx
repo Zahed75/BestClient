@@ -48,10 +48,10 @@ export default function SingleProduct({ product, categoryName }) {
   const tagValues = [
     "Home",
     "Shop",
-    `${categoryName}`,
+    ...categoryName?.flatMap((category) => category), 
     `${product?.productName}`,
   ];
-
+  
   const productDataTabs = [
     {
       title: "Descriptions",
@@ -185,7 +185,7 @@ export default function SingleProduct({ product, categoryName }) {
               <div className="mt-10">
                 <p>
                   <span className="text-[#9B9BB4] mr-1">Categories:</span>{" "}
-                  {categoryName}
+                  {categoryName?.join(", ")}
                 </p>
               </div>
 

@@ -111,7 +111,7 @@ export default function CheckOutCart() {
     }
   };
 
-  console.log("channels", isMobileDevice() ? "Mobile" : "Web");
+
   return (
     <section className="">
       <form

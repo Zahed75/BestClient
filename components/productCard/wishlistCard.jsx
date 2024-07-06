@@ -5,6 +5,7 @@ import Dynamo from "@/public/images/dynacool.jpg";
 import Link from "next/link";
 import { addToCart, updateQuantity } from "@/redux/slice/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { removeFromWishlist } from "@/redux/slice/wishlistSlice";
 
 export default function WishlistCard({ product }) {
   const [cartCount, setCartCount] = useState(0);
@@ -16,7 +17,7 @@ export default function WishlistCard({ product }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setProductImage(product?.productImage || Dynamo);
+    setProductImage(product?.productImage);
   }, [product]);
 
   return (
@@ -45,7 +46,8 @@ export default function WishlistCard({ product }) {
             height="21"
             viewBox="0 0 18 17"
             fill="none"
-            className=""
+            className="cursor-pointer"
+            onClick={() => dispatch(removeFromWishlist(product?._id))}
             xmlns="http://www.w3.org/2000/svg"
           >
             <path

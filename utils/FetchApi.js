@@ -12,7 +12,7 @@ export const fetchApi = async (path, method, data = null) => {
     // const config = {
     //   headers: {
     //     "Content-Type": "application/json",
-    //     "Authorization": `Bearer ${token}`,
+    //     Authorization: `Bearer ${token}`,
     //   },
     // };
 
@@ -24,6 +24,9 @@ export const fetchApi = async (path, method, data = null) => {
         break;
       case "POST":
         response = await axios.post(url, data);
+        break;
+      case "PATCH":
+        response = await axios.patch(url, data);
         break;
       case "PUT":
         response = await axios.put(url, data);

@@ -98,7 +98,7 @@ export default function Search() {
             />
           </div>
           {searchTerm && (
-            <div className="absolute z-10 bg-white shadow-md rounded-lg w-full max-h-60 overflow-y-auto">
+            <div className="absolute z-10 bg-white shadow-md rounded-lg w-full max-h-40 overflow-y-auto scrollbar_hidden">
               {filteredProducts.length > 0 ? (
                 filteredProducts.map((product) => (
                   <div
