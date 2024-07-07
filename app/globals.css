@@ -5,6 +5,14 @@
 /* --------------------------------
 slider image styles
 -------------------------------- */
+.bg-primary {
+  background-color: #f16521;
+}
+.text-primary {
+  color: #f16521;
+}
+
+
 .slider-container {
   position: relative;
   width: 100%;
