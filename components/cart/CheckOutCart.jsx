@@ -194,10 +194,16 @@ export default function CheckOutCart() {
                   className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
                   name="district"
                   id="district"
-                  defaultValue={customerInfo?.billingInfo?.district || ""}
+                  defaultValue={customerInfo?.billingInfo?.district}
                   required
                 >
-                  <option value="">Select District</option>
+                  {customerInfo?.billingInfo?.district ? (
+                    <option value={customerInfo?.billingInfo?.district}>
+                      {customerInfo?.billingInfo?.district}
+                    </option>
+                  ) : (
+                    <option value="">Select District</option>
+                  )}
                   {districts?.map((district, index) => (
                     <option key={index} value={district.district}>
                       {district.district}
