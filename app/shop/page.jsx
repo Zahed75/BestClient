@@ -1,4 +1,4 @@
-import { fetchApi } from "@/utils/FetchApi";
+
 import Shop from "./Shop";
 
 export default async function Page() {
@@ -10,7 +10,7 @@ export default async function Page() {
       headers: {
         "Content-Type": "application/json",
       },
-      cache: "no-store",
+      // cache: "no-store",
     }
   )
     .then((res) => res.json())
