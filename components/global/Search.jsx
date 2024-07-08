@@ -22,14 +22,17 @@ export default function Search() {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const totalProductPrice = Array.isArray(cart)
+  const deliveryCharge = 100;
+  const vat = 50;
+  const totalProductPrice = Array.isArray(cart) && cart.length > 0
     ? cart.reduce(
         (acc, item) => acc + item.general.salePrice * item.quantity,
         0
       )
     : 0;
-
-  const totalPrice = totalProductPrice + deliveryCharge + vat;
+  
+  const total = totalProductPrice > 0 ? totalProductPrice + deliveryCharge + vat : 0;
+  
 
   const allProducts = products?.products || [];
 
@@ -135,7 +138,7 @@ export default function Search() {
               />
             </Link>
           </div>
-          <div className="text-md font-bold ">৳ {totalPrice}</div>
+          <div className="text-md font-bold ">৳ {total}</div>
           <div className="w-[42px] h-[42px] rounded-full border border-[#FFF1EE] bg-[#FFF1EE] p-2 relative ">
             <button
               className="flex justify-center mx-auto w-full h-full"
