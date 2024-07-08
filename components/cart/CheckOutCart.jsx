@@ -12,6 +12,7 @@ export default function CheckOutCart() {
   const [productItems, setProductItems] = useState([]);
   const [customerInfo, setCustomerInfo] = useState({});
   const [IP, setIP] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const cart = useSelector((state) => state.cart.items) || [];
   const customer = useSelector((state) => state.customer) || {};
@@ -25,7 +26,7 @@ export default function CheckOutCart() {
       )
     : 0;
   const deliveryCharge = 100;
-  const vat = 50;
+  const vat = 5;
   const totalPrice = totalProductPrice + deliveryCharge + vat;
   const userId = customer?.items?.userId;
   const email = customer?.items?.email;
@@ -302,7 +303,7 @@ export default function CheckOutCart() {
             </div>
             <div className="flex justify-between items-center my-3">
               <p>VAT</p>
-              <p className="font-semibold">৳{vat}</p>
+              <p className="font-semibold">{vat}%</p>
             </div>
             <div className="border"></div>
             <div className="flex justify-between items-center my-3">

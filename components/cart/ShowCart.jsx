@@ -13,7 +13,7 @@ export default function ShowCart() {
   ? cart.reduce((acc, item) => acc + item.general.salePrice * item.quantity, 0)
   : 0;
   const deliveryCharge = 100;
-  const vat = 50;
+  const vat = 5;
   const totalPrice = totalProductPrice + deliveryCharge + vat;
 
   return (
@@ -141,7 +141,7 @@ export default function ShowCart() {
               </div>
               <div className="flex justify-between items-center my-3">
                 <p>VAT</p>
-                <p className="font-semibold">৳50</p>
+                <p className="font-semibold">{vat}%</p>
               </div>
               <div className="border"></div>
               <div className="flex justify-between items-center my-3">

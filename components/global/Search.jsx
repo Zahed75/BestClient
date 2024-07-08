@@ -23,7 +23,7 @@ export default function Search() {
   const router = useRouter();
 
   const deliveryCharge = 100;
-  const vat = 50;
+  const vat = 5;
   const totalProductPrice = Array.isArray(cart) && cart.length > 0
     ? cart.reduce(
         (acc, item) => acc + item.general.salePrice * item.quantity,
