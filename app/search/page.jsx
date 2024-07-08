@@ -33,7 +33,7 @@ export default function Search() {
   };
 
   return (
-    <main className="container absolute top-0 right-0 bg-white h-full">
+    <main className="container fixed top-0 right-0 bg-white min-h-screen">
       <div className="w-full mx-auto col-span-2 md:hidden relative mt-5 mb-10">
         <div className="relative flex items-center w-full h-14 rounded-lg bg-[#F3F4F7] overflow-hidden">
           <div className="grid place-items-center h-full w-12 text-gray-300">

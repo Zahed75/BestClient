@@ -113,7 +113,6 @@ const navigationLink = [
 
 export default function BottomNavigation() {
   const [open, setOpen] = useState(false);
-  const [mobileSearch, setMobileSearch] = useState(false);
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };

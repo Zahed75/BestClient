@@ -1,12 +1,12 @@
 export default function ShortBrand() {
   return (
-    <section className="mt-40 mb-10">
+    <section className="mt-20 mb-10">
       <div className="grid grid-cols-1 md:grid-cols-4 justify-between items-center gap-5">
         <div className="flex justify-start md:justify-between items-center gap-5">
           <svg
             width="20"
             height="21"
-            className="w-10 h-10"
+            className="w-8 md:w-10 h-5 md:h-10"
             viewBox="0 0 23 23"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
