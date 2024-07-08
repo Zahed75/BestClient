@@ -7,13 +7,17 @@ import Link from "next/link";
 export default function ShowCart() {
   
   const cart = useSelector((state) => state.cart.items) || [];
-
+  const deliveryCharge = 100;
+  const vatPercentage = 5; // 5%
 
   const totalProductPrice = Array.isArray(cart)
-  ? cart.reduce((acc, item) => acc + item.general.salePrice * item.quantity, 0)
-  : 0;
-  const deliveryCharge = 100;
-  const vat = 5;
+    ? cart.reduce(
+        (acc, item) => acc + item.general.salePrice * item.quantity,
+        0
+      )
+    : 0;
+
+  const vat = (totalProductPrice * vatPercentage) / 100;
   const totalPrice = totalProductPrice + deliveryCharge + vat;
 
   return (
@@ -141,7 +145,7 @@ export default function ShowCart() {
               </div>
               <div className="flex justify-between items-center my-3">
                 <p>VAT</p>
-                <p className="font-semibold">{vat}%</p>
+                <p className="font-semibold">{vatPercentage}%</p>
               </div>
               <div className="border"></div>
               <div className="flex justify-between items-center my-3">

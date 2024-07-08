@@ -23,16 +23,19 @@ export default function Search() {
   const router = useRouter();
 
   const deliveryCharge = 100;
-  const vat = 5;
-  const totalProductPrice = Array.isArray(cart) && cart.length > 0
+  const vatPercentage = 5; // 5%
+
+  const totalProductPrice = Array.isArray(cart)
     ? cart.reduce(
         (acc, item) => acc + item.general.salePrice * item.quantity,
         0
       )
     : 0;
-  
-  const total = totalProductPrice > 0 ? totalProductPrice + deliveryCharge + vat : 0;
-  
+
+  const vat = (totalProductPrice * vatPercentage) / 100;
+  const totalPrice = totalProductPrice + deliveryCharge + vat;
+
+  const total = totalProductPrice > 0 ? totalProductPrice : 0;
 
   const allProducts = products?.products || [];
 

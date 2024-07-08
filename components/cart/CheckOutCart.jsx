@@ -19,15 +19,19 @@ export default function CheckOutCart() {
 
   const router = useRouter();
 
+  const deliveryCharge = 100;
+  const vatPercentage = 5; // 5%
+
   const totalProductPrice = Array.isArray(cart)
     ? cart.reduce(
         (acc, item) => acc + item.general.salePrice * item.quantity,
         0
       )
     : 0;
-  const deliveryCharge = 100;
-  const vat = 5;
+
+  const vat = (totalProductPrice * vatPercentage) / 100;
   const totalPrice = totalProductPrice + deliveryCharge + vat;
+
   const userId = customer?.items?.userId;
   const email = customer?.items?.email;
 
@@ -307,7 +311,7 @@ export default function CheckOutCart() {
             </div>
             <div className="flex justify-between items-center my-3">
               <p>VAT</p>
-              <p className="font-semibold">{vat}%</p>
+              <p className="font-semibold">{vatPercentage}%</p>
             </div>
             <div className="border"></div>
             <div className="flex justify-between items-center my-3">
