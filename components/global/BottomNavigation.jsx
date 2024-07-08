@@ -9,22 +9,6 @@ import Image from "next/image";
 
 const categories = [
   {
-    title: "Mobile",
-    link: "/shop",
-    subcategories: [
-      {
-        title: "Smartphones",
-        link: "/shop",
-        subcategories: [],
-      },
-      {
-        title: "Feature Phones",
-        link: "/shop",
-        subcategories: [],
-      },
-    ],
-  },
-  {
     title: "TV & Entertainment",
     link: "/shop",
     subcategories: [
@@ -99,6 +83,7 @@ const categories = [
     ],
   },
 ];
+
 const navigationLink = [
   {
     title: "Home",
@@ -125,8 +110,10 @@ const navigationLink = [
     link: "/",
   },
 ];
+
 export default function BottomNavigation() {
   const [open, setOpen] = useState(false);
+  const [mobileSearch, setMobileSearch] = useState(false);
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
@@ -137,7 +124,7 @@ export default function BottomNavigation() {
   };
   return (
     <section>
-      <div className="fixed md:hidden bottom-0 left-0 z-50 w-full h-16 bg-[#F16521]">
+      <div className="fixed md:hidden bottom-0 left-0 z-50 w-full h-16 bg-[#F16521] mx-auto">
         <div className="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
           <Link
             href="/shop"
@@ -178,6 +165,7 @@ export default function BottomNavigation() {
           </button>
         </div>
       </div>
+
       <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
         <Box role="presentation" className="w-[350px] md:w-[400px]">
           <div className="flex justify-between items-center border-b-2 p-3">
@@ -191,7 +179,7 @@ export default function BottomNavigation() {
           <div>
             <div
               onClick={() => setCategoryShow(!categoryShow)}
-              className="bg-primary mt-5 mx-3 p-3 rounded-md text-white flex justify-between items-center cursor-pointer scrollbar_hidden "
+              className="bg-primary mt-5 mx-3 p-3 rounded-md text-white flex justify-between items-center cursor-pointer "
             >
               All Categories
               <span>
@@ -309,8 +297,10 @@ export default function BottomNavigation() {
           </div>
         </Box>
       </Drawer>
+
+      <div>
+        
+      </div>
     </section>
   );
 }
-
-// only for mobile version

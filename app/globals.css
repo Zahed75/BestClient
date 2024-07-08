@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+
+body::-webkit-scrollbar {
+  display: none !important;
+}
 /* --------------------------------
 slider image styles
 -------------------------------- */
@@ -26,6 +30,8 @@ slider image styles
     height: auto;
   }
 }
+
+
 
 
 /* custom select */
@@ -70,7 +76,7 @@ input[type="radio"]:checked:after {
 scroll bar hidden
 -------------------------------------------- */
 .scrollbar_hidden::-webkit-scrollbar {
-  display: none;
+  display: none !important;
 }
 /* Hide scrollbar for IE, Edge add Firefox */
 .scrollbar_hidden {
