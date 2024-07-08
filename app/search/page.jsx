@@ -69,7 +69,7 @@ export default function Search() {
               filteredProducts.map((product) => (
                 <div
                   key={product._id}
-                  className="p-3 hover:bg-gray-200 cursor-pointer"
+                  className="p-3 hover:bg-gray-200 cursor-pointer text-sm"
                   onClick={() => handleProductClick(product?.productSlug)}
                 >
                   {product.productName}
