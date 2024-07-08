@@ -135,15 +135,15 @@ export default function BottomNavigation() {
               Shop
             </span>
           </Link>
-          <button
-            type="button"
+          <Link
+            href="/search"
             className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 duration-700 group"
           >
             <FaSearch className="w-5 h-5 mb-2 text-white group-hover:text-[#F16521] duration-700" />
             <span className="text-sm text-white group-hover:text-[#F16521] duration-700">
               Search
             </span>
-          </button>
+          </Link>
           <Link
             href="/userfeed"
             className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 duration-700 group"
@@ -297,10 +297,6 @@ export default function BottomNavigation() {
           </div>
         </Box>
       </Drawer>
-
-      <div>
-        
-      </div>
     </section>
   );
 }
