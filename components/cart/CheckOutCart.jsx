@@ -88,6 +88,7 @@ export default function CheckOutCart() {
 
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const form = e.target;
     const formData = new FormData(form);
     const customerInfo = localStorage.getItem("customer");
@@ -125,11 +126,14 @@ export default function CheckOutCart() {
       console.log("Order Response:", ResponseCookies);
       if (response) {
         router.push("/success");
+        setLoading(false);
       } else {
         console.error("Order creation error:", response);
+        setLoading(false);
       }
     } catch (error) {
       console.error("Order creation error:", error);
+      setLoading(false);
     }
   };
 
@@ -345,7 +349,7 @@ export default function CheckOutCart() {
             type="submit"
             className="bg-[#F16521] w-full py-2 rounded-md text-white"
           >
-            Place Order
+            {loading ? "Placing Order..." : "Place Order"}
           </button>
         </div>
       </form>
