@@ -89,11 +89,7 @@ export default function CheckOutCart() {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-
-    if (!userId) {
-      router.push("/signin");
-      return;
-    }
+    const customerInfo = localStorage.getItem("customer");
 
     const data = {
       customer: userId,
@@ -118,7 +114,10 @@ export default function CheckOutCart() {
       outlet: "",
     };
 
-    console.log("Order Data:", data);
+    if (!customerInfo) {
+      router.push("/signin");
+      return;
+    }
 
     try {
       const response = await fetchApi("/order/orderCreate", "POST", data);

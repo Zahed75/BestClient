@@ -16,7 +16,9 @@ export default function ShopCard({ product }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setProductImage(product?.productImage || Dynamo);
+    setProductImage(
+      product?.productImage || "https://i.ibb.co/sqPhfrt/notimgpng.png"
+    );
   }, [product]);
 
   return (
