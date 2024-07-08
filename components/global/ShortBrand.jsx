@@ -6,7 +6,7 @@ export default function ShortBrand() {
           <svg
             width="20"
             height="21"
-            className="w-8 md:w-10 h-5 md:h-10"
+            className="w-7 md:w-10 h-7 md:h-10"
             viewBox="0 0 23 23"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +37,7 @@ export default function ShortBrand() {
             height="21"
             viewBox="0 0 20 21"
             fill="none"
-            className="w-10 h-10"
+            className="w-8 md:w-10 h-8 md:h-10"
             xmlns="http://www.w3.org/2000/svg"
           >
             <g clipPath="url(#clip0_707_6150)">
@@ -66,7 +66,7 @@ export default function ShortBrand() {
             height="21"
             viewBox="0 0 20 21"
             fill="none"
-            className="w-10 h-10"
+            className="w-8 md:w-10 h-8 md:h-10"
             xmlns="http://www.w3.org/2000/svg"
           >
             <g clipPath="url(#clip0_707_6157)">
@@ -95,7 +95,7 @@ export default function ShortBrand() {
             height="21"
             viewBox="0 0 20 21"
             fill="none"
-            className="w-10 h-10"
+            className="w-7 md:w-10 h-7 md:h-10"
             xmlns="http://www.w3.org/2000/svg"
           >
             <g clipPath="url(#clip0_707_6164)">
