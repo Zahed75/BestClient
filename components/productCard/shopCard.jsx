@@ -1,24 +1,18 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import Dynamo from "@/public/images/dynacool.jpg";
 import Link from "next/link";
 import { addToCart, updateQuantity } from "@/redux/slice/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function ShopCard({ product }) {
-  const [cartCount, setCartCount] = useState(0);
-  const [productImage, setProductImage] = useState(
-    product?.productImage || Dynamo
-  );
+  const [productImage, setProductImage] = useState("");
 
   const cart = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setProductImage(
-      product?.productImage || "https://i.ibb.co/sqPhfrt/notimgpng.png"
-    );
+    setProductImage(product?.productImage);
   }, [product]);
 
   return (
@@ -141,7 +135,6 @@ export default function ShopCard({ product }) {
               <button
                 onClick={() => {
                   dispatch(addToCart(product));
-                  setCartCount(1);
                 }}
                 className="bg-[#FFCD00] px-3 py-2 rounded-full w-full"
               >

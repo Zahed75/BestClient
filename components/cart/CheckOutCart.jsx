@@ -114,11 +114,13 @@ export default function CheckOutCart() {
       products: productItems,
       totalPrice: totalProductPrice,
       deliveryCharge: deliveryCharge,
-      vatRate: vat,
+      vatRate: vatPercentage,
       couponId: "",
       channel: isMobileDevice() ? "mobile" : "web",
       outlet: "",
     };
+
+    console.log("Order Data:", data);
 
     if (!customerInfo) {
       router.push("/signin");
