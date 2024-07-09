@@ -12,7 +12,7 @@ export default function RelatedCard() {
       <section className="my-5 md:my-10 flex justify-start items-center gap-x-2">
         <div>
           <h4 className="text-[#202435] text-md md:text-xl font-semibold uppercase">
-            {relatedProducts?.length > 0 ? "Related Products" : ""}
+            {relatedProducts?.length > 0 ? "Recent Views" : ""}
           </h4>
         </div>
       </section>

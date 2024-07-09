@@ -25,17 +25,17 @@ export default function InfoSection() {
     if (!customerId || customerId === "") {
       router.push("/signin");
     } else {
-    const fetchData = async () => {
-      try {
-        const data = await fetchApi(`/customer/info/${customerId}`, "GET");
-        setCustomer(data?.customerInfo);
-        setCustomerImage(data?.customerInfo?.profilePicture);
-      } catch (error) {
-        console.error("Error fetching product data:", error);
-      }
-    };
+      const fetchData = async () => {
+        try {
+          const data = await fetchApi(`/customer/info/${customerId}`, "GET");
+          setCustomer(data?.customerInfo);
+          setCustomerImage(data?.customerInfo?.profilePicture);
+        } catch (error) {
+          console.error("Error fetching product data:", error);
+        }
+      };
 
-    fetchData();
+      fetchData();
     }
   }, []);
 
@@ -100,7 +100,7 @@ export default function InfoSection() {
         email: form.get("shippingEmail"),
       },
     };
-    console.log(data);
+
     try {
       const response = fetchApi(
         `/customer/updateCustomer/${customer?._id}`,
@@ -140,8 +140,13 @@ export default function InfoSection() {
   const handleRemoveProductPicture = () => {
     setCustomerImage("");
   };
+
   const products = useSelector((state) => state.wishlist.items);
 
+  const handleLogout = () => {
+    localStorage.removeItem("customer");
+    router.push("/");
+  };
   return (
     <section className="bg-[#F4F4F4]">
       <div className="bg-white shadow-md p-5 my-10 rounded-md">
@@ -152,7 +157,7 @@ export default function InfoSection() {
               active === "personal" ? "bg-[#F16521] text-white shadow-md" : ""
             }`}
           >
-            personal information
+            personal
           </div>
           <div
             onClick={() => setActive("orders")}
@@ -170,6 +175,12 @@ export default function InfoSection() {
           >
             Wishlist
           </div>
+          <button
+            onClick={handleLogout}
+            className="uppercase bg-[#F16521] text-white px-5 py-2 rounded-md ml-auto"
+          >
+            LogOut
+          </button>
         </div>
         <div
           className={`grid grid-cols-1 justify-between items-start gap-5 w-full my-10 
