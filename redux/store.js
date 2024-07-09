@@ -4,7 +4,7 @@ import productsReducer from "@/redux/slice/productsSlice";
 import cartReducer from "@/redux/slice/cartSlice";
 import customerReducer from "@/redux/slice/customerSlice";
 import wishlistReducer from "@/redux/slice/wishlistSlice";
-import relatedReducer from "@/redux/slice/relatedSlice";
+import relatedProductsReducer from "@/redux/slice/relatedSlice";
 
 const store = configureStore({
   reducer: {
@@ -13,7 +13,7 @@ const store = configureStore({
     cart: cartReducer,
     customer: customerReducer,
     wishlist: wishlistReducer,
-    related: relatedReducer,
+    relatedProducts: relatedProductsReducer,
   },
 });
 

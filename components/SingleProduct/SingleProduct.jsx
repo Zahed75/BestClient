@@ -15,6 +15,7 @@ import CompareProduct from "./CompareProduct";
 import ExcelUploader from "../fileUpload/ExcelUploader";
 import { useDispatch, useSelector } from "react-redux";
 import { addToWishlist } from "@/redux/slice/wishlistSlice";
+import { addRelatedProduct } from "@/redux/slice/relatedSlice";
 
 export default function SingleProduct({ product, categoryName }) {
   const [favorite, setFavorite] = useState(false);
@@ -26,6 +27,12 @@ export default function SingleProduct({ product, categoryName }) {
   const customerId = customer.items.userId;
   const wishlist = useSelector((state) => state.wishlist.items);
   const favoriteProduct = wishlist.find((item) => item._id === product?._id);
+
+  useEffect(() => {
+    if (product) {
+      dispatch(addRelatedProduct(product));
+    }
+  }, []);
 
   useEffect(() => {
     if (favoriteProduct) {
@@ -48,10 +55,10 @@ export default function SingleProduct({ product, categoryName }) {
   const tagValues = [
     "Home",
     "Shop",
-    ...categoryName?.flatMap((category) => category), 
+    ...categoryName?.flatMap((category) => category),
     `${product?.productName}`,
   ];
-  
+
   const productDataTabs = [
     {
       title: "Descriptions",
@@ -90,9 +97,7 @@ export default function SingleProduct({ product, categoryName }) {
               </tr>
             </tbody>
           </table> */}
-          <div className="my-20">
-            {/* <ExcelUploader /> */}
-          </div>
+          <div className="my-20">{/* <ExcelUploader /> */}</div>
         </section>
       ),
     },
@@ -107,7 +112,6 @@ export default function SingleProduct({ product, categoryName }) {
             {product?.productName}
           </h1>
           <div className="flex flex-col md:flex-row justify-between items-start gap-x-10">
-
             <div className="">
               <ImageShow
                 product={product}
