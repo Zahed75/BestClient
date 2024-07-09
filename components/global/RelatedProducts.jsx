@@ -3,9 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import RelatedProductCard from "../productCard/RelatedProductCard";
 
 export default function RelatedCard() {
-
-  const relatedProducts = useSelector((state) => state.relatedProducts?.items) || [];
-
+  const relatedProducts =
+    useSelector((state) => state.relatedProducts?.items) || [];
 
   console.log("relatedProducts", relatedProducts);
   return (
@@ -13,7 +12,7 @@ export default function RelatedCard() {
       <section className="my-5 md:my-10 flex justify-start items-center gap-x-2">
         <div>
           <h4 className="text-[#202435] text-md md:text-xl font-semibold uppercase">
-            Related Products
+            {relatedProducts?.length > 0 ? "Related Products" : ""}
           </h4>
         </div>
       </section>
