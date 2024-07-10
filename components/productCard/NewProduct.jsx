@@ -22,7 +22,7 @@ export default function NewProduct() {
         <h4 className="text-[#202435] text-md font-semibold mt-2">
           Conion BEW-DC24KRNV 2 Ton Inverter (DynaCool) Air Conditioner
         </h4>
-        <p className="text-[#70BE38] text-sm font-semibold my-3">IN STOCK</p>
+        <p className="text-[#70BE38] text-xs font-semibold font-dosis my-3">IN STOCK</p>
       </div>
     </div>
   );

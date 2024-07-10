@@ -34,7 +34,7 @@ export default function ProductCard({ index }) {
           <h4 className="text-[#202435] text-md font-normal mt-2">
             Conion BEW-DC24KRNV 2 Ton Inverter (DynaCool) Air Conditioner
           </h4>
-          <p className="text-[#70BE38] text-sm font-semibold my-3">IN STOCK</p>
+          <p className="text-[#70BE38] text-xs font-dosis font-semibold my-3">IN STOCK</p>
           <div className="flex justify-between items-center mt-2">
             {cartCount >= 1 ? (
               <div className="bg-[#F16521] border rounded-full w-full flex justify-between items-center">

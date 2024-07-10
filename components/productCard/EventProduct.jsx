@@ -7,7 +7,7 @@ export default function EventProduct({ event }) {
     <main className="my-5 md:my-10">
       <section className="flex justify-between items-center gap-x-2">
         <div>
-          <h4 className="text-[#202435] text-md md:text-xl font-semibold uppercase">
+          <h4 className="text-[#202435] text-md md:text-xl font-dosis font-bold uppercase">
             {event}
           </h4>
           <h4 className="text-[#9B9BB4] text-xs md:text-sm font-semibold">

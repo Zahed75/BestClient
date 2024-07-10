@@ -4,11 +4,11 @@ import Image from "next/image";
 import EmptyCart from "@/public/images/emptyCart.png";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
+import { fetchApi } from "@/utils/FetchApi";
 export default function ShowCart() {
-  
   const cart = useSelector((state) => state.cart.items) || [];
   const deliveryCharge = 100;
-  const vatPercentage = 5; // 5%
+  const vatPercentage = 5;
 
   const totalProductPrice = Array.isArray(cart)
     ? cart.reduce(
@@ -19,6 +19,35 @@ export default function ShowCart() {
 
   const vat = (totalProductPrice * vatPercentage) / 100;
   const totalPrice = totalProductPrice + deliveryCharge + vat;
+
+  // {
+  //   "couponName": "SUMMER1200",
+  //   "userId": "665c2a41a1659f9f35e0ba8a",
+  //   "requestedProducts": [
+  //     { "_id": "6688c125a1ed955794c485d0", "quantity": 1 }
+  //   ]
+  // }
+
+  // api /discount//getDiscountByCode
+
+  const applyCoupon = async (e) => {
+    e.preventDefault();
+    const coupon = e.target.coupon.value;
+    const userId = "665c2a41a1659f9f35e0ba8a";
+    const requestedProducts = cart.map((item) => ({
+      _id: item._id,
+      quantity: item.quantity,
+    }));
+    const data = {
+      couponName: coupon,
+      userId,
+      requestedProducts,
+    };
+    console.log(data);
+    const res = await fetchApi("/discount/getDiscountByCode", "POST", data);
+
+    console.log(res);
+  };
 
   return (
     <section className="">
@@ -134,10 +163,7 @@ export default function ShowCart() {
             <div className="my-5">
               <div className="flex justify-between items-center my-3">
                 <p>Products price</p>
-                <p className="font-semibold">
-                  ৳
-                  {totalProductPrice.toFixed(2)}
-                </p>
+                <p className="font-semibold">৳{totalProductPrice.toFixed(2)}</p>
               </div>
               <div className="flex justify-between items-center my-3">
                 <p>Delivery</p>
@@ -150,12 +176,7 @@ export default function ShowCart() {
               <div className="border"></div>
               <div className="flex justify-between items-center my-3">
                 <p>Total (Incl. VAT)</p>
-                {cart && (
-                  <p className="font-semibold">
-                    ৳
-                    {totalPrice}
-                  </p>
-                )}
+                {cart && <p className="font-semibold">৳{totalPrice}</p>}
               </div>
             </div>
           ) : (
@@ -200,7 +221,10 @@ export default function ShowCart() {
               can exchange these later in the process.
             </span>
             <div className="my-5 w-full">
-              <form className="flex justify-between items-center gap-5 ">
+              <form
+                onSubmit={applyCoupon}
+                className="flex justify-between items-center gap-5 "
+              >
                 <input
                   className="border-2 border-gray-400 bg-transparent rounded-md w-full py-1 px-3 focus:outline-0"
                   type="text"

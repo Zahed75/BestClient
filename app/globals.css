@@ -6,6 +6,8 @@
 body::-webkit-scrollbar {
   display: none !important;
 }
+
+
 /* --------------------------------
 slider image styles
 -------------------------------- */
@@ -14,6 +16,9 @@ slider image styles
 }
 .text-primary {
   color: #f16521;
+}
+.font-dosis {
+  font-family: 'Dosis', sans-serif;
 }
 
 

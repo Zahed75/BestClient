@@ -1,4 +1,4 @@
-import { Inter } from "next/font/google";
+import { Inter, Dosis } from "next/font/google";
 import "./globals.css";
 import Welcome from "@/components/global/Welcome";
 import TopLocationBar from "@/components/global/TobLocationBar";
@@ -10,6 +10,7 @@ import BottomNavigation from "@/components/global/BottomNavigation";
 import { Providers } from "@/redux/providers";
 
 const inter = Inter({ subsets: ["latin"] });
+const dosis = Dosis({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Best Electronic in Bangladesh",

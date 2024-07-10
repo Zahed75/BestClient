@@ -55,15 +55,15 @@ export default function NavigationBar() {
 
   return (
     <nav className="container">
-      <div className="hidden sm:hidden md:flex lg:flex justify-stretch items-center">
+      <div className="hidden sm:hidden md:flex lg:flex justify-stretch items-center font-dosis">
         <div className="relative">
           <button
             onMouseEnter={() => setIsAllCategoriesOpen(true)}
             onMouseLeave={() => setIsAllCategoriesOpen(false)}
-            className="group bg-[#F16521] text-sm font-normal px-5 py-4 uppercase text-white rounded-full flex justify-start items-center relative"
+            className="group bg-[#F16521] text-sm px-5 py-4 uppercase text-white rounded-full flex justify-start items-center relative"
           >
             <Image src={treeDot} className="w-4 h-4 " alt="Tree Dot" /> 
-            <span className="mx-3">All Categories</span>
+            <span className="mx-3 text-[13px]">All Categories</span>
             <Image
               src={arrayBottom}
               className="w-4 h-4 "
@@ -165,7 +165,7 @@ export default function NavigationBar() {
         </div>
 
         <div className="flex ml-auto">
-          <div className="flex justify-end items-center uppercase text-sm font-normal gap-x-1">
+          <div className="flex justify-end items-center uppercase text-sm gap-x-1">
             <span className="bg-[#F0FAFF] text-[#F16521] px-3 py-2 rounded-full cursor-pointer">
               <Link href="/">Home</Link>
             </span>
