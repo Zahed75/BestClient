@@ -20,7 +20,7 @@ export default function CheckOutCart() {
   const router = useRouter();
 
   const deliveryCharge = 100;
-  const vatPercentage = 5; // 5%
+  const vatPercentage = 5;
 
   const totalProductPrice = Array.isArray(cart)
     ? cart.reduce(
@@ -115,7 +115,7 @@ export default function CheckOutCart() {
       totalPrice: totalProductPrice,
       deliveryCharge: deliveryCharge,
       vatRate: vatPercentage,
-      couponId: "",
+      couponName: "",
       channel: isMobileDevice() ? "mobile" : "web",
       outlet: "",
     };

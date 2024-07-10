@@ -5,7 +5,12 @@ import EmptyCart from "@/public/images/emptyCart.png";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { fetchApi } from "@/utils/FetchApi";
+import { useState } from "react";
 export default function ShowCart() {
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [massage, setMassage] = useState("");
+
   const cart = useSelector((state) => state.cart.items) || [];
   const deliveryCharge = 100;
   const vatPercentage = 5;
@@ -32,8 +37,12 @@ export default function ShowCart() {
 
   const applyCoupon = async (e) => {
     e.preventDefault();
+    setError("");
+    setMassage("");
+    setLoading(true);
     const coupon = e.target.coupon.value;
-    const userId = "665c2a41a1659f9f35e0ba8a";
+    const customer = localStorage.getItem("customer");
+    const userId = customer ? JSON.parse(customer)._id : null;
     const requestedProducts = cart.map((item) => ({
       _id: item._id,
       quantity: item.quantity,
@@ -43,10 +52,20 @@ export default function ShowCart() {
       userId,
       requestedProducts,
     };
-    console.log(data);
-    const res = await fetchApi("/discount/getDiscountByCode", "POST", data);
 
-    console.log(res);
+    try {
+      const response = await fetchApi(
+        "/discount/getDiscountByCode",
+        "POST",
+        data
+      );
+      console.log(response);
+      setMassage("Coupon Applied Successfully");
+      setLoading(false);
+    } catch (error) {
+      setError(error.response.data.message);
+      setLoading(false);
+    }
   };
 
   return (
@@ -235,9 +254,13 @@ export default function ShowCart() {
                   type="submit"
                   className="border-2 border-gray-400 rounded-md py-1 px-3"
                 >
-                  Submit
+                  {loading ? "Submitting" : "Submit"}
                 </button>
               </form>
+              <div className="pt-2">
+                {error && <p className="text-red-500 text-xs">{error}</p>}
+                {massage && <p className="text-green-500 text-xs">{massage}</p>}
+              </div>
             </div>
 
             <Link
