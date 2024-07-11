@@ -16,21 +16,23 @@ export default function CheckOutCart() {
 
   const cart = useSelector((state) => state.cart.items) || [];
   const customer = useSelector((state) => state.customer) || {};
+  const discounts = useSelector((state) => state.discount?.discounts) || {};
 
   const router = useRouter();
 
   const deliveryCharge = 100;
   const vatPercentage = 5;
 
+  const discount = discounts?.discount || 0;
   const totalProductPrice = Array.isArray(cart)
-    ? cart.reduce(
-        (acc, item) => acc + item.general.salePrice * item.quantity,
-        0
-      )
+    ? cart.reduce((acc, item) => {
+        const price =
+          discount > 0 ? item.general.regularPrice : item.general.salePrice;
+        return acc + price * item.quantity;
+      }, 0)
     : 0;
-
   const vat = (totalProductPrice * vatPercentage) / 100;
-  const totalPrice = totalProductPrice + deliveryCharge + vat;
+  const totalPrice = totalProductPrice + deliveryCharge + vat - discount;
 
   const userId = customer?.items?.userId;
   const email = customer?.items?.email;
@@ -115,7 +117,7 @@ export default function CheckOutCart() {
       totalPrice: totalProductPrice,
       deliveryCharge: deliveryCharge,
       vatRate: vatPercentage,
-      couponName: "",
+      couponName: discounts?.name || "",
       channel: isMobileDevice() ? "mobile" : "web",
       outlet: "",
     };
@@ -264,7 +266,10 @@ export default function CheckOutCart() {
                   <p className="font-semibold">{item.quantity} x</p>
                   <p className="font-semibold max-w-52">{item?.productName}</p>
                   <p className="font-semibold">
-                    ৳{item.general.salePrice * item.quantity}
+                    ৳
+                    {discount > 0
+                      ? item.general.regularPrice
+                      : item.general.salePrice * item.quantity}
                   </p>
                 </div>
               ))}

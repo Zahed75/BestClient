@@ -5,41 +5,26 @@ import EmptyCart from "@/public/images/emptyCart.png";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { fetchApi } from "@/utils/FetchApi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { addDiscount } from "@/redux/slice/discountSlice";
 export default function ShowCart() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [massage, setMassage] = useState("");
+  const [message, setMessage] = useState("");
 
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.items) || [];
+  const discounts = useSelector((state) => state.discount?.discounts) || {};
+
   const deliveryCharge = 100;
   const vatPercentage = 5;
-
-  const totalProductPrice = Array.isArray(cart)
-    ? cart.reduce(
-        (acc, item) => acc + item.general.salePrice * item.quantity,
-        0
-      )
-    : 0;
-
-  const vat = (totalProductPrice * vatPercentage) / 100;
-  const totalPrice = totalProductPrice + deliveryCharge + vat;
-
-  // {
-  //   "couponName": "SUMMER1200",
-  //   "userId": "665c2a41a1659f9f35e0ba8a",
-  //   "requestedProducts": [
-  //     { "_id": "6688c125a1ed955794c485d0", "quantity": 1 }
-  //   ]
-  // }
-
-  // api /discount//getDiscountByCode
 
   const applyCoupon = async (e) => {
     e.preventDefault();
     setError("");
-    setMassage("");
+    setMessage("");
     setLoading(true);
+
     const coupon = e.target.coupon.value;
     const customer = localStorage.getItem("customer");
     const userId = customer ? JSON.parse(customer)._id : null;
@@ -59,14 +44,34 @@ export default function ShowCart() {
         "POST",
         data
       );
-      console.log(response);
-      setMassage("Coupon Applied Successfully");
-      setLoading(false);
+
+      if (response?.discountAmount) {
+        const discount = {
+          name: coupon,
+          discount: response?.discountAmount?.discount,
+        };
+        dispatch(addDiscount(discount));
+        setMessage("Coupon Applied Successfully");
+      } else {
+        setError("Invalid coupon code or discount amount");
+      }
     } catch (error) {
-      setError(error.response.data.message);
+      setError("Apply a valid coupon code");
+    } finally {
       setLoading(false);
     }
   };
+
+  const discount = discounts?.discount || 0;
+  const totalProductPrice = Array.isArray(cart)
+    ? cart.reduce((acc, item) => {
+        const price =
+          discount > 0 ? item.general.regularPrice : item.general.salePrice;
+        return acc + price * item.quantity;
+      }, 0)
+    : 0;
+  const vat = (totalProductPrice * vatPercentage) / 100;
+  const totalPrice = totalProductPrice + deliveryCharge + vat - discount;
 
   return (
     <section className="">
@@ -259,7 +264,7 @@ export default function ShowCart() {
               </form>
               <div className="pt-2">
                 {error && <p className="text-red-500 text-xs">{error}</p>}
-                {massage && <p className="text-green-500 text-xs">{massage}</p>}
+                {message && <p className="text-green-500 text-xs">{message}</p>}
               </div>
             </div>
 
