@@ -3,7 +3,6 @@ import RelatedCard from "@/components/global/RelatedProducts";
 import ShortBrand from "@/components/global/ShortBrand";
 
 export default async function page() {
-
   return (
     <main className="container">
       <CheckOutCart />
@@ -12,3 +11,6 @@ export default async function page() {
     </main>
   );
 }
+
+
+// Path: app/checkout/page.jsx
