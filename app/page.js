@@ -1,23 +1,28 @@
 import ImageSlider from "@/components/global/ImageSlider";
-import ShortBrand from "@/components/global/ShortBrand";
 import Categories from "@/components/home/Categories";
 import RecentAdded from "@/components/home/RecentAdded";
 import EventProduct from "@/components/productCard/EventProduct";
 
 export default async function Home() {
-  const events = await fetch(
-    `${process.env.NEXT_PUBLIC_API_ENDPOINT}/event/products`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
-    }
-  )
-    .then((res) => res.json())
-    .then((data) => data.productsAndEvents || [])
-    .catch((error) => console.error(error));
+  let events = [];
+
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/event/products`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        cache: "no-store",
+      }
+    );
+
+    const data = await response.json();
+    events = data.productsAndEvents || []; // Default to an empty array if undefined
+  } catch (error) {
+    console.error("Error fetching events:", error);
+  }
 
   // Sort events by eventCatId
   const sortedEvents = events.sort((a, b) => a.eventCatId - b.eventCatId);
