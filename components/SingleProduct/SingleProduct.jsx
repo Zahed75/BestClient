@@ -97,7 +97,9 @@ export default function SingleProduct({ product, categoryName }) {
               </tr>
             </tbody>
           </table> */}
-          <div className="my-20">{/* <ExcelUploader /> */}</div>
+          <div className="my-20">
+            {/* <ExcelUploader /> */}
+          </div>
         </section>
       ),
     },

@@ -16,8 +16,10 @@ export default async function Page({ params }) {
   const { slug } = params;
   const res = await fetchApi(`/product/getProductBySlugHandler/${slug}`, "GET");
   const product = await res?.product;
-  // all categories
-  const categories = product?.categoryId?.map((category) => 
+
+  console.log("product", product);
+
+  const categories = product?.categoryId?.map((category) =>
     fetchApi(`/category/getCategoryById/${category}`, "GET")
   );
   // const category = await fetchApi(
@@ -30,11 +32,6 @@ export default async function Page({ params }) {
   const categoryName = category?.map((cat) => cat?.category?.categoryName);
 
   console.log("categoryName", categoryName);
-
-
-
-
-
   return (
     <>
       {product ? (
@@ -45,9 +42,6 @@ export default async function Page({ params }) {
     </>
   );
 }
-
-
-
 
 // export async function generateStaticParams() {
 //   const res = await fetchApi(`/product/getAllProducts`, "GET");

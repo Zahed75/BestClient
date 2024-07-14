@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  discounts: {}, // Initial state with discounts stored as an object
+  discounts: {},
 };
 
 const discountSlice = createSlice({

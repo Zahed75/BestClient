@@ -13,8 +13,9 @@ export default function InfoSection() {
   const [isLoading, setIsLoading] = useState(false);
   const [customerImage, setCustomerImage] = useState("");
   const [customer, setCustomer] = useState({});
-  const [active, setActive] = useState("personal");
+  const [active, setActive] = useState("orders");
   const [openModal, setOpenModal] = useState(false);
+  const [orderHistory, setOrderHistory] = useState([]);
 
   const { error, handleUpload, imageUrl, uploading } = useImgBBUpload();
   const router = useRouter();
@@ -52,6 +53,32 @@ export default function InfoSection() {
     };
 
     fetchDistricts();
+  }, []);
+
+  useEffect(() => {
+    const fetchOrderHistory = async () => {
+      const storedCustomer = localStorage.getItem("customer");
+      const customerId = storedCustomer
+        ? JSON.parse(storedCustomer).userId
+        : "";
+      if (!customerId || customerId === "") {
+        router.push("/signin");
+      } else {
+        try {
+          const res = await fetchApi(
+            `/customer/order-history/${customerId}`,
+            "GET"
+          );
+
+          setOrderHistory(res?.orders);
+          console.log("orderHistory", res?.orders);
+        } catch (error) {
+          console.error("Error fetching order history:", error);
+        }
+      }
+    };
+
+    fetchOrderHistory();
   }, []);
 
   const handleUserImgFileChange = async (event) => {
@@ -147,6 +174,12 @@ export default function InfoSection() {
     localStorage.removeItem("customer");
     router.push("/");
   };
+
+  const formedDate = (date) => {
+    const d = new Date(date);
+    return d.toDateString();
+  };
+
   return (
     <section className="bg-[#F4F4F4]">
       <div className="bg-white shadow-md p-5 my-10 rounded-md">
@@ -666,39 +699,47 @@ export default function InfoSection() {
         ${active === "orders" ? "block" : "hidden"} 
         `}
         >
-          <div className="w-full p-5 shadow-md rounded-md border ">
-            <div className="grid grid-cols-1 md:grid-cols-5 justify-between items-center">
-              <div>
-                <span className="text-slate-400">Order</span>
-                <p className="text-[#F16521]">#F16521</p>
+          {orderHistory?.map((order, index) => (
+            <div
+              key={index}
+              className="w-full p-5 shadow-md rounded-md border "
+            >
+              <div className="grid grid-cols-1 md:grid-cols-5 justify-between items-center">
+                <div>
+                  <span className="text-slate-400">Order</span>
+                  <p className="text-[#F16521]">{order?.orderId}</p>
+                </div>
+                <div>
+                  <span className="text-slate-400">Date</span>
+                  <p className="">{formedDate(order?.createdAt)}</p>
+                </div>
+                <div>
+                  <span className="text-slate-400">Status</span>
+                  <p className="">{order?.orderStatus}</p>
+                </div>
+                <div>
+                  <span className="text-slate-400">Total</span>
+                  <p className="">৳ {order?.totalPrice} for {order?.products?.length} item</p>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => setOpenModal(true)}
+                    className="bg-[#F16521] text-white px-3 py-1 rounded-md"
+                  >
+                    View
+                  </button>
+                </div>
               </div>
-              <div>
-                <span className="text-slate-400">Date</span>
-                <p className=""> 5 May 2023</p>
-              </div>
-              <div>
-                <span className="text-slate-400">Status</span>
-                <p className="">Delivered</p>
-              </div>
-              <div>
-                <span className="text-slate-400">Total</span>
-                <p className="">৳ 86500 for 2 item</p>
-              </div>
-              <div>
-                <button
-                  type="button"
-                  onClick={() => setOpenModal(true)}
-                  className="bg-[#F16521] text-white px-3 py-1 rounded-md"
-                >
-                  View
-                </button>
+              <div className="my-10">
+                {
+                  order?.products?.map((product, index) => (
+                    <CartProductSuccess key={index} product={product} />
+                  ))
+                }
               </div>
             </div>
-            <div className="my-10">
-              <CartProductSuccess />
-              <CartProductSuccess />
-            </div>
-          </div>
+          ))}
         </div>
         <div
           className={`grid grid-cols-1 justify-between items-start gap-5 w-full my-10

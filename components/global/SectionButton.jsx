@@ -5,7 +5,7 @@ export default function SectionButton({ url }) {
     <div className="flex justify-center ml-auto">
       <Link
         href={url}
-        className="bg-[#F16521] text-white text-nowrap text-xs md:text-sm font-semibold py-2 px-4 rounded-full flex items-center justify-center"
+        className="bg-[#F16521] text-white text-nowrap text-xs md:text-sm font-dosis font-semibold py-2 px-4 rounded-full flex items-center justify-center"
       >
         View All
         <svg
