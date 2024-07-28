@@ -66,12 +66,12 @@ export default function InfoSection() {
       } else {
         try {
           const res = await fetchApi(
-            `/customer/order-history/${customerId}`,
+            `/order/order-history/${customerId}`,
             "GET"
           );
 
-          setOrderHistory(res?.orders);
-          console.log("orderHistory", res?.orders);
+          setOrderHistory(res?.data);
+          console.log("orderHistory", res?.data);
         } catch (error) {
           console.error("Error fetching order history:", error);
         }
@@ -711,15 +711,15 @@ export default function InfoSection() {
                 </div>
                 <div>
                   <span className="text-slate-400">Date</span>
-                  <p className="">{formedDate(order?.createdAt)}</p>
+                  <p className="">{formedDate(order?.date)}</p>
                 </div>
                 <div>
                   <span className="text-slate-400">Status</span>
-                  <p className="">{order?.orderStatus}</p>
+                  <p className="">{order?.status}</p>
                 </div>
                 <div>
                   <span className="text-slate-400">Total</span>
-                  <p className="">৳ {order?.totalPrice} for {order?.products?.length} item</p>
+                  <p className="">৳ {order?.total} for {order?.products?.length} item</p>
                 </div>
                 <div>
                   <button
