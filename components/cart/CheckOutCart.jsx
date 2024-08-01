@@ -245,9 +245,7 @@ export default function CheckOutCart() {
                   type="tel"
                   name="phone"
                   id="phone"
-                  defaultValue={
-                    88 + customerInfo?.billingInfo?.phoneNumber || ""
-                  }
+                  defaultValue={customerInfo?.billingInfo?.phoneNumber || ""}
                   required
                 />
               </div>
