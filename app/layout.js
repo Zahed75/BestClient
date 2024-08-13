@@ -12,9 +12,28 @@ import { Providers } from "@/redux/providers";
 const inter = Inter({ subsets: ["latin"] });
 const dosis = Dosis({ subsets: ["latin"] });
 
+
+// og:image should 1200 x 630
+// 
+// 
+
 export const metadata = {
-  title: "Best Electronic in Bangladesh",
-  description: "Best Electronic is the best online shop in Bangladesh",
+  title: {
+    default: "Best Electronic in Bangladesh",
+    template: "%s - Best Electronic in Bangladesh",
+  },
+  description:
+    "Best Electronics is your one-stop shop to get all kinds of electronic and electrical products in Bangladesh.",
+  openGraph: {
+    title: "Best Electronics in Bangladesh",
+    description:
+      "Best Electronics is your one-stop shop to get all kinds of electronic and electrical products in Bangladesh.",
+    type: "website",
+    locale: "en_BD",
+    url: "https://www.bestelectronics.com.bd/",
+    metadataBase: "https://www.bestelectronics.com.bd/",
+    siteName: "Best Electronic",
+  },
 };
 
 export default function RootLayout({ children }) {
