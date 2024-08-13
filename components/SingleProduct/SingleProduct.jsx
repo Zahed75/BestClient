@@ -12,7 +12,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import ProductTabs from "./ProductTabs";
 import CompareProduct from "./CompareProduct";
-import ExcelUploader from "../fileUpload/ExcelUploader";
 import { useDispatch, useSelector } from "react-redux";
 import { addToWishlist } from "@/redux/slice/wishlistSlice";
 import { addRelatedProduct } from "@/redux/slice/relatedSlice";
@@ -98,7 +97,6 @@ export default function SingleProduct({ product, categoryName }) {
             </tbody>
           </table> */}
           <div className="my-20">
-            <ExcelUploader />
           </div>
         </section>
       ),
