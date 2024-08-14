@@ -24,6 +24,8 @@ export default async function Page() {
     .then((data) => data.products)
     .catch((error) => console.error(error));
 
+  console.log("env", process.env.SITE_URL);
+
   return (
     <main>
       <Shop products={products} />

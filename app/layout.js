@@ -30,8 +30,8 @@ export const metadata = {
       "Best Electronics is your one-stop shop to get all kinds of electronic and electrical products in Bangladesh.",
     type: "website",
     locale: "en_BD",
-    url: "https://www.bestelectronics.com.bd/",
-    metadataBase: "https://www.bestelectronics.com.bd/",
+    url: `${process.env.SITE_URL}`,
+    metadataBase: `${process.env.SITE_URL}`,
     siteName: "Best Electronic",
   },
 };

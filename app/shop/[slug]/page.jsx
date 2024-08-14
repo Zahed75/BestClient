@@ -14,8 +14,8 @@ export async function generateMetadata({ params, searchParams }) {
       description: product?.seo?.prodDescription,
       type: "website",
       locale: "en_BD",
-      url: `https://www.bestelectronics.com.bd/shop/${slug}`,
-      metadataBase: "https://www.bestelectronics.com.bd/",
+      url: `${process.env.SITE_URL}/shop/${slug}`,
+      metadataBase: `${process.env.SITE_URL}`,
       siteName: "Best Electronic",
       images: [
         {
@@ -45,7 +45,7 @@ export default async function Page({ params }) {
   const category = await Promise.all(categories);
   const categoryName = category?.map((cat) => cat?.category?.categoryName);
 
-  console.log("categoryName", categoryName);
+  
   return (
     <>
       {product ? (
