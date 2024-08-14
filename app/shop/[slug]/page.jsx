@@ -9,6 +9,20 @@ export async function generateMetadata({ params, searchParams }) {
   return {
     title: product?.seo?.productTitle,
     description: product?.seo?.prodDescription,
+    openGraph: {
+      title: product?.seo?.productTitle,
+      description: product?.seo?.prodDescription,
+      type: "website",
+      locale: "en_BD",
+      url: `https://www.bestelectronics.com.bd/shop/${slug}`,
+      metadataBase: "https://www.bestelectronics.com.bd/",
+      siteName: "Best Electronic",
+      images: [
+        {
+          url: product?.productImage,
+        },
+      ],
+    },
   };
 }
 
