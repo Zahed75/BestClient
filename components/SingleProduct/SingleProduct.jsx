@@ -113,9 +113,9 @@ export default function SingleProduct({ product, categoryName }) {
                 className={`
                 ${
                   product?.inventory?.stockStatus === "In Stock"
-                    ? "text-[#70BE38]"
-                    : "text-red-400"
-                } bg-[#E5F8ED] text-xs font-semibold px-3 py-1 inline-block rounded-full
+                    ? "text-[#70BE38] bg-[#E5F8ED]"
+                    : "text-red-400 bg-red-100"
+                }  text-xs font-semibold px-3 py-1 inline-block rounded-full
                 `}
               >
                 {product?.inventory?.stockStatus}
