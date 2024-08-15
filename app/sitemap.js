@@ -4,10 +4,14 @@ export default async function sitemap(req, res) {
   const response = await fetchApi("/product/getProductByproductStatus", "GET");
   const products = response?.products || [];
 
-  const productUrls = products.map((product) => ({
-    url: `${process.env.SITE_URL}/shop/${product.productSlug}`,
-    lastModified: new Date(product.updatedAt).toISOString(),
-  }));
+  const productUrls = products.map((product) => {
+    const lastModified = product.updatedAt ? new Date(product.updatedAt) : new Date();
+    
+    return {
+      url: `${process.env.SITE_URL}/shop/${product.productSlug}`,
+      lastModified: lastModified.toISOString(),
+    };
+  });
 
   const staticUrls = [
     {
@@ -39,8 +43,4 @@ export default async function sitemap(req, res) {
   res.setHeader("Content-Type", "text/xml");
   res.write(sitemap);
   res.end();
-
-  return {
-    props: {},  
-  };
 }

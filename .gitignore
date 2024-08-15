@@ -38,6 +38,6 @@ next-env.d.ts
 
 
 # pages
-sitemap.xml
-sitemap.js
-robots.js
+/sitemap.xml
+/sitemap.js
+/robots.js
