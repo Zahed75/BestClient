@@ -72,32 +72,20 @@ export default function SingleProduct({ product, categoryName }) {
       title: "Specifications",
       content: (
         <section className="my-5">
-          {/* <table className="w-full">
+          <table className="w-full">
             <tbody>
               <tr>
-                <td className="border px-5 py-2">Type</td>
-                <td className="border px-5 py-2">Inverter</td>
+                <td className="border px-5 py-2">Brand:</td>
+                <td className="border px-5 py-2">{product?.productBrand}</td>
               </tr>
-              <tr>
-                <td className="border px-5 py-2">Capacity</td>
-                <td className="border px-5 py-2">2 Ton</td>
-              </tr>
-              <tr>
-                <td className="border px-5 py-2">Model</td>
-                <td className="border px-5 py-2">BEW-DC24KRNV</td>
-              </tr>
-              <tr>
-                <td className="border px-5 py-2">Brand</td>
-                <td className="border px-5 py-2">Conion</td>
-              </tr>
-              <tr>
-                <td className="border px-5 py-2">Heavy Duty Cooling</td>
-                <td className="border px-5 py-2">Up To 52°C</td>
-              </tr>
+              {product?.productSpecification?.map((spec, i) => (
+                <tr key={i}>
+                  <td className="border px-5 py-2">{spec.key + ":"}</td>
+                  <td className="border px-5 py-2">{spec.value}</td>
+                </tr>
+              ))}
             </tbody>
-          </table> */}
-          <div className="my-20">
-          </div>
+          </table>
         </section>
       ),
     },
