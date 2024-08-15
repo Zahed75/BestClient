@@ -80,8 +80,8 @@ export default function SingleProduct({ product, categoryName }) {
               </tr>
               {product?.productSpecification?.map((spec, i) => (
                 <tr key={i}>
-                  <td className="border px-5 py-2">{spec.key + ":"}</td>
-                  <td className="border px-5 py-2">{spec.value}</td>
+                  <td className="border px-5 py-2 w-1/2">{spec.key}</td>
+                  <td className="border px-5 py-2 w-1/2">{spec.value}</td>
                 </tr>
               ))}
             </tbody>
