@@ -3,17 +3,19 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/slice/cartSlice";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function ImageShow({ productImage, productGallery, product }) {
   const combinedGallery = [productImage, ...productGallery];
-  const initialIndex = combinedGallery.length - 1;
+  const initialIndex = 0; // Start with the first image
   const [wordData, setWordData] = useState(combinedGallery[initialIndex]);
   const [val, setVal] = useState(initialIndex);
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const handleClick = (index) => {
     setVal(index);
@@ -33,11 +35,15 @@ export default function ImageShow({ productImage, productGallery, product }) {
     return () => clearInterval(interval);
   }, [val]);
 
+  const handleBuyNow = () => {
+    dispatch(addToCart(product));
+    router.push("/checkout");
+  };
   return (
     <section className="flex justify-center items-start gap-5 my-5">
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 max-h-[387px] overflow-y-scroll scrollbar_hidden">
         {combinedGallery?.map((src, i) => (
-          <div className="" key={i}>
+          <div key={i}>
             <Image
               className={
                 wordData === src
@@ -54,7 +60,7 @@ export default function ImageShow({ productImage, productGallery, product }) {
         ))}
       </div>
       <div>
-        <div className="w-full object-cover border rounded-md group overflow-hidden group">
+        <div className="w-full object-cover border rounded-md group overflow-hidden">
           <Zoom>
             <Image
               width="400"
@@ -75,12 +81,12 @@ export default function ImageShow({ productImage, productGallery, product }) {
           >
             Add to Cart
           </button>
-          <Link
-            href="/checkout"
+          <button
+            onClick={handleBuyNow}
             className="flex justify-center w-full py-2 text-white bg-[#F16521] rounded-md text-sm"
           >
             Buy Now
-          </Link>
+          </button>
         </div>
       </div>
     </section>
