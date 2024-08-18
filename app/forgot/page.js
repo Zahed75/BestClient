@@ -5,7 +5,7 @@ import { fetchApi } from "@/utils/FetchApi";
 
 export default function Forgot() {
   const [confirm, setConfirm] = useState(false);
-  const [error, setError] = useState("something wrong");
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleForgotPassword = async (e) => {
@@ -19,6 +19,8 @@ export default function Forgot() {
       await fetchApi("/customer/forgetCred", "POST", { email });
       setConfirm(true);
       setIsLoading(false);
+
+      localStorage.setItem('forgetEmail', email);
     } catch (err) {
       console.error(err);
       setError("Failed to send reset email. Please try again.");

@@ -35,7 +35,7 @@ export default function SetPassword() {
       const response = await fetchApi("/customer/resetPassword", "PUT", data);
       if (response) {
         setIsLoading(false);
-        console.log(response);
+        localStorage.removeItem('forgetEmail');
         setConfirm(true);
       } else {
         setError("something went wrong");
@@ -48,8 +48,7 @@ export default function SetPassword() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const customer = localStorage.getItem("customer");
-      const email = customer ? JSON.parse(customer).email : "";
+      const email = localStorage.getItem("forgetEmail");
       if (email) {
         setEmail(email);
         console.log(email);
@@ -187,7 +186,7 @@ export default function SetPassword() {
                 </p>
               </div>
               <Link
-                href="/"
+                href="/signin"
                 className="bg-[#F16521] text-white py-2 px-3 my-10 rounded-md"
               >
                 Back to Login

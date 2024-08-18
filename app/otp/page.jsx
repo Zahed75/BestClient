@@ -6,7 +6,7 @@ import { fetchApi } from "@/utils/FetchApi";
 export default function Otp() {
   const [otpValues, setOtpValues] = useState(["", "", "", ""]);
   const [email, setEmail] = useState("");
-  const [error, setError] = useState("Something wrong");
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
