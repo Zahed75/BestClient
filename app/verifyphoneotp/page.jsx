@@ -2,16 +2,20 @@
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { fetchApi } from "@/utils/FetchApi";
+import { useDispatch } from "react-redux";
+import { addCustomerInfo } from "@/redux/slice/customerSlice";
 
 export default function VerifyOtp() {
     const [otpValues, setOtpValues] = useState(["", "", "", ""]);
-    const [email, setEmail] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState("");
     const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
     const [countdown, setCountdown] = useState(120);
+
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const handleOtpChange = (index, value) => {
         const newOtpValues = [...otpValues];
@@ -37,13 +41,16 @@ export default function VerifyOtp() {
 
         setIsLoading(true);
         try {
-            const data = { email, otp };
-            const response = await fetchApi("/customer/otpverify", "POST", data);
+            const data = { phoneNumber, otp };
+            console.log("data", data);
+            
+            const response = await fetchApi("/customer/verifyPhoneOtp", "POST", data);
             setIsLoading(false);
 
             if (response) {
-                router.push("/setpassword");
-
+                router.push("/");
+                localStorage.removeItem("phoneNumber");
+                dispatch(addCustomerInfo(response?.user));
             } else {
                 setError("Invalid OTP. Please try again.");
             }
@@ -58,7 +65,7 @@ export default function VerifyOtp() {
         setMessage("");
         setIsLoading(true);
         try {
-            const response = await fetchApi("/auth/otpResend", "POST", { email });
+            const response = await fetchApi("/auth/verifyPhoneOtp", "POST", { number });
             if (response) {
                 setMessage("OTP resent successfully.");
                 setIsLoading(false);
@@ -75,12 +82,11 @@ export default function VerifyOtp() {
 
     useEffect(() => {
         if (typeof window !== "undefined") {
-            const email = localStorage.getItem("forgetEmail");
-            if (email) {
-                setEmail(email);
-                console.log(email);
+            const phoneNumber = localStorage.getItem("phoneNumber");
+            if (phoneNumber) {
+                setPhoneNumber(phoneNumber);
             } else {
-                setError("Email not found.");
+                setError("Phone Number not found.");
             }
         }
     }, []);

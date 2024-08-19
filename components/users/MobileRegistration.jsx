@@ -27,23 +27,22 @@ export default function MobileRegistration() {
         setIsLoading(true);
         setError("");
 
-        const email = formRef.current.email.value;
+        const firstName = formRef.current.name.value;
         const phoneNumber = formRef.current.mobile.value;
-        const password = formRef.current.password.value;
 
-        if (email && password && mobile) {
+        if (firstName && mobile) {
             try {
-                const data = { email, password, phoneNumber, role: "CUS" };
+                const data = { firstName, phoneNumber };
                 const response = await fetchApi(
-                    "/customer/createCustomer",
+                    "/customer/registerByPhone",
                     "POST",
                     data
                 );
 
                 if (response) {
-                    localStorage.setItem("customer", JSON.stringify(response.customer));
+                    localStorage.setItem("phoneNumber", JSON.stringify(response.phoneNumber));
                     setIsLoading(false);
-                    router.push("/otp");
+                    router.push("/verifyphoneotp");
                 } else {
                     setError("Something went wrong. Please try again.");
                 }
@@ -78,7 +77,6 @@ export default function MobileRegistration() {
                                     name="name"
                                     id="name"
                                     required
-                                    placeholder="Md Shaidul Bsahar"
                                 />
                             </div>
                             <div>
@@ -92,12 +90,11 @@ export default function MobileRegistration() {
                                     id="mobile"
                                     required
                                     defaultValue={"880"}
-                                    placeholder="01*********"
                                 />
                             </div>
                             <div className="flex justify-start items-center text-sm">
                                 <Link href="/mobilesignin" className="text-[#F16521]">
-                                    Sign in an account
+                                    Create an account
                                 </Link>
 
                             </div>

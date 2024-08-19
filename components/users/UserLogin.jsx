@@ -132,34 +132,16 @@ export default function UserLogin() {
             </div>
 
             <div className="flex justify-center items-center gap-3 border-b pb-5">
-              <div className="border shadow-sm p-3 rounded-md cursor-pointer">
-                <Image
-                  src={fbLogin}
-                  alt="Facebook Login"
-                  className="w-[30px]"
-                />
-              </div>
-              <div className="border shadow-sm p-3 rounded-md cursor-pointer">
-                <Image
-                  src={googleLogin}
-                  alt="Google Login"
-                  className="w-[30px]"
-                />
-              </div>
-              <div className="border shadow-sm p-3 rounded-md cursor-pointer">
-                <Image
-                  src={appleLogin}
-                  alt="apple Login"
-                  className="w-[25px]"
-                />
-              </div>
+              <Link href="/mobilesignin" className="text-[#F16521]">
+                Sign In with Phone Number
+              </Link>
             </div>
 
             <div className="text-center text-sm">
               By signing in or creating an account, you agree with our
               <Link href="/" className="text-[#F16521] pl-1">
                 Terms & Conditions
-              </Link>{" "}
+              </Link>
               and
               <Link href="/" className="text-[#F16521]">
                 Privacy Statement

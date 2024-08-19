@@ -13,7 +13,7 @@ export default function InfoSection() {
   const [isLoading, setIsLoading] = useState(false);
   const [customerImage, setCustomerImage] = useState("");
   const [customer, setCustomer] = useState({});
-  const [active, setActive] = useState("orders");
+  const [active, setActive] = useState("personal");
   const [openModal, setOpenModal] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [orderHistory, setOrderHistory] = useState([]);
@@ -25,7 +25,7 @@ export default function InfoSection() {
     const storedCustomer = localStorage.getItem("customer");
     const customerId = storedCustomer ? JSON.parse(storedCustomer).userId : "";
     if (!customerId || customerId === "") {
-      router.push("/signin");
+      router.push("/mobilesignin");
     } else {
       const fetchData = async () => {
         try {
@@ -63,7 +63,7 @@ export default function InfoSection() {
         ? JSON.parse(storedCustomer).userId
         : "";
       if (!customerId || customerId === "") {
-        router.push("/signin");
+        router.push("/mobilesignin");
       } else {
         try {
           const res = await fetchApi(
