@@ -8,7 +8,7 @@ export default async function Home() {
 
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/event/products`,
+      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/grid/allProductGrids`,
       {
         method: "GET",
         headers: {
@@ -19,17 +19,17 @@ export default async function Home() {
     );
 
     const data = await response.json();
-    events = data.productsAndEvents || []; // Default to an empty array if undefined
+    events = data.grids  || []; 
   } catch (error) {
     console.error("Error fetching events:", error);
   }
 
   // Sort events by eventCatId
-  const sortedEvents = events.sort((a, b) => a.eventCatId - b.eventCatId);
+  const sortedEvents = events.sort((a, b) => a.ordersBy - b.ordersBy);
 
   const eventCategories = sortedEvents.reduce(
     (acc, event) => {
-      if (event.eventCatId === "0" || event.eventCatId === "1") {
+      if (event.ordersBy === 0 || event.ordersBy === 1) {
         acc.before.push(event);
       } else {
         acc.after.push(event);
