@@ -6,6 +6,7 @@ import { RiGridFill } from "react-icons/ri";
 import { useState } from "react";
 import ShopCard from "@/components/productCard/shopCard";
 import Skeleton from "@/components/global/Skeleton";
+import Pagination from "@/components/global/Pagination";
 
 export default function Shop({ products }) {
   const tagValues = ["Home", "Shop"];
@@ -142,22 +143,19 @@ export default function Shop({ products }) {
                 <div className="flex justify-start items-center gap-5">
                   <TiThMenu
                     onClick={() => handleDynamicGrid({ value: 1 })}
-                    className={`text-2xl text-gray-400 hover:text-gray-700 ${
-                      dynamicGrid == 1 ? "text-gray-700" : ""
-                    } duration-700`}
+                    className={`text-2xl text-gray-400 hover:text-gray-700 ${dynamicGrid == 1 ? "text-gray-700" : ""
+                      } duration-700`}
                   />
 
                   <RiGridFill
                     onClick={() => handleDynamicGrid({ value: 3 })}
-                    className={`text-2xl text-gray-400 hover:text-gray-700 ${
-                      dynamicGrid == 3 ? "text-gray-700" : ""
-                    } duration-700`}
+                    className={`text-2xl text-gray-400 hover:text-gray-700 ${dynamicGrid == 3 ? "text-gray-700" : ""
+                      } duration-700`}
                   />
                   <TfiLayoutGrid4Alt
                     onClick={() => handleDynamicGrid({ value: 4 })}
-                    className={`text-xl text-gray-400 hover:text-gray-700 ${
-                      dynamicGrid == 4 ? "text-gray-700" : ""
-                    } duration-700`}
+                    className={`text-xl text-gray-400 hover:text-gray-700 ${dynamicGrid == 4 ? "text-gray-700" : ""
+                      } duration-700`}
                   />
                 </div>
                 <div className="flex items-center gap-3 ">
@@ -208,6 +206,7 @@ export default function Shop({ products }) {
                   <ShopCard key={index} product={product} />
                 ))}
               </div>
+              <Pagination />
             </div>
           </section>
         </div>

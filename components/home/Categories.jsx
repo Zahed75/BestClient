@@ -23,7 +23,7 @@ export default function Categories() {
   ];
 
   return (
-    <section className="my-5 md:my-10 grid grid-cols-1 md:grid-cols-3 gap-3">
+    <section className="my-5 md:my-10 grid grid-cols-2 md:grid-cols-3 gap-3">
       {images.map((image, index) => (
         <div key={index} className="relative overflow-hidden">
           <Image src={image} alt="category" className="hover:scale-105 duration-700" />
