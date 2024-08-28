@@ -56,10 +56,10 @@ export default function ProductCard({ product }) {
             className={`${product?.inventory?.stockStatus === "In Stock"
               ? "text-[#70BE38]"
               : "text-red-400"
-              } text-[11px] font-semibold ${product?.inventory?.stockStatus === "In Stock"
+              } text-[11px] md:text-[12px] font-semibold ${product?.inventory?.stockStatus === "In Stock"
                 ? "border border-[#70BE38]"
                 : "border border-red-400 bg-red-100"
-              } rounded-md px-3 py-1`}
+              } rounded-md px-2 md:px-3 md:py-1`}
           >
             {product?.inventory?.stockStatus}
           </p>
@@ -75,7 +75,7 @@ export default function ProductCard({ product }) {
               {(product?.productName)}
             </h4>
           </Link>
-          <div className="mt-5 text-slate-500 text-[13px]">
+          <div className="mt-5 text-slate-500 text-[13px] md:text-[14px]">
             <div className=" ">
               Offer Price:{" "}
               <span className="font-semibold ml-1">
