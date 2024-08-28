@@ -24,7 +24,7 @@ export default async function Home() {
     console.error("Error fetching events:", error);
   }
 
-  // Sort events by eventCatId
+  
   const sortedEvents = events.sort((a, b) => a.ordersBy - b.ordersBy);
 
   const eventCategories = sortedEvents.reduce(
