@@ -20,13 +20,6 @@ export default function ProductCard({ product }) {
     setIsInCart(!!cart.find((item) => item._id === product?._id));
   }, [cart, product?._id]);
 
-  const truncateText = (text) => {
-    if (text.length <= 35) {
-      return text;
-    }
-    return text.substring(0, 35) + "...";
-  }
-
   return (
     <div
       className={`w-full min-h-full overflow-hidden border shadow-sm hover:shadow-lg duration-700 rounded-md p-5 mx-auto relative`}
@@ -63,7 +56,7 @@ export default function ProductCard({ product }) {
             className={`${product?.inventory?.stockStatus === "In Stock"
               ? "text-[#70BE38]"
               : "text-red-400"
-              } text-xs font-semibold ${product?.inventory?.stockStatus === "In Stock"
+              } text-[11px] font-semibold ${product?.inventory?.stockStatus === "In Stock"
                 ? "border border-[#70BE38]"
                 : "border border-red-400 bg-red-100"
               } rounded-md px-3 py-1`}
@@ -76,23 +69,24 @@ export default function ProductCard({ product }) {
         </div>
         <div className="mt-3">
           <Link href={`/shop/${product?.productSlug}`}>
-            <h4 className="text-[#202435] hover:text-[#F16521] duration-700 text-[14px] font-semibold h-10 md:h-14 overflow-hidden">
+            <h4 className="text-[#202435] hover:text-[#F16521] duration-700 text-[14px] md:text-[15px] font-semibold h-10 md:h-[45px] text-ellipsis overflow-hidden  line-clamp-2">
 
-              {truncateText(product?.productName)}
+              {/* {truncateText(product?.productName)} */}
+              {(product?.productName)}
             </h4>
           </Link>
-          <div className="mt-5 text-slate-500 text-[14px]">
+          <div className="mt-5 text-slate-500 text-[13px]">
             <div className=" ">
               Offer Price:{" "}
               <span className="font-semibold ml-1">
                 ৳{product?.general?.salePrice}
               </span>{" "}
             </div>
-            <div className="text-[14px]">
+            <div className="">
               M.R.P:
               <del className="ml-1">৳{product?.general?.regularPrice}</del>
             </div>
-            <div className="flex justify-start items-center text-[14px] text-nowrap">
+            <div className="flex justify-start items-center text-nowrap">
               Your Save:
               <div className="ml-1 flex justify-start items-center">
                 {product?.general?.salePrice ? (
