@@ -26,3 +26,5 @@ export default function EventProduct({ event }) {
     </main>
   );
 }
+
+// some non major changes for testing
