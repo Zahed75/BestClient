@@ -19,6 +19,14 @@ export default function ProductCard({ product }) {
   useEffect(() => {
     setIsInCart(!!cart.find((item) => item._id === product?._id));
   }, [cart, product?._id]);
+
+  const truncateText = (text) => {
+    if (text.length <= 35) {
+      return text;
+    }
+    return text.substring(0, 35) + "...";
+  }
+
   return (
     <div
       className={`w-full min-h-full overflow-hidden border shadow-sm hover:shadow-lg duration-700 rounded-md p-5 mx-auto relative`}
@@ -50,24 +58,41 @@ export default function ProductCard({ product }) {
             />
           </div>
         </Link>
+        <div className="mt-5 flex justify-start items-center">
+          <p
+            className={`${product?.inventory?.stockStatus === "In Stock"
+              ? "text-[#70BE38]"
+              : "text-red-400"
+              } text-xs font-semibold ${product?.inventory?.stockStatus === "In Stock"
+                ? "border border-[#70BE38]"
+                : "border border-red-400 bg-red-100"
+              } rounded-md px-3 py-1`}
+          >
+            {product?.inventory?.stockStatus}
+          </p>
+          {/* <span className="text-[#F16521] text-xs font-semibold ml-3 px-3 py-1 border border-[#F16521] rounded-md">
+              {product?.inventory?.inventoryStatus}
+            </span> */}
+        </div>
         <div className="mt-3">
           <Link href={`/shop/${product?.productSlug}`}>
-            <h4 className="text-[#202435] hover:text-[#F16521] duration-700 text-md font-semibold h-14">
-              {product?.productName}
+            <h4 className="text-[#202435] hover:text-[#F16521] duration-700 text-[14px] font-semibold h-10 md:h-14 overflow-hidden">
+
+              {truncateText(product?.productName)}
             </h4>
           </Link>
-          <div className="mt-5 text-slate-500 text-md">
+          <div className="mt-5 text-slate-500 text-[14px]">
             <div className=" ">
               Offer Price:{" "}
               <span className="font-semibold ml-1">
                 ৳{product?.general?.salePrice}
               </span>{" "}
             </div>
-            <div className="">
+            <div className="text-[14px]">
               M.R.P:
               <del className="ml-1">৳{product?.general?.regularPrice}</del>
             </div>
-            <div className="flex justify-start items-center">
+            <div className="flex justify-start items-center text-[14px] text-nowrap">
               Your Save:
               <div className="ml-1 flex justify-start items-center">
                 {product?.general?.salePrice ? (
@@ -91,24 +116,7 @@ export default function ProductCard({ product }) {
               </div>
             </div>
           </div>
-          <div className="mt-5 flex justify-start items-center">
-            <p
-              className={`${
-                product?.inventory?.stockStatus === "In Stock"
-                  ? "text-[#70BE38]"
-                  : "text-red-400"
-              } text-xs font-semibold ${
-                product?.inventory?.stockStatus === "In Stock"
-                  ? "border border-[#70BE38]"
-                  : "border border-red-400 bg-red-100"
-              } rounded-md px-3 py-1`}
-            >
-              {product?.inventory?.stockStatus}
-            </p>
-            {/* <span className="text-[#F16521] text-xs font-semibold ml-3 px-3 py-1 border border-[#F16521] rounded-md">
-              {product?.inventory?.inventoryStatus}
-            </span> */}
-          </div>
+
           <div className="opacity-0 group-hover:opacity-100 duration-700 transition-all justify-between items-center mt-5 w-full bg-white text-md">
             {isInCart ? (
               <div className="bg-[#FFCD00] border rounded-full w-full flex justify-between items-center transition-all duration-700 font-semibold">
@@ -142,7 +150,7 @@ export default function ProductCard({ product }) {
                   dispatch(addToCart(product));
                   setIsInCart(true);
                 }}
-                className="bg-[#FFCD00] px-3 py-2 rounded-full w-1/2 transition-all duration-700"
+                className="bg-[#FFCD00] px-3 py-2 rounded-full w-full md:w-1/2 transition-all duration-700"
               >
                 Add to Cart
               </button>
