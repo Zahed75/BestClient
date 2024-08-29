@@ -3,10 +3,12 @@ import TagLine from "@/components/global/TagLine";
 import { TfiLayoutGrid4Alt } from "react-icons/tfi";
 import { TiThMenu } from "react-icons/ti";
 import { RiGridFill } from "react-icons/ri";
+import { CiFilter } from "react-icons/ci";
 import { useState } from "react";
 import ShopCard from "@/components/productCard/shopCard";
 import Skeleton from "@/components/global/Skeleton";
 import Pagination from "@/components/global/Pagination";
+import { Box, Drawer } from "@mui/material";
 
 export default function Shop({ products }) {
   const tagValues = ["Home", "Shop"];
@@ -63,6 +65,7 @@ export default function Shop({ products }) {
   ];
 
   const [dynamicGrid, setDynamicGrid] = useState(3);
+  const [open, setOpen] = useState(false);
 
   const handleDynamicGrid = ({ value }) => {
     if (value) {
@@ -70,6 +73,9 @@ export default function Shop({ products }) {
     }
   };
 
+  const toggleFilterDrawer = (newOpen) => () => {
+    setOpen(newOpen);
+  };
   return (
     <main className="container">
       {products ? (
@@ -139,8 +145,8 @@ export default function Shop({ products }) {
               </div>
             </div>
             <div className="md:col-span-5">
-              <div className="bg-[#f7f8fd] py-4 px-5 w-full rounded-md flex justify-between items-center">
-                <div className="flex justify-start items-center gap-5">
+              <div className="bg-[#f7f8fd] py-4 px-5 w-full rounded-md flex justify-between items-center text-[17px]">
+                <div className="hidden md:hidden lg:flex justify-start items-center gap-5">
                   <TiThMenu
                     onClick={() => handleDynamicGrid({ value: 1 })}
                     className={`text-2xl text-gray-400 hover:text-gray-700 ${dynamicGrid == 1 ? "text-gray-700" : ""
@@ -158,12 +164,26 @@ export default function Shop({ products }) {
                       } duration-700`}
                   />
                 </div>
+
+                <div className="flex justify-start md:block lg:hidden items-center gap-5">
+                  <div className="flex justify-center items-center gap-2 text-nowrap">
+                    <div>
+                      <button type="button"
+                        onClick={toggleFilterDrawer(true)}>
+                        <CiFilter
+                          className={`text-xl 
+                      duration-700 cursor-pointer`} />
+                      </button></div>
+
+                    {/* <div>Filter Products</div> */}
+                  </div>
+                </div>
                 <div className="flex items-center gap-3 ">
                   <div>
                     <select
                       name="sort"
                       id="sort"
-                      className="focus:ring-0 focus:outline-0 px-3 "
+                      className="focus:ring-0 focus:outline-0 px-3"
                     >
                       <option className="" value="default">
                         Short by latest
@@ -208,11 +228,79 @@ export default function Shop({ products }) {
               </div>
               <Pagination />
             </div>
+
+
           </section>
         </div>
       ) : (
         <Skeleton />
       )}
+      <Drawer anchor="left" open={open} onClose={toggleFilterDrawer(false)}>
+        <Box role="presentation" className="w-[350px] md:w-[400px]">
+          <div className="flex flex-col lg:hidden justify-center items-center p-3 mt-20">
+            <div>
+              <h1 className="uppercase">FILTER BY CATEGORIES</h1>
+              <div className="text-sm my-5">
+                <div className="flex justify-start items-center gap-3 py-1">
+                  <input
+                    id="all"
+                    type="checkbox"
+                    className="w-4 h-4 bg-gray-100 rounded border-gray-300   dark:border-gray-600"
+                  />
+                  <label htmlFor="all">All Categories</label>
+                </div>
+                <div className="flex justify-start items-center gap-3 py-1">
+                  <input
+                    id="brand"
+                    type="checkbox"
+                    className="w-4 h-4 bg-gray-100 rounded border-gray-300   dark:border-gray-600"
+                  />
+                  <label htmlFor="brand">All Brand</label>
+                </div>
+                <div className="flex justify-start items-center gap-3 py-1">
+                  <input
+                    id="conion"
+                    type="checkbox"
+                    className="w-4 h-4 bg-gray-100 rounded border-gray-300   dark:border-gray-600"
+                  />
+                  <label htmlFor="conion">Conion</label>
+                </div>
+              </div>
+            </div>
+            <div className="my-10">
+              <h1 className="uppercase">Filter by Price</h1>
+              <div className="text-sm my-5">
+                <div>
+                  <input
+                    type="range"
+                    id="rangeInput"
+                    name="rangeInput"
+                    min="0"
+                    max="100"
+                  />
+                </div>
+                <div className="mt-3">
+                  <label htmlFor="rangeInput">Price: ৳ 550 — ৳ 543,200</label>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h1 className="uppercase">FILTER BY Brand</h1>
+              <div className="text-sm my-5 h-60 scrollbar_hidden cursor-all-scroll">
+                {brands.map((brand, index) => (
+                  <button
+                    key={index}
+                    className="flex justify-between items-center gap-3 py-1"
+                  >
+                    {brand.name}
+                    <p>({brand.count})</p>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Box>
+      </Drawer>
     </main>
   );
 }
