@@ -22,7 +22,7 @@ export default function ProductCard({ product }) {
 
   return (
     <div
-      className={`w-full min-h-full overflow-hidden border shadow-sm hover:shadow-lg duration-700 rounded-md p-5 mx-auto relative`}
+      className={`w-full min-h-full overflow-hidden border shadow-sm hover:shadow-lg duration-700 rounded-md p-2 mx-auto relative`}
     >
       <div className="relative group duration-700">
         {product?.general?.salePrice ? (
