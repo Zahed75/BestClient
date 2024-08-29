@@ -17,7 +17,7 @@ export default function EventProduct({ event }) {
         <SectionButton url="/" />
       </section>
       <section
-        className={`grid grid-cols-2 md:grid-cols-${productColumn} lg:grid-cols-${productColumn} justify-evenly items-center gap-2 my-10`}
+        className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-${productColumn} justify-evenly items-center gap-2 my-10`}
       >
         {selectProducts?.map((product, index) => (
           <ProductCard product={product} index={index} key={index} />

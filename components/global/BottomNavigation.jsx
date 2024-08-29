@@ -123,7 +123,7 @@ export default function BottomNavigation() {
   };
   return (
     <section>
-      <div className="fixed md:hidden bottom-0 left-0 z-50 w-full h-16 bg-[#F16521] mx-auto">
+      <div className="fixed md:visible lg:hidden bottom-0 left-0 z-50 w-full h-16 bg-[#F16521] mx-auto">
         <div className="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
           <Link
             href="/shop"
@@ -184,9 +184,8 @@ export default function BottomNavigation() {
               <span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className={`h-7 w-7 transition-transform duration-300 transform ${
-                    categoryShow ? "rotate-180" : ""
-                  }`}
+                  className={`h-7 w-7 transition-transform duration-300 transform ${categoryShow ? "rotate-180" : ""
+                    }`}
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -219,9 +218,8 @@ export default function BottomNavigation() {
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                className={`h-7 w-7 transition-transform duration-300 transform text-gray-400 ${
-                                  submenuShow === index ? "rotate-180" : ""
-                                }`}
+                                className={`h-7 w-7 transition-transform duration-300 transform text-gray-400 ${submenuShow === index ? "rotate-180" : ""
+                                  }`}
                                 viewBox="0 0 20 20"
                                 fill="currentColor"
                               >

@@ -11,7 +11,7 @@ export default function TopLocationBar() {
   ];
   return (
     <section className="container">
-      <div className="text-[#3E445A] text-xs py-3 hidden md:grid grid-cols-2 justify-between items-center">
+      <div className="text-[#3E445A] text-xs py-3 hidden md:hidden lg:grid grid-cols-2 justify-between items-center">
         <div>
           <ul className="flex justify-start items-center gap-5">
             {linkData.map((link, index) => (

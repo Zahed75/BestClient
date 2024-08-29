@@ -55,14 +55,14 @@ export default function NavigationBar() {
 
   return (
     <nav className="container">
-      <div className="hidden sm:hidden md:flex lg:flex justify-stretch items-center font-dosis">
+      <div className="hidden sm:hidden md:hidden lg:flex justify-stretch items-center font-dosis">
         <div className="relative">
           <button
             onMouseEnter={() => setIsAllCategoriesOpen(true)}
             onMouseLeave={() => setIsAllCategoriesOpen(false)}
             className="group bg-[#F16521] text-sm px-5 py-4 uppercase text-white rounded-full flex justify-start items-center relative"
           >
-            <Image src={treeDot} className="w-4 h-4 " alt="Tree Dot" /> 
+            <Image src={treeDot} className="w-4 h-4 " alt="Tree Dot" />
             <span className="mx-3 text-[13px]">All Categories</span>
             <Image
               src={arrayBottom}
@@ -76,9 +76,8 @@ export default function NavigationBar() {
           <div
             onMouseEnter={() => setIsAllCategoriesOpen(true)}
             onMouseLeave={() => setIsAllCategoriesOpen(false)}
-            className={`${
-              isAllCategoriesOpen ? "block" : "hidden"
-            } group-hover:block absolute left-0 w-96 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
+            className={`${isAllCategoriesOpen ? "block" : "hidden"
+              } group-hover:block absolute left-0 w-96 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
           >
             <ul className="text-sm">
               <li className="py-2 px-3 hover:text-[#F16521] cursor-pointer">
@@ -93,9 +92,8 @@ export default function NavigationBar() {
                   <span>Electronics</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className={`h-4 w-4 transition-transform duration-300 transform ${
-                      isElectronicsSubMenuOpen ? "-rotate-90" : "rotate-0"
-                    }`}
+                    className={`h-4 w-4 transition-transform duration-300 transform ${isElectronicsSubMenuOpen ? "-rotate-90" : "rotate-0"
+                      }`}
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
@@ -120,9 +118,8 @@ export default function NavigationBar() {
                         <span>Smartphone</span>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          className={`h-4 w-4 transition-transform duration-300 transform ${
-                            isSmartSubMenuOpen ? "-rotate-90" : "rotate-0"
-                          }`}
+                          className={`h-4 w-4 transition-transform duration-300 transform ${isSmartSubMenuOpen ? "-rotate-90" : "rotate-0"
+                            }`}
                           viewBox="0 0 20 20"
                           fill="currentColor"
                         >
@@ -184,9 +181,8 @@ export default function NavigationBar() {
               <div
                 onMouseEnter={() => setIsBrowseProducts(true)}
                 onMouseLeave={() => setIsBrowseProducts(false)}
-                className={`${
-                  isBrowseProducts ? "block" : "hidden"
-                } group-hover:block absolute left-0 w-64 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
+                className={`${isBrowseProducts ? "block" : "hidden"
+                  } group-hover:block absolute left-0 w-64 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
               >
                 <ul className="text-sm">
                   <li className="py-2 px-3 hover:text-[#F16521] cursor-pointer">
@@ -201,9 +197,8 @@ export default function NavigationBar() {
                       <span>Electronics</span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className={`h-4 w-4 transition-transform duration-300 transform ${
-                          isElectronicsSubMenuOpen ? "-rotate-90" : "rotate-0"
-                        }`}
+                        className={`h-4 w-4 transition-transform duration-300 transform ${isElectronicsSubMenuOpen ? "-rotate-90" : "rotate-0"
+                          }`}
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
@@ -228,9 +223,8 @@ export default function NavigationBar() {
                             <span>Smartphone</span>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
-                              className={`h-4 w-4 transition-transform duration-300 transform ${
-                                isSmartSubMenuOpen ? "-rotate-90" : "rotate-0"
-                              }`}
+                              className={`h-4 w-4 transition-transform duration-300 transform ${isSmartSubMenuOpen ? "-rotate-90" : "rotate-0"
+                                }`}
                               viewBox="0 0 20 20"
                               fill="currentColor"
                             >
@@ -295,9 +289,8 @@ export default function NavigationBar() {
               </button>
               <div
                 onMouseLeave={() => setIsOrderMenuOpen(false)}
-                className={`${
-                  isOrderMenuOpen ? "block" : "hidden"
-                } group-hover:block absolute left-0 w-64 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
+                className={`${isOrderMenuOpen ? "block" : "hidden"
+                  } group-hover:block absolute left-0 w-64 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
               >
                 <ul className="text-sm">
                   <li className="py-2 px-3 hover:text-[#F16521] cursor-pointer">

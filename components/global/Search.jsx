@@ -27,9 +27,9 @@ export default function Search() {
 
   const totalProductPrice = Array.isArray(cart)
     ? cart.reduce(
-        (acc, item) => acc + item.general.salePrice * item.quantity,
-        0
-      )
+      (acc, item) => acc + item.general.salePrice * item.quantity,
+      0
+    )
     : 0;
 
   const vat = (totalProductPrice * vatPercentage) / 100;

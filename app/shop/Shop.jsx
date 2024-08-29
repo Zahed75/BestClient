@@ -75,8 +75,8 @@ export default function Shop({ products }) {
       {products ? (
         <div className="my-10">
           <TagLine tagValues={tagValues} />
-          <section className="grid grid-cols-1 md:grid-cols-6 justify-between items-start gap-5">
-            <div>
+          <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 justify-between items-start gap-5">
+            <div className="hidden md:hidden lg:block">
               <div>
                 <h1 className="uppercase">FILTER BY CATEGORIES</h1>
                 <div className="text-sm my-5">
@@ -200,7 +200,7 @@ export default function Shop({ products }) {
                 </div>
               </div>
               <div
-                className={`grid grid-cols-1 md:grid-cols-${dynamicGrid} justify-between items-center gap-5 my-5 w-full`}
+                className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${dynamicGrid} justify-between items-center gap-5 my-5 w-full`}
               >
                 {products?.map((product, index) => (
                   <ShopCard key={index} product={product} />

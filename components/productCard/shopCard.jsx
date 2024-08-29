@@ -89,15 +89,13 @@ export default function ShopCard({ product }) {
           </div>
           <div className="mt-5 flex justify-start items-center">
             <p
-              className={`${
-                product?.inventory?.stockStatus === "In Stock"
-                  ? "text-[#70BE38]"
-                  : "text-red-400"
-              } text-xs font-semibold ${
-                product?.inventory?.stockStatus === "In Stock"
+              className={`${product?.inventory?.stockStatus === "In Stock"
+                ? "text-[#70BE38]"
+                : "text-red-400"
+                } text-xs font-semibold ${product?.inventory?.stockStatus === "In Stock"
                   ? "border border-[#70BE38]"
                   : "border border-red-400 bg-red-100"
-              } rounded-md px-3 py-1`}
+                } rounded-md px-3 py-1`}
             >
               {product?.inventory?.stockStatus}
             </p>
@@ -107,7 +105,7 @@ export default function ShopCard({ product }) {
           </div>
           <div className="hidden group-hover:block duration-700 justify-between items-center mt-5 absolute bottom-0 right-0 w-full bg-white">
             {Array.isArray(cart) &&
-            cart.find((item) => item._id === product?._id) ? (
+              cart.find((item) => item._id === product?._id) ? (
               <div className="bg-[#F16521] border rounded-full w-full flex justify-between items-center">
                 <button
                   onClick={() => {
