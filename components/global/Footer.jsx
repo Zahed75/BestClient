@@ -111,7 +111,7 @@ export default function Footer() {
                   </span>
                 </div>
               </div>
-              <div className="flex justify-start items-center gap-5 ml-auto mt-10 md:mt-0">
+              <div className="flex justify-start items-center gap-5 md:ml-auto mt-10 md:mt-0">
                 <div>
                   <span className="font-semibold text-white">Find us on: </span>{" "}
                   <br />
