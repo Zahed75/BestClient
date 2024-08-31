@@ -99,7 +99,7 @@ export default function SingleProduct({ product, categoryName }) {
           <h1 className="text-[#202435] text-lg font-semibold">
             {product?.productName}
           </h1>
-          <div className="flex flex-col md:flex-col lg:flex-row justify-between items-start gap-x-10">
+          <div className="flex flex-col md:flex-col lg:flex-row justify-between items-start lg:gap-x-10">
             <div className="">
               <ImageShow
                 product={product}
@@ -108,7 +108,7 @@ export default function SingleProduct({ product, categoryName }) {
               />
             </div>
 
-            <div className="my-5 md:w-1/3 lg:w-1/3 ">
+            <div className="my-5 md:w-full lg:w-1/3 ">
               <p
                 className={`
                 ${product?.inventory?.stockStatus === "In Stock"
@@ -196,12 +196,12 @@ export default function SingleProduct({ product, categoryName }) {
               </div>
             </div>
 
-            <div className="my-5 md:max-w-72 lg:w-1/4">
-              <div className="text-[#BE143C] bg-[#FFEEF2] p-5 text-xs rounded-md mb-5">
+            <div className="my-5 md:w-full lg:w-1/4">
+              <div className="text-[#BE143C] bg-[#FFEEF2] p-5 text-xs rounded-md mb-5 text-center">
                 <span>Largest Collection of World Class Home Appliances</span>
               </div>
               <div className="bg-[#F8F9FD] p-5 text-xs rounded-md">
-                <div className="flex justify-between items-center gap-5">
+                <div className="flex justify-between md:justify-start items-center gap-5">
                   <svg
                     width="20"
                     height="21"
@@ -230,7 +230,7 @@ export default function SingleProduct({ product, categoryName }) {
 
                   <span>Largest Collection of World Class Home Appliances</span>
                 </div>
-                <div className="flex justify-between items-center gap-5 my-10">
+                <div className="flex justify-between md:justify-start items-center gap-5 my-10">
                   <svg
                     width="20"
                     height="21"
@@ -259,7 +259,7 @@ export default function SingleProduct({ product, categoryName }) {
 
                   <span>Follow Us for Every Occasional Campaign Discounts</span>
                 </div>
-                <div className="flex justify-between items-center gap-5">
+                <div className="flex justify-between md:justify-start items-center gap-5">
                   <svg
                     width="20"
                     height="21"
