@@ -9,6 +9,7 @@ import ShopCard from "@/components/productCard/shopCard";
 import Skeleton from "@/components/global/Skeleton";
 import Pagination from "@/components/global/Pagination";
 import { Box, Drawer } from "@mui/material";
+import ProductCard from "@/components/productCard/ProductCard";
 
 export default function Shop({ products }) {
   const tagValues = ["Home", "Shop"];
@@ -223,7 +224,7 @@ export default function Shop({ products }) {
                 className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${dynamicGrid} justify-between items-center gap-5 my-5 w-full`}
               >
                 {products?.map((product, index) => (
-                  <ShopCard key={index} product={product} />
+                  <ProductCard key={index} product={product} />
                 ))}
               </div>
               <Pagination />
