@@ -144,7 +144,7 @@ export default function ProductCard({ product }) {
                   dispatch(addToCart(product));
                   setIsInCart(true);
                 }}
-                className="bg-[#FFCD00] px-3 py-2 rounded-full w-full md:w-1/2 transition-all duration-700"
+                className="bg-[#FFCD00] px-3 py-2 rounded-full w-full md:w-2/3 transition-all duration-700"
               >
                 Add to Cart
               </button>
