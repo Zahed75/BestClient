@@ -6,6 +6,7 @@ import { RiGridFill } from "react-icons/ri";
 import { CiFilter } from "react-icons/ci";
 import { useState } from "react";
 import ShopCard from "@/components/productCard/shopCard";
+import CloseIcon from "@mui/icons-material/Close";
 import Skeleton from "@/components/global/Skeleton";
 import Pagination from "@/components/global/Pagination";
 import { Box, Drawer } from "@mui/material";
@@ -238,7 +239,15 @@ export default function Shop({ products }) {
       )}
       <Drawer anchor="left" open={open} onClose={toggleFilterDrawer(false)}>
         <Box role="presentation" className="w-[350px] md:w-[400px]">
-          <div className="flex flex-col lg:hidden justify-center items-center p-3 mt-20">
+          <div className="flex justify-end items-center p-3 mt-10">
+            {/* <div>
+              <Image src={bestLogo} alt="bestLogo" width={200} height={200} />
+            </div> */}
+            <button className="inline-block" onClick={toggleFilterDrawer(false)}>
+              <CloseIcon />
+            </button>
+          </div>
+          <div className="flex flex-col lg:hidden justify-start items-start p-10">
             <div>
               <h1 className="uppercase">FILTER BY CATEGORIES</h1>
               <div className="text-sm my-5">
@@ -287,7 +296,7 @@ export default function Shop({ products }) {
             </div>
             <div>
               <h1 className="uppercase">FILTER BY Brand</h1>
-              <div className="text-sm my-5 h-60 scrollbar_hidden cursor-all-scroll">
+              <div className="text-sm my-5 h-60 scrollbar_hidden overflow-y-scroll cursor-all-scroll">
                 {brands.map((brand, index) => (
                   <button
                     key={index}
