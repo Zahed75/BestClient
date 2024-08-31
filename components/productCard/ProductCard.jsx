@@ -111,7 +111,7 @@ export default function ProductCard({ product }) {
             </div>
           </div>
 
-          <div className="opacity-0 group-hover:opacity-100 duration-700 transition-all justify-between items-center mt-5 w-full bg-white text-md">
+          <div className="duration-700 transition-all justify-between items-center mt-5 w-full bg-white text-md">
             {isInCart ? (
               <div className="bg-[#FFCD00] border rounded-full w-full flex justify-between items-center transition-all duration-700 font-semibold">
                 <button

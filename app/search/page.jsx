@@ -2,6 +2,7 @@
 import { fetchProducts } from "@/redux/slice/productsSlice";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -14,6 +15,7 @@ export default function Search() {
 
   
     const allProducts = products?.products || [];
+    const router = useRouter();
   
     useEffect(() => {
       dispatch(fetchProducts());
@@ -33,8 +35,8 @@ export default function Search() {
   };
 
   return (
-    <main className="container fixed top-0 right-0 bg-white min-h-screen">
-      <div className="w-full mx-auto col-span-2 md:hidden relative mt-5 mb-10">
+    <main className="container w-full fixed top-0 right-0 bg-white min-h-screen">
+      <div className="w-full mx-auto col-span-2 lg:hidden relative mt-5 mb-10">
         <div className="relative flex items-center w-full h-14 rounded-lg bg-[#F3F4F7] overflow-hidden">
           <div className="grid place-items-center h-full w-12 text-gray-300">
             <svg
