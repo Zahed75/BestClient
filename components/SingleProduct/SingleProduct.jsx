@@ -99,7 +99,7 @@ export default function SingleProduct({ product, categoryName }) {
           <h1 className="text-[#202435] text-lg font-semibold">
             {product?.productName}
           </h1>
-          <div className="flex flex-col md:flex-row justify-between items-start gap-x-10">
+          <div className="flex flex-col md:flex-col lg:flex-row justify-between items-start gap-x-10">
             <div className="">
               <ImageShow
                 product={product}
@@ -111,11 +111,10 @@ export default function SingleProduct({ product, categoryName }) {
             <div className="my-5 md:w-1/3 lg:w-1/3 ">
               <p
                 className={`
-                ${
-                  product?.inventory?.stockStatus === "In Stock"
+                ${product?.inventory?.stockStatus === "In Stock"
                     ? "text-[#70BE38] bg-[#E5F8ED]"
                     : "text-red-400 bg-red-100"
-                }  text-xs font-semibold px-3 py-1 inline-block rounded-full
+                  }  text-xs font-semibold px-3 py-1 inline-block rounded-full
                 `}
               >
                 {product?.inventory?.stockStatus}
@@ -139,9 +138,8 @@ export default function SingleProduct({ product, categoryName }) {
                     dispatch(addToWishlist(product));
                   }}
                   disabled={favorite}
-                  className={`text-xs text-[#9B9BB4] border px-3 py-2 rounded-full flex justify-center items-center uppercase ${
-                    favorite ? "cursor-not-allowed" : "cursor-pointer"
-                  }`}
+                  className={`text-xs text-[#9B9BB4] border px-3 py-2 rounded-full flex justify-center items-center uppercase ${favorite ? "cursor-not-allowed" : "cursor-pointer"
+                    }`}
                 >
                   <svg
                     width="20"
