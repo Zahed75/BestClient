@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import bestLogo from "@/public/images/bestElectronicsLogo.svg";
+import bestLogo from "@/public/images/Best-Electronics.png";
 import userIcon from "@/public/images/userIcon.svg";
 import cartIcon from "@/public/images/cartIcon.svg";
 import CloseIcon from "@mui/icons-material/Close";
@@ -74,10 +74,10 @@ export default function Search() {
     <main className="container">
       <div className="grid grid-cols-4 justify-center items-center gap-5 my-5">
         <div className="col-span-2 md:col-span-1">
-          <Link href="/">
+          <Link href="/" className="object-cover">
             <Image
               src={bestLogo}
-              className="w-full md:w-fit"
+              className=""
               alt="Best Electronics Icon"
             />
           </Link>
