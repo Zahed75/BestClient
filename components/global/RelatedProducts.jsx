@@ -1,6 +1,7 @@
 "use client";
 import { useDispatch, useSelector } from "react-redux";
 import RelatedProductCard from "../productCard/RelatedProductCard";
+import ProductCard from "../productCard/ProductCard";
 
 export default function RelatedCard() {
   const relatedProducts =
@@ -16,9 +17,9 @@ export default function RelatedCard() {
           </h4>
         </div>
       </section>
-      <section className="grid grid-cols-2 md:grid-cols-4 justify-evenly items-center gap-2 my-10">
+      <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-evenly items-center gap-2 my-10">
         {relatedProducts?.map((product, index) => (
-          <RelatedProductCard product={product} key={index} index={index} />
+          <ProductCard product={product} key={index} index={index} />
         ))}
       </section>
     </main>
