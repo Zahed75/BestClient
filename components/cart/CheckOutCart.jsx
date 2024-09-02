@@ -366,3 +366,4 @@ export default function CheckOutCart() {
     </section>
   );
 }
+// length of the code is 111 lines
