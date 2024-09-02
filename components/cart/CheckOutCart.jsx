@@ -20,7 +20,6 @@ export default function CheckOutCart() {
 
   const router = useRouter();
 
-  const deliveryCharge = 100;
   const vatPercentage = 5;
 
   const discount = discounts?.discount || 0;
@@ -31,8 +30,8 @@ export default function CheckOutCart() {
         return acc + price * item.quantity;
       }, 0)
     : 0;
-  const vat = (totalProductPrice * vatPercentage) / 100;
-  const totalPrice = totalProductPrice + deliveryCharge + vat - discount;
+
+  const totalPrice = totalProductPrice - discount;
 
   const userId = customer?.items?.userId;
   const email = customer?.items?.email;
@@ -311,10 +310,7 @@ export default function CheckOutCart() {
               <p>Products price</p>
               <p className="font-semibold">৳{totalProductPrice}</p>
             </div>
-            <div className="flex justify-between items-center my-3">
-              <p>Delivery</p>
-              <p className="font-semibold">৳{deliveryCharge}</p>
-            </div>
+
             <div className="flex justify-between items-center my-3">
               <p>VAT</p>
               <p className="font-semibold">{vatPercentage}%</p>
