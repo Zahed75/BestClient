@@ -142,3 +142,6 @@ export default function MobileRegistration() {
         </section>
     );
 }
+
+
+// submit main
