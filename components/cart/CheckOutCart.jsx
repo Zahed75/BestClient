@@ -245,6 +245,7 @@ export default function CheckOutCart() {
                   type="tel"
                   name="phone"
                   id="phone"
+                  minLength={11}
                   defaultValue={customerInfo?.billingInfo?.phoneNumber || ""}
                   required
                 />
@@ -365,3 +366,4 @@ export default function CheckOutCart() {
     </section>
   );
 }
+// length of the code is 111 lines
