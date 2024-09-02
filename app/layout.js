@@ -8,6 +8,7 @@ import Footer from "@/components/global/Footer";
 import LastFooter from "@/components/global/LastFooter";
 import BottomNavigation from "@/components/global/BottomNavigation";
 import { Providers } from "@/redux/providers";
+import PageTransition from "@/components/global/PageTransition";
 
 const inter = Inter({ subsets: ["latin"] });
 const dosis = Dosis({ subsets: ["latin"] });
@@ -46,7 +47,7 @@ export default function RootLayout({ children }) {
           <div className="border-b shadow-md"></div>
           <Search />
           <NavigationBar />
-          {children}
+          <PageTransition>{children}</PageTransition>
           <BottomNavigation />
           <Footer />
           <LastFooter />

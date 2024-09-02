@@ -100,7 +100,7 @@ export default function CheckOutCart() {
 
     const data = {
       customer: userId,
-      email: email,
+      email: formData.get("orderEmail"),
       orderType: "Delivery",
       customerIp: IP,
       firstName: formData.get("firstName"),
@@ -114,8 +114,6 @@ export default function CheckOutCart() {
           : "Online Payment",
       products: productItems,
       totalPrice: totalProductPrice,
-      deliveryCharge: deliveryCharge,
-      vatRate: vatPercentage,
       couponName: discounts?.name || "",
       channel: isMobileDevice() ? "mobile" : "web",
       outlet: "",
@@ -130,7 +128,7 @@ export default function CheckOutCart() {
 
     try {
       const response = await fetchApi("/order/orderCreate", "POST", data);
-      console.log("Order Response:", ResponseCookies);
+      console.log("Order Response:", response);
       if (response) {
         router.push("/success");
         setLoading(false);
@@ -181,6 +179,19 @@ export default function CheckOutCart() {
                   id="lastName"
                   defaultValue={customerInfo?.billingInfo?.lastName || ""}
                   required
+                />
+              </div>
+              <div className="col-span-2">
+                <label className="text-sm" htmlFor="orderEmail">
+                  Enter Your Full Address*
+                </label>
+                <input
+                  className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
+                  type="email"
+                  name="orderEmail"
+                  id="orderEmail"
+                  required
+                  placeholder="Example@gmail.com"
                 />
               </div>
               <div className="col-span-2">
@@ -245,6 +256,7 @@ export default function CheckOutCart() {
                   name="phone"
                   id="phone"
                   minLength={11}
+                  maxLength={11}
                   defaultValue={customerInfo?.billingInfo?.phoneNumber || ""}
                   required
                 />

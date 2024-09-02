@@ -705,7 +705,7 @@ export default function InfoSection() {
         ${active === "orders" ? "block" : "hidden"} 
         `}
         >
-          {orderHistory?.map((order, index) => (
+          {orderHistory?.slice().reverse().map((order, index) => (
             <div
               key={index}
               className="w-full p-5 shadow-md rounded-md border "
