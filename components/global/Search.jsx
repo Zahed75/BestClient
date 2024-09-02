@@ -77,7 +77,7 @@ export default function Search() {
           <Link href="/" className="object-cover">
             <Image
               src={bestLogo}
-              className=""
+              className="lg:w-11/12"
               alt="Best Electronics Icon"
             />
           </Link>
