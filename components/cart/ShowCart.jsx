@@ -16,7 +16,6 @@ export default function ShowCart() {
   const cart = useSelector((state) => state.cart.items) || [];
   const discounts = useSelector((state) => state.discount?.discounts) || {};
 
-  const deliveryCharge = 100;
   const vatPercentage = 5;
 
   const applyCoupon = async (e) => {
@@ -70,8 +69,8 @@ export default function ShowCart() {
         return acc + price * item.quantity;
       }, 0)
     : 0;
-  const vat = (totalProductPrice * vatPercentage) / 100;
-  const totalPrice = totalProductPrice + deliveryCharge + vat - discount;
+
+  const totalPrice = totalProductPrice - discount;
 
   return (
     <section className="">
@@ -188,10 +187,6 @@ export default function ShowCart() {
               <div className="flex justify-between items-center my-3">
                 <p>Products price</p>
                 <p className="font-semibold">৳{totalProductPrice.toFixed(2)}</p>
-              </div>
-              <div className="flex justify-between items-center my-3">
-                <p>Delivery</p>
-                <p className="font-semibold">৳100</p>
               </div>
               <div className="flex justify-between items-center my-3">
                 <p>VAT</p>
