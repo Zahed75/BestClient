@@ -33,6 +33,8 @@ export default function MobileRegistration() {
         if (firstName && mobile) {
             try {
                 const data = { firstName, phoneNumber };
+                console.log(data , "data");
+                
                 const response = await fetchApi(
                     "/customer/registerByPhone",
                     "POST",
@@ -40,7 +42,8 @@ export default function MobileRegistration() {
                 );
 
                 if (response) {
-                    localStorage.setItem("phoneNumber", JSON.stringify(response.phoneNumber));
+                    console.log(response, "response");
+                    localStorage.setItem("phoneNumber", JSON.stringify(response?.phoneNumber));
                     setIsLoading(false);
                     router.push("/verifyphoneotp");
                 } else {

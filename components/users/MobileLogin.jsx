@@ -31,7 +31,7 @@ export default function MobileLogin() {
             console.log(response);
             
           setIsLoading(false);
-          localStorage.setItem("phoneNumber", response?.customer?.phoneNumber);
+          localStorage.setItem("phoneNumber", JSON.stringify(response?.customer?.phoneNumber));
           router.push("/verifyphoneotp");
         } else {
           setError("Something went wrong. Please try again.");
