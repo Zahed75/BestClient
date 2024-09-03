@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
-import dynacool from "@/public/images/dynacool.jpg";
-import bisalmullochar from "@/public/images/bisalmullochar.png";
+
 import dhamaka from "@/public/images/dhamaka.png";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";

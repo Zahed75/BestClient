@@ -190,6 +190,7 @@ export default function CheckOutCart() {
                   type="email"
                   name="orderEmail"
                   id="orderEmail"
+                  defaultValue={customerInfo?.email || ""}
                   required
                   placeholder="Example@gmail.com"
                 />

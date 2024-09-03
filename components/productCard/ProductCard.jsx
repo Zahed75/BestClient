@@ -112,15 +112,16 @@ export default function ProductCard({ product }) {
             </div>
           </div>
 
+        
           <div className="mt-5 w-full text-md">
             <AnimatePresence mode="wait">
               {isInCart ? (
                 <motion.div
                   key="inCart"
-                  className="bg-[#FFCD00] border rounded-full w-full flex justify-between items-center font-semibold"
+                  className="bg-[#FFCD00] rounded-full w-full flex justify-between items-center font-semibold"
                   initial={{ width: "50%" }}
                   animate={{ width: "100%" }}
-                  exit={{ width: "50%", opacity: 0 }}
+                  exit={{ width: "50%" }}
                   transition={{ duration: 0.7 }}
                 >
                   <button
@@ -167,13 +168,19 @@ export default function ProductCard({ product }) {
                     dispatch(addToCart(product));
                     setIsInCart(true);
                   }}
-                  className="bg-[#FFCD00] px-3 py-2 rounded-full w-full md:w-2/3 transition-all duration-500"
+                  className="bg-[#FFCD00] px-3 py-2 rounded-full w-full md:w-2/4 transition-all duration-500"
                   initial={{ width: "50%" }}
                   animate={{ width: "50%" }}
-                  exit={{ opacity: 0, duration: 0.2 }}
+                  exit={{ width: "50%" }}
                   transition={{ duration: 0.7 }}
                 >
-                  Add to Cart
+                  <motion.span
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.9, delay: 0.1 }}
+                  >
+                    Add to Cart
+                  </motion.span>
                 </motion.button>
               )}
             </AnimatePresence>
