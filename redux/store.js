@@ -7,6 +7,7 @@ import wishlistReducer from "@/redux/slice/wishlistSlice";
 import relatedProductsReducer from "@/redux/slice/relatedSlice";
 import discountReducer from "./slice/discountSlice";
 import shopReducer from "./slice/shopSlice";
+import brandReducer from "./slice/brandSlice";
 
 const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
     relatedProducts: relatedProductsReducer,
     discount: discountReducer,
     shop: shopReducer,
+    brand: brandReducer,
   },
 });
 
