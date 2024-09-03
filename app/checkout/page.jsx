@@ -11,6 +11,3 @@ export default async function page() {
     </main>
   );
 }
-
-
-// Path: app/checkout/page.jsx
