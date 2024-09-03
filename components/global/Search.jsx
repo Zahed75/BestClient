@@ -16,6 +16,7 @@ import { fetchProducts } from "@/redux/slice/productsSlice";
 export default function Search() {
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [OutsideClick, setOutsideClick] = useState(false);
 
   const cart = useSelector((state) => state.cart.items) || [];
   const products = useSelector((state) => state.products.products);
@@ -59,6 +60,7 @@ export default function Search() {
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
+    setOutsideClick(true);
   };
 
   const filteredProducts = allProducts.filter((product) =>
@@ -68,6 +70,11 @@ export default function Search() {
   const handleProductClick = (productSlug) => {
     router.push(`/shop/${productSlug}`);
     setSearchTerm("");
+    setOutsideClick(false);
+  };
+
+  const handleOutsideClick = (productSlug) => {
+    setOutsideClick(false);
   };
 
   return (
@@ -83,7 +90,7 @@ export default function Search() {
           </Link>
         </div>
 
-        <div className="w-full mx-auto col-span-2 hidden md:block relative">
+        <div className="w-full mx-auto col-span-2 hidden md:block relative" onMouseLeave={handleOutsideClick}>
           <div className="relative flex items-center w-full h-14 rounded-lg bg-[#F3F4F7] overflow-hidden">
             <div className="grid place-items-center h-full w-12 text-gray-300">
               <svg
@@ -112,7 +119,7 @@ export default function Search() {
               onChange={handleSearchChange}
             />
           </div>
-          {searchTerm && (
+          {searchTerm && OutsideClick && (
             <div className="absolute z-10 bg-white shadow-md rounded-lg w-full max-h-40 overflow-y-auto scrollbar_hidden">
               {filteredProducts.length > 0 ? (
                 filteredProducts.map((product) => (
