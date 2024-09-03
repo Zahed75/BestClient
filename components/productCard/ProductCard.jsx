@@ -112,7 +112,6 @@ export default function ProductCard({ product }) {
             </div>
           </div>
 
-        
           <div className="mt-5 w-full text-md">
             <AnimatePresence mode="wait">
               {isInCart ? (
