@@ -4,7 +4,7 @@ import { TfiLayoutGrid4Alt } from "react-icons/tfi";
 import { TiThMenu } from "react-icons/ti";
 import { RiGridFill } from "react-icons/ri";
 import { CiFilter } from "react-icons/ci";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductCard from "@/components/productCard/ProductCard";
 import Pagination from "@/components/global/Pagination";
 import Skeleton from "@/components/global/Skeleton";
@@ -18,13 +18,22 @@ import {
   setPriceRange,
   setSorting,
 } from "@/redux/slice/shopSlice";
+import { fetchBrands } from "@/redux/slice/brandSlice";
 
 export default function Shop({ products }) {
-  const dispatch = useDispatch();
-  const { filters, pagination, sorting } = useSelector((state) => state.shop);
-
   const [dynamicGrid, setDynamicGrid] = useState(3);
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const { filters, pagination, sorting } = useSelector((state) => state.shop);
+  const brandsState = useSelector((state) => state.brand); // Get the full brands state
+
+  const brands = brandsState?.brands || []; // Access brands array from state
+
+  useEffect(() => {
+    dispatch(fetchBrands());
+  }, [dispatch]);
+
+  console.log("brands", brands);
 
   const filteredProducts = products
     ?.filter((product) => {
@@ -78,20 +87,6 @@ export default function Shop({ products }) {
   );
 
   const tagValues = ["Home", "Shop"];
-  const brands = [
-    { name: "Conion", count: 4 },
-    { name: "Samsung", count: 2 },
-    { name: "LG", count: 3 },
-    { name: "Sony", count: 1 },
-    { name: "Walton", count: 2 },
-    { name: "Panasonic", count: 3 },
-    { name: "Philips", count: 2 },
-    { name: "Sharp", count: 1 },
-    { name: "Vision", count: 3 },
-    { name: "Hitachi", count: 2 },
-    { name: "Toshiba", count: 1 },
-    { name: "Hisense", count: 1 },
-  ];
 
   const handleDynamicGrid = ({ value }) => {
     if (value) {
@@ -157,14 +152,14 @@ export default function Shop({ products }) {
               <div>
                 <h1 className="uppercase">FILTER BY Brand</h1>
                 <div className="text-sm my-5 h-60 overflow-y-scroll scrollbar_hidden cursor-all-scroll">
-                  {brands.map((brand, index) => (
+                  {brands?.map((brand, index) => (
                     <button
                       key={index}
                       className="flex justify-between items-center gap-3 py-1"
                       onClick={() => handleBrandChange(brand.name)}
                     >
                       {brand.name}
-                      <p>({brand.count})</p>
+                      <p>({brand.count ? brand.productCount : 0})</p>
                     </button>
                   ))}
                 </div>
@@ -263,14 +258,14 @@ export default function Shop({ products }) {
                       <div>
                         <h1 className="uppercase">FILTER BY Brand</h1>
                         <div className="text-sm my-5 h-60 overflow-y-scroll scrollbar_hidden cursor-all-scroll">
-                          {brands.map((brand, index) => (
+                          {brands?.map((brand, index) => (
                             <button
                               key={index}
                               className="flex justify-between items-center gap-3 py-1"
                               onClick={() => handleBrandChange(brand.name)}
                             >
-                              {brand.name}
-                              <p>({brand.count})</p>
+                              {brand?.name}
+                              <p>({brand?.productCount})</p>
                             </button>
                           ))}
                         </div>
