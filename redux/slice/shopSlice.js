@@ -23,19 +23,19 @@ const shopSlice = createSlice({
     },
     setBrandFilter: (state, action) => {
       state.filters.brand = action.payload;
-      state.pagination.currentPage = 1; // Reset page when filter changes
+      state.pagination.currentPage = 1; 
     },
     setPriceRange: (state, action) => {
       state.filters.priceRange = action.payload;
-      state.pagination.currentPage = 1; // Reset page when filter changes
+      state.pagination.currentPage = 1; 
     },
     setSorting: (state, action) => {
       state.sorting = action.payload;
-      state.pagination.currentPage = 1; // Reset page when sorting changes
+      state.pagination.currentPage = 1; 
     },
     setItemsPerPage: (state, action) => {
       state.pagination.itemsPerPage = action.payload;
-      state.pagination.currentPage = 1; // Reset page when items per page changes
+      state.pagination.currentPage = 1; 
     },
     setCurrentPage: (state, action) => {
       state.pagination.currentPage = action.payload;

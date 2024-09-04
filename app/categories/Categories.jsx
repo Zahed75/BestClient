@@ -21,7 +21,7 @@ import {
 import { fetchBrands } from "@/redux/slice/brandSlice";
 import { fetchCategories } from "@/redux/slice/categorySlice";
 
-export default function Shop({ products }) {
+export default function Categories({ products }) {
   const [dynamicGrid, setDynamicGrid] = useState(3);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();

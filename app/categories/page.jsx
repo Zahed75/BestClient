@@ -1,4 +1,4 @@
-import Shop from "./Shop";
+import Categories from "./Categories";
 
 export const metadata = {
   title: "Shop",
@@ -25,9 +25,10 @@ export default async function Page() {
     .catch((error) => console.error(error));
 
 
+
   return (
     <main>
-      <Shop products={products} />
+      <Categories products={products} />
     </main>
   );
 }
