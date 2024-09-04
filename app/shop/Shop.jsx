@@ -234,21 +234,27 @@ export default function Shop({ products }) {
                   </div>
                 </div>
               </div>
-              <div className="my-10">
-                <div
-                  className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${dynamicGrid} justify-between items-center gap-5`}
-                >
-                  {paginatedProducts?.map((product, index) => (
-                    <ProductCard key={index} product={product} />
-                  ))}
+              {filteredProducts?.length === 0 ? (
+                <div className="text-center py-10">
+                  <p>No products were found matching your selection.</p>
                 </div>
-                <Pagination
-                  currentPage={pagination.currentPage}
-                  totalItems={filteredProducts.length}
-                  itemsPerPage={pagination.itemsPerPage}
-                  onPageChange={handlePageChange}
-                />
-              </div>
+              ) : (
+                <div className="my-10">
+                  <div
+                    className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${dynamicGrid} justify-between items-center gap-5`}
+                  >
+                    {paginatedProducts?.map((product, index) => (
+                      <ProductCard key={index} product={product} />
+                    ))}
+                  </div>
+                  <Pagination
+                    currentPage={pagination.currentPage}
+                    totalItems={filteredProducts.length}
+                    itemsPerPage={pagination.itemsPerPage}
+                    onPageChange={handlePageChange}
+                  />
+                </div>
+              )}
             </div>
           </section>
           <Drawer anchor="left" open={open} onClose={toggleFilterDrawer(false)}>
