@@ -21,9 +21,14 @@ import {
 import { fetchBrands } from "@/redux/slice/brandSlice";
 import { useRouter } from "next/navigation";
 
-export default function Categories({ products, AllCategories }) {
+export default function ParentCat({ category, path }) {
+  const { products, subCategories } = category;
   const [dynamicGrid, setDynamicGrid] = useState(3);
   const [open, setOpen] = useState(false);
+
+
+  
+  
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -60,7 +65,7 @@ export default function Categories({ products, AllCategories }) {
     });
 
   const handleGotoCategory = (slug) => {
-    router.push(`/categories/${slug}`);
+    router.push(`/categories/${path}/${slug}`);
   };
 
   const handleCategoryChange = (category) => {
@@ -93,7 +98,7 @@ export default function Categories({ products, AllCategories }) {
     pagination?.currentPage * pagination?.itemsPerPage
   );
 
-  const tagValues = ["Home", "Categories"];
+  const tagValues = ["Home", "Categories", category?.categoryName];
 
   const handleDynamicGrid = ({ value }) => {
     if (value) {
@@ -104,8 +109,6 @@ export default function Categories({ products, AllCategories }) {
   const toggleFilterDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
-
- 
 
   return (
     <main className="container">
@@ -129,7 +132,7 @@ export default function Categories({ products, AllCategories }) {
                       All Categories
                     </label>
                   </div>
-                  {AllCategories?.map((category, index) => (
+                  {subCategories?.map((category, index) => (
                     <div
                       key={index}
                       className="flex justify-start items-center gap-3 py-1"
@@ -285,7 +288,7 @@ export default function Categories({ products, AllCategories }) {
                       All Categories
                     </label>
                   </div>
-                  {AllCategories?.map((category, index) => (
+                  {subCategories?.map((category, index) => (
                     <div
                       key={index}
                       className="flex justify-start items-center gap-3 py-1"
