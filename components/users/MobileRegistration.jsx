@@ -33,8 +33,8 @@ export default function MobileRegistration() {
         if (firstName && mobile) {
             try {
                 const data = { firstName, phoneNumber };
-                console.log(data , "data");
-                
+                console.log(data, "data");
+
                 const response = await fetchApi(
                     "/customer/registerByPhone",
                     "POST",
@@ -132,7 +132,7 @@ export default function MobileRegistration() {
                                 Terms & Conditions
                             </Link>{" "}
                             and{" "}
-                            <Link href="/" className="text-[#F16521]">
+                            <Link href="/" className="text-[#F16521] pl-1">
                                 Privacy Statement
                             </Link>
                         </div>

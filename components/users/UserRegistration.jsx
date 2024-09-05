@@ -149,11 +149,11 @@ export default function UserRegistration() {
 
             <div className="text-center text-sm">
               By signing in or creating an account, you agree with our
-              <Link href="/" className="text-[#F16521] pl-1">
+              <Link href="/" className="text-[#F16521] pr-1 pl-1">
                 Terms & Conditions
               </Link>
               and{" "}
-              <Link href="/" className="text-[#F16521]">
+              <Link href="/" className="text-[#F16521] pl-1">
                 Privacy Statement
               </Link>
             </div>

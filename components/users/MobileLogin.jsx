@@ -25,11 +25,11 @@ export default function MobileLogin() {
       try {
         const data = { phoneNumber };
         const response = await fetchApi("/customer/loginPhoneOTP", "POST", data);
-       
+
 
         if (response) {
-            console.log(response);
-            
+          console.log(response);
+
           setIsLoading(false);
           localStorage.setItem("phoneNumber", JSON.stringify(response?.customer?.phoneNumber));
           router.push("/verifyphoneotp");
@@ -96,7 +96,7 @@ export default function MobileLogin() {
                 Terms & Conditions
               </Link>{" "}
               and
-              <Link href="/" className="text-[#F16521]">
+              <Link href="/" className="text-[#F16521] pl-1">
                 Privacy Statement
               </Link>
             </div>
