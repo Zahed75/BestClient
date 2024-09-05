@@ -55,7 +55,7 @@ export default function ShowCart() {
         setError("Invalid coupon code or discount amount");
       }
     } catch (error) {
-      setError("Apply a valid coupon code");
+      setError(error?.response?.data?.message || "Something went wrong");
     } finally {
       setLoading(false);
     }

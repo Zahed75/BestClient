@@ -371,8 +371,9 @@ export default function InfoSection() {
                           type="text"
                           id="phoneNumber"
                           name="phoneNumber"
+                          readOnly
                           defaultValue={customer?.phoneNumber}
-                          className="border border-gray-300 rounded-md p-2 focus:outline-none "
+                          className="border border-gray-300 rounded-md p-2 focus:outline-none cursor-not-allowed"
                         />
                       </div>
                     </div>
