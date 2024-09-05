@@ -16,11 +16,11 @@ export async function generateMetadata({ params, searchParams }) {
       url: `${process.env.SITE_URL}/categories/${slug}`,
       metadataBase: `${process.env.SITE_URL}`,
       siteName: "Best Electronic",
-      images: [
-        {
-          url: category?.fetaureImage[0],
-        },
-      ],
+      // images: [
+      //   {
+      //     url: category?.fetaureImage[0],
+      //   },
+      // ],
     },
   };
 }
