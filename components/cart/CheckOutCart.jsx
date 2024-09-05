@@ -34,7 +34,6 @@ export default function CheckOutCart() {
   const totalPrice = totalProductPrice - discount;
 
   const userId = customer?.items?.userId;
-  const email = customer?.items?.email;
 
   useEffect(() => {
     const fetchDistricts = async () => {
@@ -183,21 +182,27 @@ export default function CheckOutCart() {
               </div>
               <div className="col-span-2">
                 <label className="text-sm" htmlFor="orderEmail">
-                  Enter Your Full Address*
+                  Enter Email Address*
                 </label>
                 <input
                   className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
                   type="email"
                   name="orderEmail"
                   id="orderEmail"
-                  defaultValue={customerInfo?.email || ""}
+                  defaultValue={
+                    customerInfo?.email ||
+                    customerInfo?.billingInfo?.email ||
+                    customerInfo?.shippingInfo?.email ||
+                    ""
+                  }
                   required
+                  readOnly
                   placeholder="Example@gmail.com"
                 />
               </div>
               <div className="col-span-2">
                 <label className="text-sm" htmlFor="fullAddress">
-                  Enter Your Full Address*
+                  Enter Full Address*
                 </label>
                 <input
                   className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
