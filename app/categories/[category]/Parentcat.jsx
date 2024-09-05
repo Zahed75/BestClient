@@ -181,7 +181,7 @@ export default function ParentCat({ category, path }) {
                       onClick={() => handleBrandChange(brand.name)}
                     >
                       {brand.name}
-                      <p>({brand.count ? brand.productCount : 0})</p>
+                      <p>({brand?.productCount ? brand.productCount : 0})</p>
                     </button>
                   ))}
                 </div>
@@ -336,7 +336,7 @@ export default function ParentCat({ category, path }) {
                       onClick={() => handleBrandChange(brand.name)}
                     >
                       {brand?.name}
-                      <p>({brand?.productCount})</p>
+                      <p>({brand?.productCount ? brand.productCount : 0})</p>
                     </button>
                   ))}
                 </div>
