@@ -75,11 +75,12 @@ export default function StoreLocator() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-10">
       <div className="w-full p-4">
-        <h2 className="text-xl font-bold mb-4">Find Store</h2>
+        <h2 className="text-xl font-bold mb-4">Showroom Locator</h2>
         <div className="mb-4">
           <p className="text-sm">
-            See the list of all our stores below, or enter a name or area to
-            search for one.
+            Showroom Locator See the list of all our showrooms below, or enter a
+            name or area to search for one. All these showrooms are directly
+            operated by Best Electronics Limited.
           </p>
         </div>
 
