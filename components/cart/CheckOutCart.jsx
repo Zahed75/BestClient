@@ -33,7 +33,7 @@ export default function CheckOutCart() {
 
   const totalPrice = totalProductPrice - discount;
 
-  const userId = customer?.items?.userId;
+  // const userId = customer?.items?.userId;
 
   useEffect(() => {
     const fetchDistricts = async () => {
@@ -95,10 +95,11 @@ export default function CheckOutCart() {
     setLoading(true);
     const form = e.target;
     const formData = new FormData(form);
-    const customerInfo = localStorage.getItem("customer");
+    const customerInfo = JSON.parse(localStorage.getItem("customer") || "{}");
+    const userId = customerInfo?.userId;
 
     const data = {
-      customer: userId,
+      customer: customerInfo?.userId,
       email: formData.get("orderEmail"),
       orderType: "Delivery",
       customerIp: IP,
@@ -196,7 +197,6 @@ export default function CheckOutCart() {
                     ""
                   }
                   required
-                  readOnly
                   placeholder="Example@gmail.com"
                 />
               </div>
@@ -240,7 +240,7 @@ export default function CheckOutCart() {
                 </select>
               </div>
               <div className="col-span-2">
-                <label className="text-sm" htmlFor="phone">
+                <label className="text-sm" htmlFor="postalCode">
                   PostalCode *
                 </label>
                 <input
@@ -257,14 +257,17 @@ export default function CheckOutCart() {
                   Enter Your Phone Number *
                 </label>
                 <input
-                  className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
+                  className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0 cursor-not-allowed"
                   type="tel"
                   name="phone"
                   id="phone"
-                  minLength={11}
-                  maxLength={11}
-                  defaultValue={customerInfo?.billingInfo?.phoneNumber || ""}
+                  readOnly
                   required
+                  defaultValue={
+                    customerInfo?.phoneNumber ||
+                    customerInfo?.billingInfo?.phoneNumber ||
+                    ""
+                  }
                 />
               </div>
             </div>
