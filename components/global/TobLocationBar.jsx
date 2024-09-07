@@ -36,7 +36,7 @@ export default function TopLocationBar() {
               className="mr-2"
             />
             To Locate Store:{" "}
-            <Link className="text-[#F16521]" href="/">
+            <Link className="text-[#F16521]" href="/store-locator">
               <strong className="ml-1"> Click Here</strong>
             </Link>
           </div>

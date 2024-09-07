@@ -12,6 +12,9 @@ slider image styles
 .text-primary {
   color: #f16521;
 }
+.border-primary {
+  border: #f16521 solid 2px;
+}
 
 .font-dosis {
   font-family: "Dosis", sans-serif;

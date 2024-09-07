@@ -20,8 +20,8 @@ const dosis = Dosis({ subsets: ["latin"] });
 
 export const metadata = {
   title: {
-    default: "Best Electronic in Bangladesh",
-    template: "%s - Best Electronic in Bangladesh",
+    default: "Best Electronics in Bangladesh",
+    template: "%s - Best Electronics in Bangladesh",
   },
   description:
     "Best Electronics is your one-stop shop to get all kinds of electronic and electrical products in Bangladesh.",
@@ -33,7 +33,7 @@ export const metadata = {
     locale: "en_BD",
     url: `${process.env.SITE_URL}`,
     metadataBase: `${process.env.SITE_URL}`,
-    siteName: "Best Electronic",
+    siteName: "Best Electronics",
   },
 };
 
