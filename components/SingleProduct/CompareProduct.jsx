@@ -2,6 +2,7 @@ import { BorderAllRounded } from "@mui/icons-material";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
+import { useState } from 'react';
 
 const style = {
   position: "absolute",
@@ -15,6 +16,11 @@ const style = {
 export default function CompareProduct({ open, setOpen }) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [selectedCheckbox, setSelectedCheckbox] = useState(null);
+
+  const handleCheckboxChange = (index) => {
+    setSelectedCheckbox(index);
+  };
 
   return (
     <div>
@@ -87,6 +93,27 @@ export default function CompareProduct({ open, setOpen }) {
                 <td className="border px-5 py-2">Up To 52°C</td>
                 <td className="border px-5 py-2">Up To 52°C</td>
                 <td className="border px-5 py-2">Up To 52°C</td>
+              </tr>
+              <tr>
+                <td className="border px-5 py-2 text-nowrap">Add to Cart</td>
+                <td className="border px-5 py-2">
+                  <div className="flex justify-center items-center">
+                    <input type="checkbox" checked={selectedCheckbox === 1}
+                      onChange={() => handleCheckboxChange(1)} className="mr-2 scale-150" />
+                  </div>
+                </td>
+                <td className="border px-6 py-6">
+                  <div className="flex justify-center items-center">
+                    <input type="checkbox" checked={selectedCheckbox === 2}
+                      onChange={() => handleCheckboxChange(2)} className="mr-2 scale-150" />
+                  </div>
+                </td>
+                <td className="border px-5 py-2">
+                  <div className="flex justify-center items-center">
+                    <input type="checkbox" checked={selectedCheckbox === 3}
+                      onChange={() => handleCheckboxChange(3)} className="mr-2 scale-150" />
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
