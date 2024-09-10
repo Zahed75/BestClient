@@ -2,12 +2,10 @@ import React from 'react'
 import Image from "next/image";
 import Link from "next/link";
 import callIcon from "@/public/images/callIcon.svg";
-import facebook from "@/public/images/facebookLite.png";
 import linkedinLink from "@/public/images/linkedinLink.svg";
 import instagramLink from "@/public/images/instagramLink.svg";
 import pso from "@/public/images/pso 1.png";
 import logo from "@/public/images/logo 1.png";
-import x from "@/public/images/x.png";
 
 export default function Footer_2() {
     const footerData = [
