@@ -21,7 +21,7 @@ export default function NavigationBar() {
     setIsBrowseProducts(!isBrowseProducts);
   };
   const handleGotoCategories = () => {
-    router.push("/categories");
+    router.push("/shop");
   };
 
   const browseMenusItems = [

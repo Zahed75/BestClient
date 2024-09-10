@@ -35,7 +35,7 @@ export default function SetPassword() {
       const response = await fetchApi("/customer/resetPassword", "PUT", data);
       if (response) {
         setIsLoading(false);
-        localStorage.removeItem('forgetEmail');
+        localStorage.removeItem("forgetEmail");
         setConfirm(true);
       } else {
         setError("something went wrong");
@@ -51,7 +51,6 @@ export default function SetPassword() {
       const email = localStorage.getItem("forgetEmail");
       if (email) {
         setEmail(email);
-        console.log(email);
       } else {
         setError("Email not found.");
       }

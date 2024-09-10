@@ -67,7 +67,6 @@ export default function InfoSection() {
           );
 
           setOrderHistory(res?.data);
-          console.log("orderHistory", res?.data);
         } catch (error) {
           console.error("Error fetching order history:", error);
         }
@@ -85,7 +84,6 @@ export default function InfoSection() {
       const uploadedImageUrl = await handleUpload(file);
 
       setIsLoading(false);
-      console.log(uploadedImageUrl);
     } catch (error) {
       console.error("Error uploading image:", error);
       setIsLoading(false);

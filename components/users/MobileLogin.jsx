@@ -12,8 +12,6 @@ export default function MobileLogin() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-
-
   const onSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -24,14 +22,18 @@ export default function MobileLogin() {
     if (phoneNumber) {
       try {
         const data = { phoneNumber };
-        const response = await fetchApi("/customer/loginPhoneOTP", "POST", data);
-
+        const response = await fetchApi(
+          "/customer/loginPhoneOTP",
+          "POST",
+          data
+        );
 
         if (response) {
-          console.log(response);
-
           setIsLoading(false);
-          localStorage.setItem("phoneNumber", JSON.stringify(response?.customer?.phoneNumber));
+          localStorage.setItem(
+            "phoneNumber",
+            JSON.stringify(response?.customer?.phoneNumber)
+          );
           router.push("/verifyphoneotp");
         } else {
           setError("Something went wrong. Please try again.");

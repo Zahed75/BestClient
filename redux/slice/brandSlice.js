@@ -31,7 +31,7 @@ export const fetchBrands = createAsyncThunk("brands/fetchBrands", async () => {
     }
     const data = await response.json();
 
-    console.log("API Response:", data); // <-- Check what the API is returning
+   
 
     return data;
   } catch (error) {
@@ -52,7 +52,7 @@ const brandSlice = createSlice({
       .addCase(fetchBrands.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.brands = action.payload.brands; // Ensure payload contains the correct data
-        console.log("Brands in state:", state.brands);
+        
       })
       .addCase(fetchBrands.rejected, (state, action) => {
         state.status = "failed";

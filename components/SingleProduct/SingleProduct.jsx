@@ -56,10 +56,16 @@ export default function SingleProduct({ product, categoryName }) {
   ];
 
   const tagValues = [
-    "Home",
-    "Shop",
-    ...categoryName?.flatMap((category) => category),
-    `${product?.productName}`,
+    { link: "/", value: "Home" },
+    { link: "/shop", value: "Shop" },
+    ...categoryName?.flatMap((category) => ({
+      link: `/category/${category?.slug}`,
+      value: category,
+    })),
+    {
+      link: `/product/${product?.productSlug}`,
+      value: `${product?.productName}`,
+    },
   ];
 
   const productDataTabs = [
@@ -80,7 +86,12 @@ export default function SingleProduct({ product, categoryName }) {
             <tbody>
               <tr>
                 <td className="border px-5 py-2">Brand:</td>
-                <td className="border px-5 py-2">{brands?.find((brand) => brand._id === product?.productBrand)?.name}</td>
+                <td className="border px-5 py-2">
+                  {
+                    brands?.find((brand) => brand._id === product?.productBrand)
+                      ?.name
+                  }
+                </td>
               </tr>
               {product?.productSpecification?.map((spec, i) => (
                 <tr key={i}>
@@ -115,10 +126,11 @@ export default function SingleProduct({ product, categoryName }) {
             <div className="my-5 md:w-full lg:w-1/3 ">
               <p
                 className={`
-                ${product?.inventory?.stockStatus === "In Stock"
+                ${
+                  product?.inventory?.stockStatus === "In Stock"
                     ? "text-[#70BE38] bg-[#E5F8ED]"
                     : "text-red-400 bg-red-100"
-                  }  text-xs font-semibold px-3 py-1 inline-block rounded-full
+                }  text-xs font-semibold px-3 py-1 inline-block rounded-full
                 `}
               >
                 {product?.inventory?.stockStatus}
@@ -142,8 +154,9 @@ export default function SingleProduct({ product, categoryName }) {
                     dispatch(addToWishlist(product));
                   }}
                   disabled={favorite}
-                  className={`text-xs text-[#9B9BB4] border px-3 py-2 rounded-full flex justify-center items-center uppercase ${favorite ? "cursor-not-allowed" : "cursor-pointer"
-                    }`}
+                  className={`text-xs text-[#9B9BB4] border px-3 py-2 rounded-full flex justify-center items-center uppercase ${
+                    favorite ? "cursor-not-allowed" : "cursor-pointer"
+                  }`}
                 >
                   <svg
                     width="20"

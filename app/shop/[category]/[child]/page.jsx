@@ -2,8 +2,8 @@ import { fetchApi } from "@/utils/FetchApi";
 import ChildrenCat from "./ChildrenCat";
 
 export async function generateMetadata({ params, searchParams }) {
-  const { slug } = params;
-  const res = await fetchApi(`/category/categories/${slug}`, "GET");
+  const { child } = params;
+  const res = await fetchApi(`/category/categories/${child}`, "GET");
   const category = await res?.category;
   return {
     title: category?.categoryName,
@@ -13,7 +13,7 @@ export async function generateMetadata({ params, searchParams }) {
       description: category?.categoryDescription,
       type: "website",
       locale: "en_BD",
-      url: `${process.env.SITE_URL}/categories/${slug}`,
+      url: `${process.env.SITE_URL}/shop/${child}`,
       metadataBase: `${process.env.SITE_URL}`,
       siteName: "Best Electronic",
       // images: [
@@ -26,13 +26,13 @@ export async function generateMetadata({ params, searchParams }) {
 }
 
 export default async function Page({ params }) {
-  const { slug } = params;
-  const res = await fetchApi(`/category/categories/${slug}`, "GET");
+  const { child } = params;
+  const res = await fetchApi(`/category/categories/${child}`, "GET");
   const category = await res?.category;
 
   return (
     <>
-      <ChildrenCat category={category} path={slug} />
+      <ChildrenCat category={category} path={child} />
     </>
   );
 }

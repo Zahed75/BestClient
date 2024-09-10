@@ -43,7 +43,6 @@ export default function VerifyOtp() {
 
       if (response) {
         router.push("/setpassword");
-
       } else {
         setError("Invalid OTP. Please try again.");
       }
@@ -72,13 +71,11 @@ export default function VerifyOtp() {
     }
   };
 
-
   useEffect(() => {
     if (typeof window !== "undefined") {
       const email = localStorage.getItem("forgetEmail");
       if (email) {
         setEmail(email);
-        console.log(email);
       } else {
         setError("Email not found.");
       }
