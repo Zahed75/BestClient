@@ -5,7 +5,9 @@ import TopLocationBar from "@/components/global/TobLocationBar";
 import Search from "@/components/global/Search";
 import NavigationBar from "@/components/global/NavigationBar";
 import Footer from "@/components/global/Footer";
+import Footer_2 from "@/components/global/Footer_2";
 import LastFooter from "@/components/global/LastFooter";
+import LastFooter_2 from "@/components/global/LastFooter_1";
 import BottomNavigation from "@/components/global/BottomNavigation";
 import { Providers } from "@/redux/providers";
 import PageTransition from "@/components/global/PageTransition";
@@ -49,8 +51,8 @@ export default function RootLayout({ children }) {
           <NavigationBar />
           <PageTransition>{children}</PageTransition>
           <BottomNavigation />
-          <Footer />
-          <LastFooter />
+          <Footer_2 />
+          <LastFooter_2 />
         </Providers>
       </body>
     </html>
