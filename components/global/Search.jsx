@@ -140,7 +140,7 @@ export default function Search() {
 
         <div className="flex justify-end items-center gap-5 col-span-2 md:col-span-1">
           <div className="w-[42px] h-[42px] rounded-full border hover:border-[#FFF1EE] p-2 hover:bg-[#FFF1EE] duration-700 hidden md:block">
-            <Link href="/userfeed">
+            <Link href="/my-account">
               <Image
                 src={userIcon}
                 alt="User Icon"

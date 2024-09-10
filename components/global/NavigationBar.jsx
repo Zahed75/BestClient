@@ -303,13 +303,21 @@ export default function NavigationBar() {
                   isOrderMenuOpen ? "block" : "hidden"
                 } group-hover:block absolute left-0 w-64 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
               >
-                <ul className="text-sm">
+                <ul className="text-sm capitalize">
                   <li className="py-2 px-3 hover:text-[#F16521] cursor-pointer">
-                    Home Appliance & Furniture
+                    <Link href={"/cart"}>Cart</Link>
                   </li>
-
                   <li className="py-2 px-3 hover:text-[#F16521] cursor-pointer">
-                    Mobile & Accessories
+                    <Link href={"/checkout"}>Checkout</Link>
+                  </li>
+                  <li className="py-2 px-3 hover:text-[#F16521] cursor-pointer">
+                    <Link href={"/my-account/orders"}>My Orders</Link>
+                  </li>
+                  <li className="py-2 px-3 hover:text-[#F16521] cursor-pointer">
+                    <Link href={"/my-account"}>My Account</Link>
+                  </li>
+                  <li className="py-2 px-3 hover:text-[#F16521] cursor-pointer">
+                    <Link href={"/my-account/wishlist"}>Wishlist</Link>
                   </li>
                 </ul>
               </div>
