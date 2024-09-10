@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { fetchApi } from "@/utils/FetchApi";
 import { useSelector } from "react-redux";
 import ProductCard from "../productCard/ProductCard";
+import WishlistCard from "../productCard/wishlistCard";
 
 export default function WishlistInfo() {
   const [customerImage, setCustomerImage] = useState("");
@@ -93,7 +94,7 @@ export default function WishlistInfo() {
         >
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 justify-between items-center">
             {products?.map((product, index) => (
-              <ProductCard key={index} product={product} />
+              <WishlistCard key={index} product={product} />
             ))}
           </div>
         </div>
