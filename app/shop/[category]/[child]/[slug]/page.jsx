@@ -31,8 +31,6 @@ export default async function Page({ params }) {
   const res = await fetchApi(`/product/getProductBySlugHandler/${slug}`, "GET");
   const product = await res?.product;
 
-  console.log("product", product);
-
   const categories = product?.categoryId?.map((category) =>
     fetchApi(`/category/getCategoryById/${category}`, "GET")
   );
@@ -45,7 +43,6 @@ export default async function Page({ params }) {
   const category = await Promise.all(categories);
   const categoryName = category?.map((cat) => cat?.category?.categoryName);
 
-  
   return (
     <>
       {product ? (

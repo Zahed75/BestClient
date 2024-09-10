@@ -1,7 +1,8 @@
-import Shop from "./Shop";
+import { fetchApi } from "@/utils/FetchApi";
+import Categories from "./Categories";
 
 export const metadata = {
-  title: "Shop",
+  title: "Categories",
   // title: {
   //   absolute: "SHOP"   only if I don't need template
   // }
@@ -10,24 +11,29 @@ export const metadata = {
 };
 
 export default async function Page() {
-  const products = await fetch(
-    `${process.env.NEXT_PUBLIC_API_ENDPOINT}/product/getProductByproductStatus`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
-    }
-  )
-    .then((res) => res.json())
-    .then((data) => data.products)
-    .catch((error) => console.error(error));
+  const categories = await fetchApi("/category/getAllCat", "GET");
 
+  const productsByCategory = categories?.categories?.map((category) => {
+    return {
+      ...category,
+      products: category.products,
+    };
+  });
+
+  const publishedProductsArray = productsByCategory?.map((category) => {
+    return category.products?.filter(
+      (product) => product?.productStatus === "Published"
+    );
+  });
+
+  const products = publishedProductsArray?.flat();
+
+ 
+  
 
   return (
     <main>
-      <Shop products={products} />
+      <Categories products={products} AllCategories={productsByCategory} />
     </main>
   );
 }

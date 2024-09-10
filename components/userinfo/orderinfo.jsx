@@ -54,7 +54,7 @@ export default function OrderInfo() {
           );
 
           setOrderHistory(res?.data);
-          console.log("orderHistory", res?.data);
+          
         } catch (error) {
           console.error("Error fetching order history:", error);
         }

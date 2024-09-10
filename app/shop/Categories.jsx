@@ -21,14 +21,9 @@ import {
 import { fetchBrands } from "@/redux/slice/brandSlice";
 import { useRouter } from "next/navigation";
 
-export default function ParentCat({ category, path }) {
-  const { products, subCategories } = category;
+export default function Categories({ products, AllCategories }) {
   const [dynamicGrid, setDynamicGrid] = useState(3);
   const [open, setOpen] = useState(false);
-
-
-  
-  
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -65,7 +60,7 @@ export default function ParentCat({ category, path }) {
     });
 
   const handleGotoCategory = (slug) => {
-    router.push(`/categories/${path}/${slug}`);
+    router.push(`/shop/${slug}`);
   };
 
   const handleCategoryChange = (category) => {
@@ -98,7 +93,7 @@ export default function ParentCat({ category, path }) {
     pagination?.currentPage * pagination?.itemsPerPage
   );
 
-  const tagValues = ["Home", "Categories", category?.categoryName];
+  const tagValues = ["Home", "Categories"];
 
   const handleDynamicGrid = ({ value }) => {
     if (value) {
@@ -109,6 +104,8 @@ export default function ParentCat({ category, path }) {
   const toggleFilterDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
+
+ 
 
   return (
     <main className="container">
@@ -132,7 +129,7 @@ export default function ParentCat({ category, path }) {
                       All Categories
                     </label>
                   </div>
-                  {subCategories?.map((category, index) => (
+                  {AllCategories?.map((category, index) => (
                     <div
                       key={index}
                       className="flex justify-start items-center gap-3 py-1"
@@ -288,7 +285,7 @@ export default function ParentCat({ category, path }) {
                       All Categories
                     </label>
                   </div>
-                  {subCategories?.map((category, index) => (
+                  {AllCategories?.map((category, index) => (
                     <div
                       key={index}
                       className="flex justify-start items-center gap-3 py-1"

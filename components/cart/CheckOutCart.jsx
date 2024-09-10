@@ -119,8 +119,6 @@ export default function CheckOutCart() {
       outlet: "",
     };
 
-    console.log("Order Data:", data);
-
     if (!customerInfo) {
       router.push("/signin");
       return;
@@ -128,7 +126,7 @@ export default function CheckOutCart() {
 
     try {
       const response = await fetchApi("/order/orderCreate", "POST", data);
-      console.log("Order Response:", response);
+
       if (response) {
         router.push("/success");
         setLoading(false);

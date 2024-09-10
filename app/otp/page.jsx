@@ -77,7 +77,6 @@ export default function Otp() {
       const email = customer ? JSON.parse(customer).customer.email : "";
       if (email) {
         setEmail(email);
-        console.log(email);
       } else {
         setError("Email not found.");
       }

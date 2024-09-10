@@ -6,7 +6,7 @@ export default function RelatedCard() {
   const relatedProducts =
     useSelector((state) => state.relatedProducts?.items) || [];
 
-  console.log("relatedProducts", relatedProducts);
+  
   return (
     <main>
       <section className="my-5 md:my-10 flex justify-start items-center gap-x-2">
