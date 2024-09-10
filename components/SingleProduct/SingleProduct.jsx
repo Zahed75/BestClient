@@ -15,6 +15,7 @@ import CompareProduct from "./CompareProduct";
 import { useDispatch, useSelector } from "react-redux";
 import { addToWishlist } from "@/redux/slice/wishlistSlice";
 import { addRelatedProduct } from "@/redux/slice/relatedSlice";
+import { fetchBrands } from "@/redux/slice/brandSlice";
 
 export default function SingleProduct({ product, categoryName }) {
   const [favorite, setFavorite] = useState(false);
@@ -22,6 +23,8 @@ export default function SingleProduct({ product, categoryName }) {
 
   const dispatch = useDispatch();
 
+  const brandsState = useSelector((state) => state.brand);
+  const brands = brandsState?.brands || [];
   const customer = useSelector((state) => state.customer);
   const customerId = customer.items.userId;
   const wishlist = useSelector((state) => state.wishlist.items);
@@ -30,8 +33,9 @@ export default function SingleProduct({ product, categoryName }) {
   useEffect(() => {
     if (product) {
       dispatch(addRelatedProduct(product));
+      dispatch(fetchBrands());
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (favoriteProduct) {
@@ -76,7 +80,7 @@ export default function SingleProduct({ product, categoryName }) {
             <tbody>
               <tr>
                 <td className="border px-5 py-2">Brand:</td>
-                <td className="border px-5 py-2">{product?.productBrand}</td>
+                <td className="border px-5 py-2">{brands?.find((brand) => brand._id === product?.productBrand)?.name}</td>
               </tr>
               {product?.productSpecification?.map((spec, i) => (
                 <tr key={i}>
