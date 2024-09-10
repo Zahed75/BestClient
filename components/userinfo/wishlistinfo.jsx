@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { fetchApi } from "@/utils/FetchApi";
 import { useSelector } from "react-redux";
-import ProductCard from "../productCard/ProductCard";
 import WishlistCard from "../productCard/wishlistCard";
 
 export default function WishlistInfo() {
@@ -72,7 +71,7 @@ export default function WishlistInfo() {
             Orders
           </div>
           <div
-            onClick={() => setActive("wishlist")}
+            onClick={handleGotoWishlist}
             className={`cursor-pointer inline-block px-5 py-2 rounded-md duration-700 ${
               active === "wishlist" ? "bg-[#F16521] text-white shadow-md" : ""
             }`}

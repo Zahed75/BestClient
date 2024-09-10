@@ -103,7 +103,7 @@ const navigationLink = [
   },
   {
     title: "Your Order",
-    link: "/",
+    link: "/my-account/orders",
   },
   {
     title: "Contact Us",
@@ -144,7 +144,7 @@ export default function BottomNavigation() {
             </span>
           </Link>
           <Link
-            href="/userfeed"
+            href="/my-account"
             className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 duration-700 group"
           >
             <FaUser className="w-5 h-5 mb-2 text-white group-hover:text-[#F16521] duration-700" />
