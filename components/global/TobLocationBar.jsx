@@ -4,10 +4,10 @@ import locationIcon from "@/public/images/locationIcon.svg";
 
 export default function TopLocationBar() {
   const linkData = [
-    { name: "My Account", url: "/" },
-    { name: "Wishlist", url: "/" },
+    { name: "My Account", url: "/my-account" },
+    { name: "Wishlist", url: "/my-account/wishlist" },
     { name: "Order Tracking", url: "/" },
-    { name: "Cart", url: "/" },
+    { name: "Cart", url: "/cart" },
   ];
   return (
     <section className="container">
