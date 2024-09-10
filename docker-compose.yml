@@ -10,7 +10,7 @@ services:
         - NEXT_PUBLIC_API_ENDPOINT=https://app.bestelectronics.com.bd/api/v1
         
     ports:
-      - 7800:7800
+      - 9800:9800
     container_name: best_customer
 
 
