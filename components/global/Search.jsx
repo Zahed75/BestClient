@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart } from "@/redux/slice/cartSlice";
 import { useRouter } from "next/navigation";
 import { fetchProducts } from "@/redux/slice/productsSlice";
+import { fetchApi } from "@/utils/FetchApi";
 
 export default function Search() {
   const [open, setOpen] = useState(false);
@@ -67,14 +68,59 @@ export default function Search() {
     product.productName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleProductClick = (productSlug) => {
-    router.push(`/shop/${productSlug}`);
-    setSearchTerm("");
-    setOutsideClick(false);
-  };
+  
 
   const handleOutsideClick = (productSlug) => {
     setOutsideClick(false);
+  };
+
+  const fetchCategorySlug = async (categoryId) => {
+    try {
+      const response = await fetchApi(
+        `/category/getCategoryById/${categoryId}`,
+        "GET"
+      );
+      const category = response?.category;
+
+      if (category?.parentCategory) {
+        const parentResponse = await fetchApi(
+          `/category/getCategoryById/${category?.parentCategory}`,
+          "GET"
+        );
+        const parentCategory = parentResponse?.category?.slug;
+        return `${parentCategory}/${category?.slug}`;
+      }
+
+      return `${category?.slug}/${category?.slug}`;
+    } catch (error) {
+      console.error(`Error fetching category with ID ${categoryId}`, error);
+      return null;
+    }
+  };
+
+  const getProductCategorySlugs = async (product) => {
+    if (!product?.categoryId) return [];
+
+    const categorySlugs = await Promise.all(
+      product?.categoryId?.map((categoryId) => fetchCategorySlug(categoryId))
+    );
+
+    return categorySlugs.filter((slug) => slug);
+  };
+
+  const handleProductClick = async (product) => {
+    const slugs = await getProductCategorySlugs(product);
+  
+    // Check if there are any valid slugs
+    if (slugs.length > 0) {
+      const slugPath = slugs[0]; // Use the first slug or join them if needed
+      router.push(`/shop/${slugPath}/${product.productSlug}`);
+      console.log(`/shop/${slugPath}/${product.productSlug}`);
+    } else {
+      console.log("No valid slugs found for the product");
+    }
+  
+    setSearchTerm(""); // Clear search input after redirect
   };
 
   return (
@@ -126,7 +172,7 @@ export default function Search() {
                   <div
                     key={product._id}
                     className="p-3 hover:bg-gray-200 cursor-pointer"
-                    onClick={() => handleProductClick(product?.productSlug)}
+                    onClick={() => handleProductClick(product)}
                   >
                     {product.productName}
                   </div>

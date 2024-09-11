@@ -98,7 +98,22 @@ export default function ParentCat({ category, path }) {
     pagination?.currentPage * pagination?.itemsPerPage
   );
 
-  const tagValues = ["Home", "Categories", category?.categoryName];
+  // const tagValues = ["Home", "Categories", category?.categoryName];
+  const tagValues = [
+    {
+      link: "/",
+      value: "Home",
+    },
+    {
+      link: "/shop",
+      value: "Shop",
+    },
+    {
+      link: `/shop/${path}`,
+      value: category?.categoryName,
+    },
+  ];
+  
 
   const handleDynamicGrid = ({ value }) => {
     if (value) {

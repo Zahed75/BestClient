@@ -65,16 +65,16 @@ const createTagValues = async (product) => {
   return [
     { link: "/", value: "Home" },
     { link: "/shop", value: "Shop" },
-    ...categories.flatMap((category) => {
+    ...categories.sort().reverse().flatMap((category) => {
       const tags = [];
-      if (category?.slug) {
-        tags.push({ link: `/shop/${category?.slug}`, value: category?.categoryName });
+      if (category?.categorySlug) {
+        tags.push({ link: `/shop/${category?.categorySlug}`, value: category?.categoryName });
       }
-      tags.push({ link: `/shop/${category?.slug ? `${category?.slug}/` : ''}${category?.slug}`, value: category?.categoryName });
+      
       return tags;
     }),
     {
-      link: `/product/${product.productSlug}`,
+      link: "#",
       value: product.productName
     }
   ];
