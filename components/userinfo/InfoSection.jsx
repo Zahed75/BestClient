@@ -181,25 +181,22 @@ export default function InfoSection() {
         <div className="flex justify-start items-center uppercase text-slate-500 text-xs">
           <div
             onClick={() => setActive("personal")}
-            className={`cursor-pointer inline-block px-5 py-2 rounded-md duration-700 ${
-              active === "personal" ? "bg-[#F16521] text-white shadow-md" : ""
-            }`}
+            className={`cursor-pointer inline-block px-5 py-2 rounded-md duration-700 ${active === "personal" ? "bg-[#F16521] text-white shadow-md" : ""
+              }`}
           >
             personal
           </div>
           <div
             onClick={handleGotoOrders}
-            className={`cursor-pointer inline-block px-5 py-2 rounded-md duration-700 ${
-              active === "orders" ? "bg-[#F16521] text-white shadow-md" : ""
-            }`}
+            className={`cursor-pointer inline-block px-5 py-2 rounded-md duration-700 ${active === "orders" ? "bg-[#F16521] text-white shadow-md" : ""
+              }`}
           >
             Orders
           </div>
           <div
             onClick={handleGotoWishlist}
-            className={`cursor-pointer inline-block px-5 py-2 rounded-md duration-700 ${
-              active === "wishlist" ? "bg-[#F16521] text-white shadow-md" : ""
-            }`}
+            className={`cursor-pointer inline-block px-5 py-2 rounded-md duration-700 ${active === "wishlist" ? "bg-[#F16521] text-white shadow-md" : ""
+              }`}
           >
             Wishlist
           </div>

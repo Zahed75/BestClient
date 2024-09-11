@@ -78,9 +78,8 @@ export default function NavigationBar() {
           <div
             onMouseEnter={() => setIsAllCategoriesOpen(true)}
             onMouseLeave={() => setIsAllCategoriesOpen(false)}
-            className={`${
-              isAllCategoriesOpen ? "block" : "hidden"
-            } group-hover:block absolute left-0 w-96 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
+            className={`${isAllCategoriesOpen ? "block" : "hidden"
+              } group-hover:block absolute left-0 w-96 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
           >
             <ul className="text-sm">
               <li className="py-2 px-3 hover:text-[#F16521] cursor-pointer">
@@ -95,9 +94,8 @@ export default function NavigationBar() {
                   <span>Electronics</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className={`h-4 w-4 transition-transform duration-300 transform ${
-                      isElectronicsSubMenuOpen ? "-rotate-90" : "rotate-0"
-                    }`}
+                    className={`h-4 w-4 transition-transform duration-300 transform ${isElectronicsSubMenuOpen ? "-rotate-90" : "rotate-0"
+                      }`}
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
@@ -122,9 +120,8 @@ export default function NavigationBar() {
                         <span>Smartphone</span>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          className={`h-4 w-4 transition-transform duration-300 transform ${
-                            isSmartSubMenuOpen ? "-rotate-90" : "rotate-0"
-                          }`}
+                          className={`h-4 w-4 transition-transform duration-300 transform ${isSmartSubMenuOpen ? "-rotate-90" : "rotate-0"
+                            }`}
                           viewBox="0 0 20 20"
                           fill="currentColor"
                         >
@@ -188,9 +185,8 @@ export default function NavigationBar() {
               <div
                 onMouseEnter={() => setIsBrowseProducts(true)}
                 onMouseLeave={() => setIsBrowseProducts(false)}
-                className={`${
-                  isBrowseProducts ? "block" : "hidden"
-                } group-hover:block absolute left-0 w-64 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
+                className={`${isBrowseProducts ? "block" : "hidden"
+                  } group-hover:block absolute left-0 w-64 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
               >
                 <ul className="text-sm">
                   <li className="py-2 px-3 hover:text-[#F16521] cursor-pointer">
@@ -205,9 +201,8 @@ export default function NavigationBar() {
                       <span>Electronics</span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className={`h-4 w-4 transition-transform duration-300 transform ${
-                          isElectronicsSubMenuOpen ? "-rotate-90" : "rotate-0"
-                        }`}
+                        className={`h-4 w-4 transition-transform duration-300 transform ${isElectronicsSubMenuOpen ? "-rotate-90" : "rotate-0"
+                          }`}
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
@@ -232,9 +227,8 @@ export default function NavigationBar() {
                             <span>Smartphone</span>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
-                              className={`h-4 w-4 transition-transform duration-300 transform ${
-                                isSmartSubMenuOpen ? "-rotate-90" : "rotate-0"
-                              }`}
+                              className={`h-4 w-4 transition-transform duration-300 transform ${isSmartSubMenuOpen ? "-rotate-90" : "rotate-0"
+                                }`}
                               viewBox="0 0 20 20"
                               fill="currentColor"
                             >
@@ -279,10 +273,10 @@ export default function NavigationBar() {
               <Link href="/shop">All Products</Link>
             </span>
             <span className="hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700">
-              <Link href="/">Quick emi</Link>
+              <Link href="/emi-facility">Quick emi</Link>
             </span>
             <span className="hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700">
-              <Link href="/">super kisti</Link>
+              <Link href="/super-kisti">super kisti</Link>
             </span>
             <div className="group relative">
               <button
@@ -299,9 +293,8 @@ export default function NavigationBar() {
               </button>
               <div
                 onMouseLeave={() => setIsOrderMenuOpen(false)}
-                className={`${
-                  isOrderMenuOpen ? "block" : "hidden"
-                } group-hover:block absolute left-0 w-64 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
+                className={`${isOrderMenuOpen ? "block" : "hidden"
+                  } group-hover:block absolute left-0 w-64 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
               >
                 <ul className="text-sm capitalize">
                   <li className="py-2 px-3 hover:text-[#F16521] cursor-pointer">

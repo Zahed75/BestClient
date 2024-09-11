@@ -4,7 +4,8 @@ import { useState } from "react";
 import { Box, Drawer } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import bestLogo from "@/public/images/bestElectronicsLogo.svg";
-import { FaStore, FaSearch, FaUser, FaBars } from "react-icons/fa";
+import { FaStore, FaSearch, FaUser, FaBars, FaRegHeart } from "react-icons/fa";
+import { SlHeart } from "react-icons/sl";
 import Image from "next/image";
 
 const categories = [
@@ -124,10 +125,10 @@ export default function BottomNavigation() {
   return (
     <section>
       <div className="fixed md:visible lg:hidden bottom-0 left-0 z-50 w-full h-16 bg-[#F16521] mx-auto">
-        <div className="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
+        <div className="grid h-full max-w-lg grid-cols-5 mx-auto font-medium">
           <Link
             href="/shop"
-            className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 duration-700 group"
+            className="inline-flex flex-col items-center justify-center px-4 hover:bg-gray-50 duration-700 group"
           >
             <FaStore className="w-5 h-5 mb-2 text-white group-hover:text-[#F16521] duration-700" />
             <span className="text-sm text-white group-hover:text-[#F16521] duration-700">
@@ -136,7 +137,7 @@ export default function BottomNavigation() {
           </Link>
           <Link
             href="/search"
-            className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 duration-700 group"
+            className="inline-flex flex-col items-center justify-center px-4 hover:bg-gray-50 duration-700 group"
           >
             <FaSearch className="w-5 h-5 mb-2 text-white group-hover:text-[#F16521] duration-700" />
             <span className="text-sm text-white group-hover:text-[#F16521] duration-700">
@@ -144,8 +145,17 @@ export default function BottomNavigation() {
             </span>
           </Link>
           <Link
+            href="/my-account/wishlist"
+            className="inline-flex flex-col items-center justify-center px-4 hover:bg-gray-50 duration-700 group"
+          >
+            <FaRegHeart className="w-5 h-5 mb-2 text-white group-hover:text-[#F16521] duration-700" />
+            <span className="text-sm text-white group-hover:text-[#F16521] duration-700">
+              Whishlist
+            </span>
+          </Link>
+          <Link
             href="/my-account"
-            className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 duration-700 group"
+            className="inline-flex flex-col items-center justify-center px-4 hover:bg-gray-50 duration-700 group"
           >
             <FaUser className="w-5 h-5 mb-2 text-white group-hover:text-[#F16521] duration-700" />
             <span className="text-sm text-white group-hover:text-[#F16521] duration-700">
@@ -155,7 +165,7 @@ export default function BottomNavigation() {
           <button
             type="button"
             onClick={toggleDrawer(true)}
-            className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 duration-700 group"
+            className="inline-flex flex-col items-center justify-center px-4 hover:bg-gray-50 duration-700 group"
           >
             <FaBars className="w-5 h-5 mb-2 text-white group-hover:text-[#F16521] duration-700" />
             <span className="text-sm text-white group-hover:text-[#F16521] duration-700">
