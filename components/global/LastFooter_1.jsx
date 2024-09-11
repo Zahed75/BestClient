@@ -19,12 +19,11 @@ export default function LastFooter_1() {
                     <a href="#" className="hover:underline border-l border-gray-300 px-4">Customer Complaint</a>
                 </div>
 
-
-                <div className="flex justify-center items-center text-sm text-gray-600 mb-5">
+                <div className="flex justify-center items-center text-sm text-gray-600 mb-5 text-center">
                     © Best Electronics - All Rights Reserved. Payment Partner:
                     SSLCOMMERZ
                 </div>
-                <div className="flex justify-center items-center text-sm text-gray-600">
+                <div className="flex text-sm text-gray-600 text-center">
                     Best Electronics Limited is authorised and regulated by the Financial Conduct Authority as a credit broker (713206), and works exclusively with the lender, Home Retail Group Card Services Limited trading as Best Electronics Card and Best Electronics Financial Services, who are authorised and regulated by the Financial Conduct Authority to provide credit (716148). Home Retail Group Card Services Limited is registered in England (04007072) at 33 Holborn, London, United Kingdom, EC1N 2HT.
                 </div>
             </div>

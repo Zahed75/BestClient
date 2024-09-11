@@ -79,7 +79,7 @@ export default function Search() {
 
   return (
     <main className="container">
-      <div className="grid grid-cols-4 justify-center items-center gap-5 my-5">
+      <div className="hidden md:grid grid-cols-4 justify-center items-center gap-5 my-5">
         <div className="col-span-2 md:col-span-1">
           <Link href="/" className="object-cover">
             <Image
@@ -149,6 +149,127 @@ export default function Search() {
             </Link>
           </div>
           <div className="text-md font-bold ">৳ {total}</div>
+          <div className="w-[42px] h-[42px] rounded-full border border-[#FFF1EE] bg-[#FFF1EE] p-2 relative ">
+            <button
+              className="flex justify-center mx-auto w-full h-full"
+              onClick={toggleDrawer(true)}
+            >
+              <Image
+                src={cartIcon}
+                alt="User Icon"
+                className="flex justify-center mx-auto w-full h-full"
+              />
+            </button>
+            <div>
+              <span className="absolute top-0 -right-2 bg-[#F16521] text-white rounded-full text-xs px-1">
+                {cart?.length}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
+          <Box role="presentation" className="w-[350px] md:w-[400px]">
+            <div className="flex justify-between items-center border-b-2 p-3">
+              <h3 className="text-xl">Shopping Cart</h3>
+              <button className="inline-block" onClick={toggleDrawer(false)}>
+                <CloseIcon />
+              </button>
+            </div>
+            {cart.length > 0 ? (
+              cart.map((product, i) => (
+                <div
+                  key={i}
+                  className="grid grid-cols-4 justify-between items-center gap-3 p-3 hover:bg-slate-50 duration-700 border-b-2"
+                >
+                  <div>
+                    <Image
+                      className="w-20 h-20"
+                      src={product?.productImage}
+                      alt={product?.productName}
+                      width={80}
+                      height={80}
+                    />
+                  </div>
+                  <div className="col-span-3 flex justify-between items-center">
+                    <div>
+                      <h3 className="text-md">{product?.productName}</h3>
+                      <div>
+                        <p className="text-slate-500">
+                          ৳ {product?.general?.salePrice}
+                        </p>
+                        <p className="ml-2 text-slate-500">
+                          {" "}
+                          X {product?.quantity}
+                        </p>
+                      </div>
+                    </div>
+                    <button className="flex justify-center bg-[#F16521] w-5 h-5 rounded-full p-1">
+                      <CloseIcon
+                        className="text-white pb-1"
+                        style={{ fontSize: 17 }}
+                        onClick={() => dispatch(removeFromCart(product?._id))}
+                      />
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="flex flex-col justify-center items-center mt-10">
+                <Image className="w-40 h-40" src={EmptyCart} alt="Empty Cart" />
+                <p>No products in the cart</p>
+              </div>
+            )}
+
+            <div className="p-3 my-3">
+              {cart?.length > 0 ? (
+                <div className="flex justify-between items-center">
+                  <h3 className="text-slate-500">
+                    Subtotal ({cart.length} items):
+                  </h3>
+                  <h3 className="text-md font-semibold">
+                    ৳
+                    {cart
+                      .map((item) => item?.general?.salePrice * item?.quantity)
+                      .reduce((a, b) => a + b, 0)}
+                  </h3>
+                </div>
+              ) : (
+                <div>
+                  <p>No Product In Cart</p>
+                </div>
+              )}
+
+              <div className="flex flex-col justify-between items-center">
+                <button
+                  onClick={handleGoToCart}
+                  className="border py-3 rounded-md w-full my-3"
+                >
+                  View Cart
+                </button>
+                <button
+                  onClick={handleGoToCheckout}
+                  className="text-white bg-[#F16521] py-3 rounded-md w-full"
+                >
+                  Checkout
+                </button>
+              </div>
+            </div>
+          </Box>
+        </Drawer>
+      </div>
+      <div className="grid grid-cols-3 justify-center items-center my-5 md:hidden">
+        <div className="col-span-2 md:hidden">
+          <Link href="/" className="object-cover">
+            <Image
+              src={bestLogo}
+              className="w-full"
+              alt="Best Electronics Icon"
+            />
+          </Link>
+        </div>
+
+        <div className="flex justify-end items-center gap-1 col-span-1 md:hidden">
           <div className="w-[42px] h-[42px] rounded-full border border-[#FFF1EE] bg-[#FFF1EE] p-2 relative ">
             <button
               className="flex justify-center mx-auto w-full h-full"
