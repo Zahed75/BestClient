@@ -75,7 +75,7 @@ export default function CheckOutCart() {
   useEffect(() => {
     const customerId = customer?.items?.userId;
     if (!customerId || customerId === "") {
-      router.push("/signin");
+      router.push("/mobilesignin");
     } else {
       const fetchData = async () => {
         try {
@@ -120,7 +120,7 @@ export default function CheckOutCart() {
     };
 
     if (!customerInfo) {
-      router.push("/signin");
+      router.push("/mobilesignin");
       return;
     }
 

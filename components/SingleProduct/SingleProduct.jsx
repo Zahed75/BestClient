@@ -16,10 +16,74 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToWishlist } from "@/redux/slice/wishlistSlice";
 import { addRelatedProduct } from "@/redux/slice/relatedSlice";
 import { fetchBrands } from "@/redux/slice/brandSlice";
+import { fetchApi } from "@/utils/FetchApi";
+
+
+const fetchCategorySlug = async (categoryId) => {
+  try {
+    const response = await fetchApi(`/category/getCategoryById/${categoryId}`, 'GET');
+    const category = response?.category;
+
+    if (category?.parentCategory) {
+      const parentResponse = await fetchApi(`/category/getCategoryById/${category?.parentCategory}`, 'GET');
+      const parentCategorySlug = parentResponse?.category?.slug;
+      return {
+        parentSlug: parentCategorySlug,
+        categorySlug: category?.slug,
+        parentName: parentResponse?.category?.categoryName,
+        categoryName: category?.categoryName
+      };
+    }
+
+    return {
+      parentSlug: null,
+      categorySlug: category?.slug,
+      parentName: null,
+      categoryName: category?.categoryName,
+    };
+  } catch (error) {
+    console.error(`Error fetching category with ID ${categoryId}`, error);
+    return null;
+  }
+};
+
+const getProductCategorySlugs = async (product) => {
+  if (!product?.categoryId) {
+    return [];
+  }
+
+  const categories = await Promise.all(
+    product?.categoryId.map((categoryId) => fetchCategorySlug(categoryId))
+  );
+
+  return categories.filter((category) => category);
+};
+
+const createTagValues = async (product) => {
+  const categories = await getProductCategorySlugs(product);
+
+  return [
+    { link: "/", value: "Home" },
+    { link: "/shop", value: "Shop" },
+    ...categories.flatMap((category) => {
+      const tags = [];
+      if (category?.slug) {
+        tags.push({ link: `/shop/${category?.slug}`, value: category?.categoryName });
+      }
+      tags.push({ link: `/shop/${category?.slug ? `${category?.slug}/` : ''}${category?.slug}`, value: category?.categoryName });
+      return tags;
+    }),
+    {
+      link: `/product/${product.productSlug}`,
+      value: product.productName
+    }
+  ];
+};
 
 export default function SingleProduct({ product, categoryName }) {
   const [favorite, setFavorite] = useState(false);
   const [open, setOpen] = useState(false);
+  const [tagValues, setTagValues] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -45,7 +109,20 @@ export default function SingleProduct({ product, categoryName }) {
     }
   }, [favoriteProduct]);
 
-  const handleOpen = () => setOpen(true);
+  useEffect(() => {
+    const fetchTagValues = async () => {
+      try {
+        const tags = await createTagValues(product);
+        setTagValues(tags);
+      } catch (err) {
+        setError('Failed to load tag values');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTagValues();
+  }, [product]);
 
   const logoSrc = [
     { src: FacebookLogo, alt: "Facebook Logo", link: "/product" },
@@ -55,18 +132,7 @@ export default function SingleProduct({ product, categoryName }) {
     { src: LinkedinLogo, alt: "Linkedin Logo", link: "/product" },
   ];
 
-  const tagValues = [
-    { link: "/", value: "Home" },
-    { link: "/shop", value: "Shop" },
-    ...categoryName?.flatMap((category) => ({
-      link: `/category/${category?.slug}`,
-      value: category,
-    })),
-    {
-      link: `/product/${product?.productSlug}`,
-      value: `${product?.productName}`,
-    },
-  ];
+ 
 
   const productDataTabs = [
     {
@@ -176,7 +242,7 @@ export default function SingleProduct({ product, categoryName }) {
                   Add to Wishlist
                 </button>
                 <button
-                  onClick={handleOpen}
+                  onClick={() => setOpen(true)}
                   className="text-xs text-[#9B9BB4] px-5 py-2 flex justify-center items-center uppercase"
                 >
                   <Image
