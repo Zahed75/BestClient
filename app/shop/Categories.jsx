@@ -93,7 +93,17 @@ export default function Categories({ products, AllCategories }) {
     pagination?.currentPage * pagination?.itemsPerPage
   );
 
-  const tagValues = ["Home", "Categories"];
+  const tagValues = [
+    {
+      link: "/",
+      value: "Home",
+    },
+    {
+      link: "/shop",
+      value: "Shop",
+    }
+  ];
+  
 
   const handleDynamicGrid = ({ value }) => {
     if (value) {

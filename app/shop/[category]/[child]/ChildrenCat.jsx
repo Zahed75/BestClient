@@ -65,7 +65,7 @@ export default function ChildrenCat({ category, path }) {
     });
 
   const handleGotoCategory = (slug) => {
-    router.push(`/categories/${slug}`);
+    router.push(`/shop/${slug}`);
   };
 
   const handleCategoryChange = (category) => {
@@ -102,11 +102,30 @@ export default function ChildrenCat({ category, path }) {
     (cat) => cat._id === category?.parentCategory
   )?.categoryName;
 
+  // const tagValues = [
+  //   "Home",
+  //   "Categories",
+  //   parentCatName,
+  //   category?.categoryName,
+  // ];
+
   const tagValues = [
-    "Home",
-    "Categories",
-    parentCatName,
-    category?.categoryName,
+    {
+      link: "/",
+      value: "Home",
+    },
+    {
+      link: "/shop",
+      value: "Shop",
+    },
+    {
+      link: `/shop/${parentCatName?.toLowerCase().replace(/\s+/g, "-")}`,
+      value: parentCatName,
+    },
+    {
+      link: `/shop/${parentCatName?.toLowerCase().replace(/\s+/g, "-")}/${category?.slug}`,
+      value: category?.categoryName,
+    },
   ];
 
   const handleDynamicGrid = ({ value }) => {
