@@ -11,12 +11,12 @@ export default function LastFooter_1() {
 
                 </div>
                 <div className="flex flex-wrap justify-center items-center text-sm text-gray-600 mb-5">
-                    <a href="#" className="hover:underline px-4">Quick EMIs</a>
-                    <a href="#" className="hover:underline border-l border-gray-300 px-4">Super Kisti</a>
-                    <a href="#" className="hover:underline border-l border-gray-300 px-4">Refund and Return Policy</a>
-                    <a href="#" className="hover:underline border-l border-gray-300 px-4">Terms & Conditions of Warranty</a>
-                    <a href="#" className="hover:underline border-l border-gray-300 px-4">Privacy Policy</a>
-                    <a href="#" className="hover:underline border-l border-gray-300 px-4">Customer Complaint</a>
+                    <a href="https://www.bestelectronics.com.bd/emi-facility" className="hover:underline px-4">Quick EMIs</a>
+                    <a href="https://www.bestelectronics.com.bd/super-kisti" className="hover:underline border-l border-gray-300 px-4">Super Kisti</a>
+                    <a href="https://www.bestelectronics.com.bd/refund-return-policy" className="hover:underline border-l border-gray-300 px-4">Refund and Return Policy</a>
+                    <a href="https://www.bestelectronics.com.bd/warranty-policy" className="hover:underline border-l border-gray-300 px-4">Terms & Conditions of Warranty</a>
+                    <a href="https://www.bestelectronics.com.bd/privacy-policy" className="hover:underline border-l border-gray-300 px-4">Privacy Policy</a>
+                    <a href="https://www.bestelectronics.com.bd/customer-complaint" className="hover:underline border-l border-gray-300 px-4">Customer Complaint</a>
                 </div>
 
                 <div className="flex justify-center items-center text-sm text-gray-600 mb-5 text-center">
