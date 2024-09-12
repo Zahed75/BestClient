@@ -273,10 +273,10 @@ export default function NavigationBar() {
               <Link href="/shop">All Products</Link>
             </span>
             <span className="hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700">
-              <Link href="/emi-facility">Quick emi</Link>
+              <Link href="https://www.bestelectronics.com.bd/emi-facility">Quick emi</Link>
             </span>
             <span className="hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700">
-              <Link href="/super-kisti">super kisti</Link>
+              <Link href="https://www.bestelectronics.com.bd/super-kisti">super kisti</Link>
             </span>
             <div className="group relative">
               <button
@@ -316,7 +316,7 @@ export default function NavigationBar() {
               </div>
             </div>
             <span className="hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700">
-              <Link href="/">contact us</Link>
+              <Link href="https://www.bestelectronics.com.bd/contact-us">contact us</Link>
             </span>
           </div>
         </div>
