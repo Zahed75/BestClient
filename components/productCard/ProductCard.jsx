@@ -10,7 +10,7 @@ import { fetchApi } from "@/utils/FetchApi";
 export default function ProductCard({ product }) {
   const [productImage, setProductImage] = useState("");
   const [isInCart, setIsInCart] = useState(false);
-  const [subCategory, setSubCategory] = useState("");
+  const [subCategory, setSubCategory] = useState([]);
 
   const cart = useSelector((state) => state.cart.items);
 
@@ -31,57 +31,49 @@ export default function ProductCard({ product }) {
         "GET"
       );
       const category = response?.category;
-  
+
       if (category?.parentCategory) {
         const parentResponse = await fetchApi(
-          `/category/getCategoryById/${category.parentCategory}`,
+          `/category/getCategoryById/${category?.parentCategory}`,
           "GET"
         );
-        const parentCategory = parentResponse?.category?.slug;
-        return `${parentCategory}/${category?.slug}`;
+        const parentCategorySlug = parentResponse?.category?.slug;
+
+        // Ensure the parent and category slugs are not the same to avoid duplication
+        if (parentCategorySlug && parentCategorySlug !== category?.slug) {
+          return `${parentCategorySlug}/${category?.slug}`;
+        }
       }
-  
-      // If no parent category, return the category as both parent and subcategory
-      return `${category?.slug}/${category?.slug}`;
+
+      // Return only the category slug if no parent or if parent is the same as category
+      return category?.slug;
     } catch (error) {
       console.error(`Error fetching category with ID ${categoryId}`, error);
       return null;
     }
   };
-  
+
   const getProductCategorySlugs = async (product) => {
     if (!product?.categoryId) {
       return [];
     }
-  
-    // Fetch slugs for all category IDs in the product
+
     const categorySlugs = await Promise.all(
       product.categoryId.map((categoryId) => fetchCategorySlug(categoryId))
     );
-  
-    // Filter out any null or undefined slugs
-    return categorySlugs.filter((slug) => slug);
+
+    return categorySlugs.filter((slug) => slug); // Filter out any null values
   };
-  
+
   useEffect(() => {
-    // Call the async function inside useEffect and update state
     getProductCategorySlugs(product)
       .then((productCategorySlugs) => {
-        setSubCategory(productCategorySlugs);
+        setSubCategory(productCategorySlugs || []);
       })
       .catch((error) => {
         console.error("Error fetching product category slugs:", error);
       });
   }, [product]);
-  
-  // Logs the subCategory slugs after they are updated
-  // useEffect(() => {
-  //   if (subCategory.length > 0) {
-  //     console.log("Product Categories: ", subCategory[0]);
-  //   }
-  // }, [subCategory]);
-  
-  
 
   return (
     <div
@@ -103,7 +95,7 @@ export default function ProductCard({ product }) {
         ) : (
           <></>
         )}
-        <Link href={`/shop/${subCategory[0]}/${product?.productSlug}`}>
+        <Link href={`/shop/${subCategory[1]}/${product?.productSlug}`}>
           <div className="object-cover min-h-[200px] flex justify-center overflow-hidden">
             <Image
               src={productImage}
@@ -128,12 +120,9 @@ export default function ProductCard({ product }) {
           >
             {product?.inventory?.stockStatus}
           </p>
-          {/* <span className="text-[#F16521] text-xs font-semibold ml-3 px-3 py-1 border border-[#F16521] rounded-md">
-              {product?.inventory?.inventoryStatus}
-            </span> */}
         </div>
         <div className="mt-3">
-          <Link href={`/shop/${subCategory[0]}/${product?.productSlug}`}>
+          <Link href={`/shop/${subCategory[1]}/${product?.productSlug}`}>
             <h4 className="text-[#202435] hover:text-[#F16521] duration-700 text-[14px] md:text-[15px] font-semibold h-10 md:h-[45px] text-ellipsis overflow-hidden line-clamp-2">
               {product?.productName}
             </h4>

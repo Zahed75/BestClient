@@ -65,7 +65,7 @@ const createTagValues = async (product) => {
   return [
     { link: "/", value: "Home" },
     { link: "/shop", value: "Shop" },
-    ...categories.sort().reverse().flatMap((category) => {
+    ...categories.flatMap((category) => {
       const tags = [];
       if (category?.categorySlug) {
         tags.push({ link: `/shop/${category?.categorySlug}`, value: category?.categoryName });
