@@ -385,3 +385,5 @@ export default function SingleProduct({ product, categoryName }) {
     </section>
   );
 }
+
+// updated
