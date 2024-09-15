@@ -142,6 +142,7 @@ export default function NavigationBar() {
                             onMouseEnter={() => setIsSmartSubMenuOpen(true)}
                             onMouseLeave={() => setIsSmartSubMenuOpen(false)}
                             className="py-2 px-3 cursor-pointer relative"
+                            key={category?._id}
                           >
                             <div className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer">
                               <span>{/* Home Appliance & Furniture */}
@@ -167,7 +168,7 @@ export default function NavigationBar() {
                                 className="absolute left-full top-0 p-3 w-auto min-w-48 bg-white rounded-lg border border-gray-200 shadow-xl"
                               >
                                 {category.products.map((products) => (
-                                  <li className="py-2 hover:text-[#F16521] cursor-pointer">
+                                  <li key={products?._id} className="py-2 hover:text-[#F16521] cursor-pointer">
                                     {products.productName}
                                   </li>
                                 ))}
