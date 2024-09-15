@@ -5,7 +5,8 @@ import treeDot from "@/public/images/treeDot.svg";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { fetchApi } from "@/utils/FetchApi";
 
 export default function NavigationBar() {
   const [isBrowseProducts, setIsBrowseProducts] = useState(false);
@@ -14,6 +15,7 @@ export default function NavigationBar() {
   const [isSmartSubMenuOpen, setIsSmartSubMenuOpen] = useState(false);
   const [isOrderMenuOpen, setIsOrderMenuOpen] = useState(false);
   const [isAllCategoriesOpen, setIsAllCategoriesOpen] = useState(false);
+  const [category, setCategory] = useState([]);
 
   const router = useRouter();
 
@@ -59,6 +61,20 @@ export default function NavigationBar() {
     },
   ];
 
+  useEffect(() => {
+    const fetchCategory = async () => {
+      try {
+        // const data = await fetchApi(`/category/categories-name`, "GET");
+        const data = await fetchApi(`/category/getAllCat`, "GET");
+        setCategory(data?.categories); // Adjust according to API response structure
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategory();
+  }, []);
+
   return (
     <nav className="container">
       <div className="hidden sm:hidden md:hidden lg:flex justify-stretch items-center font-dosis">
@@ -79,34 +95,40 @@ export default function NavigationBar() {
             onMouseEnter={() => setIsAllCategoriesOpen(true)}
             onMouseLeave={() => setIsAllCategoriesOpen(false)}
             className={`${isAllCategoriesOpen ? "block" : "hidden"
-              } group-hover:block absolute left-0 w-96 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
+              } group-hover:block absolute left-0 w-60 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
           >
             <ul className="text-sm">
-              <li className="py-2 px-3 hover:text-[#F16521] cursor-pointer">
-                Home Appliance & Furniture
-              </li>
-              <li
-                className="py-2 px-3 relative"
-                onMouseEnter={() => setIsElectronicsSubMenuOpen(true)}
-                onMouseLeave={() => setIsElectronicsSubMenuOpen(false)}
-              >
-                <div className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer">
-                  <span>Electronics</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className={`h-4 w-4 transition-transform duration-300 transform ${isElectronicsSubMenuOpen ? "-rotate-90" : "rotate-0"
-                      }`}
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M6.293 7.707a1 1 0 0 1 1.414 0L10 10.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z"
-                    />
-                  </svg>
-                </div>
+              {category
+                // .filter((categories) => categories?.parentCategory === "").map((categories) => (
+                .filter((categories) => !categories.subCategories?.categoryName).map((categories) => (
+                  <li key={categories.id} className="py-2 px-3 relative"
+                    onMouseEnter={() => setIsElectronicsSubMenuOpen(true)}
+                    onMouseLeave={() => setIsElectronicsSubMenuOpen(false)}>
+                    <div className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer">
+                      <span>{/* Home Appliance & Furniture */}
+                        {categories.categoryName}</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className={`h-4 w-4 transition-transform duration-300 transform ${isElectronicsSubMenuOpen ? "-rotate-90" : "-rotate-90"
+                          }`}
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M6.293 7.707a1 1 0 0 1 1.414 0L10 10.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z"
+                        />
+                      </svg>
+                    </div>
 
-                {isElectronicsSubMenuOpen && (
+
+                  </li>
+                ))}
+              <li
+                className="py-2 px-3 hover:text-[#F16521] border-t cursor-pointer"
+
+              > Offers
+                {/* {isElectronicsSubMenuOpen && (
                   <ul className="absolute left-full top-0 mt-0 w-auto min-w-48 bg-white rounded-lg border border-gray-200 shadow-xl">
                     <li className="py-2 px-3 hover:text-[#F16521] cursor-pointer">
                       Laptops
@@ -154,11 +176,15 @@ export default function NavigationBar() {
                       Cameras
                     </li>
                   </ul>
-                )}
+                )} */}
               </li>
               <li className="py-2 px-3 hover:text-[#F16521] cursor-pointer">
-                Mobile & Accessories
+                New Arrivals
               </li>
+              <li className="py-2 px-3 hover:text-[#F16521] border-t cursor-pointer">
+                Orders
+              </li>
+
             </ul>
           </div>
         </div>
