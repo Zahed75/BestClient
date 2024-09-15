@@ -7,6 +7,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { fetchApi } from "@/utils/FetchApi";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "@/redux/slice/productsSlice";
 
 export default function NavigationBar() {
   const [isBrowseProducts, setIsBrowseProducts] = useState(false);
@@ -18,6 +20,9 @@ export default function NavigationBar() {
   const [category, setCategory] = useState([]);
 
   const router = useRouter();
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.products.products);
+  const productsLength = products?.products?.length;
 
   const handleBrowseProducts = () => {
     setIsBrowseProducts(!isBrowseProducts);
@@ -74,6 +79,15 @@ export default function NavigationBar() {
 
     fetchCategory();
   }, []);
+  useEffect(() => {
+
+      dispatch(fetchProducts());
+
+  }, [dispatch]);
+
+
+
+  
 
   return (
     <nav className="container">
@@ -88,7 +102,7 @@ export default function NavigationBar() {
             <span className="mx-3 text-[13px]">All Categories</span>
             <Image src={arrayBottom} className="w-4 h-4 " alt="Array Bottom" />
             <span className="bg-gray-100 text-[#71778E] text-[10px] text-nowrap px-1 border border-white rounded-xl absolute -bottom-[10px] left-[22%] mx-auto z-20">
-              TOTAL 813 PRODUCTS
+              TOTAL {productsLength} PRODUCTS
             </span>
           </button>
           <div
