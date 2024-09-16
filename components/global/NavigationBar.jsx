@@ -18,6 +18,8 @@ export default function NavigationBar() {
   const [isOrderMenuOpen, setIsOrderMenuOpen] = useState(false);
   const [isAllCategoriesOpen, setIsAllCategoriesOpen] = useState(false);
   const [category, setCategory] = useState([]);
+  const [hoveredCategoryId, setHoveredCategoryId] = useState(null);
+  const [hoveredSubCategoryId, setHoveredSubCategoryId] = useState(null);
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -116,14 +118,14 @@ export default function NavigationBar() {
                 // .filter((categories) => categories?.parentCategory === "").map((categories) => (
                 .filter((categories) => !categories.subCategories?.categoryName).map((categories) => (
                   <li key={categories._id} className="py-2 px-3 relative"
-                    onMouseEnter={() => setIsElectronicsSubMenuOpen(true)}
-                    onMouseLeave={() => setIsElectronicsSubMenuOpen(false)}>
+                    onMouseEnter={() => setHoveredCategoryId(categories._id)}
+                    onMouseLeave={() => setHoveredCategoryId(null)}>
                     <div className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer">
                       <span>{/* Home Appliance & Furniture */}
                         {categories.categoryName}</span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className={`h-4 w-4 transition-transform duration-300 transform ${isElectronicsSubMenuOpen ? "-rotate-90" : "-rotate-90"
+                        className={`h-4 w-4 transition-transform duration-300 transform  -rotate-90
                           }`}
                         viewBox="0 0 20 20"
                         fill="currentColor"
@@ -134,13 +136,13 @@ export default function NavigationBar() {
                         />
                       </svg>
                     </div>
-                    {isElectronicsSubMenuOpen && (
+                    {hoveredCategoryId === categories._id && (
                       <ul className="absolute left-full top-0 mt-0 w-auto min-w-48 bg-white rounded-lg border border-gray-200 shadow-xl">
                         {categories.subCategories.map((category) => (
 
                           <li
-                            onMouseEnter={() => setIsSmartSubMenuOpen(true)}
-                            onMouseLeave={() => setIsSmartSubMenuOpen(false)}
+                            onMouseEnter={() => setHoveredSubCategoryId(category._id)}
+                            onMouseLeave={() => setHoveredSubCategoryId(null)}
                             className="py-2 px-3 cursor-pointer relative"
                             key={category?._id}
                           >
@@ -149,7 +151,7 @@ export default function NavigationBar() {
                                 {category.categoryName}</span>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                className={`h-4 w-4 transition-transform duration-300 transform ${isSmartSubMenuOpen ? "-rotate-90" : "rotate-0"
+                                className={`h-4 w-4 transition-transform duration-300 transform -rotate-90
                                   }`}
                                 viewBox="0 0 20 20"
                                 fill="currentColor"
@@ -161,10 +163,10 @@ export default function NavigationBar() {
                               </svg>
                             </div>
 
-                            {isSmartSubMenuOpen && (
+                            {hoveredSubCategoryId === category._id && (
                               <ul
-                                onMouseEnter={() => setIsSmartSubMenuOpen(true)}
-                                onMouseLeave={() => setIsSmartSubMenuOpen(false)}
+                                onMouseEnter={() => setHoveredSubCategoryId(category._id)}
+                                onMouseLeave={() => setHoveredSubCategoryId(null)}
                                 className="absolute left-full top-0 p-3 w-auto min-w-48 bg-white rounded-lg border border-gray-200 shadow-xl"
                               >
                                 {category.products.map((products) => (
