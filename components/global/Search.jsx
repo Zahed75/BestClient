@@ -25,7 +25,7 @@ export default function Search() {
   const router = useRouter();
 
   const deliveryCharge = 100;
-  const vatPercentage = 5; // 5%
+  const vatPercentage = 5; 
 
   const totalProductPrice = Array.isArray(cart)
     ? cart.reduce(
@@ -171,7 +171,7 @@ export default function Search() {
                 filteredProducts.map((product) => (
                   <div
                     key={product._id}
-                    className="p-3 hover:bg-gray-200 cursor-pointer"
+                    className="p-3 hover:bg-gray-200 cursor-pointer text-xs"
                     onClick={() => handleProductClick(product)}
                   >
                     {product.productName}

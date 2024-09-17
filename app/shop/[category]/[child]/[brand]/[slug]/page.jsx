@@ -34,11 +34,7 @@ export default async function Page({ params }) {
   const categories = product?.categoryId?.map((category) =>
     fetchApi(`/category/getCategoryById/${category}`, "GET")
   );
-  // const category = await fetchApi(
-  //   `/category/getCategoryById/${product?.categoryId}`,
-  //   "GET"
-  // );
-  // const categoryName = await category?.category?.categoryName;
+
 
   const category = await Promise.all(categories);
   const categoryName = category?.map((cat) => cat?.category?.categoryName);
@@ -57,11 +53,3 @@ export default async function Page({ params }) {
   );
 }
 
-// export async function generateStaticParams() {
-//   const res = await fetchApi(`/product/getAllProducts`, "GET");
-//   const products = res?.products;
-
-//   return products.map((product) => ({
-//     id: product?._id.toString(),
-//   }));
-// }

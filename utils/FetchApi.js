@@ -1,10 +1,11 @@
 import axios from "axios";
+import { notFound } from "next/navigation";
 
 const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
 export const fetchApi = async (path, method, data = null) => {
   const url = `${API_ENDPOINT}${path}`;
-  // const user = localStorage.getItem("user");
+  // const user = localStorage.getItem("customer");
   // const token = user ? JSON.parse(user).accessToken : "";
 
   try {
@@ -41,6 +42,6 @@ export const fetchApi = async (path, method, data = null) => {
     return response.data;
   } catch (error) {
     console.error(error);
-    throw error;
+    notFound();
   }
 };
