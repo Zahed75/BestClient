@@ -17,6 +17,7 @@ import { addToWishlist } from "@/redux/slice/wishlistSlice";
 import { addRelatedProduct } from "@/redux/slice/relatedSlice";
 import { fetchBrands } from "@/redux/slice/brandSlice";
 import { fetchApi } from "@/utils/FetchApi";
+import { usePathname } from "next/navigation";
 
 
 const fetchCategorySlug = async (categoryId) => {
@@ -59,33 +60,15 @@ const getProductCategorySlugs = async (product) => {
   return categories.filter((category) => category);
 };
 
-const createTagValues = async (product) => {
-  const categories = await getProductCategorySlugs(product);
 
-  return [
-    { link: "/", value: "Home" },
-    { link: "/shop", value: "Shop" },
-    ...categories.flatMap((category) => {
-      const tags = [];
-      if (category?.categorySlug) {
-        tags.push({ link: `/shop/${category?.categorySlug}`, value: category?.categoryName });
-      }
-      
-      return tags;
-    }),
-    {
-      link: "#",
-      value: product.productName
-    }
-  ];
-};
 
 export default function SingleProduct({ product, categoryName }) {
   const [favorite, setFavorite] = useState(false);
   const [open, setOpen] = useState(false);
-  const [tagValues, setTagValues] = useState([]);
+
 
   const dispatch = useDispatch();
+  const pathName = usePathname();
 
   const brandsState = useSelector((state) => state.brand);
   const brands = brandsState?.brands || [];
@@ -132,7 +115,38 @@ export default function SingleProduct({ product, categoryName }) {
     { src: LinkedinLogo, alt: "Linkedin Logo", link: "/product" },
   ];
 
- 
+  const getBaseUrl = () => {
+    if (typeof window !== "undefined") {
+      return window.location.origin;
+    }
+    return "";
+  };
+
+  const pathWithoutDomain = pathName.replace(getBaseUrl(), "");
+
+  const pathParts = pathWithoutDomain.split("/").filter((part) => part);
+
+  const toTitleCase = (str) => {
+    return str
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  };
+
+  const tagValues = [
+    {
+      link: "/",
+      value: "Home",
+    },
+    ...pathParts.map((part, index) => {
+      const link = `/${pathParts.slice(0, index + 1).join("/")}`;
+
+      return {
+        link,
+        value: toTitleCase(part),
+      };
+    }),
+  ];
 
   const productDataTabs = [
     {

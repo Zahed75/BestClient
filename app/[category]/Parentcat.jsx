@@ -61,7 +61,7 @@ export default function ParentCat({ category, path }) {
     });
 
   const handleGotoCategory = (slug) => {
-    router.push(`/shop/${path}/${slug}`);
+    router.push(`/${path}/${slug}`);
   };
 
   const handleCategoryChange = (category) => {

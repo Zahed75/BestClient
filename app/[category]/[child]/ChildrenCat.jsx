@@ -19,7 +19,7 @@ import {
   setSorting,
 } from "@/redux/slice/shopSlice";
 import { fetchBrands } from "@/redux/slice/brandSlice";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { fetchCategories } from "@/redux/slice/categorySlice";
 
 export default function ChildrenCat({ category, path }) {
@@ -29,6 +29,7 @@ export default function ChildrenCat({ category, path }) {
 
   const router = useRouter();
   const dispatch = useDispatch();
+  const pathName = usePathname();
 
   const { filters, pagination, sorting } = useSelector((state) => state.shop);
   const brandsState = useSelector((state) => state.brand);
@@ -63,10 +64,6 @@ export default function ChildrenCat({ category, path }) {
         return a?.general?.regularPrice - b?.general?.regularPrice;
       return 0;
     });
-
-  const handleGotoCategory = (slug) => {
-    router.push(`/shop/${slug}`);
-  };
 
   const handleCategoryChange = (category) => {
     const selectedCategory = category === "All Categories" ? "" : category;
@@ -118,6 +115,19 @@ export default function ChildrenCat({ category, path }) {
       value: category?.categoryName,
     },
   ];
+
+  const getBaseUrl = () => {
+    if (typeof window !== "undefined") {
+      return window.location.origin;
+    }
+    return "";
+  };
+
+  const withOutDomainPathname = pathName.replace(getBaseUrl(), "");
+
+  const handleGotoCategory = (slug) => {
+    router.push(`${withOutDomainPathname}/${slug}`);
+  };
 
   const handleDynamicGrid = ({ value }) => {
     if (value) {
