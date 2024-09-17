@@ -19,7 +19,7 @@ import {
   setSorting,
 } from "@/redux/slice/shopSlice";
 import { fetchBrands } from "@/redux/slice/brandSlice";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { fetchCategories } from "@/redux/slice/categorySlice";
 
 export default function ChildrenCat({ category, path }) {
@@ -29,6 +29,7 @@ export default function ChildrenCat({ category, path }) {
 
   const router = useRouter();
   const dispatch = useDispatch();
+  const pathName = usePathname();
 
   const { filters, pagination, sorting } = useSelector((state) => state.shop);
   const brandsState = useSelector((state) => state.brand);
@@ -65,7 +66,7 @@ export default function ChildrenCat({ category, path }) {
     });
 
   const handleGotoCategory = (slug) => {
-    router.push(`/shop/${slug}`);
+    router.push(`/${slug}`);
   };
 
   const handleCategoryChange = (category) => {
@@ -98,27 +99,37 @@ export default function ChildrenCat({ category, path }) {
     pagination?.currentPage * pagination?.itemsPerPage
   );
 
-  const parentCatName = categories?.find(
-    (cat) => cat._id === category?.parentCategory
-  )?.categoryName;
+  const getBaseUrl = () => {
+    if (typeof window !== "undefined") {
+      return window.location.origin;
+    }
+    return "";
+  };
+
+  const pathWithoutDomain = pathName.replace(getBaseUrl(), "");
+
+  const pathParts = pathWithoutDomain.split("/").filter((part) => part);
+
+  const toTitleCase = (str) => {
+    return str
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  };
 
   const tagValues = [
     {
       link: "/",
       value: "Home",
     },
-    {
-      link: `/${parentCatName?.toLowerCase().replace(/\s+/g, "-")}`,
-      value: parentCatName,
-    },
-    {
-      link: `/${parentCatName?.toLowerCase().replace(/\s+/g, "-")}/${category?.slug}`,
-      value: category?.categoryName,
-    },
-    {
-      link: `/${parentCatName?.toLowerCase().replace(/\s+/g, "-")}/${category?.slug}/${path}`,
-      value: `${path}`,
-      },
+    ...pathParts.map((part, index) => {
+      const link = `/${pathParts.slice(0, index + 1).join("/")}`;
+
+      return {
+        link,
+        value: toTitleCase(part),
+      };
+    }),
   ];
 
   const handleDynamicGrid = ({ value }) => {
