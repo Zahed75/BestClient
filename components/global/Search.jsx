@@ -13,11 +13,14 @@ import { removeFromCart } from "@/redux/slice/cartSlice";
 import { useRouter } from "next/navigation";
 import { fetchProducts } from "@/redux/slice/productsSlice";
 import { fetchApi } from "@/utils/FetchApi";
+import { AnimatePresence, motion } from "framer-motion";
+import { addToCart, updateQuantity } from "@/redux/slice/cartSlice";
 
 export default function Search() {
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [OutsideClick, setOutsideClick] = useState(false);
+  const [hoveredProduct, setHoveredProduct] = useState(null);
 
   const cart = useSelector((state) => state.cart.items) || [];
   const products = useSelector((state) => state.products.products);
@@ -25,13 +28,13 @@ export default function Search() {
   const router = useRouter();
 
   const deliveryCharge = 100;
-  const vatPercentage = 5; 
+  const vatPercentage = 5;
 
   const totalProductPrice = Array.isArray(cart)
     ? cart.reduce(
-      (acc, item) => acc + item.general.salePrice * item.quantity,
-      0
-    )
+        (acc, item) => acc + item.general.salePrice * item.quantity,
+        0
+      )
     : 0;
 
   const vat = (totalProductPrice * vatPercentage) / 100;
@@ -67,8 +70,6 @@ export default function Search() {
   const filteredProducts = allProducts.filter((product) =>
     product.productName.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  
 
   const handleOutsideClick = (productSlug) => {
     setOutsideClick(false);
@@ -110,17 +111,29 @@ export default function Search() {
 
   const handleProductClick = async (product) => {
     const slugs = await getProductCategorySlugs(product);
-  
+
     // Check if there are any valid slugs
     if (slugs.length > 0) {
-      const slugPath = slugs[0]; // Use the first slug or join them if needed
+      const slugPath = slugs[0];
       router.push(`/shop/${slugPath}/${product.productSlug}`);
       console.log(`/shop/${slugPath}/${product.productSlug}`);
     } else {
       console.log("No valid slugs found for the product");
     }
-  
-    setSearchTerm(""); // Clear search input after redirect
+
+    setSearchTerm("");
+  };
+
+  const handleMouseEnter = (product) => {
+    setHoveredProduct(product);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredProduct(null);
+  };
+
+  const isInCart = (product) => {
+    return !!cart.find((item) => item._id === product._id);
   };
 
   return (
@@ -136,7 +149,10 @@ export default function Search() {
           </Link>
         </div>
 
-        <div className="w-full mx-auto col-span-2 hidden md:block relative" onMouseLeave={handleOutsideClick}>
+        <div
+          className="w-full mx-auto col-span-2 hidden md:block relative"
+          onMouseLeave={handleOutsideClick}
+        >
           <div className="relative flex items-center w-full h-14 rounded-lg bg-[#F3F4F7] overflow-hidden">
             <div className="grid place-items-center h-full w-12 text-gray-300">
               <svg
@@ -166,20 +182,144 @@ export default function Search() {
             />
           </div>
           {searchTerm && OutsideClick && (
-            <div className="absolute z-10 bg-white shadow-md rounded-lg w-full max-h-40 overflow-y-auto scrollbar_hidden">
-              {filteredProducts.length > 0 ? (
-                filteredProducts.map((product) => (
-                  <div
-                    key={product._id}
-                    className="p-3 hover:bg-gray-200 cursor-pointer text-xs"
-                    onClick={() => handleProductClick(product)}
-                  >
-                    {product.productName}
-                  </div>
-                ))
-              ) : (
-                <div className="p-3 text-center">No products found</div>
-              )}
+            <div className="absolute z-10 bg-white shadow-md rounded-lg w-full overflow-y-auto scrollbar_hidden transition-opacity duration-700 ">
+              <div className="grid grid-cols-2">
+                <div className="h-80 overflow-y-auto scrollbar_hidden">
+                  {filteredProducts.length > 0 ? (
+                    filteredProducts.map((product) => (
+                      <div
+                        key={product._id}
+                        className="p-3 hover:bg-gray-200 cursor-pointer text-xs duration-700"
+                        onMouseEnter={() => handleMouseEnter(product)}
+                        onMouseLeave={handleMouseLeave}
+                        onClick={() => handleProductClick(product)}
+                      >
+                        {product.productName}
+                      </div>
+                    ))
+                  ) : (
+                    <div className="p-3 text-center">No products found</div>
+                  )}
+                </div>
+
+                <div className="col-span-1">
+                  {hoveredProduct ? (
+                    <div
+                      onMouseEnter={() => handleMouseEnter(hoveredProduct)}
+                      onMouseLeave={handleMouseLeave}
+                      className="p-4 shadow-md rounded-tr-lg rounded-br-lg"
+                    >
+                      <div className="relative group duration-700">
+                        <div className="object-cover min-h-[200px] flex justify-center overflow-hidden">
+                          <Image
+                            src={hoveredProduct.productImage}
+                            width={200}
+                            height={200}
+                            alt="product"
+                            className="hover:scale-105 duration-700"
+                          />
+                        </div>
+                        <h4 className="text-[#202435] hover:text-[#F16521] duration-700 text-[14px] md:text-[15px] font-semibold h-10 md:h-[45px] text-ellipsis overflow-hidden line-clamp-2">
+                          {hoveredProduct.productName}
+                        </h4>
+                        <div className="mt-5 text-[13px] md:text-[14px]">
+                          <div>
+                            Offer Price: ৳{hoveredProduct.general.salePrice}
+                          </div>
+                          <div>
+                            M.R.P:{" "}
+                            <del className="ml-1">
+                              ৳{hoveredProduct.general.regularPrice}
+                            </del>
+                          </div>
+                          <div>VAT Inc</div>
+                          {/* <div className="mt-5 w-full text-md">
+                            <AnimatePresence mode="wait">
+                              {isInCart(hoveredProduct) ? (
+                                <motion.div
+                                  key="inCart"
+                                  className="bg-[#FFCD00] rounded-full w-full flex justify-between items-center font-semibold"
+                                  initial={{ width: "50%" }}
+                                  animate={{ width: "100%" }}
+                                  exit={{ width: "50%" }}
+                                  transition={{ duration: 0.7 }}
+                                >
+                                  <button
+                                    onClick={() => {
+                                      const currentQuantity = cart.find(
+                                        (item) =>
+                                          item._id === hoveredProduct._id
+                                      )?.quantity;
+
+                                      if (currentQuantity > 1) {
+                                        dispatch(
+                                          updateQuantity({
+                                            id: hoveredProduct._id,
+                                            quantity: -1,
+                                          })
+                                        );
+                                      } else {
+                                        dispatch(
+                                          updateQuantity({
+                                            id: hoveredProduct._id,
+                                            quantity: -1,
+                                          })
+                                        );
+                                      }
+                                    }}
+                                    className="px-3 py-2"
+                                  >
+                                    -
+                                  </button>
+                                  <button className="w-full py-2">
+                                    {
+                                      cart.find(
+                                        (item) =>
+                                          item._id === hoveredProduct._id
+                                      )?.quantity
+                                    }
+                                  </button>
+                                  <button
+                                    onClick={() => {
+                                      dispatch(
+                                        updateQuantity({
+                                          id: hoveredProduct._id,
+                                          quantity: 1,
+                                        })
+                                      );
+                                    }}
+                                    className="px-3 py-2 mr-1 shadow-inner"
+                                  >
+                                    +
+                                  </button>
+                                </motion.div>
+                              ) : (
+                                <motion.button
+                                  key="addToCart"
+                                  onClick={() => {
+                                    dispatch(addToCart(hoveredProduct));
+                                  }}
+                                  className="bg-[#FFCD00] px-3 py-2 rounded-full w-full transition-all duration-500"
+                                  initial={{ width: "50%" }}
+                                  animate={{ width: "50%" }}
+                                  exit={{ width: "50%" }}
+                                  transition={{ duration: 0.7 }}
+                                >
+                                  Add to Cart
+                                </motion.button>
+                              )}
+                            </AnimatePresence>
+                          </div> */}
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="text-center py-5 text-sm text-[#F16521]">
+                      Hover over a product to see details
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           )}
         </div>
