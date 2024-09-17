@@ -2,6 +2,7 @@ import ImageSlider from "@/components/global/ImageSlider";
 import Categories from "@/components/home/Categories";
 import RecentAdded from "@/components/home/RecentAdded";
 import EventProduct from "@/components/productCard/EventProduct";
+import { fetchApi } from "@/utils/FetchApi";
 
 export default async function Home() {
   let events = [];
@@ -38,6 +39,24 @@ export default async function Home() {
     },
     { before: [], after: [] }
   );
+
+  const categories = await fetchApi("/category/getAllCat", "GET");
+
+  const productsByCategory = categories?.categories?.map((category) => {
+    return {
+      ...category,
+      products: category.products,
+    };
+  });
+
+  const publishedProductsArray = productsByCategory?.map((category) => {
+    return category.products?.filter(
+      (product) => product?.productStatus === "Published"
+    );
+  });
+
+  const products = publishedProductsArray?.flat();
+
   return (
     <main>
       <ImageSlider />
