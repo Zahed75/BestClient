@@ -20,22 +20,26 @@ import {
 } from "@/redux/slice/shopSlice";
 import { fetchBrands } from "@/redux/slice/brandSlice";
 import { usePathname, useRouter } from "next/navigation";
+import { fetchCategories } from "@/redux/slice/categorySlice";
 
-export default function ParentCat({ category, path }) {
+export default function ChildrenCat({ category, path }) {
   const { products, subCategories } = category;
   const [dynamicGrid, setDynamicGrid] = useState(3);
   const [open, setOpen] = useState(false);
 
   const router = useRouter();
-  const pathName = usePathname();
   const dispatch = useDispatch();
+  const pathName = usePathname();
 
   const { filters, pagination, sorting } = useSelector((state) => state.shop);
   const brandsState = useSelector((state) => state.brand);
+  const categoriesState = useSelector((state) => state.categories);
   const brands = brandsState?.brands || [];
+  const categories = categoriesState?.categories?.categories || [];
 
   useEffect(() => {
     dispatch(fetchBrands());
+    dispatch(fetchCategories());
   }, [dispatch]);
 
   const filteredProducts = products
@@ -62,7 +66,7 @@ export default function ParentCat({ category, path }) {
     });
 
   const handleGotoCategory = (slug) => {
-    router.push(`/shop/${path}/${slug}`);
+    router.push(`/${slug}`);
   };
 
   const handleCategoryChange = (category) => {

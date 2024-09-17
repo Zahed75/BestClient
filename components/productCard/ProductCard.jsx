@@ -24,7 +24,10 @@ export default function ProductCard({ product }) {
     setIsInCart(!!cart.find((item) => item._id === product?._id));
   }, [cart, product?._id]);
 
-  const fetchCategorySlug = async (categoryId) => {
+  const fetchFullCategoryPath = async (
+    categoryId,
+    visitedCategories = new Set()
+  ) => {
     try {
       const response = await fetchApi(
         `/category/getCategoryById/${categoryId}`,
@@ -32,20 +35,24 @@ export default function ProductCard({ product }) {
       );
       const category = response?.category;
 
-      if (category?.parentCategory) {
-        const parentResponse = await fetchApi(
-          `/category/getCategoryById/${category?.parentCategory}`,
-          "GET"
-        );
-        const parentCategorySlug = parentResponse?.category?.slug;
-
-        // Ensure the parent and category slugs are not the same to avoid duplication
-        if (parentCategorySlug && parentCategorySlug !== category?.slug) {
-          return `${parentCategorySlug}/${category?.slug}`;
-        }
+      // Check if the category has already been visited to avoid duplicates
+      if (visitedCategories.has(category?.slug)) {
+        return "";
       }
 
-      // Return only the category slug if no parent or if parent is the same as category
+      // Mark the category as visited
+      visitedCategories.add(category?.slug);
+
+      // If there's a parent category, fetch the parent's full path
+      if (category?.parentCategory) {
+        const parentPath = await fetchFullCategoryPath(
+          category?.parentCategory,
+          visitedCategories
+        );
+        return `${parentPath ? `${parentPath}/` : ""}${category?.slug}`;
+      }
+
+      // If this category is the topmost (no parent), return its slug
       return category?.slug;
     } catch (error) {
       console.error(`Error fetching category with ID ${categoryId}`, error);
@@ -54,15 +61,22 @@ export default function ProductCard({ product }) {
   };
 
   const getProductCategorySlugs = async (product) => {
-    if (!product?.categoryId) {
+    if (!product?.categoryId || !Array.isArray(product.categoryId)) {
       return [];
     }
 
+    // Create a set to track visited categories to avoid duplicates
+    const visitedCategories = new Set();
+
+    // Fetch the full path for the product categories (grandparent, parent, child)
     const categorySlugs = await Promise.all(
-      product.categoryId.map((categoryId) => fetchCategorySlug(categoryId))
+      product.categoryId.map((categoryId) =>
+        fetchFullCategoryPath(categoryId, visitedCategories)
+      )
     );
 
-    return categorySlugs.filter((slug) => slug); // Filter out any null values
+    // Return an array of slugs, filtering out any empty or null values
+    return categorySlugs.filter((slug) => slug);
   };
 
   useEffect(() => {
@@ -95,7 +109,11 @@ export default function ProductCard({ product }) {
         ) : (
           <></>
         )}
-        <Link href={`/shop/${subCategory[1]}/${product?.productSlug}`}>
+        <Link
+          href={`/${subCategory?.[0] ?? ""}/${subCategory?.[1] ?? ""}/${
+            subCategory?.[2] ?? ""
+          }/${product?.productSlug}`}
+        >
           <div className="object-cover min-h-[200px] flex justify-center overflow-hidden">
             <Image
               src={productImage}
@@ -122,7 +140,11 @@ export default function ProductCard({ product }) {
           </p>
         </div>
         <div className="mt-3">
-          <Link href={`/shop/${subCategory[1]}/${product?.productSlug}`}>
+          <Link
+            href={`/${subCategory?.[0] ?? ""}/${subCategory?.[1] ?? ""}/${
+              subCategory?.[2] ?? ""
+            }/${product?.productSlug}`}
+          >
             <h4 className="text-[#202435] hover:text-[#F16521] duration-700 text-[14px] md:text-[15px] font-semibold h-10 md:h-[45px] text-ellipsis overflow-hidden line-clamp-2">
               {product?.productName}
             </h4>

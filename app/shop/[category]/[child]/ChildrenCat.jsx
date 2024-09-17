@@ -19,7 +19,7 @@ import {
   setSorting,
 } from "@/redux/slice/shopSlice";
 import { fetchBrands } from "@/redux/slice/brandSlice";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { fetchCategories } from "@/redux/slice/categorySlice";
 
 export default function ChildrenCat({ category, path }) {
@@ -28,6 +28,7 @@ export default function ChildrenCat({ category, path }) {
   const [open, setOpen] = useState(false);
 
   const router = useRouter();
+  const pathName = usePathname();
   const dispatch = useDispatch();
 
   const { filters, pagination, sorting } = useSelector((state) => state.shop);
@@ -64,10 +65,7 @@ export default function ChildrenCat({ category, path }) {
       return 0;
     });
 
-  const handleGotoCategory = (slug) => {
-    router.push(`/shop/${slug}`);
-  };
-
+  
   const handleCategoryChange = (category) => {
     const selectedCategory = category === "All Categories" ? "" : category;
     dispatch(setCategoryFilter(selectedCategory));
@@ -102,31 +100,43 @@ export default function ChildrenCat({ category, path }) {
     (cat) => cat._id === category?.parentCategory
   )?.categoryName;
 
-  // const tagValues = [
-  //   "Home",
-  //   "Categories",
-  //   parentCatName,
-  //   category?.categoryName,
-  // ];
+  const getBaseUrl = () => {
+    if (typeof window !== "undefined") {
+      return window.location.origin;
+    }
+    return "";
+  };
+
+  const pathWithoutDomain = pathName.replace(getBaseUrl(), "");
+
+  const pathParts = pathWithoutDomain.split("/").filter((part) => part);
+
+  const toTitleCase = (str) => {
+    return str
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  };
 
   const tagValues = [
     {
       link: "/",
       value: "Home",
     },
-    {
-      link: "/shop",
-      value: "Shop",
-    },
-    {
-      link: `/shop/${parentCatName?.toLowerCase().replace(/\s+/g, "-")}`,
-      value: parentCatName,
-    },
-    {
-      link: `/shop/${parentCatName?.toLowerCase().replace(/\s+/g, "-")}/${category?.slug}`,
-      value: category?.categoryName,
-    },
+    ...pathParts.map((part, index) => {
+      const link = `/${pathParts.slice(0, index + 1).join("/")}`;
+
+      return {
+        link,
+        value: toTitleCase(part),
+      };
+    }),
   ];
+
+  const handleGotoCategory = (slug) => {
+    router.push(`${pathWithoutDomain}/${slug}`);
+  };
+
 
   const handleDynamicGrid = ({ value }) => {
     if (value) {

@@ -33,41 +33,6 @@ export default function NavigationBar() {
     router.push("/shop");
   };
 
-  const browseMenusItems = [
-    {
-      title: "Electronics",
-      link: "/",
-      subMenu: [
-        {
-          title: "Laptops",
-          link: "/",
-        },
-        {
-          title: "Smartphones",
-          link: "/",
-          subMenu: [
-            {
-              title: "Samsung",
-              link: "/",
-            },
-            {
-              title: "Apple",
-              link: "/",
-            },
-            {
-              title: "Xiaomi",
-              link: "/",
-            },
-          ],
-        },
-        {
-          title: "Cameras",
-          link: "/",
-        },
-      ],
-    },
-  ];
-
   useEffect(() => {
     const fetchCategory = async () => {
       try {
@@ -84,6 +49,56 @@ export default function NavigationBar() {
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
+
+  const CategoryItem = ({ category, setHoveredCategoryId, hoveredCategoryId, setHoveredSubCategoryId }) => {
+    const hasSubCategories = category.subCategories && category.subCategories.length > 0;
+  
+    return (
+      <li
+        key={category._id}
+        className="relative"
+        onMouseEnter={() => setHoveredCategoryId(category._id)}
+        onMouseLeave={() => setHoveredCategoryId(null)}
+      >
+        <Link
+          href={category.slug}
+          className="flex items-center justify-between py-2 px-3 hover:text-[#F16521] cursor-pointer"
+        >
+          <span>{category.categoryName}</span>
+  
+          {hasSubCategories && (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className={`h-4 w-4 transition-transform duration-300 transform ${
+                hoveredCategoryId === category._id ? 'rotate-90' : '-rotate-90'
+              }`}
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M6.293 7.707a1 1 0 0 1 1.414 0L10 10.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z"
+              />
+            </svg>
+          )}
+        </Link>
+  
+        {hoveredCategoryId === category._id && hasSubCategories && (
+          <ul className="absolute left-full top-0 mt-0 py-5 w-auto min-w-52 bg-white rounded-lg border border-gray-200 shadow-xl">
+            {category.subCategories.map(subCategory => (
+              <CategoryItem
+                key={subCategory._id}
+                category={subCategory}
+                setHoveredCategoryId={setHoveredCategoryId}
+                hoveredCategoryId={hoveredCategoryId}
+                setHoveredSubCategoryId={setHoveredSubCategoryId}
+              />
+            ))}
+          </ul>
+        )}
+      </li>
+    );
+  };
 
   return (
     <nav className="container">
@@ -118,7 +133,7 @@ export default function NavigationBar() {
                     onMouseEnter={() => setHoveredCategoryId(categories?._id)}
                     onMouseLeave={() => setHoveredCategoryId(null)}
                   >
-                    <div className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer">
+                    <Link href={categories?.slug} className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer">
                       <span>{categories?.categoryName}</span>
 
                       {categories?.subCategories &&
@@ -139,7 +154,7 @@ export default function NavigationBar() {
                             />
                           </svg>
                         )}
-                    </div>
+                    </Link>
 
                     {hoveredCategoryId === categories._id &&
                       categories?.subCategories &&
@@ -215,9 +230,30 @@ export default function NavigationBar() {
                 New Arrivals
               </li>
               <li className="py-2 px-3 hover:text-[#F16521] border-t cursor-pointer">
-                Orders
+                Brands
               </li>
             </ul>
+            {/* <ul className="text-sm py-5">
+              {category.map((category) => (
+                 <CategoryItem
+                 key={category._id}
+                 category={category}
+                 setHoveredCategoryId={setHoveredCategoryId}
+                 hoveredCategoryId={hoveredCategoryId}
+                 setHoveredSubCategoryId={setHoveredSubCategoryId}
+               />
+              ))}
+
+              <li className="py-2 px-3 hover:text-[#F16521] border-t cursor-pointer">
+                Offers
+              </li>
+              <li className="py-2 px-3 hover:text-[#F16521] cursor-pointer">
+                New Arrivals
+              </li>
+              <li className="py-2 px-3 hover:text-[#F16521] border-t cursor-pointer">
+                Orders
+              </li>
+            </ul> */}
           </div>
         </div>
 
