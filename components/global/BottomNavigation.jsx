@@ -98,11 +98,11 @@ const navigationLink = [
   },
   {
     title: "Quick EMI",
-    link: "/",
+    link: "https://www.bestelectronics.com.bd/emi-facility",
   },
   {
     title: "Super Kisti",
-    link: "/",
+    link: "https://www.bestelectronics.com.bd/super-kisti",
   },
   {
     title: "Your Order",
@@ -110,7 +110,7 @@ const navigationLink = [
   },
   {
     title: "Contact Us",
-    link: "/",
+    link: "https://www.bestelectronics.com.bd/contact-us",
   },
 ];
 
