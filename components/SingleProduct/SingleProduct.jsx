@@ -20,52 +20,10 @@ import { fetchApi } from "@/utils/FetchApi";
 import { usePathname } from "next/navigation";
 
 
-const fetchCategorySlug = async (categoryId) => {
-  try {
-    const response = await fetchApi(`/category/getCategoryById/${categoryId}`, 'GET');
-    const category = response?.category;
-
-    if (category?.parentCategory) {
-      const parentResponse = await fetchApi(`/category/getCategoryById/${category?.parentCategory}`, 'GET');
-      const parentCategorySlug = parentResponse?.category?.slug;
-      return {
-        parentSlug: parentCategorySlug,
-        categorySlug: category?.slug,
-        parentName: parentResponse?.category?.categoryName,
-        categoryName: category?.categoryName
-      };
-    }
-
-    return {
-      parentSlug: null,
-      categorySlug: category?.slug,
-      parentName: null,
-      categoryName: category?.categoryName,
-    };
-  } catch (error) {
-    console.error(`Error fetching category with ID ${categoryId}`, error);
-    return null;
-  }
-};
-
-const getProductCategorySlugs = async (product) => {
-  if (!product?.categoryId) {
-    return [];
-  }
-
-  const categories = await Promise.all(
-    product?.categoryId.map((categoryId) => fetchCategorySlug(categoryId))
-  );
-
-  return categories.filter((category) => category);
-};
-
-
 
 export default function SingleProduct({ product, categoryName }) {
   const [favorite, setFavorite] = useState(false);
   const [open, setOpen] = useState(false);
-
 
   const dispatch = useDispatch();
   const pathName = usePathname();
@@ -98,7 +56,7 @@ export default function SingleProduct({ product, categoryName }) {
         const tags = await createTagValues(product);
         setTagValues(tags);
       } catch (err) {
-        setError('Failed to load tag values');
+        setError("Failed to load tag values");
       } finally {
         setLoading(false);
       }
@@ -266,7 +224,11 @@ export default function SingleProduct({ product, categoryName }) {
                   />
                   Compare
                 </button>
-                <CompareProduct open={open} setOpen={setOpen} />
+                <CompareProduct
+                  open={open}
+                  setOpen={setOpen}
+                  currentProduct={product}
+                />
               </div>
 
               <div className="mt-10">

@@ -1,8 +1,11 @@
-import { BorderAllRounded } from "@mui/icons-material";
+"use client";
+import { fetchProducts } from "@/redux/slice/productsSlice";
+import { fetchApi } from "@/utils/FetchApi";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import Typography from "@mui/material/Typography";
-import { useState } from 'react';
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const style = {
   position: "absolute",
@@ -13,10 +16,58 @@ const style = {
   boxShadow: 24,
 };
 
-export default function CompareProduct({ open, setOpen }) {
-  const handleOpen = () => setOpen(true);
+export default function CompareProduct({ open, setOpen, currentProduct }) {
   const handleClose = () => setOpen(false);
   const [selectedCheckbox, setSelectedCheckbox] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const products = useSelector((state) => state.products);
+
+  // Dispatch function to trigger the fetchProducts action
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+ 
+      dispatch(fetchProducts()); // Fetch products when component mounts
+
+  }, [dispatch]);
+
+  const allProducts = products?.products?.products || [];
+
+
+  console.log("allProducts", allProducts);
+  
+
+  
+  function compareSimilarProducts(currentProduct, allProducts) {
+    const {
+      productBrand,
+      categoryId,
+      general: { salePrice },
+    } = currentProduct;
+  
+  
+    const minPrice = salePrice - 10000;
+    const maxPrice = salePrice + 10000;
+  
+    // Filter products based on the same category, different brand, and within the price range
+    const similarProducts = allProducts?.filter((product) => {
+      const isSameCategory = product?.categoryId.some((catId) =>
+        categoryId.includes(catId)
+      );
+      const isDifferentBrand = product.productBrand !== productBrand;
+      const isWithinPriceRange =
+        product?.general.salePrice >= minPrice && product?.general.salePrice <= maxPrice;
+  
+      return isSameCategory && isDifferentBrand && isWithinPriceRange;
+    });
+  
+    return similarProducts;
+  }
+  
+
+
+  const similarProducts = compareSimilarProducts(currentProduct, allProducts);
 
   const handleCheckboxChange = (index) => {
     setSelectedCheckbox(index);
@@ -24,96 +75,125 @@ export default function CompareProduct({ open, setOpen }) {
 
   return (
     <div>
-      {/* <Button >Open modal</Button> */}
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box className="rounded-lg" sx={style}>
+        <Box className="" sx={style}>
           <table className="table-auto">
             <tbody>
               <tr>
                 <td className="border px-5 py-2">Picture</td>
                 <td className="border px-5 py-2">
-                  <img
-                    src="https://www.bestelectronics.com.bd/wp-content/uploads/2024/04/as-12tr4ryetd00a-2_copy_1-500x500.jpg"
-                    alt="Product 1"
+                  <Image
+                    width={200}
+                    height={200}
+                    src={currentProduct?.productImage}
+                    alt={currentProduct?.productSlug}
                     className="w-20 h-20"
                   />
                 </td>
-                <td className="border px-5 py-2">
-                  <img
-                    src="https://www.bestelectronics.com.bd/wp-content/uploads/2024/04/as-12tr4ryetd00a_copy_1-500x500.jpg"
-                    alt="Product 1"
-                    className="w-20 h-20"
-                  />
-                </td>
-                <td className="border px-5 py-2">
-                  <img
-                    src="https://www.bestelectronics.com.bd/wp-content/uploads/2024/04/as-12tr4ryetd00a-2_copy_1-500x500.jpg"
-                    alt="Product 1"
-                    className="w-20 h-20"
-                  />
-                </td>
+                {similarProducts.map((product, index) => (
+                  <td key={index} className="border px-5 py-2">
+                    <Image
+                      width={200}
+                      height={200}
+                      src={product?.productImage}
+                      alt={product?.productSlug}
+                      className="w-20 h-20"
+                    />
+                  </td>
+                ))}
               </tr>
               <tr>
                 <td className="border px-5 py-2">Product Name</td>
-                <td className="border px-5 py-2">Conion BEW-DC24KRNV 2 Ton Inverter (DynaCool) Air Conditioner</td>
-                <td className="border px-5 py-2">Conion BEW-DC24KRNV 2 Ton Non Inverter Air Conditioner</td>
-                <td className="border px-5 py-2">Conion BEW-DC24KRNV 2 Ton Inverter (DynaCool) Air Conditioner</td>
+                <td className="border px-5 py-2">
+                  {currentProduct?.productName}
+                </td>
+                {similarProducts.map((product, index) => (
+                  <td key={index} className="border px-5 py-2">
+                    {product?.productName}
+                  </td>
+                ))}
               </tr>
               <tr>
-                <td className="border px-5 py-2">Type</td>
-                <td className="border px-5 py-2">Inverter</td>
-                <td className="border px-5 py-2">Non Inverter</td>
-                <td className="border px-5 py-2">Inverter</td>
+                <td className="border px-5 py-2">Stock</td>
+                <td className="border px-5 py-2">
+                  {currentProduct?.inventory?.stockStatus}
+                </td>
+                {similarProducts.map((product, index) => (
+                  <td key={index} className="border px-5 py-2">
+                    {product?.inventory?.stockStatus}
+                  </td>
+                ))}
               </tr>
               <tr>
-                <td className="border px-5 py-2">Capacity</td>
-                <td className="border px-5 py-2">2 Ton</td>
-                <td className="border px-5 py-2">2 Ton</td>
-                <td className="border px-5 py-2">2 Ton</td>
+                <td className="border px-5 py-2">Features</td>
+
+                <td
+                  className="border px-5 py-2"
+                  dangerouslySetInnerHTML={{
+                    __html: currentProduct?.productShortDescription,
+                  }}
+                ></td>
+                {similarProducts.map((product, index) => (
+                  <td
+                    key={index}
+                    className="border px-5 py-2"
+                    dangerouslySetInnerHTML={{
+                      __html: product?.productShortDescription,
+                    }}
+                  ></td>
+                ))}
               </tr>
               <tr>
-                <td className="border px-5 py-2">Model</td>
-                <td className="border px-5 py-2">BEW-DC24KRNV</td>
-                <td className="border px-5 py-2">BEW-DC24KRNV</td>
-                <td className="border px-5 py-2">BEW-DC24KRNV</td>
+                <td className="border px-5 py-2">Price</td>
+                <td className="border px-5 py-2 font-semibold">
+                  {currentProduct.general.salePrice}
+                </td>
+                {similarProducts.map((product, index) => (
+                  <td key={index} className="border px-5 py-2 font-semibold">
+                    {product.general.salePrice}
+                  </td>
+                ))}
               </tr>
               <tr>
                 <td className="border px-5 py-2">Brand</td>
-                <td className="border px-5 py-2">Conion</td>
-                <td className="border px-5 py-2">Conion</td>
-                <td className="border px-5 py-2">Conion</td>
-              </tr>
-              <tr>
-                <td className="border px-5 py-2">Heavy Duty Cooling</td>
-                <td className="border px-5 py-2">Up To 52°C</td>
-                <td className="border px-5 py-2">Up To 52°C</td>
-                <td className="border px-5 py-2">Up To 52°C</td>
+                <td className="border px-5 py-2">
+                  {currentProduct.productBrand}
+                </td>
+                {similarProducts.map((product, index) => (
+                  <td key={index} className="border px-5 py-2">
+                    {product.productBrand}
+                  </td>
+                ))}
               </tr>
               <tr>
                 <td className="border px-5 py-2 text-nowrap">Add to Cart</td>
                 <td className="border px-5 py-2">
                   <div className="flex justify-center items-center">
-                    <input type="checkbox" checked={selectedCheckbox === 1}
-                      onChange={() => handleCheckboxChange(1)} className="mr-2 scale-150" />
+                    <input
+                      type="checkbox"
+                      checked={selectedCheckbox === 1}
+                      onChange={() => handleCheckboxChange(1)}
+                      className="mr-2 scale-150"
+                    />
                   </div>
                 </td>
-                <td className="border px-6 py-6">
-                  <div className="flex justify-center items-center">
-                    <input type="checkbox" checked={selectedCheckbox === 2}
-                      onChange={() => handleCheckboxChange(2)} className="mr-2 scale-150" />
-                  </div>
-                </td>
-                <td className="border px-5 py-2">
-                  <div className="flex justify-center items-center">
-                    <input type="checkbox" checked={selectedCheckbox === 3}
-                      onChange={() => handleCheckboxChange(3)} className="mr-2 scale-150" />
-                  </div>
-                </td>
+                {similarProducts.map((product, index) => (
+                  <td key={index} className="border px-5 py-2">
+                    <div className="flex justify-center items-center">
+                      <input
+                        type="checkbox"
+                        checked={selectedCheckbox === index + 2}
+                        onChange={() => handleCheckboxChange(index + 2)}
+                        className="mr-2 scale-150"
+                      />
+                    </div>
+                  </td>
+                ))}
               </tr>
             </tbody>
           </table>

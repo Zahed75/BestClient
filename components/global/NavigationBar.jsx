@@ -232,6 +232,7 @@ export default function NavigationBar() {
                 Brands
               </li>
             </ul>
+            
             {/* <ul className="text-sm py-5">
               {category.map((category) => (
                  <CategoryItem

@@ -43,7 +43,7 @@ export default function Search() {
           "GET"
         );
         const parentCategory = parentResponse?.category?.slug;
-        return `${parentCategory}/${category?.slug}`;
+        return `${parentCategory}/${category?.slug}/`;
       }
 
       return `${category?.slug}/${category?.slug}`;
@@ -65,17 +65,21 @@ export default function Search() {
 
   const handleProductClick = async (product) => {
     const slugs = await getProductCategorySlugs(product);
-  
-    // Check if there are any valid slugs
+
     if (slugs.length > 0) {
-      const slugPath = slugs[0]; // Use the first slug or join them if needed
-      router.push(`/shop/${slugPath}/${product.productSlug}`);
-      console.log(`/shop/${slugPath}/${product.productSlug}`);
+      const slugPath = slugs.join("/");
+
+      const uniqueSlugs = [...new Set(slugPath.split("/"))];
+
+      const cleanSlugPath = uniqueSlugs.join("/");
+
+      router.push(`/${cleanSlugPath}/${product.productSlug}`);
+      console.log(`/${cleanSlugPath}/${product.productSlug}`);
     } else {
       console.log("No valid slugs found for the product");
     }
-  
-    setSearchTerm(""); // Clear search input after redirect
+
+    setSearchTerm("");
   };
   
 
