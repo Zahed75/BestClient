@@ -35,12 +35,12 @@ export default function ProductCard({ product }) {
       );
       const category = response?.category;
 
-      // Check if the category has already been visited to avoid duplicates
+
       if (visitedCategories.has(category?.slug)) {
         return "";
       }
 
-      // Mark the category as visited
+    
       visitedCategories.add(category?.slug);
 
       // If there's a parent category, fetch the parent's full path
