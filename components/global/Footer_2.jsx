@@ -350,9 +350,9 @@ export default function Footer_2() {
                                 </svg>
 
                                 <div>
-                                    <span className="text-nowrap text-gray-700 text-xl font-semibold">
+                                    <a href="tel:09606111777" className="text-nowrap text-gray-700 text-xl font-semibold">
                                         09606 111 777
-                                    </span>{" "}
+                                    </a>{" "}
                                     <br />
                                     <span className="text-nowrap text-gray-700">
                                         (9:00AM - 9:00PM)

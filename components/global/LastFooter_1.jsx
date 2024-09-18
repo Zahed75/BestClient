@@ -1,15 +1,17 @@
 import React from 'react'
 import Image from "next/image";
+import Link from "next/link";
 import logo from "@/public/images/BestElectronics.png";
 
 export default function LastFooter_1() {
     return (
         <section className="container">
             <div className="py-10 mb-5">
-                <div className="flex justify-center items-center mb-5">
-                    <Image src={logo} className="w-fit" alt="SSL Commerz" />
-
-                </div>
+                <Link href="/">
+                    <div className="flex justify-center items-center mb-5">
+                        <Image src={logo} className="w-fit" alt="SSL Commerz" />
+                    </div>
+                </Link>
                 <div className="flex flex-wrap justify-center items-center text-sm text-gray-600 mb-5">
                     <a href="https://www.bestelectronics.com.bd/emi-facility" className="hover:underline px-4">Quick EMIs</a>
                     <a href="https://www.bestelectronics.com.bd/super-kisti" className="hover:underline border-l border-gray-300 px-4">Super Kisti</a>
