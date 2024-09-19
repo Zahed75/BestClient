@@ -33,12 +33,25 @@ export default function NavigationBar() {
     router.push("/shop");
   };
 
+  const allowedSlugs = [
+    "tv-entertainment",
+    "fan",
+    "home-appliances",
+    "kitchen-appliances",
+    "small-appliances",
+    "electrical-power",
+  ];
+
+
+
   useEffect(() => {
     const fetchCategory = async () => {
-      try {
-        // const data = await fetchApi(`/category/categories-name`, "GET");
+      try {  
         const data = await fetchApi(`/category/getAllCat`, "GET");
-        setCategory(data?.categories);
+        const filteredCategories = data?.categories?.filter((category) =>
+          allowedSlugs.includes(category?.slug)
+        );
+        setCategory(filteredCategories);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
