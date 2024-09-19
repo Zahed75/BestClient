@@ -1,6 +1,8 @@
 "use client";
 import { fetchProducts } from "@/redux/slice/productsSlice";
 import { fetchApi } from "@/utils/FetchApi";
+import { motion, AnimatePresence } from "framer-motion";
+import { addToCart, removeFromCart, updateQuantity } from "@/redux/slice/cartSlice";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Image from "next/image";
@@ -20,58 +22,52 @@ export default function CompareProduct({ open, setOpen, currentProduct }) {
   const handleClose = () => setOpen(false);
   const [selectedCheckbox, setSelectedCheckbox] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isInCart, setIsInCart] = useState(false);
+  const [error, setError] = useState(null);
 
   const products = useSelector((state) => state.products);
+  const cart = useSelector((state) => state.cart.items);
 
-  // Dispatch function to trigger the fetchProducts action
   const dispatch = useDispatch();
 
   useEffect(() => {
- 
-      dispatch(fetchProducts()); // Fetch products when component mounts
-
+      dispatch(fetchProducts()); 
   }, [dispatch]);
 
+  useEffect(() => {
+    setIsInCart(!!cart.find((item) => item._id === currentProduct?._id));
+  }, [cart, currentProduct?._id]);
+
   const allProducts = products?.products?.products || [];
-
-
-  console.log("allProducts", allProducts);
-  
-
   
   function compareSimilarProducts(currentProduct, allProducts) {
     const {
       productBrand,
       categoryId,
       general: { salePrice },
+       _id, 
     } = currentProduct;
   
+    const minPrice = salePrice - 5000;
+    const maxPrice = salePrice + 5000;
   
-    const minPrice = salePrice - 10000;
-    const maxPrice = salePrice + 10000;
-  
-    // Filter products based on the same category, different brand, and within the price range
     const similarProducts = allProducts?.filter((product) => {
       const isSameCategory = product?.categoryId.some((catId) =>
         categoryId.includes(catId)
       );
-      const isDifferentBrand = product.productBrand !== productBrand;
       const isWithinPriceRange =
-        product?.general.salePrice >= minPrice && product?.general.salePrice <= maxPrice;
+        product?.general?.salePrice >= minPrice &&
+        product?.general.salePrice <= maxPrice;
+      const isNotCurrentProduct = product._id !== _id;
+    
   
-      return isSameCategory && isDifferentBrand && isWithinPriceRange;
+      return isSameCategory && isWithinPriceRange && isNotCurrentProduct;
     });
   
-    return similarProducts;
+    return similarProducts.slice(0, 2);
   }
   
-
-
   const similarProducts = compareSimilarProducts(currentProduct, allProducts);
-
-  const handleCheckboxChange = (index) => {
-    setSelectedCheckbox(index);
-  };
 
   return (
     <div>
@@ -173,27 +169,151 @@ export default function CompareProduct({ open, setOpen, currentProduct }) {
               <tr>
                 <td className="border px-5 py-2 text-nowrap">Add to Cart</td>
                 <td className="border px-5 py-2">
-                  <div className="flex justify-center items-center">
-                    <input
-                      type="checkbox"
-                      checked={selectedCheckbox === 1}
-                      onChange={() => handleCheckboxChange(1)}
-                      className="mr-2 scale-150"
-                    />
-                  </div>
+                <div className="mt-5 w-full text-md">
+            <AnimatePresence mode="wait">
+              {isInCart ? (
+                <motion.div
+                  key="inCart"
+                  className="bg-[#FFCD00] rounded-full w-full flex justify-between items-center font-semibold"
+                  initial={{ width: "50%" }}
+                  animate={{ width: "100%" }}
+                  exit={{ width: "50%" }}
+                  transition={{ duration: 0.7 }}
+                >
+                  <button
+                    onClick={() => {
+                      const currentQuantity = cart.find(
+                        (item) => item._id === currentProduct?._id
+                      )?.quantity;
+
+                      if (currentQuantity > 1) {
+                        dispatch(
+                          updateQuantity({ id: currentProduct?._id, quantity: -1 })
+                        );
+                      } else {
+                        setIsInCart(false);
+                        dispatch(
+                          updateQuantity({ id: currentProduct?._id, quantity: -1 })
+                        );
+                      }
+                    }}
+                    className="px-3 py-2"
+                  >
+                    -
+                  </button>
+                  <button className="w-full py-2">
+                    {cart.find((item) => item._id === currentProduct?._id)?.quantity}
+                  </button>
+                  <button
+                    onClick={() => {
+                      dispatch(
+                        updateQuantity({ id: currentProduct?._id, quantity: 1 })
+                      );
+                    }}
+                    className=""
+                  >
+                    <span className="bg-[#dbb51f] rounded-full w-2 h-2 px-3 py-2 mr-1 shadow-inner">
+                      +
+                    </span>
+                  </button>
+                </motion.div>
+              ) : (
+                <motion.button
+                  key="addToCart"
+                  onClick={() => {
+                    dispatch(addToCart(currentProduct));
+                    setIsInCart(true);
+                  }}
+                  className="bg-[#FFCD00] px-3 py-2 rounded-full w-full md:w-2/4 transition-all duration-500"
+                  initial={{ width: "50%" }}
+                  animate={{ width: "50%" }}
+                  exit={{ width: "50%" }}
+                  transition={{ duration: 0.7 }}
+                >
+                  <motion.span
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.9, delay: 0.1 }}
+                  >
+                    Add to Cart
+                  </motion.span>
+                </motion.button>
+              )}
+            </AnimatePresence>
+          </div>
                 </td>
                 {similarProducts.map((product, index) => (
-                  <td key={index} className="border px-5 py-2">
-                    <div className="flex justify-center items-center">
-                      <input
-                        type="checkbox"
-                        checked={selectedCheckbox === index + 2}
-                        onChange={() => handleCheckboxChange(index + 2)}
-                        className="mr-2 scale-150"
-                      />
-                    </div>
-                  </td>
-                ))}
+    <td key={index} className="border px-5 py-2">
+      <div className="mt-5 w-full text-md">
+        <AnimatePresence mode="wait">
+          {cart.find((item) => item._id === product?._id) ? (
+            <motion.div
+              key="inCart"
+              className="bg-[#FFCD00] rounded-full w-full flex justify-between items-center font-semibold"
+              initial={{ width: "50%" }}
+              animate={{ width: "100%" }}
+              exit={{ width: "50%" }}
+              transition={{ duration: 0.7 }}
+            >
+              <button
+                onClick={() => {
+                  const currentQuantity = cart.find(
+                    (item) => item._id === product?._id
+                  )?.quantity;
+
+                  if (currentQuantity > 1) {
+                    dispatch(
+                      updateQuantity({ id: product?._id, quantity: -1 })
+                    );
+                  } else {
+                    dispatch(removeFromCart(product?._id));
+                  }
+                }}
+                className="px-3 py-2"
+              >
+                -
+              </button>
+              <button className="w-full py-2">
+                {cart.find((item) => item._id === product?._id)?.quantity}
+              </button>
+              <button
+                onClick={() => {
+                  dispatch(
+                    updateQuantity({ id: product?._id, quantity: 1 })
+                  );
+                }}
+                className=""
+              >
+                <span className="bg-[#dbb51f] rounded-full w-2 h-2 px-3 py-2 mr-1 shadow-inner">
+                  +
+                </span>
+              </button>
+            </motion.div>
+          ) : (
+            <motion.button
+              key="addToCart"
+              onClick={() => {
+                dispatch(addToCart(product));
+              }}
+              className="bg-[#FFCD00] px-3 py-2 rounded-full w-full md:w-2/4 transition-all duration-500"
+              initial={{ width: "50%" }}
+              animate={{ width: "50%" }}
+              exit={{ width: "50%" }}
+              transition={{ duration: 0.7 }}
+            >
+              <motion.span
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.9, delay: 0.1 }}
+              >
+                Add to Cart
+              </motion.span>
+            </motion.button>
+          )}
+        </AnimatePresence>
+      </div>
+    </td>
+  ))}
               </tr>
             </tbody>
           </table>

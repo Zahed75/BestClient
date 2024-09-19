@@ -188,7 +188,7 @@ export default function Categories({ products, AllCategories }) {
                       onClick={() => handleBrandChange(brand.name)}
                     >
                       {brand.name}
-                      <p>({brand?.productCount ? brand.productCount : 0})</p>
+                      <p>({brand?.productCount ? brand?.productCount : 0})</p>
                     </button>
                   ))}
                 </div>
