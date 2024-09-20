@@ -29,7 +29,6 @@ const style = {
 
 export default function CompareProduct({ open, setOpen, currentProduct }) {
   const handleClose = () => setOpen(false);
-  const [selectedCheckbox, setSelectedCheckbox] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isInCart, setIsInCart] = useState(false);
   const [error, setError] = useState(null);
@@ -61,7 +60,6 @@ export default function CompareProduct({ open, setOpen, currentProduct }) {
     const maxPrice = salePrice + 5000;
 
     const similarProducts = allProducts?.filter((product) => {
-      // Count the number of matching categories
       const matchingCategories = product?.categoryId.filter((catId) =>
         currentCategoryIds.includes(catId)
       ).length;
@@ -72,7 +70,6 @@ export default function CompareProduct({ open, setOpen, currentProduct }) {
         product?.general.salePrice <= maxPrice;
       const isNotCurrentProduct = product._id !== _id;
 
-      // Ensure at least two category matches and other conditions
       return (
         isAtLeastTwoCategoriesMatched &&
         isWithinPriceRange &&
@@ -96,8 +93,6 @@ export default function CompareProduct({ open, setOpen, currentProduct }) {
       return "Unknown Brand";
     }
   };
-
-  console.log(getBrandName(currentProduct?.productBrand));
 
   return (
     <div>
