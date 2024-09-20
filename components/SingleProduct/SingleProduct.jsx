@@ -19,8 +19,6 @@ import { fetchBrands } from "@/redux/slice/brandSlice";
 import { fetchApi } from "@/utils/FetchApi";
 import { usePathname } from "next/navigation";
 
-
-
 export default function SingleProduct({ product, categoryName }) {
   const [favorite, setFavorite] = useState(false);
   const [open, setOpen] = useState(false);
