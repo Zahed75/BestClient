@@ -110,7 +110,7 @@ export default function CheckOutCart() {
       phoneNumber: formData.get("phone"),
       paymentMethod:
         formData.get("paymentMethod") === "cashOnDelivery"
-          ? "Cash on Delivery"
+          ? "Cash On Delivery"
           : "Online Payment",
       products: productItems,
       totalPrice: totalProductPrice,

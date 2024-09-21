@@ -2,7 +2,7 @@ import SectionButton from "../global/SectionButton";
 import ProductCard from "./ProductCard";
 
 export default function EventProduct({ event }) {
-  const { gridName, gridDescription, selectProducts, productColumn } = event;
+  const { gridName, gridDescription, selectProducts, productColumn, url } = event;
   return (
     <main className="my-5 md:my-10">
       <section className="flex justify-between items-center gap-x-2">
@@ -14,7 +14,7 @@ export default function EventProduct({ event }) {
             {gridDescription}
           </h4>
         </div>
-        <SectionButton url="/" />
+        <SectionButton url={url || "/"} />
       </section>
       <section
         className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-${productColumn} justify-evenly items-center gap-2 my-10`}
