@@ -124,6 +124,8 @@ export default function CheckOutCart() {
       return;
     }
 
+    console.log("Order data:", data);
+
     try {
       const response = await fetchApi("/order/orderCreate", "POST", data);
 
@@ -299,6 +301,7 @@ export default function CheckOutCart() {
                 type="radio"
                 name="paymentMethod"
                 id="cashOnDelivery"
+                value="cashOnDelivery"
                 required
                 defaultChecked={true}
               />
@@ -312,6 +315,7 @@ export default function CheckOutCart() {
                 type="radio"
                 name="paymentMethod"
                 id="onlinePayment"
+                value="onlinePayment"
                 required
               />
               <label className="text-sm" htmlFor="onlinePayment">
