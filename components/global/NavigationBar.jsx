@@ -94,9 +94,8 @@ export default function NavigationBar() {
           {hasSubCategories && (
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className={`h-4 w-4 transition-transform duration-300 transform ${
-                hoveredCategoryId === category._id ? "rotate-90" : "-rotate-90"
-              }`}
+              className={`h-4 w-4 transition-transform duration-300 transform ${hoveredCategoryId === category._id ? "rotate-90" : "-rotate-90"
+                }`}
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -144,9 +143,8 @@ export default function NavigationBar() {
           <div
             onMouseEnter={() => setIsAllCategoriesOpen(true)}
             onMouseLeave={() => setIsAllCategoriesOpen(false)}
-            className={`${
-              isAllCategoriesOpen ? "block" : "hidden"
-            } group-hover:block absolute left-0 w-60 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
+            className={`${isAllCategoriesOpen ? "block" : "hidden"
+              } group-hover:block absolute left-0 w-60 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
           >
             <ul className="text-sm py-5">
               {category
@@ -168,11 +166,10 @@ export default function NavigationBar() {
                         categories?.subCategories.length > 0 && (
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className={`h-4 w-4 transition-transform duration-300 transform ${
-                              hoveredCategoryId === categories._id
-                                ? "rotate-[90]"
-                                : "-rotate-90"
-                            }`}
+                            className={`h-4 w-4 transition-transform duration-300 transform ${hoveredCategoryId === categories._id
+                              ? "rotate-[90]"
+                              : "-rotate-90"
+                              }`}
                             viewBox="0 0 20 20"
                             fill="currentColor"
                           >
@@ -208,11 +205,10 @@ export default function NavigationBar() {
                                     category?.subCategories.length > 0 && (
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        className={`h-4 w-4 transition-transform duration-300 transform ${
-                                          hoveredSubCategoryId === category._id
-                                            ? "rotate-[90]"
-                                            : "-rotate-90"
-                                        }`}
+                                        className={`h-4 w-4 transition-transform duration-300 transform ${hoveredSubCategoryId === category._id
+                                          ? "rotate-[90]"
+                                          : "-rotate-90"
+                                          }`}
                                         viewBox="0 0 20 20"
                                         fill="currentColor"
                                       >
@@ -277,9 +273,8 @@ export default function NavigationBar() {
                   {brands.length > 0 && (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className={`h-4 w-4 transition-transform duration-300 transform ${
-                        isBrandsMenuOpen ? "rotate-[90]" : "-rotate-90"
-                      }`}
+                      className={`h-4 w-4 transition-transform duration-300 transform ${isBrandsMenuOpen ? "rotate-[90]" : "-rotate-90"
+                        }`}
                       viewBox="0 0 20 20"
                       fill="currentColor"
                     >
@@ -349,7 +344,7 @@ export default function NavigationBar() {
                   alt="Array Bottom"
                 />
               </button>
-              <div
+              {/* <div
                 onMouseEnter={() => setIsBrowseProducts(true)}
                 onMouseLeave={() => setIsBrowseProducts(false)}
                 className={`${
@@ -437,7 +432,126 @@ export default function NavigationBar() {
                     Mobile & Accessories
                   </li>
                 </ul>
+              </div> */}
+              <div
+                onMouseEnter={() => setIsAllCategoriesOpen(true)}
+                onMouseLeave={() => setIsAllCategoriesOpen(false)}
+                className={`${isAllCategoriesOpen ? "block" : "hidden"
+                  } group-hover:block absolute left-0 w-60 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
+              >
+                <ul className="text-sm py-5">
+                  {category
+                    .filter((categories) => !categories.subCategories?.categoryName)
+                    .map((categories) => (
+                      <li
+                        key={categories?._id}
+                        className="py-2 px-3 relative"
+                        onMouseEnter={() => setHoveredCategoryId(categories?._id)}
+                        onMouseLeave={() => setHoveredCategoryId(null)}
+                      >
+                        <Link
+                          href={`/${categories?.slug}`}
+                          className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer"
+                        >
+                          <span>{categories?.categoryName}</span>
+
+                          {categories?.subCategories &&
+                            categories?.subCategories.length > 0 && (
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className={`h-4 w-4 transition-transform duration-300 transform ${hoveredCategoryId === categories._id
+                                  ? "rotate-[90]"
+                                  : "-rotate-90"
+                                  }`}
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                              >
+                                <path
+                                  fillRule="evenodd"
+                                  d="M6.293 7.707a1 1 0 0 1 1.414 0L10 10.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z"
+                                />
+                              </svg>
+                            )}
+                        </Link>
+
+                        {hoveredCategoryId === categories._id &&
+                          categories?.subCategories &&
+                          categories?.subCategories.length > 0 && (
+                            <ul className="absolute left-full top-0 mt-0 py-5 w-auto min-w-52 bg-white rounded-lg border border-gray-200 shadow-xl">
+                              {categories.subCategories.map((category) => (
+                                <li
+                                  onMouseEnter={() =>
+                                    setHoveredSubCategoryId(category._id)
+                                  }
+                                  onMouseLeave={() => setHoveredSubCategoryId(null)}
+                                  className="py-2 px-3 cursor-pointer relative"
+                                  key={category?._id}
+                                >
+                                  <div className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer">
+                                    <Link
+                                      href={`/${categories?.slug}/${category?.slug}`}
+                                      className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer"
+                                    >
+                                      <span>{category?.categoryName}</span>
+
+                                      {category?.subCategories &&
+                                        category?.subCategories.length > 0 && (
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            className={`h-4 w-4 transition-transform duration-300 transform ${hoveredSubCategoryId === category._id
+                                              ? "rotate-[90]"
+                                              : "-rotate-90"
+                                              }`}
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                          >
+                                            <path
+                                              fillRule="evenodd"
+                                              d="M6.293 7.707a1 1 0 0 1 1.414 0L10 10.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z"
+                                            />
+                                          </svg>
+                                        )}
+                                    </Link>
+                                  </div>
+
+                                  {hoveredSubCategoryId === category._id &&
+                                    category.subCategories &&
+                                    category.subCategories.length > 0 && (
+                                      <ul
+                                        onMouseEnter={() =>
+                                          setHoveredSubCategoryId(category._id)
+                                        }
+                                        onMouseLeave={() =>
+                                          setHoveredSubCategoryId(null)
+                                        }
+                                        className="absolute left-full top-0 px-3 py-5 w-auto min-w-52 bg-white rounded-lg border border-gray-200 shadow-xl"
+                                      >
+                                        {category.subCategories.map(
+                                          (subCategory) => (
+                                            <li
+                                              key={subCategory?._id}
+                                              className="py-2 hover:text-[#F16521] cursor-pointer"
+                                            >
+                                              <Link
+                                                href={`/${categories?.slug}/${category?.slug}/${subCategory?.slug}`}
+                                                className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer"
+                                              >
+                                                {subCategory?.categoryName}
+                                              </Link>
+                                            </li>
+                                          )
+                                        )}
+                                      </ul>
+                                    )}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                      </li>
+                    ))}
+                </ul>
               </div>
+
             </div>
             <span className="hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700">
               <Link href="/shop">All Products</Link>
@@ -467,9 +581,8 @@ export default function NavigationBar() {
               </button>
               <div
                 onMouseLeave={() => setIsOrderMenuOpen(false)}
-                className={`${
-                  isOrderMenuOpen ? "block" : "hidden"
-                } group-hover:block absolute left-0 w-64 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
+                className={`${isOrderMenuOpen ? "block" : "hidden"
+                  } group-hover:block absolute left-0 w-64 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
               >
                 <ul className="text-sm capitalize">
                   <li className="py-2 px-3 hover:text-[#F16521] cursor-pointer">
