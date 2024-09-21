@@ -278,7 +278,7 @@ export default function NavigationBar() {
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className={`h-4 w-4 transition-transform duration-300 transform ${
-                        isBrandsMenuOpen ? "rotate-90" : "-rotate-90"
+                        isBrandsMenuOpen ? "rotate-[90]" : "-rotate-90"
                       }`}
                       viewBox="0 0 20 20"
                       fill="currentColor"
