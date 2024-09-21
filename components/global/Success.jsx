@@ -19,7 +19,8 @@ export default function Success() {
   const discounts = useSelector((state) => state.discount?.discounts) || {};
   const discount = discounts?.discount || 0;
   const cart = useSelector((state) => state.cart.items) || [];
-  const customerInfo = JSON.parse(localStorage.getItem("customer") || "{}");
+  // const customerInfo = JSON.parse(localStorage.getItem("customer") || "{}");
+  // const fullAddress = customerInfo?.billingInfo?.fullAddress || "";
 
   const vatPercentage = 5;
   const totalProductPrice = Array.isArray(cart)
@@ -35,7 +36,7 @@ export default function Success() {
 
 
   useEffect(() => {
-    const fetchOrderHistory = async () => {
+    const fetchCustomer = async () => {
       const storedCustomer = localStorage.getItem("customer");
       const customerId = storedCustomer
         ? JSON.parse(storedCustomer).userId
@@ -45,11 +46,11 @@ export default function Success() {
       } else {
         try {
           const res = await fetchApi(
-            `/order/order-history/${customerId}`,
+            `/customer/info/${customerId}`,
             "GET"
           );
 
-          setOrderHistory(res?.data);
+          setCustomer(res?.customerInfo?.billingInfo);
 
         } catch (error) {
           console.error("Error fetching order history:", error);
@@ -57,8 +58,10 @@ export default function Success() {
       }
     };
 
-    fetchOrderHistory();
+    fetchCustomer();
   }, []);
+
+
 
   return (
     <section className="my-10">
@@ -120,7 +123,7 @@ export default function Success() {
           <div className="my-5">
             <div className="flex justify-between items-between my-3">
               <p>Delivery Address</p>
-              <p className="font-semibold">{customerInfo?.billingInfo?.fullAddress || ""}</p>
+              <p className="font-semibold">{customer?.fullAddress}</p>
 
             </div>
             <div className="flex justify-between items-center my-3">
@@ -153,8 +156,8 @@ export default function Success() {
           {/* )} */}
         </div>
         <div className="col-span-2">
-          {cart?.map((product) => (
-            <div className="flex justify-start items-start gap-5">
+          {cart?.map((product, i) => (
+            <div key={i} className="flex justify-start items-start gap-5">
               <div className="w-[150px] h-[150px] ">
                 <Image src={product?.productImage} width={100} height={100} alt="product" />
               </div>
