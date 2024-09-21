@@ -151,7 +151,7 @@ export default function CompareProduct({ open, setOpen, currentProduct }) {
                 ))}
               </tr>
               <tr>
-                <td className="border px-5 py-3 align-top">Features</td>
+                <td className="border px-5 py-3 align-top"> Key Features</td>
 
                 <td
                   className="border px-5 py-3 align-top "
