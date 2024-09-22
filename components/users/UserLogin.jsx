@@ -63,7 +63,7 @@ export default function UserLogin() {
         <div className="flex justify-center shadow-md bg-white rounded-md">
           <div className="flex flex-col p-5 w-[26rem] space-y-4">
             <h1 className="text-xl font-semibold">
-              Sign in or Create an account
+              Sign in
             </h1>
             <form ref={formRef} onSubmit={onSubmit} className="space-y-5">
               <div>
