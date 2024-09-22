@@ -126,6 +126,9 @@ export default function InfoSection() {
         phoneNumber: form.get("shippingPhoneNumber"),
         email: form.get("shippingEmail"),
       },
+      currentPassword: form.get("currentPassword"),
+      newPassword: form.get("newPassword"),
+      confirmPassword: form.get("confirmPassword"),
     };
 
     try {
@@ -137,7 +140,7 @@ export default function InfoSection() {
 
       if (response) {
         setIsLoading(false);
-        router.push("/userfeed");
+        router.push("/my-account");
       }
     } catch (error) {
       console.log(error);
