@@ -484,7 +484,7 @@ export default function NavigationBar() {
                               {categories.subCategories.map((category) => (
                                 <li
                                   onMouseEnter={() =>
-                                    setHoveredSubProductCategoryId(category._id)
+                                    setHoveredSubProductCategoryId(category?._id)
                                   }
                                   onMouseLeave={() => setHoveredSubProductCategoryId(null)}
                                   className="py-2 px-3 cursor-pointer relative"
@@ -501,7 +501,7 @@ export default function NavigationBar() {
                                         category?.subCategories.length > 0 && (
                                           <svg
                                             xmlns="http://www.w3.org/2000/svg"
-                                            className={`h-4 w-4 transition-transform duration-300 transform ${hoveredAlProductCategoryId === category._id
+                                            className={`h-4 w-4 transition-transform duration-300 transform ${hoveredSubProductCategoryId === category._id
                                               ? "rotate-[90]"
                                               : "-rotate-90"
                                               }`}

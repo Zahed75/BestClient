@@ -519,7 +519,7 @@ export default function InfoSection() {
                 </div>
               </div>
 
-              <div className="p-5 border bg-white rounded-md shadow-md w-full">
+              {/* <div className="p-5 border bg-white rounded-md shadow-md w-full">
                 <div className="flex justify-between items-center mb-5">
                   <h5 className="text-md font-bold ">Shipping Info</h5>
                   <button
@@ -674,7 +674,109 @@ export default function InfoSection() {
                     />
                   </div>
                 </div>
+              </div> */}
+
+              <div className="p-5 border bg-white rounded-md shadow-md w-full">
+                <div className="flex justify-between items-center mb-5">
+                  <h5 className="text-md font-bold ">Change Password</h5>
+                </div>
+                <div className="grid grid-cols-2 justify-between items-center gap-5 pb-5">
+                  <div className="flex flex-col space-y-1 w-full">
+                    <label
+                      htmlFor="currentpassword"
+                      className="text-sm font-semibold text-gray-600"
+                    >
+                      Current Password
+                    </label>
+                    <input
+                      type="text"
+                      id="currentpassword"
+                      name="currentPassword"
+                      // defaultValue={customer?.shippingInfo?.firstName}
+                      placeholder="*********"
+                      className="border border-gray-300 rounded-md p-2 focus:outline-none "
+                    />
+                  </div>
+                  <div className="flex flex-col space-y-1 w-full">
+
+                  </div>
+                  <div className="flex flex-col space-y-1 w-full">
+                    <label htmlFor="password" className="text-sm font-semibold">
+                      New password
+                    </label>
+                    <div className="relative">
+                      <input
+                        // type={showPassword ? "text" : "password"}
+                        id="password"
+                        required
+                        placeholder="*********"
+                        // value={password}
+                        minLength={6}
+                        maxLength={12}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="border border-gray-300 rounded-md p-2 focus:outline-none w-full"
+                      />
+                      {/* <span
+                      className="absolute right-2 top-2 cursor-pointer"
+                      onClick={handlePasswordToggle}
+                    >
+                      {showPassword ? (
+                        <Image src={view} alt="view" width={24} height={24} />
+                      ) : (
+                        <Image
+                          src={hidden}
+                          alt="hidden"
+                          width={24}
+                          height={24}
+                        />
+                      )}
+                    </span> */}
+                    </div>
+                  </div>
+                  <div className="flex flex-col space-y-1 w-full">
+
+                  </div>
+                  <div className="flex flex-col space-y-1 w-full">
+                    <label
+                      htmlFor="confirmPassword"
+                      className="text-sm font-semibold"
+                    >
+                      Confirm new password
+                    </label>
+                    <div className="relative">
+                      <input
+                        // type={showConfirmPassword ? "text" : "password"}
+                        id="confirmPassword"
+                        required
+                        placeholder="*********"
+                        // value={confirmPassword}
+                        minLength={6}
+                        maxLength={12}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        className="border border-gray-300 rounded-md p-2 focus:outline-none w-full"
+                      />
+                      {/* <span
+                      className="absolute right-2 top-2 cursor-pointer"
+                      onClick={handleConfirmPasswordToggle}
+                    >
+                      {showConfirmPassword ? (
+                        <Image src={view} alt="view" width={24} height={24} />
+                      ) : (
+                        <Image
+                          src={hidden}
+                          alt="hidden"
+                          width={24}
+                          height={24}
+                        />
+                      )}
+                    </span> */}
+                    </div>
+                  </div>
+                  <div className="flex flex-col space-y-1 w-full">
+                  </div>
+                </div>
               </div>
+
 
               <div className="flex justify-start items-center w-full">
                 <button
