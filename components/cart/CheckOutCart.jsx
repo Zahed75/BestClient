@@ -124,8 +124,6 @@ export default function CheckOutCart() {
       return;
     }
 
-    console.log("Order data:", data);
-
     try {
       const response = await fetchApi("/order/orderCreate", "POST", data);
 
