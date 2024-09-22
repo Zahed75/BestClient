@@ -18,6 +18,9 @@ const navigationLink = [
     link: "/",
   },
   {
+    title: "Browse Products",
+  },
+  {
     title: "All Products",
     link: "/shop",
   },
@@ -51,6 +54,7 @@ export default function BottomNavigation() {
   };
   const dispatch = useDispatch();
   const [categoryShow, setCategoryShow] = useState(false);
+  const [categoryProduct, setCategoryProduct] = useState(false);
   const [submenuShow, setSubmenuShow] = useState(null);
   const brandsState = useSelector((state) => state.brand);
   const brands = brandsState?.brands || [];
@@ -87,8 +91,6 @@ export default function BottomNavigation() {
     fetchCategory();
   }, []);
 
-
-  console.log("Brand", brands);
   return (
     <section>
       <div className="fixed md:visible lg:hidden bottom-0 left-0 z-50 w-full h-16 bg-[#F16521] mx-auto">
@@ -180,31 +182,35 @@ export default function BottomNavigation() {
                     {category.filter((categories) => !categories.subCategories?.categoryName).map((categories) => (
                       <li key={categories?._id} className="py-2">
                         <div className="flex justify-between items-center">
-                          <Link href={""}>
+                          <Link
+                            href={`/${categories?.slug}`}
+                            className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer"
+                          >
                             <span
                               className="text-gray-500 hover:text-[#F16521] duration-700 cursor-pointer"
                               onClick={() => setHoveredCategoryId(hoveredCategoryId === categories._id ? null : categories._id)}
                             >
                               {categories.categoryName}
                             </span>
+                            {categories?.subCategories &&
+                              categories?.subCategories.length > 0 && (
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  className={`h-7 w-7 transition-transform duration-300 transform ${hoveredCategoryId === categories._id
+                                    ? "rotate-180"
+                                    : ""
+                                    }`}
+                                  onClick={() => setHoveredCategoryId(hoveredCategoryId === categories._id ? null : categories._id)}
+                                  viewBox="0 0 20 20"
+                                  fill="currentColor"
+                                >
+                                  <path
+                                    fillRule="evenodd"
+                                    d="M6.293 7.707a1 1 0 0 1 1.414 0L10 10.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z"
+                                  />
+                                </svg>
+                              )}
                           </Link>
-                          {categories?.subCategories &&
-                            categories?.subCategories.length > 0 && (
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className={`h-7 w-7 transition-transform duration-300 transform ${hoveredCategoryId === categories._id
-                                  ? "rotate-180"
-                                  : ""
-                                  }`}
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                              >
-                                <path
-                                  fillRule="evenodd"
-                                  d="M6.293 7.707a1 1 0 0 1 1.414 0L10 10.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z"
-                                />
-                              </svg>
-                            )}
                         </div>
                         {hoveredCategoryId === categories._id &&
                           categories?.subCategories &&
@@ -218,25 +224,31 @@ export default function BottomNavigation() {
                                   key={category?._id}
                                 >
                                   <div className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer">
-                                    <span>{category?.categoryName}</span>
+                                    <Link
+                                      href={`/${categories?.slug}/${category?.slug}`}
+                                      className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer"
+                                    >
+                                      <span>{category?.categoryName}</span>
 
-                                    {category?.subCategories &&
-                                      category?.subCategories.length > 0 && (
-                                        <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          className={`h-7 w-7 transition-transform duration-300 transform ${hoveredSubCategoryId === category._id
-                                            ? "rotate-180"
-                                            : ""
-                                            }`}
-                                          viewBox="0 0 20 20"
-                                          fill="currentColor"
-                                        >
-                                          <path
-                                            fillRule="evenodd"
-                                            d="M6.293 7.707a1 1 0 0 1 1.414 0L10 10.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z"
-                                          />
-                                        </svg>
-                                      )}
+                                      {category?.subCategories &&
+                                        category?.subCategories.length > 0 && (
+                                          <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            className={`h-7 w-7 transition-transform duration-300 transform ${hoveredSubCategoryId === category._id
+                                              ? "rotate-180"
+                                              : ""
+                                              }`}
+                                            onClick={() => setHoveredSubCategoryId(hoveredSubCategoryId === category._id ? null : category._id)}
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                          >
+                                            <path
+                                              fillRule="evenodd"
+                                              d="M6.293 7.707a1 1 0 0 1 1.414 0L10 10.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z"
+                                            />
+                                          </svg>
+                                        )}
+                                    </Link>
                                   </div>
 
                                   {hoveredSubCategoryId === category._id &&
@@ -251,7 +263,12 @@ export default function BottomNavigation() {
                                               onClick={() =>
                                                 setHoveredSubCategoryId(category._id)}
                                             >
-                                              {subCategory?.categoryName}
+                                              <Link
+                                                href={`/${categories?.slug}/${category?.slug}/${subCategory?.slug}`}
+                                                className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer"
+                                              >
+                                                {subCategory?.categoryName}
+                                              </Link>
                                             </li>
                                           )
                                         )}
@@ -278,12 +295,145 @@ export default function BottomNavigation() {
                   className={`py-2 border-b ${i === 0 ? "border-t" : ""}`}
                   key={i}
                 >
-                  <Link
-                    className="text-gray-500 hover:text-[#F16521] duration-700"
-                    href={link.link}
-                  >
-                    {link.title}
-                  </Link>
+                  {link.link ? (
+                    <Link
+                      className="text-gray-500 hover:text-[#F16521] duration-700"
+                      href={link.link}
+                    >
+                      {link.title}
+                    </Link>
+                  ) : (
+                    <div>
+                      <div
+                        onClick={() => setCategoryProduct(!categoryProduct)}
+                        className="flex items-center justify-between w-full text-gray-500 hover:text-[#F16521] duration-700"
+                      >
+                        {link.title}
+                        <span>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className={`h-7 w-7 transition-transform duration-300 transform ${categoryProduct ? "rotate-180" : ""}
+                            `}
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M6.293 7.707a1 1 0 0 1 1.414 0L10 10.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z"
+                            />
+                          </svg>
+                        </span>
+                      </div>
+                      {categoryProduct && (
+                        <div className="bg-white px-3 transition-all duration-700">
+                          <ul>
+                            {category.filter((categories) => !categories.subCategories?.categoryName).map((categories) => (
+                              <li key={categories?._id} className="py-2">
+                                <div className="flex justify-between items-center">
+                                  <Link
+                                    href={`/${categories?.slug}`}
+                                    className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer"
+                                  >
+                                    <span
+                                      className="text-gray-500 hover:text-[#F16521] duration-700 cursor-pointer"
+                                      onClick={() => setHoveredCategoryId(hoveredCategoryId === categories._id ? null : categories._id)}
+                                    >
+                                      {categories.categoryName}
+                                    </span>
+                                    {categories?.subCategories &&
+                                      categories?.subCategories.length > 0 && (
+                                        <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          className={`h-7 w-7 transition-transform duration-300 transform ${hoveredCategoryId === categories._id
+                                            ? "rotate-180"
+                                            : ""
+                                            }`}
+                                          onClick={() => setHoveredCategoryId(hoveredCategoryId === categories._id ? null : categories._id)}
+                                          viewBox="0 0 20 20"
+                                          fill="currentColor"
+                                        >
+                                          <path
+                                            fillRule="evenodd"
+                                            d="M6.293 7.707a1 1 0 0 1 1.414 0L10 10.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z"
+                                          />
+                                        </svg>
+                                      )}
+                                  </Link>
+                                </div>
+                                {hoveredCategoryId === categories._id &&
+                                  categories?.subCategories &&
+                                  categories?.subCategories.length > 0 && (
+                                    <ul>
+                                      {categories?.subCategories.map((category) => (
+                                        <li
+                                          onClick={() => setHoveredSubCategoryId(hoveredSubCategoryId === category._id ? null : category._id)}
+
+                                          className="py-2 px-3 cursor-pointer relative"
+                                          key={category?._id}
+                                        >
+                                          <div className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer">
+                                            <Link
+                                              href={`/${categories?.slug}/${category?.slug}`}
+                                              className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer"
+                                            >
+                                              <span>{category?.categoryName}</span>
+
+                                              {category?.subCategories &&
+                                                category?.subCategories.length > 0 && (
+                                                  <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    className={`h-7 w-7 transition-transform duration-300 transform ${hoveredSubCategoryId === category._id
+                                                      ? "rotate-180"
+                                                      : ""
+                                                      }`}
+                                                    onClick={() => setHoveredSubCategoryId(hoveredSubCategoryId === category._id ? null : category._id)}
+                                                    viewBox="0 0 20 20"
+                                                    fill="currentColor"
+                                                  >
+                                                    <path
+                                                      fillRule="evenodd"
+                                                      d="M6.293 7.707a1 1 0 0 1 1.414 0L10 10.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z"
+                                                    />
+                                                  </svg>
+                                                )}
+                                            </Link>
+                                          </div>
+
+                                          {hoveredSubCategoryId === category._id &&
+                                            category?.subCategories &&
+                                            category?.subCategories.length > 0 && (
+                                              <ul>
+                                                {category.subCategories.map(
+                                                  (subCategory) => (
+                                                    <li
+                                                      key={subCategory?._id}
+                                                      className="py-2 hover:text-[#F16521] cursor-pointer"
+                                                      onClick={() =>
+                                                        setHoveredSubCategoryId(category._id)}
+                                                    >
+                                                      <Link
+                                                        href={`/${categories?.slug}/${category?.slug}/${subCategory?.slug}`}
+                                                        className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer"
+                                                      >
+                                                        {subCategory?.categoryName}
+                                                      </Link>
+                                                    </li>
+                                                  )
+                                                )}
+                                              </ul>
+                                            )}
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  )}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
                 </li>
               ))}
               <li
@@ -333,6 +483,6 @@ export default function BottomNavigation() {
           </div>
         </Box>
       </Drawer>
-    </section>
+    </section >
   );
 }
