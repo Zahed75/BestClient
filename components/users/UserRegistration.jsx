@@ -61,7 +61,7 @@ export default function UserRegistration() {
         <div className="flex justify-center shadow-md bg-white rounded-md">
           <div className="flex flex-col p-5 w-[26rem] space-y-4">
             <h1 className="text-xl font-semibold">
-              Sign in or Create an account
+              Sign up or Create an account
             </h1>
             <form
               ref={formRef}
@@ -121,6 +121,11 @@ export default function UserRegistration() {
                   defaultValue={"880"}
                   placeholder="Enter your mobile number"
                 />
+              </div>
+              <div className="flex justify-start items-center text-sm">
+                <Link href="/signin" className="text-[#F16521]">
+                  Sign in With Email
+                </Link>
               </div>
 
               <button

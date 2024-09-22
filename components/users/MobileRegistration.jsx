@@ -96,7 +96,7 @@ export default function MobileRegistration() {
               </div>
               <div className="flex justify-start items-center text-sm">
                 <Link href="/mobilesignin" className="text-[#F16521]">
-                  Create an account
+                  Sign in With Phone Number
                 </Link>
               </div>
 
