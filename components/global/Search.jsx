@@ -120,7 +120,6 @@ export default function Search() {
       const cleanSlugPath = uniqueSlugs.join("/");
 
       router.push(`/${cleanSlugPath}/${product.productSlug}`);
-      console.log(`/${cleanSlugPath}/${product.productSlug}`);
     } else {
       console.log("No valid slugs found for the product");
     }

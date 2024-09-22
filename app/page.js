@@ -62,15 +62,15 @@ export default async function Home() {
       <ImageSlider />
       <div className="container">
         <div className="">
-          {/* Render events with eventCatId 0 and 1 */}
+     
           {eventCategories.before.map((event, index) => (
             <EventProduct key={index} event={event} />
           ))}
 
-          <Categories />
-          <RecentAdded />
+          {/* <Categories />
+          <RecentAdded /> */}
 
-          {/* Render the remaining events */}
+          
           {eventCategories.after.map((event, index) => (
             <EventProduct key={index} event={event} />
           ))}

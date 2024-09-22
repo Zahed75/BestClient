@@ -4,6 +4,8 @@ import Image from "next/image";
 import useImgBBUpload from "@/utils/useImgBBUpload";
 import { useRouter } from "next/navigation";
 import { fetchApi } from "@/utils/FetchApi";
+import hidden from "@/public/images/view-off.svg";
+import view from "@/public/images/view.svg";
 
 export default function InfoSection() {
   const [districts, setDistricts] = useState([]);
@@ -12,6 +14,9 @@ export default function InfoSection() {
   const [customer, setCustomer] = useState({});
   const [active, setActive] = useState("personal");
   const [orderHistory, setOrderHistory] = useState([]);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  
 
   const { error, handleUpload, imageUrl, uploading } = useImgBBUpload();
   const router = useRouter();
@@ -141,7 +146,7 @@ export default function InfoSection() {
   };
 
   const copyBillingInfo = () => {
-    const form = document.forms[0]; // Assuming this is the first form on the page
+    const form = document.forms[0]; 
     const billingFirstName = form.billingFirstName.value;
     const billingLastName = form.billingLastName.value;
     const billingDistrict = form.billingDistrict.value;
@@ -162,6 +167,7 @@ export default function InfoSection() {
   const handleRemoveUserPicture = () => {
     setCustomerImage("");
   };
+
   const handleLogout = () => {
     localStorage.removeItem("customer");
     router.push("/");
@@ -174,6 +180,13 @@ export default function InfoSection() {
   const handleGotoWishlist = () => {
     router.push("/my-account/wishlist");
   };
+
+  const handlePasswordToggle = () => {
+    setShowPassword(!showPassword);
+  };
+  const handleConfirmPasswordToggle = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+    };
 
   return (
     <section className="bg-[#F4F4F4]">
@@ -519,7 +532,7 @@ export default function InfoSection() {
                 </div>
               </div>
 
-              {/* <div className="p-5 border bg-white rounded-md shadow-md w-full">
+              <div className="p-5 border bg-white rounded-md shadow-md w-full">
                 <div className="flex justify-between items-center mb-5">
                   <h5 className="text-md font-bold ">Shipping Info</h5>
                   <button
@@ -674,7 +687,7 @@ export default function InfoSection() {
                     />
                   </div>
                 </div>
-              </div> */}
+              </div>
 
               <div className="p-5 border bg-white rounded-md shadow-md w-full">
                 <div className="flex justify-between items-center mb-5">
@@ -683,16 +696,15 @@ export default function InfoSection() {
                 <div className="grid grid-cols-2 justify-between items-center gap-5 pb-5">
                   <div className="flex flex-col space-y-1 w-full">
                     <label
-                      htmlFor="currentpassword"
+                      htmlFor="currentPassword"
                       className="text-sm font-semibold text-gray-600"
                     >
                       Current Password
                     </label>
                     <input
                       type="text"
-                      id="currentpassword"
+                      id="currentPassword"
                       name="currentPassword"
-                      // defaultValue={customer?.shippingInfo?.firstName}
                       placeholder="*********"
                       className="border border-gray-300 rounded-md p-2 focus:outline-none "
                     />
@@ -706,17 +718,16 @@ export default function InfoSection() {
                     </label>
                     <div className="relative">
                       <input
-                        // type={showPassword ? "text" : "password"}
+                        type={showPassword ? "text" : "password"}
                         id="password"
                         required
                         placeholder="*********"
-                        // value={password}
                         minLength={6}
                         maxLength={12}
                         onChange={(e) => setPassword(e.target.value)}
                         className="border border-gray-300 rounded-md p-2 focus:outline-none w-full"
                       />
-                      {/* <span
+                      <span
                       className="absolute right-2 top-2 cursor-pointer"
                       onClick={handlePasswordToggle}
                     >
@@ -730,7 +741,7 @@ export default function InfoSection() {
                           height={24}
                         />
                       )}
-                    </span> */}
+                    </span>
                     </div>
                   </div>
                   <div className="flex flex-col space-y-1 w-full">
@@ -745,17 +756,16 @@ export default function InfoSection() {
                     </label>
                     <div className="relative">
                       <input
-                        // type={showConfirmPassword ? "text" : "password"}
+                        type={showConfirmPassword ? "text" : "password"}
                         id="confirmPassword"
                         required
                         placeholder="*********"
-                        // value={confirmPassword}
                         minLength={6}
                         maxLength={12}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        onChange={(e) => setShowConfirmPassword(e.target.value)}
                         className="border border-gray-300 rounded-md p-2 focus:outline-none w-full"
                       />
-                      {/* <span
+                      <span
                       className="absolute right-2 top-2 cursor-pointer"
                       onClick={handleConfirmPasswordToggle}
                     >
@@ -769,7 +779,7 @@ export default function InfoSection() {
                           height={24}
                         />
                       )}
-                    </span> */}
+                    </span>
                     </div>
                   </div>
                   <div className="flex flex-col space-y-1 w-full">
