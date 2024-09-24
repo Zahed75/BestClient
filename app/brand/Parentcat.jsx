@@ -94,7 +94,7 @@ export default function ParentCat({ category, path }) {
     pagination?.currentPage * pagination?.itemsPerPage
   );
 
-  // const tagValues = ["Home", "Categories", category?.categoryName];
+ 
   const tagValues = [
     {
       link: "/",

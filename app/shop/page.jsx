@@ -11,14 +11,29 @@ export const metadata = {
 };
 
 export default async function Page() {
+
+  const allowedSlugs = [
+    "tv-entertainment",
+    "fan",
+    "home-appliances",
+    "kitchen-appliances",
+    "small-appliances",
+    "electrical-power",
+  ];
+
   const categories = await fetchApi("/category/getAllCat", "GET");
 
-  const productsByCategory = categories?.categories?.map((category) => {
+  const filteredCategories = categories?.categories?.filter((category) =>
+    allowedSlugs.includes(category?.slug)
+  );
+
+  const productsByCategory = filteredCategories?.map((category) => {
     return {
       ...category,
       products: category.products,
     };
   });
+
 
   const publishedProductsArray = productsByCategory?.map((category) => {
     return category.products?.filter(

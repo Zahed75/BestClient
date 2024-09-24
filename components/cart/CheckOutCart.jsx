@@ -1,11 +1,11 @@
 "use client";
+import { setOrderResponse } from "@/redux/slice/orderResponseSlice";
 import { fetchApi } from "@/utils/FetchApi";
 import isMobileDevice from "@/utils/deviceDetection";
 import { getIPAddress } from "@/utils/getIP";
-import { ResponseCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function CheckOutCart() {
   const [districts, setDistricts] = useState([]);
@@ -19,7 +19,7 @@ export default function CheckOutCart() {
   const discounts = useSelector((state) => state.discount?.discounts) || {};
 
   const router = useRouter();
-
+  const dispatch = useDispatch();
   const vatPercentage = 5;
 
   const discount = discounts?.discount || 0;
@@ -33,7 +33,7 @@ export default function CheckOutCart() {
 
   const totalPrice = totalProductPrice - discount;
 
-  // const userId = customer?.items?.userId;
+ 
 
   useEffect(() => {
     const fetchDistricts = async () => {
@@ -126,6 +126,7 @@ export default function CheckOutCart() {
     }
 
     console.log("Order data:", data);
+    
 
     try {
       const response = await fetchApi("/order/orderCreate", "POST", data);
@@ -133,6 +134,7 @@ export default function CheckOutCart() {
       if (response) {
         router.push("/success");
         setLoading(false);
+        dispatch(setOrderResponse(response?.order?.createdOrder?.order));
       } else {
         console.error("Order creation error:", response);
         setLoading(false);

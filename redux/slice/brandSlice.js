@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
-  brands: [], // Should be an array
+  brands: [], 
   status: "idle",
   error: null,
 };
@@ -51,8 +51,7 @@ const brandSlice = createSlice({
       })
       .addCase(fetchBrands.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.brands = action.payload.brands; // Ensure payload contains the correct data
-        
+        state.brands = action.payload.data;
       })
       .addCase(fetchBrands.rejected, (state, action) => {
         state.status = "failed";
