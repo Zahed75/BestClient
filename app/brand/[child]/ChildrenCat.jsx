@@ -105,7 +105,7 @@ export default function ChildrenCat({ category, path }) {
       value: "Home",
     },
     {
-      link: "/",
+      link: "/brand",
       value: "Brand",
     },
     {

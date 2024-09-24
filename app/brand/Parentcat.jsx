@@ -100,11 +100,15 @@ export default function ParentCat({ category, path }) {
       link: "/",
       value: "Home",
     },
-
     {
-      link: `/Brand/${path}`,
-      value: category?.categoryName,
+      link: "/brand",
+      value: "Brand",
     },
+
+    // {
+    //   link: `/shop/${path}`,
+    //   value: category?.categoryName,
+    // },
   ];
 
   const handleDynamicGrid = ({ value }) => {
