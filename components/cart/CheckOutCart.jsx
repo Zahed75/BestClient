@@ -117,6 +117,7 @@ export default function CheckOutCart() {
       couponName: discounts?.name || "",
       channel: isMobileDevice() ? "mobile" : "web",
       outlet: "",
+      orderNote: formData.get("orderNote") || "",
     };
 
     if (!customerInfo) {
@@ -344,7 +345,23 @@ export default function CheckOutCart() {
               <p className="font-semibold">৳{totalPrice}</p>
             </div>
           </div>
-          <div className="flex justify-start items-center gap-5 my-10">
+          {/* order note textarea */}
+          <div className="my-5">
+            <label className="text-sm" htmlFor="orderNote">
+              Order Note (Optional)
+            </label>
+            <textarea
+              className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
+              type="text"
+              name="orderNote"
+              id="orderNote"
+              rows={4}
+              cols={50}
+              placeholder="Any special request or note for us?"
+            ></textarea>
+          </div>
+
+          <div className="flex justify-start items-center gap-5 my-5">
             <svg
               width="20"
               height="21"
@@ -385,4 +402,4 @@ export default function CheckOutCart() {
     </section>
   );
 }
-// length of the code is 111 lines
+

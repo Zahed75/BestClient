@@ -105,8 +105,8 @@ export default function ChildrenCat({ category, path }) {
       value: "Home",
     },
     {
-      link: `/${parentCatName?.toLowerCase().replace(/\s+/g, "-")}`,
-      value: parentCatName,
+      link: "/brand",
+      value: "Brand",
     },
     {
       link: `/${parentCatName?.toLowerCase().replace(/\s+/g, "-")}/${
