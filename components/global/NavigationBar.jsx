@@ -32,7 +32,7 @@ export default function NavigationBar() {
   const productsLength = products?.products?.length;
   const brandsState = useSelector((state) => state.brand);
   const brands = brandsState?.brands || [];
-  
+
 
   useEffect(() => {
     dispatch(fetchBrands());
@@ -131,7 +131,7 @@ export default function NavigationBar() {
   return (
     <nav className="container">
       <div className="hidden sm:hidden md:hidden lg:flex justify-stretch items-center font-dosis">
-        <div className="relative">
+        <div className="relative z-20">
           <button
             onMouseEnter={() => setIsAllCategoriesOpen(true)}
             onMouseLeave={() => setIsAllCategoriesOpen(false)}
@@ -334,7 +334,8 @@ export default function NavigationBar() {
             <span className="bg-[#F0FAFF] text-[#F16521] px-3 py-2 rounded-full cursor-pointer">
               <Link href="/">Home</Link>
             </span>
-            <div className="group relative">
+            <div className="group relative  
+            z-20">
               <button
                 onClick={handleGotoCategories}
                 onMouseEnter={handleBrowseProducts}
@@ -348,7 +349,7 @@ export default function NavigationBar() {
                   alt="Array Bottom"
                 />
               </button>
-              
+
               <div
                 onMouseEnter={() => setIsAllProductCategoriesOpen(true)}
                 onMouseLeave={() => setIsAllProductCategoriesOpen(false)}
