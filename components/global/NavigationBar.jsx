@@ -334,7 +334,8 @@ export default function NavigationBar() {
             <span className="bg-[#F0FAFF] text-[#F16521] px-3 py-2 rounded-full cursor-pointer">
               <Link href="/">Home</Link>
             </span>
-            <div className="group relative  z-20">
+            <div className="group relative  
+            z-20">
               <button
                 onClick={handleGotoCategories}
                 onMouseEnter={handleBrowseProducts}
