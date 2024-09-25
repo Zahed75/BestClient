@@ -284,11 +284,11 @@ export default function Categories({ products, AllCategories }) {
                     <input
                       type="checkbox"
                       id="all-categories"
-                      className="w-4 h-4 bg-gray-100 rounded border-gray-300"
+                      className="w-4 h-4 bg-gray-100 rounded border-gray-300 text-[#3E445A]"
                       checked={filters.category === ""}
                       onChange={() => handleCategoryChange("All Categories")}
                     />
-                    <label className="cursor-pointer" htmlFor="all-categories">
+                    <label className="cursor-pointer text-[#3E445A]" htmlFor="all-categories">
                       All Categories
                     </label>
                   </div>
@@ -300,11 +300,11 @@ export default function Categories({ products, AllCategories }) {
                       <input
                         type="checkbox"
                         id={category?._id}
-                        className="w-4 h-4 bg-gray-100 rounded border-gray-300"
+                        className="w-4 h-4 bg-gray-100 rounded border-gray-300 text-[#3E445A]"
                         // checked={filters.category === category?._id}
                         onChange={() => handleGotoCategory(category?.slug)}
                       />
-                      <label className="cursor-pointer" htmlFor={category?._id}>
+                      <label className="cursor-pointer text-[#3E445A]" htmlFor={category?._id}>
                         {category?.categoryName}
                       </label>
                     </div>
@@ -336,7 +336,7 @@ export default function Categories({ products, AllCategories }) {
                   {brands?.map((brand, index) => (
                     <button
                       key={index}
-                      className="flex justify-between items-center gap-3 py-1"
+                      className="flex justify-between items-center gap-3 py-1 text-[#3E445A]"
                       onClick={() => handleBrandChange(brand.name)}
                     >
                       {brand?.name}
