@@ -103,7 +103,7 @@ export default function Categories({ products, AllCategories }) {
       value: "Shop",
     }
   ];
-  
+
 
   const handleDynamicGrid = ({ value }) => {
     if (value) {
@@ -115,7 +115,7 @@ export default function Categories({ products, AllCategories }) {
     setOpen(newOpen);
   };
 
- 
+
 
   return (
     <main className="container">
@@ -131,11 +131,11 @@ export default function Categories({ products, AllCategories }) {
                     <input
                       type="checkbox"
                       id="all-categories"
-                      className="w-4 h-4 bg-gray-100 rounded border-gray-300"
+                      className="w-4 h-4 bg-gray-100 rounded border-gray-300 text-[#3E445A]"
                       checked={filters.category === ""}
                       onChange={() => handleCategoryChange("All Categories")}
                     />
-                    <label className="cursor-pointer" htmlFor="all-categories">
+                    <label className="cursor-pointer text-[#3E445A]" htmlFor="all-categories">
                       All Categories
                     </label>
                   </div>
@@ -147,11 +147,11 @@ export default function Categories({ products, AllCategories }) {
                       <input
                         type="checkbox"
                         id={category?._id}
-                        className="w-4 h-4 bg-gray-100 rounded border-gray-300"
+                        className="w-4 h-4 bg-gray-100 rounded border-gray-300 text-[#3E445A]"
                         checked={filters.category === category?._id}
                         onChange={() => handleGotoCategory(category?.slug)}
                       />
-                      <label className="cursor-pointer" htmlFor={category?._id}>
+                      <label className="cursor-pointer text-[#3E445A]" htmlFor={category?._id}>
                         {category?.categoryName}
                       </label>
                     </div>
@@ -184,7 +184,7 @@ export default function Categories({ products, AllCategories }) {
                   {brands?.map((brand, index) => (
                     <button
                       key={index}
-                      className="flex justify-between items-center gap-3 py-1"
+                      className="flex justify-between items-center gap-3 py-1 text-[#3E445A]"
                       onClick={() => handleBrandChange(brand.name)}
                     >
                       {brand.name}
@@ -199,21 +199,18 @@ export default function Categories({ products, AllCategories }) {
                 <div className="hidden md:hidden lg:flex justify-start items-center gap-5">
                   <TiThMenu
                     onClick={() => handleDynamicGrid({ value: 1 })}
-                    className={`text-2xl text-gray-400 hover:text-gray-700 ${
-                      dynamicGrid === 1 ? "text-gray-700" : ""
-                    } duration-700`}
+                    className={`text-2xl text-gray-400 hover:text-gray-700 ${dynamicGrid === 1 ? "text-gray-700" : ""
+                      } duration-700`}
                   />
                   <RiGridFill
                     onClick={() => handleDynamicGrid({ value: 3 })}
-                    className={`text-2xl text-gray-400 hover:text-gray-700 ${
-                      dynamicGrid === 3 ? "text-gray-700" : ""
-                    } duration-700`}
+                    className={`text-2xl text-gray-400 hover:text-gray-700 ${dynamicGrid === 3 ? "text-gray-700" : ""
+                      } duration-700`}
                   />
                   <TfiLayoutGrid4Alt
                     onClick={() => handleDynamicGrid({ value: 4 })}
-                    className={`text-xl text-gray-400 hover:text-gray-700 ${
-                      dynamicGrid === 4 ? "text-gray-700" : ""
-                    } duration-700`}
+                    className={`text-xl text-gray-400 hover:text-gray-700 ${dynamicGrid === 4 ? "text-gray-700" : ""
+                      } duration-700`}
                   />
                 </div>
                 <div className="flex justify-start md:block lg:hidden items-center gap-5">

@@ -7,6 +7,7 @@ import instagramLink from "@/public/images/instagramLink.svg";
 import pso from "@/public/images/pso 1.png";
 import logo from "@/public/images/logo 1.png";
 
+
 export default function Footer_2() {
     const footerData = [
         {
@@ -54,219 +55,220 @@ export default function Footer_2() {
 
     return (
         <footer className="bg-[#f1f1f1]">
-            <section className="container grid grid-cols-1 md:grid-cols-4 justify-between items-start pt-20 text-#3E445A font-dosis">
-                <div className="flex flex-col justify-between items-start gap-5 mb-10 w-full">
-                    <h2 className="text-2xl text-[#3E445A] font-semibold ">
-                        Need help?
+            <section className="container grid grid-cols-1 md:grid-cols-4 justify-between items-start pt-20 pb-10  text-[#3E445A] gap-20">
+                <div className="flex flex-col justify-between items-start w-full mb-5">
+                    <h2 className="font-dosis text-[23px] text-[#3E445A]">
+                        Need Help?
                     </h2>
                     <ul className="text-[#3E445A]">
-                        <li className="mt-3 text-[#3E445A]">
+                        <li className="mt-5 text-[#3E445A]">
                             <Link
                                 href=" "
-                                className="text-sm hover:underline duration-700"
+                                className="text-[15px] hover:underline duration-700 font-inter"
                             >
                                 Help & FAQs
                             </Link>
                         </li>
-                        <li className="mt-3 text-[#3E445A]">
+                        <li className="mt-5 text-[#3E445A]">
                             <Link
                                 href=" "
-                                className="text-sm hover:underline duration-700"
+                                className="text-[15px] hover:underline duration-700 font-inter"
+                            >Contact us
+                            </Link>
+                        </li>
+                        <li className="mt-5 text-[#3E445A]">
+                            <Link
+                                href=" "
+                                className="text-[15px] hover:underline duration-700 font-inter"
                             >   Store finder
                             </Link>
                         </li>
-                        <li className="mt-3 text-[#3E445A]">
+                        <li className="mt-5 text-[#3E445A]">
                             <Link
                                 href=" "
-                                className="text-sm hover:underline duration-700"
-                            >   Contact us
-                            </Link>
-                        </li>
-                        <li className="mt-3 text-[#3E445A]">
-                            <Link
-                                href=" "
-                                className="text-sm hover:underline duration-700"
+                                className="text-[15px] hover:underline duration-700 font-inter"
                             >   Account
                             </Link>
                         </li>
-                        <li className="mt-3 text-[#3E445A]">
+                        <li className="mt-5 text-[#3E445A]">
                             <Link
                                 href=" "
-                                className="text-sm hover:underline duration-700"
+                                className="font-inter text-[15px] hover:underline duration-700"
                             >   Advice & inspiration
                             </Link>
                         </li>
                     </ul>
                 </div>
-                <div className='flex flex-col'>
-                    <div className="flex flex-col justify-between items-start gap-4 mb-5 w-full">
-                        <h2 className="text-2xl text-[#3E445A] font-semibold ">
-                            Delivery & returns
+                <div className="flex flex-col">
+                    <div className="flex flex-col items-start w-full mb-3">
+                        <h2 className="text-[23px] text-[#3E445A] font-dosis ">
+                            Delivery & Returns
                         </h2>
                         <ul className="text-[#3E445A]">
-                            <li className="mt-3 text-[#3E445A]">
+                            <li className="mt-5 text-[#3E445A]">
                                 <Link
                                     href=" "
-                                    className="text-sm hover:underline duration-700"
+                                    className="font-inter text-[15px] hover:underline duration-700"
                                 >
                                     Delivery & collection
                                 </Link>
                             </li>
-                            <li className="mt-3 text-[#3E445A]">
+                            <li className="mt-5 text-[#3E445A]">
                                 <Link
                                     href=" "
-                                    className="text-sm hover:underline duration-700"
+                                    className="font-inter text-[15px] hover:underline duration-700"
                                 >   Returns & refunds
                                 </Link>
                             </li>
-                            <li className="mt-3 text-[#3E445A]">
+                            <li className="mt-5 text-[#3E445A]">
                                 <Link
                                     href=" "
-                                    className="text-sm hover:underline duration-700"
+                                    className="font-inter text-[15px] hover:underline duration-700"
                                 >   Track your order
                                 </Link>
                             </li>
                         </ul>
                     </div>
-                    <div className="flex flex-col justify-between items-start gap-4 mb-10 w-full">
-                        <h2 className="text-2xl text-[#3E445A] font-semibold ">
-                            Product care
+                    <div className="flex flex-col items-start mb-5 w-full">
+                        <h2 className="text-[23px] text-[#3E445A] font-dosis mt-5">
+                            Product Care
                         </h2>
                         <ul>
-                            <li className="mt-3 text-[#3E445A]">
+                            <li className="mt-5 text-[#3E445A]">
                                 <Link
                                     href=" "
-                                    className="text-sm hover:underline duration-700"
+                                    className="font-inter text-[15px] hover:underline duration-700"
                                 >
                                     Best Electronics Care
                                 </Link>
                             </li>
-                            <li className="mt-3 text-[#3E445A]">
+                            <li className="mt-5 text-[#3E445A]">
                                 <Link
                                     href=" "
-                                    className="text-sm hover:underline duration-700"
+                                    className="font-inter text-[15px] hover:underline duration-700"
                                 >   Product Support
                                 </Link>
                             </li>
-                            <li className="mt-3 text-[#3E445A]">
+                            <li className="mt-5 text-[#3E445A]">
                                 <Link
                                     href=" "
-                                    className="text-sm hover:underline duration-700"
+                                    className="font-inter text-[15px] hover:underline duration-700"
                                 >   Product recall
                                 </Link>
                             </li>
-                            <li className="mt-3 text-[#3E445A]">
+                            <li className="mt-5 text-[#3E445A]">
                                 <Link
                                     href=" "
-                                    className="text-sm hover:underline duration-700"
+                                    className="font-inter text-[15px] hover:underline duration-700"
                                 >   Best Electronics Spares
                                 </Link>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div className="flex flex-col justify-between items-start gap-5 mb-10 w-full">
-                    <h2 className="text-2xl text-[#3E445A] font-semibold ">
-                        Payment & services
+                <div className="flex flex-col justify-between items-start w-full mb-5">
+                    <h2 className="text-[23px] text-[#3E445A] font-dosis">
+                        Payment & Services
                     </h2>
                     <ul>
-                        <li className="mt-3 text-[#3E445A]">
+                        <li className="mt-5 text-[#3E445A]">
                             <Link
                                 href=" "
-                                className="text-sm hover:underline duration-700"
+                                className="font-inter text-[15px] hover:underline duration-700"
                             >
                                 Payment types
                             </Link>
                         </li>
-                        <li className="mt-3 text-[#3E445A]">
+                        <li className="mt-5 text-[#3E445A]">
                             <Link
                                 href=" "
-                                className="text-sm hover:underline duration-700"
+                                className="font-inter text-[15px] hover:underline duration-700"
                             >   Gift cards
                             </Link>
                         </li>
-                        <li className="mt-3 text-[#3E445A]">
+                        <li className="mt-5 text-[#3E445A]">
                             <Link
                                 href=" "
-                                className="text-sm hover:underline duration-700"
+                                className="font-inter text-[15px] hover:underline duration-700"
                             >   eGift Card Rewards
                             </Link>
                         </li>
-                        <li className="mt-3 text-[#3E445A]">
+                        <li className="mt-5 text-[#3E445A]">
                             <Link
                                 href=" "
-                                className="text-sm hover:underline duration-700"
+                                className="font-inter text-[15px] hover:underline duration-700"
                             >
                                 Best Electronics Card
                             </Link>
                         </li>
-                        <li className="mt-3 text-[#3E445A]">
+                        <li className="mt-5 text-[#3E445A]">
                             <Link
                                 href=" "
-                                className="text-sm hover:underline duration-700"
+                                className="font-inter text-[15px] hover:underline duration-700"
                             >   Nectar at Best Electronics
                             </Link>
                         </li>
-                        <li className="mt-3 text-[#3E445A]">
+                        <li className="mt-5 text-[#3E445A]">
                             <Link
                                 href=" "
-                                className="text-sm hover:underline duration-700"
+                                className="font-inter text-[15px] hover:underline duration-700"
                             >   Pet Insurance
                             </Link>
                         </li>
-                        <li className="mt-3 text-[#3E445A]">
+                        <li className="mt-5 text-[#3E445A]">
                             <Link
                                 href=" "
-                                className="text-sm hover:underline duration-700"
+                                className="font-inter text-[15px] hover:underline duration-700"
                             >   Furniture Recycling
                             </Link>
                         </li>
                     </ul>
                 </div>
-                <div className="flex flex-col justify-between items-start gap-5 mb-10 w-full">
-                    <h2 className="text-2xl text-[#3E445A] font-semibold ">
+                <div className="flex flex-col justify-between items-start w-full mb-5">
+                    <h2 className="text-[23px] text-[#3E445A] font-dosis">
                         About Best Electronics
                     </h2>
-                    <ul>
-                        <li className="mt-3 text-[#3E445A]">
+                    <ul className="items-start">
+                        <li className="mt-5 text-[#3E445A]">
                             <Link
                                 href=" "
-                                className="text-sm hover:underline duration-700"
+                                className="font-inter text-[15px] hover:underline duration-700"
                             >
                                 About us
                             </Link>
                         </li>
-                        <li className="mt-3 text-[#3E445A]">
+                        <li className="mt-5 text-[#3E445A]">
                             <Link
                                 href=" "
-                                className="text-sm hover:underline duration-700"
+                                className="font-inter text-[15px] hover:underline duration-700"
                             >   Best Electronics for Business
                             </Link>
                         </li>
-                        <li className="mt-3 text-[#3E445A]">
+                        <li className="mt-5 text-[#3E445A]">
                             <Link
                                 href=" "
-                                className="text-sm hover:underline duration-700"
+                                className="font-inter text-[15px] hover:underline duration-700"
                             >   Careers
                             </Link>
                         </li>
-                        <li className="mt-3 text-[#3E445A]">
+                        <li className="mt-5 text-[#3E445A]">
                             <Link
                                 href=" "
-                                className="text-sm hover:underline duration-700"
+                                className="font-inter text-[15px] hover:underline duration-700"
                             >   Press enquiries
                             </Link>
                         </li>
-                        <li className="mt-3 text-[#3E445A]">
+                        <li className="mt-5 text-[#3E445A]">
                             <Link
                                 href=" "
-                                className="text-sm hover:underline duration-700"
+                                className="font-inter text-[15px] hover:underline duration-700"
                             >   Modern Slavery Statement
                             </Link>
                         </li>
                     </ul>
                 </div>
             </section>
+
             <section className="">
                 <div className="mx-auto grid grid-cols-1 md:grid-cols-2 gap-0 text-center h-full">
 

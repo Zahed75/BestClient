@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -18,6 +20,7 @@ slider image styles
 
 .font-dosis {
   font-family: "Dosis", inter;
+  font-weight: 600;
 }
 
 .slider-container {
