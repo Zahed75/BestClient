@@ -130,7 +130,7 @@ export default function NavigationBar() {
 
   return (
     <nav className="container">
-      <div className="hidden sm:hidden md:hidden lg:flex justify-stretch items-center font-dosis">
+      <div className="hidden sm:hidden md:hidden lg:flex justify-stretch items-center">
         <div className="relative z-20">
           <button
             onMouseEnter={() => setIsAllCategoriesOpen(true)}
@@ -138,9 +138,9 @@ export default function NavigationBar() {
             className="group bg-[#F16521] text-sm px-5 py-4 uppercase text-white rounded-full flex justify-start items-center relative"
           >
             <Image src={treeDot} className="w-4 h-4 " alt="Tree Dot" />
-            <span className="mx-3 text-[13px]">All Categories</span>
+            <span className="font-dosis mx-3 text-[13px]">All Categories</span>
             <Image src={arrayBottom} className="w-4 h-4 " alt="Array Bottom" />
-            <span className="bg-gray-100 text-[#71778E] text-[10px] text-nowrap px-1 border border-white rounded-xl absolute -bottom-[10px] left-[22%] mx-auto z-20">
+            <span className="font-dosis bg-gray-100 text-[#71778E] text-[10px] text-nowrap px-1 border border-white rounded-xl absolute -bottom-[10px] left-[22%] mx-auto z-20">
               TOTAL {productsLength} PRODUCTS
             </span>
           </button>
@@ -150,7 +150,7 @@ export default function NavigationBar() {
             className={`${isAllCategoriesOpen ? "block" : "hidden"
               } group-hover:block absolute left-0 w-60 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
           >
-            <ul className="text-sm py-5">
+            <ul className="text-sm py-5 text-[#3E445A]">
               {category
                 .filter((categories) => !categories.subCategories?.categoryName)
                 .map((categories) => (
@@ -331,7 +331,7 @@ export default function NavigationBar() {
 
         <div className="flex ml-auto">
           <div className="flex justify-end items-center uppercase text-sm gap-x-1">
-            <span className="bg-[#F0FAFF] text-[#F16521] px-3 py-2 rounded-full cursor-pointer">
+            <span className="font-dosis bg-[#F0FAFF] text-[#F16521] px-3 py-2 rounded-full cursor-pointer">
               <Link href="/">Home</Link>
             </span>
             <div className="group relative  
@@ -340,7 +340,7 @@ export default function NavigationBar() {
                 onClick={handleGotoCategories}
                 onMouseEnter={handleBrowseProducts}
                 onMouseLeave={handleBrowseProducts}
-                className="flex justify-start items-center group-hover:bg-[#F0FAFF] group-hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700 uppercase"
+                className="flex justify-start items-center font-dosis text-[#3E445A] group-hover:bg-[#F0FAFF] group-hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700 uppercase"
               >
                 Browse Products
                 <Image
@@ -356,7 +356,7 @@ export default function NavigationBar() {
                 className={`${isAllProductCategoriesOpen ? "block" : "hidden"
                   } group-hover:block absolute left-0 w-60 bg-white rounded-lg border border-gray-200 shadow-xl z-10 capitalize`}
               >
-                <ul className="text-sm py-5">
+                <ul className="text-sm py-5 text-[#3E445A]">
                   {category
                     .filter((categories) => !categories.subCategories?.categoryName)
                     .map((categories) => (
@@ -470,15 +470,15 @@ export default function NavigationBar() {
               </div>
 
             </div>
-            <span className="hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700">
+            <span className="font-dosis text-[#3E445A] hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700">
               <Link href="/shop">All Products</Link>
             </span>
-            <span className="hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700">
+            <span className="font-dosis text-[#3E445A] hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700">
               <Link href="https://www.bestelectronics.com.bd/emi-facility">
                 Quick emi
               </Link>
             </span>
-            <span className="hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700">
+            <span className="font-dosis text-[#3E445A] hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700">
               <Link href="https://www.bestelectronics.com.bd/super-kisti">
                 super kisti
               </Link>
@@ -487,7 +487,7 @@ export default function NavigationBar() {
               <button
                 onMouseEnter={() => setIsOrderMenuOpen(true)}
                 onMouseLeave={() => setIsOrderMenuOpen(false)}
-                className="flex justify-start items-center group-hover:bg-[#F0FAFF] group-hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700 uppercase"
+                className="flex justify-start items-center font-dosis text-[#3E445A] group-hover:bg-[#F0FAFF] group-hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700 uppercase"
               >
                 Your Order
                 <Image
@@ -501,7 +501,7 @@ export default function NavigationBar() {
                 className={`${isOrderMenuOpen ? "block" : "hidden"
                   } group-hover:block absolute left-0 w-64 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
               >
-                <ul className="text-sm capitalize">
+                <ul className="text-sm capitalize text-[#3E445A]">
                   <li className="py-2 px-3 hover:text-[#F16521] cursor-pointer">
                     <Link href={"/cart"}>Cart</Link>
                   </li>
@@ -520,7 +520,7 @@ export default function NavigationBar() {
                 </ul>
               </div>
             </div>
-            <span className="hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700">
+            <span className="font-dosis text-[#3E445A] hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700">
               <Link href="https://www.bestelectronics.com.bd/contact-us">
                 contact us
               </Link>
