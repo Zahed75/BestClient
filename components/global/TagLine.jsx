@@ -6,7 +6,7 @@ import arraymood from "@/public/images/arraymood.png";
 // Component for displaying tag lines
 export default function TagLine({ tagValues }) {
   return (
-    <section className="my-5">
+    <section className="font-dosis my-5 uppercase">
       {tagValues && tagValues.length > 0 ? (
         <div>
           {tagValues.map((value, index) => {

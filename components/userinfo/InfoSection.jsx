@@ -16,7 +16,7 @@ export default function InfoSection() {
   const [orderHistory, setOrderHistory] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  
+
 
   const { error, handleUpload, imageUrl, uploading } = useImgBBUpload();
   const router = useRouter();
@@ -149,7 +149,7 @@ export default function InfoSection() {
   };
 
   const copyBillingInfo = () => {
-    const form = document.forms[0]; 
+    const form = document.forms[0];
     const billingFirstName = form.billingFirstName.value;
     const billingLastName = form.billingLastName.value;
     const billingDistrict = form.billingDistrict.value;
@@ -189,7 +189,7 @@ export default function InfoSection() {
   };
   const handleConfirmPasswordToggle = () => {
     setShowConfirmPassword(!showConfirmPassword);
-    };
+  };
 
   return (
     <section className="bg-[#F4F4F4]">
@@ -197,7 +197,7 @@ export default function InfoSection() {
         <div className="flex justify-start items-center uppercase text-slate-500 text-xs">
           <div
             onClick={() => setActive("personal")}
-            className={`cursor-pointer inline-block px-5 py-2 rounded-md duration-700 ${active === "personal" ? "bg-[#F16521] text-white shadow-md" : ""
+            className={`cursor-pointer inline-block font-dosis px-5 py-2 rounded-md duration-700 ${active === "personal" ? "bg-[#F16521] text-white shadow-md" : ""
               }`}
           >
             personal
@@ -211,14 +211,14 @@ export default function InfoSection() {
           </div>
           <div
             onClick={handleGotoWishlist}
-            className={`cursor-pointer inline-block px-5 py-2 rounded-md duration-700 ${active === "wishlist" ? "bg-[#F16521] text-white shadow-md" : ""
+            className={`cursor-pointer inline-block font-dosis px-5 py-2 rounded-md duration-700 ${active === "wishlist" ? "bg-[#F16521] text-white shadow-md" : ""
               }`}
           >
             Wishlist
           </div>
           <button
             onClick={handleLogout}
-            className="uppercase bg-[#F16521] text-white px-5 py-2 rounded-md ml-auto"
+            className="font-dosis uppercase bg-[#F16521] text-white px-5 py-2 rounded-md ml-auto"
           >
             LogOut
           </button>
@@ -731,20 +731,20 @@ export default function InfoSection() {
                         className="border border-gray-300 rounded-md p-2 focus:outline-none w-full"
                       />
                       <span
-                      className="absolute right-2 top-2 cursor-pointer"
-                      onClick={handlePasswordToggle}
-                    >
-                      {showPassword ? (
-                        <Image src={view} alt="view" width={24} height={24} />
-                      ) : (
-                        <Image
-                          src={hidden}
-                          alt="hidden"
-                          width={24}
-                          height={24}
-                        />
-                      )}
-                    </span>
+                        className="absolute right-2 top-2 cursor-pointer"
+                        onClick={handlePasswordToggle}
+                      >
+                        {showPassword ? (
+                          <Image src={view} alt="view" width={24} height={24} />
+                        ) : (
+                          <Image
+                            src={hidden}
+                            alt="hidden"
+                            width={24}
+                            height={24}
+                          />
+                        )}
+                      </span>
                     </div>
                   </div>
                   <div className="flex flex-col space-y-1 w-full">
@@ -769,20 +769,20 @@ export default function InfoSection() {
                         className="border border-gray-300 rounded-md p-2 focus:outline-none w-full"
                       />
                       <span
-                      className="absolute right-2 top-2 cursor-pointer"
-                      onClick={handleConfirmPasswordToggle}
-                    >
-                      {showConfirmPassword ? (
-                        <Image src={view} alt="view" width={24} height={24} />
-                      ) : (
-                        <Image
-                          src={hidden}
-                          alt="hidden"
-                          width={24}
-                          height={24}
-                        />
-                      )}
-                    </span>
+                        className="absolute right-2 top-2 cursor-pointer"
+                        onClick={handleConfirmPasswordToggle}
+                      >
+                        {showConfirmPassword ? (
+                          <Image src={view} alt="view" width={24} height={24} />
+                        ) : (
+                          <Image
+                            src={hidden}
+                            alt="hidden"
+                            width={24}
+                            height={24}
+                          />
+                        )}
+                      </span>
                     </div>
                   </div>
                   <div className="flex flex-col space-y-1 w-full">

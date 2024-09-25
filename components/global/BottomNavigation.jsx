@@ -157,7 +157,7 @@ export default function BottomNavigation() {
           <div>
             <div
               onClick={() => setCategoryShow(!categoryShow)}
-              className="bg-primary mt-5 mx-3 p-3 rounded-md text-white flex justify-between items-center cursor-pointer "
+              className="font-dosis bg-primary mt-5 mx-3 p-3 rounded-md text-white flex justify-between items-center cursor-pointer uppercase"
             >
               All Categories
               <span>
@@ -292,12 +292,12 @@ export default function BottomNavigation() {
             <ul className="my-5">
               {navigationLink.map((link, i) => (
                 <li
-                  className={`py-2 border-b ${i === 0 ? "border-t" : ""}`}
+                  className={`font-dosis py-2 border-b ${i === 0 ? "border-t" : ""}`}
                   key={i}
                 >
                   {link.link ? (
                     <Link
-                      className="text-gray-500 hover:text-[#F16521] duration-700"
+                      className="font-dosis text-gray-500 hover:text-[#F16521] duration-700"
                       href={link.link}
                     >
                       {link.title}
@@ -441,7 +441,7 @@ export default function BottomNavigation() {
                 onClick={() => setIsBrandsMenuOpen(!isBrandsMenuOpen)}
               >
                 <div className="flex items-center justify-between w-full">
-                  <span className="text-gray-500 hover:text-[#F16521] duration-700 cursor-pointer">Brands</span>
+                  <span className="font-dosis text-gray-500 hover:text-[#F16521] duration-700 cursor-pointer">Brands</span>
                   {brands?.length > 0 && (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

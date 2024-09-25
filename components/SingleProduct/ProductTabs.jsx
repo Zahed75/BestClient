@@ -11,11 +11,10 @@ export default function ProductTabs({ tabs }) {
         {tabs.map((tab, index) => (
           <button
             key={index}
-            className={`${
-              index === activeTab
-                ? "bg-[#f1662129] text-[#F16521] "
-                : "border-transparent text-gray-500 hover:text-[#F16521]"
-            } flex justify-center items-center py-2 px-4 text-center text-nowrap font-semibold focus:outline-0 focus:ring-0 w-full rounded-md duration-700`}
+            className={`${index === activeTab
+              ? "bg-[#f1662129] text-[#F16521] "
+              : "border-transparent text-gray-500 hover:text-[#F16521]"
+              } flex justify-center items-center py-2 px-4 text-center text-nowrap font-dosis focus:outline-0 focus:ring-0 w-full rounded-md duration-700 uppercase`}
             onClick={() => setActiveTab(index)}
           >
             {tab.title}
