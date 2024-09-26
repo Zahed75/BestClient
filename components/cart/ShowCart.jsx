@@ -299,36 +299,36 @@ export default function ShowCart() {
               <div className="p-4 bg-gray-100 border-2 border-black rounded-lg text-gray-500">
                 <div className="flex flex-col items-start justify-between">
                   <div>
-                    <h3 className="font-medium text-gray-900">BEL Banani</h3>
-                    <p className="text-sm text-gray-500">Road-02, Banani Dhaka</p>
+                    <h3 className="font-inter font-semibold text-[16px] text-[#202435]">BEL Banani</h3>
+                    <p className="font-inter text-[14px] text-[#202435]">Road-02, Banani Dhaka</p>
                   </div>
                   <div className="flex items-start space-x-2 mt-3">
                     <span className="h-4 w-4 bg-green-500 rounded-full"></span>
-                    <span className="text-sm text-gray-700">Available</span>
+                    <span className="text-sm text-[#202435]">Available</span>
                   </div>
                 </div>
               </div>
               <div className="p-4 border rounded-lg bg-gray-100">
                 <div className="flex flex-col items-start justify-between">
                   <div>
-                    <h3 className="font-medium text-gray-900">BEL Banani</h3>
-                    <p className="text-sm text-gray-500">Road-02, Banani Dhaka</p>
+                    <h3 className="font-inter font-semibold text-[16px] text-[#202435]">BEL Banani</h3>
+                    <p className="font-inter text-[14px] text-[#202435]">Road-02, Banani Dhaka</p>
                   </div>
                   <div className="flex items-start space-x-2 mt-3">
                     <span className="h-4 w-4 bg-green-500 rounded-full"></span>
-                    <span className="text-sm text-gray-700">Available</span>
+                    <span className="text-sm text-[#202435]">Available</span>
                   </div>
                 </div>
               </div>
               <div className="p-3 border rounded-lg bg-gray-100">
                 <div className="flex flex-col items-start justify-between">
                   <div>
-                    <h3 className="font-medium text-gray-900">BEL Banani</h3>
-                    <p className="text-sm text-gray-500">Road-02, Banani Dhaka</p>
+                    <h3 className="font-inter font-semibold text-[16px] text-[#202435]">BEL Banani</h3>
+                    <p className="font-inter text-[14px] text-[#202435]">Road-02, Banani Dhaka</p>
                   </div>
                   <div className="flex items-start space-x-2 mt-3">
                     <span className="h-4 w-4 bg-red-500 rounded-full"></span>
-                    <span className="text-sm text-gray-700">Not Available</span>
+                    <span className="text-sm text-[#202435]">Not Available</span>
                   </div>
                 </div>
               </div>
