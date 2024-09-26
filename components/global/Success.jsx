@@ -8,6 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 export default function Success() {
   const orderResponse = useSelector((state) => state.orderResponse);
 
+  console.log("orderResponse product", orderResponse?.products);
+  
+
   return (
     <section className="my-10">
       <div className="mt-20">

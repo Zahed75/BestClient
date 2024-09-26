@@ -185,7 +185,7 @@ export default function ProductCard({ product }) {
             </div>
           </div>
 
-          <div className="mt-5 w-full text-md">
+          <div className="mt-5 w-full text-[14px]">
             <AnimatePresence mode="wait">
               {isInCart ? (
                 <motion.div
