@@ -23,6 +23,7 @@ export default function SingleProduct({ product, categoryName }) {
   const [favorite, setFavorite] = useState(false);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const dispatch = useDispatch();
   const pathName = usePathname();
@@ -178,7 +179,7 @@ export default function SingleProduct({ product, categoryName }) {
                 Offer Price: ৳{product?.general?.salePrice}
               </p>
               <section
-                className="my-5 min-h-48"
+                className="my-5 min-h-48 [&_ul]:list-disc [&_ol]:list-decimal [&_li]:ml-5"
                 dangerouslySetInnerHTML={{
                   __html: product?.productShortDescription,
                 }}
@@ -228,9 +229,9 @@ export default function SingleProduct({ product, categoryName }) {
                 />
               </div>
 
-              <div className="mt-10">
+              <div className="mt-10 text-[#9B9BB4] ">
                 <p>
-                  <span className="text-[#9B9BB4] mr-1">Categories:</span>{" "}
+                  <span className="mr-1">Categories:</span>{" "}
                   {categoryName?.join(", ")}
                 </p>
               </div>

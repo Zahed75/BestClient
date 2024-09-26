@@ -68,22 +68,22 @@ export default function Footer() {
     <footer className="bg-[#F16521]">
       <div className="container">
         <div className="">
-          <section className="grid grid-cols-1 md:grid-cols-5 justify-between items-start pt-20 text-white">
+          <section className="grid grid-cols-1 md:grid-cols-5 justify-between items-start pt-20 text-white ">
             {footerData.map((data, index) => (
               <div
                 key={index}
                 className="flex flex-col justify-between items-start gap-5 mb-10 w-full"
               >
-                <h2 className="text-md font-semibold uppercase">
+                <h2 className="text-md font-semibold uppercase leading-none">
                   {data.title}
                 </h2>
 
-                <ul>
+                <ul className="">
                   {data.links.map((link, index) => (
-                    <li key={index} className="mt-2">
+                    <li key={index} className="">
                       <Link
                         href={link.url}
-                        className="text-sm hover:text-[#b7b4b1] duration-700"
+                        className="text-sm hover:text-[#b7b4b1] duration-700 leading-none"
                       >
                         {link.name}
                       </Link>
