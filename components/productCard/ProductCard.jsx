@@ -191,9 +191,9 @@ export default function ProductCard({ product }) {
                 <motion.div
                   key="inCart"
                   className="bg-[#FFCD00] rounded-full w-full flex justify-between items-center font-semibold"
-                  initial={{ width: "50%" }}
+                  initial={{ width: "60%" }}
                   animate={{ width: "100%" }}
-                  exit={{ width: "50%" }}
+                  exit={{ width: "60%" }}
                   transition={{ duration: 0.7 }}
                 >
                   <button
@@ -241,9 +241,9 @@ export default function ProductCard({ product }) {
                     setIsInCart(true);
                   }}
                   className="bg-[#FFCD00] px-3 py-2 rounded-full w-full md:w-2/4 transition-all duration-500"
-                  initial={{ width: "50%" }}
-                  animate={{ width: "50%" }}
-                  exit={{ width: "50%" }}
+                  initial={{ width: "60%" }}
+                  animate={{ width: "60%" }}
+                  exit={{ width: "60%" }}
                   transition={{ duration: 0.7 }}
                 >
                   <motion.span
