@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 export default function CartProduct({ product }) {
   const dispatch = useDispatch();
   return (
-    <section>
+    <section className="">
       {product && (
         <div className={`flex justify-start items-start gap-5`}>
           <div className="w-1=[150px] h-[150px] ">
@@ -90,6 +90,7 @@ export default function CartProduct({ product }) {
           </div>
         </div>
       )}
+      <div className="border my-5"></div>
     </section>
   );
 }
