@@ -32,9 +32,9 @@ export default function Search() {
 
   const totalProductPrice = Array.isArray(cart)
     ? cart.reduce(
-        (acc, item) => acc + item.general.salePrice * item.quantity,
-        0
-      )
+      (acc, item) => acc + item.general.salePrice * item.quantity,
+      0
+    )
     : 0;
 
   const vat = (totalProductPrice * vatPercentage) / 100;
@@ -185,7 +185,7 @@ export default function Search() {
             />
           </div>
           {searchTerm && OutsideClick && (
-            <div className="absolute z-10 bg-white shadow-md rounded-lg w-full overflow-y-auto scrollbar_hidden transition-opacity duration-700 ">
+            <div className="absolute  bg-white shadow-md rounded-lg w-full overflow-y-auto scrollbar_hidden transition-opacity duration-700 z-30">
               <div className="grid grid-cols-2">
                 <div className="h-80 overflow-y-auto scrollbar_hidden">
                   {filteredProducts.length > 0 ? (
