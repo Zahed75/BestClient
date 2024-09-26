@@ -107,6 +107,19 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 
+
+/* ------------------------------
+product-description styles
+-------------------------------- */
+.product-description ul {
+  @apply list-disc ml-5;
+}
+
+.product-description ol {
+  @apply list-decimal ml-5;
+}
+
+
 /* -------------------------------
 checkbox style
 --------------------------------- */

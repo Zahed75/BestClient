@@ -152,8 +152,8 @@ export default function ProductCard({ product }) {
           <div className="mt-5 text-slate-500 text-[13px] md:text-[14px]">
             <div className=" ">
               Offer Price:{" "}
-              <span className="font-semibold ml-1">
-                ৳{product?.general?.salePrice}
+              <span className="font-extrabold text-black ml-1">
+                ৳ {product?.general?.salePrice.toLocaleString('en-BD')}
               </span>{" "}
             </div>
             <div className="">
