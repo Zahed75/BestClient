@@ -4,12 +4,15 @@ import Image from "next/image";
 import EmptyCart from "@/public/images/emptyCart.png";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
+import CloseIcon from "@mui/icons-material/Close";
 import { fetchApi } from "@/utils/FetchApi";
 import { useEffect, useState } from "react";
+import { Box, Drawer } from "@mui/material";
 import { addDiscount } from "@/redux/slice/discountSlice";
 export default function ShowCart() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
 
   const dispatch = useDispatch();
@@ -64,13 +67,20 @@ export default function ShowCart() {
   const discount = discounts?.discount || 0;
   const totalProductPrice = Array.isArray(cart)
     ? cart.reduce((acc, item) => {
-        const price =
-          discount > 0 ? item.general.regularPrice : item.general.salePrice;
-        return acc + price * item.quantity;
-      }, 0)
+      const price =
+        discount > 0 ? item.general.regularPrice : item.general.salePrice;
+      return acc + price * item.quantity;
+    }, 0)
     : 0;
 
   const totalPrice = totalProductPrice - discount;
+
+  const toggleFilterDrawer = (newOpen) => () => {
+    setOpen(newOpen);
+  };
+  const toggleDrawer = (newOpen) => () => {
+    setOpen(newOpen);
+  };
 
   return (
     <section className="">
@@ -119,7 +129,7 @@ export default function ShowCart() {
                 </svg>
                 <p className="font-semibold">Delivery To Home</p>
               </button>
-              <button className="flex justify-center items-center gap-5 py-2 px-3 border-2 border-[#71778E] text-[#71778E] rounded-md w-full">
+              <button className="flex justify-center items-center gap-5 py-2 px-3 border-2 border-[#71778E] text-[#71778E] rounded-md w-full" onClick={toggleFilterDrawer(true)}>
                 <svg
                   width="25"
                   height="24"
@@ -272,6 +282,69 @@ export default function ShowCart() {
           </div>
         </div>
       </div>
+      <Drawer anchor="right" open={open} onClose={toggleFilterDrawer(false)}>
+        <Box
+          role="presentation"
+          className="w-[350px] bg-[#F3F4F7]"
+        >
+          <div className="flex flex-col justify-between p-3">
+            <div>
+              <div className="flex justify-end items-end mb-3">
+                <button className="inline-block" onClick={toggleDrawer(false)}>
+                  <CloseIcon />
+                </button>
+              </div>
+
+
+              <h2 className="text-lg  text-gray-800 mb-4">Choose From Available Stores</h2>
+              <div className="space-y-4">
+                <div className="p-4 bg-gray-100 border-2 border-black rounded-lg text-gray-500">
+                  <div className="flex flex-col items-start justify-between">
+                    <div>
+                      <h3 className="font-medium text-gray-900">BEL Banani</h3>
+                      <p className="text-sm text-gray-500">Road-02, Banani Dhaka</p>
+                    </div>
+                    <div className="flex items-start space-x-2 mt-3">
+                      <span className="h-4 w-4 bg-green-500 rounded-full"></span>
+                      <span className="text-sm text-gray-700">Available</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-4 border rounded-lg bg-gray-100">
+                  <div className="flex flex-col items-start justify-between">
+                    <div>
+                      <h3 className="font-medium text-gray-900">BEL Banani</h3>
+                      <p className="text-sm text-gray-500">Road-02, Banani Dhaka</p>
+                    </div>
+                    <div className="flex items-start space-x-2 mt-3">
+                      <span className="h-4 w-4 bg-green-500 rounded-full"></span>
+                      <span className="text-sm text-gray-700">Available</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-3 border rounded-lg bg-gray-100">
+                  <div className="flex flex-col items-start justify-between">
+                    <div>
+                      <h3 className="font-medium text-gray-900">BEL Banani</h3>
+                      <p className="text-sm text-gray-500">Road-02, Banani Dhaka</p>
+                    </div>
+                    <div className="flex items-start space-x-2 mt-3">
+                      <span className="h-4 w-4 bg-red-500 rounded-full"></span>
+                      <span className="text-sm text-gray-700">Not Available</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="mt-6">
+              <button className="w-full py-3 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600">
+                Continue With Selection
+              </button>
+            </div>
+          </div>
+        </Box>
+      </Drawer>
     </section>
+
   );
 }
