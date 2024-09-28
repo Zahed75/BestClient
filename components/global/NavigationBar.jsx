@@ -343,7 +343,7 @@ export default function NavigationBar() {
         <div className="flex ml-auto">
           <div className="flex justify-end items-center uppercase text-sm gap-x-1">
             <span
-              className={`font-dosis px-3 py-2 hover:bg-[#F0FAFF] hover:text-[#F16521] rounded-full cursor-pointer ${
+              className={`font-dosis px-3 py-2 text-[#3E445A] hover:bg-[#F0FAFF] hover:text-[#F16521] rounded-full cursor-pointer ${
                 pathName === "/" ? "bg-[#F0FAFF] text-[#F16521]" : ""
               } duration-700`}
             >
