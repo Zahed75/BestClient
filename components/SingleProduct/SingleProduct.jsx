@@ -179,7 +179,7 @@ export default function SingleProduct({ product, categoryName }) {
                 Offer Price: ৳{product?.general?.salePrice}
               </p>
               <section
-                className="my-5 min-h-48 [&_ul]:list-disc [&_ol]:list-decimal [&_li]:ml-5"
+                className="my-5 min-h-48 [&_ul]:list-disc [&_ol]:list-decimal [&_li]:ml-10"
                 dangerouslySetInnerHTML={{
                   __html: product?.productShortDescription,
                 }}
