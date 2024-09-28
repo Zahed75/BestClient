@@ -4,7 +4,7 @@ import arrayBottomBlack from "@/public/images/arrayBottomBlack.svg";
 import treeDot from "@/public/images/treeDot.svg";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { fetchApi } from "@/utils/FetchApi";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,12 +18,15 @@ export default function NavigationBar() {
   const [isSmartSubMenuOpen, setIsSmartSubMenuOpen] = useState(false);
   const [isOrderMenuOpen, setIsOrderMenuOpen] = useState(false);
   const [isAllCategoriesOpen, setIsAllCategoriesOpen] = useState(false);
-  const [isAllProductCategoriesOpen, setIsAllProductCategoriesOpen] = useState(false);
+  const [isAllProductCategoriesOpen, setIsAllProductCategoriesOpen] =
+    useState(false);
   const [category, setCategory] = useState([]);
   const [hoveredCategoryId, setHoveredCategoryId] = useState(null);
   const [hoveredSubCategoryId, setHoveredSubCategoryId] = useState(null);
-  const [hoveredAlProductCategoryId, setHoveredAlProductCategoryId] = useState(null);
-  const [hoveredSubProductCategoryId, setHoveredSubProductCategoryId] = useState(null);
+  const [hoveredAlProductCategoryId, setHoveredAlProductCategoryId] =
+    useState(null);
+  const [hoveredSubProductCategoryId, setHoveredSubProductCategoryId] =
+    useState(null);
   const [isBrandsMenuOpen, setIsBrandsMenuOpen] = useState(false);
 
   const router = useRouter();
@@ -33,6 +36,7 @@ export default function NavigationBar() {
   const brandsState = useSelector((state) => state.brand);
   const brands = brandsState?.brands || [];
 
+  const pathName = usePathname();
 
   useEffect(() => {
     dispatch(fetchBrands());
@@ -98,8 +102,9 @@ export default function NavigationBar() {
           {hasSubCategories && (
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className={`h-4 w-4 transition-transform duration-300 transform ${hoveredCategoryId === category._id ? "rotate-90" : "-rotate-90"
-                }`}
+              className={`h-4 w-4 transition-transform duration-300 transform ${
+                hoveredCategoryId === category._id ? "rotate-90" : "-rotate-90"
+              }`}
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -147,8 +152,9 @@ export default function NavigationBar() {
           <div
             onMouseEnter={() => setIsAllCategoriesOpen(true)}
             onMouseLeave={() => setIsAllCategoriesOpen(false)}
-            className={`${isAllCategoriesOpen ? "block" : "hidden"
-              } group-hover:block absolute left-0 w-60 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
+            className={`${
+              isAllCategoriesOpen ? "block" : "hidden"
+            } group-hover:block absolute left-0 w-60 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
           >
             <ul className="text-sm py-5 text-[#3E445A]">
               {category
@@ -170,10 +176,11 @@ export default function NavigationBar() {
                         categories?.subCategories.length > 0 && (
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className={`h-4 w-4 transition-transform duration-300 transform ${hoveredCategoryId === categories._id
-                              ? "rotate-[90]"
-                              : "-rotate-90"
-                              }`}
+                            className={`h-4 w-4 transition-transform duration-300 transform ${
+                              hoveredCategoryId === categories._id
+                                ? "rotate-[90]"
+                                : "-rotate-90"
+                            }`}
                             viewBox="0 0 20 20"
                             fill="currentColor"
                           >
@@ -209,10 +216,11 @@ export default function NavigationBar() {
                                     category?.subCategories.length > 0 && (
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        className={`h-4 w-4 transition-transform duration-300 transform ${hoveredSubCategoryId === category._id
-                                          ? "rotate-[90]"
-                                          : "-rotate-90"
-                                          }`}
+                                        className={`h-4 w-4 transition-transform duration-300 transform ${
+                                          hoveredSubCategoryId === category._id
+                                            ? "rotate-[90]"
+                                            : "-rotate-90"
+                                        }`}
                                         viewBox="0 0 20 20"
                                         fill="currentColor"
                                       >
@@ -277,8 +285,9 @@ export default function NavigationBar() {
                   {brands.length > 0 && (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className={`h-4 w-4 transition-transform duration-300 transform ${isBrandsMenuOpen ? "rotate-[90]" : "-rotate-90"
-                        }`}
+                      className={`h-4 w-4 transition-transform duration-300 transform ${
+                        isBrandsMenuOpen ? "rotate-[90]" : "-rotate-90"
+                      }`}
                       viewBox="0 0 20 20"
                       fill="currentColor"
                     >
@@ -297,7 +306,9 @@ export default function NavigationBar() {
                         key={brand._id}
                         className="py-2 px-3 hover:text-[#F16521] cursor-pointer"
                       >
-                        <Link href={`/brand/${brand?.name?.toLowerCase()}`}>{brand?.name}</Link>
+                        <Link href={`/brand/${brand?.name?.toLowerCase()}`}>
+                          {brand?.name}
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -331,11 +342,17 @@ export default function NavigationBar() {
 
         <div className="flex ml-auto">
           <div className="flex justify-end items-center uppercase text-sm gap-x-1">
-            <span className="font-dosis bg-[#F0FAFF] text-[#F16521] px-3 py-2 rounded-full cursor-pointer">
+            <span
+              className={`font-dosis px-3 py-2 hover:bg-[#F0FAFF] hover:text-[#F16521] rounded-full cursor-pointer ${
+                pathName === "/" ? "bg-[#F0FAFF] text-[#F16521]" : ""
+              } duration-700`}
+            >
               <Link href="/">Home</Link>
             </span>
-            <div className="group relative  
-            z-20">
+            <div
+              className="group relative  
+            z-20"
+            >
               <button
                 onClick={handleGotoCategories}
                 onMouseEnter={handleBrowseProducts}
@@ -353,17 +370,22 @@ export default function NavigationBar() {
               <div
                 onMouseEnter={() => setIsAllProductCategoriesOpen(true)}
                 onMouseLeave={() => setIsAllProductCategoriesOpen(false)}
-                className={`${isAllProductCategoriesOpen ? "block" : "hidden"
-                  } group-hover:block absolute left-0 w-60 bg-white rounded-lg border border-gray-200 shadow-xl z-10 capitalize`}
+                className={`${
+                  isAllProductCategoriesOpen ? "block" : "hidden"
+                } group-hover:block absolute left-0 w-60 bg-white rounded-lg border border-gray-200 shadow-xl z-10 capitalize`}
               >
                 <ul className="text-sm py-5 text-[#3E445A]">
                   {category
-                    .filter((categories) => !categories.subCategories?.categoryName)
+                    .filter(
+                      (categories) => !categories.subCategories?.categoryName
+                    )
                     .map((categories) => (
                       <li
                         key={categories?._id}
                         className="py-2 px-3 relative"
-                        onMouseEnter={() => setHoveredAlProductCategoryId(categories?._id)}
+                        onMouseEnter={() =>
+                          setHoveredAlProductCategoryId(categories?._id)
+                        }
                         onMouseLeave={() => setHoveredAlProductCategoryId(null)}
                       >
                         <Link
@@ -376,10 +398,11 @@ export default function NavigationBar() {
                             categories?.subCategories.length > 0 && (
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                className={`h-4 w-4 transition-transform duration-300 transform ${hoveredAlProductCategoryId === categories._id
-                                  ? "rotate-[90]"
-                                  : "-rotate-90"
-                                  }`}
+                                className={`h-4 w-4 transition-transform duration-300 transform ${
+                                  hoveredAlProductCategoryId === categories._id
+                                    ? "rotate-[90]"
+                                    : "-rotate-90"
+                                }`}
                                 viewBox="0 0 20 20"
                                 fill="currentColor"
                               >
@@ -398,9 +421,13 @@ export default function NavigationBar() {
                               {categories.subCategories.map((category) => (
                                 <li
                                   onMouseEnter={() =>
-                                    setHoveredSubProductCategoryId(category?._id)
+                                    setHoveredSubProductCategoryId(
+                                      category?._id
+                                    )
                                   }
-                                  onMouseLeave={() => setHoveredSubProductCategoryId(null)}
+                                  onMouseLeave={() =>
+                                    setHoveredSubProductCategoryId(null)
+                                  }
                                   className="py-2 px-3 cursor-pointer relative"
                                   key={category?._id}
                                 >
@@ -415,10 +442,12 @@ export default function NavigationBar() {
                                         category?.subCategories.length > 0 && (
                                           <svg
                                             xmlns="http://www.w3.org/2000/svg"
-                                            className={`h-4 w-4 transition-transform duration-300 transform ${hoveredSubProductCategoryId === category._id
-                                              ? "rotate-[90]"
-                                              : "-rotate-90"
-                                              }`}
+                                            className={`h-4 w-4 transition-transform duration-300 transform ${
+                                              hoveredSubProductCategoryId ===
+                                              category._id
+                                                ? "rotate-[90]"
+                                                : "-rotate-90"
+                                            }`}
                                             viewBox="0 0 20 20"
                                             fill="currentColor"
                                           >
@@ -431,12 +460,15 @@ export default function NavigationBar() {
                                     </Link>
                                   </div>
 
-                                  {hoveredSubProductCategoryId === category._id &&
+                                  {hoveredSubProductCategoryId ===
+                                    category._id &&
                                     category.subCategories &&
                                     category.subCategories.length > 0 && (
                                       <ul
                                         onMouseEnter={() =>
-                                          setHoveredSubProductCategoryId(category._id)
+                                          setHoveredSubProductCategoryId(
+                                            category._id
+                                          )
                                         }
                                         onMouseLeave={() =>
                                           setHoveredSubProductCategoryId(null)
@@ -468,9 +500,12 @@ export default function NavigationBar() {
                     ))}
                 </ul>
               </div>
-
             </div>
-            <span className="font-dosis text-[#3E445A] hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700">
+            <span
+              className={`font-dosis text-[#3E445A] hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer ${
+                pathName === "/shop" ? "bg-[#F0FAFF] text-[#F16521]" : ""
+              } duration-700`}
+            >
               <Link href="/shop">All Products</Link>
             </span>
             <span className="font-dosis text-[#3E445A] hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700">
@@ -498,8 +533,9 @@ export default function NavigationBar() {
               </button>
               <div
                 onMouseLeave={() => setIsOrderMenuOpen(false)}
-                className={`${isOrderMenuOpen ? "block" : "hidden"
-                  } group-hover:block absolute left-0 w-64 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
+                className={`${
+                  isOrderMenuOpen ? "block" : "hidden"
+                } group-hover:block absolute left-0 w-64 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
               >
                 <ul className="text-sm capitalize text-[#3E445A]">
                   <li className="py-2 px-3 hover:text-[#F16521] cursor-pointer">
