@@ -164,10 +164,11 @@ export default function SingleProduct({ product, categoryName }) {
             <div className="my-5 md:w-full lg:w-1/3 ">
               <p
                 className={`
-                ${product?.inventory?.stockStatus === "In Stock"
+                ${
+                  product?.inventory?.stockStatus === "In Stock"
                     ? "text-[#70BE38] bg-[#E5F8ED]"
                     : "text-red-400 bg-red-100"
-                  }  text-xs font-semibold px-3 py-1 inline-block rounded-full
+                }  text-xs font-semibold px-3 py-1 inline-block rounded-full
                 `}
               >
                 {product?.inventory?.stockStatus}
@@ -191,8 +192,9 @@ export default function SingleProduct({ product, categoryName }) {
                     dispatch(addToWishlist(product));
                   }}
                   disabled={favorite}
-                  className={`text-xs text-[#9B9BB4] border px-3 py-2 rounded-full flex justify-center items-center uppercase ${favorite ? "cursor-not-allowed" : "cursor-pointer"
-                    }`}
+                  className={`text-xs text-[#9B9BB4] border px-3 py-2 rounded-full flex justify-center items-center uppercase ${
+                    favorite ? "cursor-not-allowed" : "cursor-pointer"
+                  }`}
                 >
                   <svg
                     width="20"
@@ -222,11 +224,13 @@ export default function SingleProduct({ product, categoryName }) {
                   />
                   Compare
                 </button>
-                <CompareProduct
-                  open={open}
-                  setOpen={setOpen}
-                  currentProduct={product}
-                />
+                <div>
+                  <CompareProduct
+                    open={open}
+                    setOpen={setOpen}
+                    currentProduct={product}
+                  />
+                </div>
               </div>
 
               <div className="mt-10 text-[#9B9BB4] ">

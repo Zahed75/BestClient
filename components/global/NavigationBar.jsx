@@ -522,7 +522,13 @@ export default function NavigationBar() {
               <button
                 onMouseEnter={() => setIsOrderMenuOpen(true)}
                 onMouseLeave={() => setIsOrderMenuOpen(false)}
-                className="flex justify-start items-center font-dosis text-[#3E445A] group-hover:bg-[#F0FAFF] group-hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700 uppercase"
+                className={`flex justify-start items-center font-dosis text-[#3E445A] group-hover:bg-[#F0FAFF] group-hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer ${
+                  pathName === "/my-account" ||
+                  pathName === "/my-account/orders" ||
+                  pathName === "/my-account/wishlist"
+                    ? "bg-[#F0FAFF] text-[#F16521]"
+                    : ""
+                } duration-700 uppercase`}
               >
                 Your Order
                 <Image
