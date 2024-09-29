@@ -35,12 +35,10 @@ export default function ProductCard({ product }) {
       );
       const category = response?.category;
 
-
       if (visitedCategories.has(category?.slug)) {
         return "";
       }
 
-    
       visitedCategories.add(category?.slug);
 
       // If there's a parent category, fetch the parent's full path
@@ -153,12 +151,12 @@ export default function ProductCard({ product }) {
             <div className=" ">
               Offer Price:{" "}
               <span className="font-extrabold text-black ml-1">
-                ৳ {product?.general?.salePrice.toLocaleString('en-BD')}
+                ৳{product?.general?.salePrice.toLocaleString("en-BD")}
               </span>{" "}
             </div>
             <div className="">
               M.R.P:
-              <del className="ml-1">৳{product?.general?.regularPrice}</del>
+              <del className="ml-1">৳{product?.general?.regularPrice.toLocaleString('en-BD')}</del>
             </div>
             <div className="flex justify-start items-center text-nowrap">
               Your Save:
@@ -178,7 +176,7 @@ export default function ProductCard({ product }) {
                 )}
                 <p>
                   (৳
-                  {product?.general?.regularPrice - product?.general?.salePrice}
+                  {(product?.general?.regularPrice - product?.general?.salePrice).toLocaleString('en-BD')}
                   )
                 </p>
               </div>

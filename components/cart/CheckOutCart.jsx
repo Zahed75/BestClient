@@ -289,9 +289,9 @@ export default function CheckOutCart() {
                   <p className="font-semibold max-w-52">{item?.productName}</p>
                   <p className="font-semibold">
                     ৳
-                    {discount > 0
+                    {(discount > 0
                       ? item.general.regularPrice
-                      : item.general.salePrice * item.quantity}
+                      : item.general.salePrice * item.quantity).toLocaleString('en-BD')}
                   </p>
                 </div>
               ))}
@@ -334,7 +334,7 @@ export default function CheckOutCart() {
           <div className="my-5">
             <div className="flex justify-between items-center my-3">
               <p>Products price</p>
-              <p className="font-semibold">৳{totalProductPrice}</p>
+              <p className="font-semibold">৳{totalProductPrice.toLocaleString('en-BD')}</p>
             </div>
 
             <div className="flex justify-between items-center my-3">
@@ -344,7 +344,7 @@ export default function CheckOutCart() {
             <div className="border"></div>
             <div className="flex justify-between items-center my-3">
               <p>Total (Incl. VAT)</p>
-              <p className="font-semibold">৳{totalPrice}</p>
+              <p className="font-semibold">৳{totalPrice.toLocaleString('en-BD')}</p>
             </div>
           </div>
           {/* order note textarea */}

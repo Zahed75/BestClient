@@ -196,7 +196,7 @@ export default function ShowCart() {
             <div className="my-5">
               <div className="flex justify-between items-center my-3">
                 <p>Products price</p>
-                <p className="font-semibold">৳{totalProductPrice.toFixed(2)}</p>
+                <p className="font-semibold">৳{totalProductPrice.toLocaleString('en-BD')}</p>
               </div>
               <div className="flex justify-between items-center my-3">
                 <p>VAT</p>
@@ -205,7 +205,7 @@ export default function ShowCart() {
               <div className="border"></div>
               <div className="flex justify-between items-center my-3">
                 <p>Total (Incl. VAT)</p>
-                {cart && <p className="font-semibold">৳{totalPrice}</p>}
+                {cart && <p className="font-semibold">৳{totalPrice.toLocaleString('en-BD')}</p>}
               </div>
             </div>
           ) : (

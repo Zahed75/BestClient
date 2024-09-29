@@ -32,9 +32,9 @@ export default function Search() {
 
   const totalProductPrice = Array.isArray(cart)
     ? cart.reduce(
-      (acc, item) => acc + item.general.salePrice * item.quantity,
-      0
-    )
+        (acc, item) => acc + item.general.salePrice * item.quantity,
+        0
+      )
     : 0;
 
   const vat = (totalProductPrice * vatPercentage) / 100;
@@ -236,83 +236,6 @@ export default function Search() {
                             </del>
                           </div>
                           <div>VAT Inc</div>
-                          {/* <div className="mt-5 w-full text-md">
-                            <AnimatePresence mode="wait">
-                              {isInCart(hoveredProduct) ? (
-                                <motion.div
-                                  key="inCart"
-                                  className="bg-[#FFCD00] rounded-full w-full flex justify-between items-center font-semibold"
-                                  initial={{ width: "50%" }}
-                                  animate={{ width: "100%" }}
-                                  exit={{ width: "50%" }}
-                                  transition={{ duration: 0.7 }}
-                                >
-                                  <button
-                                    onClick={() => {
-                                      const currentQuantity = cart.find(
-                                        (item) =>
-                                          item._id === hoveredProduct._id
-                                      )?.quantity;
-
-                                      if (currentQuantity > 1) {
-                                        dispatch(
-                                          updateQuantity({
-                                            id: hoveredProduct._id,
-                                            quantity: -1,
-                                          })
-                                        );
-                                      } else {
-                                        dispatch(
-                                          updateQuantity({
-                                            id: hoveredProduct._id,
-                                            quantity: -1,
-                                          })
-                                        );
-                                      }
-                                    }}
-                                    className="px-3 py-2"
-                                  >
-                                    -
-                                  </button>
-                                  <button className="w-full py-2">
-                                    {
-                                      cart.find(
-                                        (item) =>
-                                          item._id === hoveredProduct._id
-                                      )?.quantity
-                                    }
-                                  </button>
-                                  <button
-                                    onClick={() => {
-                                      dispatch(
-                                        updateQuantity({
-                                          id: hoveredProduct._id,
-                                          quantity: 1,
-                                        })
-                                      );
-                                    }}
-                                    className="px-3 py-2 mr-1 shadow-inner"
-                                  >
-                                    +
-                                  </button>
-                                </motion.div>
-                              ) : (
-                                <motion.button
-                                  key="addToCart"
-                                  onClick={() => {
-                                    dispatch(addToCart(hoveredProduct));
-                                  }}
-                                  className="bg-[#FFCD00] px-3 py-2 rounded-full w-full transition-all duration-500"
-                                  initial={{ width: "50%" }}
-                                  animate={{ width: "50%" }}
-                                  exit={{ width: "50%" }}
-                                  transition={{ duration: 0.7 }}
-                                >
-                                  Add to Cart
-                                </motion.button>
-                              )}
-                            </AnimatePresence>
-                          </div> */}
                         </div>
                       </div>
                     </div>
@@ -337,7 +260,7 @@ export default function Search() {
               />
             </Link>
           </div>
-          <div className="text-md font-bold ">৳ {total}</div>
+          <div className="text-md font-bold ">৳ {total.toLocaleString('en-BD')}</div>
           <div className="w-[42px] h-[42px] rounded-full border border-[#FFF1EE] bg-[#FFF1EE] p-2 relative ">
             <button
               className="flex justify-center mx-auto w-full h-full"
@@ -385,7 +308,8 @@ export default function Search() {
                       <h3 className="text-md">{product?.productName}</h3>
                       <div>
                         <p className="text-slate-500">
-                          ৳ {product?.general?.salePrice}
+                          ৳{" "}
+                          {product?.general?.salePrice.toLocaleString("en-BD")}
                         </p>
                         <p className="ml-2 text-slate-500">
                           {" "}
@@ -506,7 +430,8 @@ export default function Search() {
                       <h3 className="text-md">{product?.productName}</h3>
                       <div>
                         <p className="text-slate-500">
-                          ৳ {product?.general?.salePrice}
+                          ৳{" "}
+                          {product?.general?.salePrice.toLocaleString("en-BD")}
                         </p>
                         <p className="ml-2 text-slate-500">
                           {" "}
@@ -541,7 +466,8 @@ export default function Search() {
                     ৳
                     {cart
                       .map((item) => item?.general?.salePrice * item?.quantity)
-                      .reduce((a, b) => a + b, 0)}
+                      .reduce((a, b) => a + b, 0)
+                      .toLocaleString("en-BD")}
                   </h3>
                 </div>
               ) : (

@@ -22,11 +22,11 @@ export default function CartProduct({ product }) {
                 {product?.productName}
               </h3>
               <h4 className="text-lg font-semibold self-end ">
-                ৳{product?.general?.salePrice}
+                ৳{product?.general?.salePrice.toLocaleString('en-BD')}
               </h4>
             </div>
             <div className="my-3">
-              Previous Price : <del>৳{product?.general?.regularPrice}</del>
+              Previous Price : <del>৳{product?.general?.regularPrice.toLocaleString('en-BD')}</del>
             </div>
             <div className="flex justify-start items-center gap-x-5">
               <div>
