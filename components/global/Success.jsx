@@ -9,7 +9,8 @@ export default function Success() {
   const orderResponse = useSelector((state) => state.orderResponse);
 
   console.log("orderResponse product", orderResponse?.products);
-  
+
+
 
   return (
     <section className="my-10">
@@ -41,7 +42,7 @@ export default function Success() {
             <div className="flex justify-between items-center my-3">
               <p>Products Price</p>
               <p className="font-semibold">
-                ৳{orderResponse?.subTotal || "00"}
+                ৳{orderResponse?.subTotal?.toLocaleString("en-BD") || "00"}
               </p>
             </div>
             <div className="flex justify-between items-center my-3">
@@ -51,7 +52,9 @@ export default function Success() {
             <div className="border"></div>
             <div className="flex justify-between items-center my-3">
               <p>Total (Incl. VAT)</p>
-              <p className="font-semibold">৳{orderResponse?.totalPrice}</p>
+              <p className="font-semibold">
+                ৳{orderResponse?.totalPrice?.toLocaleString("en-BD")}
+              </p>
             </div>
           </div>
         </div>
@@ -77,11 +80,12 @@ export default function Success() {
                     {product?.productName}
                   </h3>
                   <span className="text-lg font-semibold">
-                    ৳{product?.salePrice}
+                    ৳{product?.salePrice.toLocaleString("en-BD")}
                   </span>
                 </div>
                 <div className="my-3">
-                  Previous Price: ৳{product?.regularPrice}
+                  Previous Price: ৳
+                  {product?.regularPrice.toLocaleString("en-BD")}
                 </div>
               </div>
               <div className="border"></div>

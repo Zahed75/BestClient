@@ -177,7 +177,7 @@ export default function SingleProduct({ product, categoryName }) {
                 MRP Price: ৳{product?.general?.regularPrice}
               </p>
               <p className="text-[#F16521] font-semibold mb-2">
-                Offer Price: ৳{product?.general?.salePrice}
+                Offer Price: ৳
               </p>
               <section
                 className="my-5 min-h-48 [&_ul]:list-disc [&_ol]:list-decimal [&_li]:ml-10"

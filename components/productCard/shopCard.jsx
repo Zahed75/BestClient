@@ -56,7 +56,7 @@ export default function ShopCard({ product }) {
             <div className=" ">
               Offer Price:{" "}
               <span className="font-semibold ml-1">
-                ৳{product?.general?.salePrice}
+                ৳{product?.general?.salePrice.toLocaleString('en-BD')}
               </span>{" "}
             </div>
             <div className="">
