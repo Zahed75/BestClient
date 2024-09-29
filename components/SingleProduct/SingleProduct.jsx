@@ -164,20 +164,19 @@ export default function SingleProduct({ product, categoryName }) {
             <div className="my-5 md:w-full lg:w-1/3 ">
               <p
                 className={`
-                ${
-                  product?.inventory?.stockStatus === "In Stock"
+                ${product?.inventory?.stockStatus === "In Stock"
                     ? "text-[#70BE38] bg-[#E5F8ED]"
                     : "text-red-400 bg-red-100"
-                }  text-xs font-semibold px-3 py-1 inline-block rounded-full
+                  }  text-xs font-semibold px-3 py-1 inline-block rounded-full
                 `}
               >
                 {product?.inventory?.stockStatus}
               </p>
               <p className="text-[#202435] font-semibold my-2">
-                MRP Price: ৳{product?.general?.regularPrice}
+                MRP Price: ৳{product?.general?.regularPrice.toLocaleString('en-BD')}
               </p>
               <p className="text-[#F16521] font-semibold mb-2">
-                Offer Price: ৳
+                Offer Price: ৳{product?.general?.salePrice.toLocaleString('en-BD')}
               </p>
               <section
                 className="my-5 min-h-48 [&_ul]:list-disc [&_ol]:list-decimal [&_li]:ml-10"
@@ -192,9 +191,8 @@ export default function SingleProduct({ product, categoryName }) {
                     dispatch(addToWishlist(product));
                   }}
                   disabled={favorite}
-                  className={`text-xs text-[#9B9BB4] border px-3 py-2 rounded-full flex justify-center items-center uppercase ${
-                    favorite ? "cursor-not-allowed" : "cursor-pointer"
-                  }`}
+                  className={`text-xs text-[#9B9BB4] border px-3 py-2 rounded-full flex justify-center items-center uppercase ${favorite ? "cursor-not-allowed" : "cursor-pointer"
+                    }`}
                 >
                   <svg
                     width="20"
