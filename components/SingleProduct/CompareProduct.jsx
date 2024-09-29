@@ -12,6 +12,7 @@ import Modal from "@mui/material/Modal";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import BrandName from "../global/BrandName";
 
 const style = {
   position: "absolute",
@@ -29,10 +30,8 @@ const style = {
 
 export default function CompareProduct({ open, setOpen, currentProduct }) {
   const handleClose = () => setOpen(false);
-  const [loading, setLoading] = useState(false);
-  const [isInCart, setIsInCart] = useState(false);
-  const [error, setError] = useState(null);
 
+  const [isInCart, setIsInCart] = useState(false);
   const products = useSelector((state) => state.products);
   const cart = useSelector((state) => state.cart.items);
 
@@ -81,18 +80,6 @@ export default function CompareProduct({ open, setOpen, currentProduct }) {
   }
 
   const similarProducts = compareSimilarProducts(currentProduct, allProducts);
-
-  const getBrandName = async (brandId) => {
-    try {
-      const response = await fetchApi(`/brand/getBrandId/${brandId}`, "GET");
-      console.log(response);
-
-      return response?.data?.brand?.name || "Unknown Brand";
-    } catch (error) {
-      console.error("Error fetching brand name:", error);
-      return "Unknown Brand";
-    }
-  };
 
   return (
     <div>
@@ -174,7 +161,6 @@ export default function CompareProduct({ open, setOpen, currentProduct }) {
                   ></td>
                 ))}
               </tr>
-
               <tr>
                 <td className="border px-5 py-2">Price</td>
                 <td className="border px-5 py-2 font-semibold">
@@ -189,11 +175,11 @@ export default function CompareProduct({ open, setOpen, currentProduct }) {
               <tr>
                 <td className="border px-5 py-2">Brand</td>
                 <td className="border px-5 py-2">
-                  {getBrandName(currentProduct?.productBrand)}
+                  <BrandName brandId={currentProduct?.productBrand} />
                 </td>
                 {similarProducts.map((product, index) => (
                   <td key={index} className="border px-5 py-2">
-                    {getBrandName(product?.productBrand)}
+                    <BrandName brandId={product?.productBrand} />
                   </td>
                 ))}
               </tr>
