@@ -1,17 +1,20 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { addToCart, updateQuantity } from "@/redux/slice/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { addToCart, updateQuantity } from "@/redux/slice/cartSlice";
+import { motion, AnimatePresence } from "framer-motion";
+import { fetchApi } from "@/utils/FetchApi";
 import { removeFromWishlist } from "@/redux/slice/wishlistSlice";
 
 export default function WishlistCard({ product }) {
+  const [productImage, setProductImage] = useState("");
   const [isInCart, setIsInCart] = useState(false);
-  const [productImage, setProductImage] = useState(product?.productImage);
+  const [subCategory, setSubCategory] = useState([]);
 
   const cart = useSelector((state) => state.cart.items);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,9 +25,74 @@ export default function WishlistCard({ product }) {
     setIsInCart(!!cart.find((item) => item._id === product?._id));
   }, [cart, product?._id]);
 
+  const fetchFullCategoryPath = async (
+    categoryId,
+    visitedCategories = new Set()
+  ) => {
+    try {
+      const response = await fetchApi(
+        `/category/getCategoryById/${categoryId}`,
+        "GET"
+      );
+      const category = response?.category;
+
+
+      if (visitedCategories.has(category?.slug)) {
+        return "";
+      }
+
+
+      visitedCategories.add(category?.slug);
+
+      // If there's a parent category, fetch the parent's full path
+      if (category?.parentCategory) {
+        const parentPath = await fetchFullCategoryPath(
+          category?.parentCategory,
+          visitedCategories
+        );
+        return `${parentPath ? `${parentPath}/` : ""}${category?.slug}`;
+      }
+
+      // If this category is the topmost (no parent), return its slug
+      return category?.slug;
+    } catch (error) {
+      console.error(`Error fetching category with ID ${categoryId}`, error);
+      return null;
+    }
+  };
+
+  const getProductCategorySlugs = async (product) => {
+    if (!product?.categoryId || !Array.isArray(product.categoryId)) {
+      return [];
+    }
+
+    // Create a set to track visited categories to avoid duplicates
+    const visitedCategories = new Set();
+
+    // Fetch the full path for the product categories (grandparent, parent, child)
+    const categorySlugs = await Promise.all(
+      product.categoryId.map((categoryId) =>
+        fetchFullCategoryPath(categoryId, visitedCategories)
+      )
+    );
+
+    // Return an array of slugs, filtering out any empty or null values
+    return categorySlugs.filter((slug) => slug);
+  };
+
+  useEffect(() => {
+    getProductCategorySlugs(product)
+      .then((productCategorySlugs) => {
+        setSubCategory(productCategorySlugs || []);
+      })
+      .catch((error) => {
+        console.error("Error fetching product category slugs:", error);
+      });
+  }, [product]);
+
   return (
     <div
-      className={`w-full min-h-full overflow-hidden border shadow-sm hover:shadow-lg duration-700 rounded-md p-5 relative`}
+      className={`w-full min-h-full overflow-hidden border shadow-sm hover:shadow-lg duration-700 rounded-md p-2 md:p-5 mx-auto relative`}
     >
       <div className="relative group duration-700">
         {product?.general?.salePrice ? (
@@ -42,7 +110,7 @@ export default function WishlistCard({ product }) {
         ) : (
           <></>
         )}
-        <div className="absolute top-0 right-0 p-2 rounded-full shadow-md">
+        <div className="absolute top-0 right-0 p-2 rounded-full shadow-md z-10">
           <svg
             width="22"
             height="21"
@@ -58,7 +126,10 @@ export default function WishlistCard({ product }) {
             />
           </svg>
         </div>
-        <Link href={`/shop/${product?.productSlug}`}>
+        <Link
+          href={`/${subCategory?.[0] ?? ""}/${subCategory?.[1] ?? ""}/${subCategory?.[2] ?? ""
+            }/${product?.productSlug}`}
+        >
           <div className="object-cover min-h-[200px] flex justify-center overflow-hidden">
             <Image
               src={productImage}
@@ -71,24 +142,22 @@ export default function WishlistCard({ product }) {
         </Link>
         <div className="mt-5 flex justify-start items-center">
           <p
-            className={`${
-              product?.inventory?.stockStatus === "In Stock"
-                ? "text-[#70BE38]"
-                : "text-red-400"
-            } text-[11px] md:text-[12px] font-semibold ${
-              product?.inventory?.stockStatus === "In Stock"
+            className={`${product?.inventory?.stockStatus === "In Stock"
+              ? "text-[#70BE38]"
+              : "text-red-400"
+              } text-[11px] md:text-[12px] font-semibold ${product?.inventory?.stockStatus === "In Stock"
                 ? "border border-[#70BE38]"
                 : "border border-red-400 bg-red-100"
-            } rounded-md px-2 md:px-3 md:py-1`}
+              } rounded-md px-2 md:px-3 md:py-1`}
           >
             {product?.inventory?.stockStatus}
           </p>
-          {/* <span className="text-[#F16521] text-xs font-semibold ml-3 px-3 py-1 border border-[#F16521] rounded-md">
-              {product?.inventory?.inventoryStatus}
-            </span> */}
         </div>
         <div className="mt-3">
-          <Link href={`/shop/${product?.productSlug}`}>
+          <Link
+            href={`/${subCategory?.[0] ?? ""}/${subCategory?.[1] ?? ""}/${subCategory?.[2] ?? ""
+              }/${product?.productSlug}`}
+          >
             <h4 className="text-[#202435] hover:text-[#F16521] duration-700 text-[14px] md:text-[15px] font-semibold h-10 md:h-[45px] text-ellipsis overflow-hidden line-clamp-2">
               {product?.productName}
             </h4>
@@ -96,8 +165,8 @@ export default function WishlistCard({ product }) {
           <div className="mt-5 text-slate-500 text-[13px] md:text-[14px]">
             <div className=" ">
               Offer Price:{" "}
-              <span className="font-semibold ml-1">
-                ৳{product?.general?.salePrice}
+              <span className="font-extrabold text-black ml-1">
+                ৳ {product?.general?.salePrice.toLocaleString('en-BD')}
               </span>{" "}
             </div>
             <div className="">
@@ -129,15 +198,15 @@ export default function WishlistCard({ product }) {
             </div>
           </div>
 
-          <div className="mt-5 w-full text-md">
+          <div className="mt-5 w-full text-[14px]">
             <AnimatePresence mode="wait">
               {isInCart ? (
                 <motion.div
                   key="inCart"
                   className="bg-[#FFCD00] rounded-full w-full flex justify-between items-center font-semibold"
-                  initial={{ width: "50%" }}
+                  initial={{ width: "60%" }}
                   animate={{ width: "100%" }}
-                  exit={{ width: "50%" }}
+                  exit={{ width: "60%" }}
                   transition={{ duration: 0.7 }}
                 >
                   <button
@@ -185,9 +254,9 @@ export default function WishlistCard({ product }) {
                     setIsInCart(true);
                   }}
                   className="bg-[#FFCD00] px-3 py-2 rounded-full w-full md:w-2/4 transition-all duration-500"
-                  initial={{ width: "50%" }}
-                  animate={{ width: "50%" }}
-                  exit={{ width: "50%" }}
+                  initial={{ width: "60%" }}
+                  animate={{ width: "60%" }}
+                  exit={{ width: "60%" }}
                   transition={{ duration: 0.7 }}
                 >
                   <motion.span
