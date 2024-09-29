@@ -90,193 +90,106 @@ export default function CompareProduct({ open, setOpen, currentProduct }) {
         aria-describedby="modal-modal-description"
       >
         <Box className="" sx={style}>
-          <table className="table-auto w-full">
-            <tbody>
-              <tr>
-                <td className="border px-5 py-2">Picture</td>
-                <td className="border px-5 py-2">
-                  <Image
-                    width={200}
-                    height={200}
-                    src={currentProduct?.productImage}
-                    alt={currentProduct?.productSlug}
-                    className="w-20 h-20"
-                  />
-                </td>
-                {similarProducts.map((product, index) => (
-                  <td key={index} className="border px-5 py-2">
+          <div className="overflow-auto max-h-[570px]">
+            <table className="table-auto w-full">
+              <tbody>
+                <tr>
+                  <td className="border px-5 py-2">Picture</td>
+                  <td className="border px-5 py-2">
                     <Image
                       width={200}
                       height={200}
-                      src={product?.productImage}
-                      alt={product?.productSlug}
+                      src={currentProduct?.productImage}
+                      alt={currentProduct?.productSlug}
                       className="w-20 h-20"
                     />
                   </td>
-                ))}
-              </tr>
-              <tr>
-                <td className="border px-5 py-2">Product Name</td>
-                <td className="border px-5 py-2">
-                  {currentProduct?.productName}
-                </td>
-                {similarProducts.map((product, index) => (
-                  <td key={index} className="border px-5 py-2">
-                    {product?.productName}
+                  {similarProducts.map((product, index) => (
+                    <td key={index} className="border px-5 py-2">
+                      <Image
+                        width={200}
+                        height={200}
+                        src={product?.productImage}
+                        alt={product?.productSlug}
+                        className="w-20 h-20"
+                      />
+                    </td>
+                  ))}
+                </tr>
+                <tr>
+                  <td className="border px-5 py-2">Product Name</td>
+                  <td className="border px-5 py-2">
+                    {currentProduct?.productName}
                   </td>
-                ))}
-              </tr>
-              <tr>
-                <td className="border px-5 py-2">Stock</td>
-                <td className="border px-5 py-2">
-                  {currentProduct?.inventory?.stockStatus}
-                </td>
-                {similarProducts.map((product, index) => (
-                  <td key={index} className="border px-5 py-2">
-                    {product?.inventory?.stockStatus}
+                  {similarProducts.map((product, index) => (
+                    <td key={index} className="border px-5 py-2">
+                      {product?.productName}
+                    </td>
+                  ))}
+                </tr>
+                <tr>
+                  <td className="border px-5 py-2">Stock</td>
+                  <td className="border px-5 py-2">
+                    {currentProduct?.inventory?.stockStatus}
                   </td>
-                ))}
-              </tr>
-              <tr>
-                <td className="border px-5 py-3 align-top"> Key Features</td>
+                  {similarProducts.map((product, index) => (
+                    <td key={index} className="border px-5 py-2">
+                      {product?.inventory?.stockStatus}
+                    </td>
+                  ))}
+                </tr>
+                <tr>
+                  <td className="border px-5 py-3 align-top"> Key Features</td>
 
-                <td
-                  className="border px-5 py-3 align-top "
-                  dangerouslySetInnerHTML={{
-                    __html:
-                      currentProduct?.productShortDescription ||
-                      "No description available",
-                  }}
-                ></td>
-
-                {similarProducts.map((product, index) => (
                   <td
-                    key={index}
                     className="border px-5 py-3 align-top "
                     dangerouslySetInnerHTML={{
                       __html:
-                        product?.productShortDescription ||
+                        currentProduct?.productShortDescription ||
                         "No description available",
                     }}
                   ></td>
-                ))}
-              </tr>
-              <tr>
-                <td className="border px-5 py-2">Price</td>
-                <td className="border px-5 py-2 font-semibold">
-                  ৳ {currentProduct.general.salePrice}
-                </td>
-                {similarProducts.map((product, index) => (
-                  <td key={index} className="border px-5 py-2 font-semibold">
-                    ৳ {product.general.salePrice}
-                  </td>
-                ))}
-              </tr>
-              <tr>
-                <td className="border px-5 py-2">Brand</td>
-                <td className="border px-5 py-2">
-                  <BrandName brandId={currentProduct?.productBrand} />
-                </td>
-                {similarProducts.map((product, index) => (
-                  <td key={index} className="border px-5 py-2">
-                    <BrandName brandId={product?.productBrand} />
-                  </td>
-                ))}
-              </tr>
-              <tr>
-                <td className="border px-5 text-nowrap">Add to Cart</td>
-                <td className="border px-5">
-                  <div className="mt-5 w-full text-md">
-                    <AnimatePresence mode="wait">
-                      {isInCart ? (
-                        <motion.div
-                          key="inCart"
-                          className="bg-[#FFCD00] rounded-full w-full flex justify-between items-center font-semibold"
-                          initial={{ width: "50%" }}
-                          animate={{ width: "100%" }}
-                          exit={{ width: "50%" }}
-                          transition={{ duration: 0.7 }}
-                        >
-                          <button
-                            onClick={() => {
-                              const currentQuantity = cart.find(
-                                (item) => item._id === currentProduct?._id
-                              )?.quantity;
 
-                              if (currentQuantity > 1) {
-                                dispatch(
-                                  updateQuantity({
-                                    id: currentProduct?._id,
-                                    quantity: -1,
-                                  })
-                                );
-                              } else {
-                                setIsInCart(false);
-                                dispatch(
-                                  updateQuantity({
-                                    id: currentProduct?._id,
-                                    quantity: -1,
-                                  })
-                                );
-                              }
-                            }}
-                            className="px-3 py-2"
-                          >
-                            -
-                          </button>
-                          <button className="w-full py-2">
-                            {
-                              cart.find(
-                                (item) => item._id === currentProduct?._id
-                              )?.quantity
-                            }
-                          </button>
-                          <button
-                            onClick={() => {
-                              dispatch(
-                                updateQuantity({
-                                  id: currentProduct?._id,
-                                  quantity: 1,
-                                })
-                              );
-                            }}
-                            className=""
-                          >
-                            <span className="bg-[#dbb51f] rounded-full w-2 h-2 px-3 py-2 mr-1 shadow-inner">
-                              +
-                            </span>
-                          </button>
-                        </motion.div>
-                      ) : (
-                        <motion.button
-                          key="addToCart"
-                          onClick={() => {
-                            dispatch(addToCart(currentProduct));
-                            setIsInCart(true);
-                          }}
-                          className="bg-[#FFCD00] px-3 py-2 rounded-full w-full md:w-2/4 transition-all duration-500"
-                          initial={{ width: "50%" }}
-                          animate={{ width: "50%" }}
-                          exit={{ width: "50%" }}
-                          transition={{ duration: 0.7 }}
-                        >
-                          <motion.span
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.9, delay: 0.1 }}
-                          >
-                            Add to Cart
-                          </motion.span>
-                        </motion.button>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                </td>
-                {similarProducts.map((product, index) => (
-                  <td key={index} className="border px-5">
+                  {similarProducts.map((product, index) => (
+                    <td
+                      key={index}
+                      className="border px-5 py-3 align-top "
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          product?.productShortDescription ||
+                          "No description available",
+                      }}
+                    ></td>
+                  ))}
+                </tr>
+                <tr>
+                  <td className="border px-5 py-2">Price</td>
+                  <td className="border px-5 py-2 font-semibold">
+                    ৳ {currentProduct.general.salePrice}
+                  </td>
+                  {similarProducts.map((product, index) => (
+                    <td key={index} className="border px-5 py-2 font-semibold">
+                      ৳ {product.general.salePrice}
+                    </td>
+                  ))}
+                </tr>
+                <tr>
+                  <td className="border px-5 py-2">Brand</td>
+                  <td className="border px-5 py-2">
+                    <BrandName brandId={currentProduct?.productBrand} />
+                  </td>
+                  {similarProducts.map((product, index) => (
+                    <td key={index} className="border px-5 py-2">
+                      <BrandName brandId={product?.productBrand} />
+                    </td>
+                  ))}
+                </tr>
+                <tr>
+                  <td className="border px-5 text-nowrap">Add to Cart</td>
+                  <td className="border px-5">
                     <div className="mt-5 w-full text-md">
                       <AnimatePresence mode="wait">
-                        {cart.find((item) => item._id === product?._id) ? (
+                        {isInCart ? (
                           <motion.div
                             key="inCart"
                             className="bg-[#FFCD00] rounded-full w-full flex justify-between items-center font-semibold"
@@ -288,18 +201,24 @@ export default function CompareProduct({ open, setOpen, currentProduct }) {
                             <button
                               onClick={() => {
                                 const currentQuantity = cart.find(
-                                  (item) => item._id === product?._id
+                                  (item) => item._id === currentProduct?._id
                                 )?.quantity;
 
                                 if (currentQuantity > 1) {
                                   dispatch(
                                     updateQuantity({
-                                      id: product?._id,
+                                      id: currentProduct?._id,
                                       quantity: -1,
                                     })
                                   );
                                 } else {
-                                  dispatch(removeFromCart(product?._id));
+                                  setIsInCart(false);
+                                  dispatch(
+                                    updateQuantity({
+                                      id: currentProduct?._id,
+                                      quantity: -1,
+                                    })
+                                  );
                                 }
                               }}
                               className="px-3 py-2"
@@ -308,15 +227,16 @@ export default function CompareProduct({ open, setOpen, currentProduct }) {
                             </button>
                             <button className="w-full py-2">
                               {
-                                cart.find((item) => item._id === product?._id)
-                                  ?.quantity
+                                cart.find(
+                                  (item) => item._id === currentProduct?._id
+                                )?.quantity
                               }
                             </button>
                             <button
                               onClick={() => {
                                 dispatch(
                                   updateQuantity({
-                                    id: product?._id,
+                                    id: currentProduct?._id,
                                     quantity: 1,
                                   })
                                 );
@@ -332,7 +252,8 @@ export default function CompareProduct({ open, setOpen, currentProduct }) {
                           <motion.button
                             key="addToCart"
                             onClick={() => {
-                              dispatch(addToCart(product));
+                              dispatch(addToCart(currentProduct));
+                              setIsInCart(true);
                             }}
                             className="bg-[#FFCD00] px-3 py-2 rounded-full w-full md:w-2/4 transition-all duration-500"
                             initial={{ width: "50%" }}
@@ -352,10 +273,91 @@ export default function CompareProduct({ open, setOpen, currentProduct }) {
                       </AnimatePresence>
                     </div>
                   </td>
-                ))}
-              </tr>
-            </tbody>
-          </table>
+                  {similarProducts.map((product, index) => (
+                    <td key={index} className="border px-5">
+                      <div className="mt-5 w-full text-md">
+                        <AnimatePresence mode="wait">
+                          {cart.find((item) => item._id === product?._id) ? (
+                            <motion.div
+                              key="inCart"
+                              className="bg-[#FFCD00] rounded-full w-full flex justify-between items-center font-semibold"
+                              initial={{ width: "50%" }}
+                              animate={{ width: "100%" }}
+                              exit={{ width: "50%" }}
+                              transition={{ duration: 0.7 }}
+                            >
+                              <button
+                                onClick={() => {
+                                  const currentQuantity = cart.find(
+                                    (item) => item._id === product?._id
+                                  )?.quantity;
+
+                                  if (currentQuantity > 1) {
+                                    dispatch(
+                                      updateQuantity({
+                                        id: product?._id,
+                                        quantity: -1,
+                                      })
+                                    );
+                                  } else {
+                                    dispatch(removeFromCart(product?._id));
+                                  }
+                                }}
+                                className="px-3 py-2"
+                              >
+                                -
+                              </button>
+                              <button className="w-full py-2">
+                                {
+                                  cart.find((item) => item._id === product?._id)
+                                    ?.quantity
+                                }
+                              </button>
+                              <button
+                                onClick={() => {
+                                  dispatch(
+                                    updateQuantity({
+                                      id: product?._id,
+                                      quantity: 1,
+                                    })
+                                  );
+                                }}
+                                className=""
+                              >
+                                <span className="bg-[#dbb51f] rounded-full w-2 h-2 px-3 py-2 mr-1 shadow-inner">
+                                  +
+                                </span>
+                              </button>
+                            </motion.div>
+                          ) : (
+                            <motion.button
+                              key="addToCart"
+                              onClick={() => {
+                                dispatch(addToCart(product));
+                              }}
+                              className="bg-[#FFCD00] px-3 py-2 rounded-full w-full md:w-2/4 transition-all duration-500"
+                              initial={{ width: "50%" }}
+                              animate={{ width: "50%" }}
+                              exit={{ width: "50%" }}
+                              transition={{ duration: 0.7 }}
+                            >
+                              <motion.span
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.9, delay: 0.1 }}
+                              >
+                                Add to Cart
+                              </motion.span>
+                            </motion.button>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    </td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </Box>
       </Modal>
     </div>
