@@ -102,9 +102,8 @@ export default function NavigationBar() {
           {hasSubCategories && (
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className={`h-4 w-4 transition-transform duration-300 transform ${
-                hoveredCategoryId === category._id ? "rotate-90" : "-rotate-90"
-              }`}
+              className={`h-4 w-4 transition-transform duration-300 transform ${hoveredCategoryId === category._id ? "rotate-90" : "-rotate-90"
+                }`}
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -152,9 +151,8 @@ export default function NavigationBar() {
           <div
             onMouseEnter={() => setIsAllCategoriesOpen(true)}
             onMouseLeave={() => setIsAllCategoriesOpen(false)}
-            className={`${
-              isAllCategoriesOpen ? "block" : "hidden"
-            } group-hover:block absolute left-0 w-60 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
+            className={`${isAllCategoriesOpen ? "block" : "hidden"
+              } group-hover:block absolute left-0 w-60 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
           >
             <ul className="text-sm py-5 text-[#3E445A]">
               {category
@@ -168,7 +166,10 @@ export default function NavigationBar() {
                   >
                     <Link
                       href={`/${categories?.slug}`}
-                      className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer"
+                      className={`flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer ${hoveredCategoryId === categories._id
+                        ? "text-[#F16521]"
+                        : "hover:text-[#F16521]"
+                        }`}
                     >
                       <span>{categories?.categoryName}</span>
 
@@ -176,11 +177,10 @@ export default function NavigationBar() {
                         categories?.subCategories.length > 0 && (
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className={`h-4 w-4 transition-transform duration-300 transform ${
-                              hoveredCategoryId === categories._id
-                                ? "rotate-[90]"
-                                : "-rotate-90"
-                            }`}
+                            className={`h-4 w-4 transition-transform duration-300 transform ${hoveredCategoryId === categories._id
+                              ? "rotate-[90]"
+                              : "-rotate-90"
+                              }`}
                             viewBox="0 0 20 20"
                             fill="currentColor"
                           >
@@ -205,7 +205,10 @@ export default function NavigationBar() {
                               className="py-2 px-3 cursor-pointer relative"
                               key={category?._id}
                             >
-                              <div className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer">
+                              <div className={`flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer ${hoveredSubCategoryId === category._id
+                                ? "text-[#F16521]"
+                                : "hover:text-[#F16521]"
+                                }`}>
                                 <Link
                                   href={`/${categories?.slug}/${category?.slug}`}
                                   className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer"
@@ -216,11 +219,10 @@ export default function NavigationBar() {
                                     category?.subCategories.length > 0 && (
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        className={`h-4 w-4 transition-transform duration-300 transform ${
-                                          hoveredSubCategoryId === category._id
-                                            ? "rotate-[90]"
-                                            : "-rotate-90"
-                                        }`}
+                                        className={`h-4 w-4 transition-transform duration-300 transform ${hoveredSubCategoryId === category._id
+                                          ? "rotate-[90]"
+                                          : "-rotate-90"
+                                          }`}
                                         viewBox="0 0 20 20"
                                         fill="currentColor"
                                       >
@@ -285,9 +287,8 @@ export default function NavigationBar() {
                   {brands.length > 0 && (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className={`h-4 w-4 transition-transform duration-300 transform ${
-                        isBrandsMenuOpen ? "rotate-[90]" : "-rotate-90"
-                      }`}
+                      className={`h-4 w-4 transition-transform duration-300 transform ${isBrandsMenuOpen ? "rotate-[90]" : "-rotate-90"
+                        }`}
                       viewBox="0 0 20 20"
                       fill="currentColor"
                     >
@@ -343,9 +344,8 @@ export default function NavigationBar() {
         <div className="flex ml-auto">
           <div className="flex justify-end items-center uppercase text-sm gap-x-1">
             <span
-              className={`font-dosis px-3 py-2 text-[#3E445A] hover:bg-[#F0FAFF] hover:text-[#F16521] rounded-full cursor-pointer ${
-                pathName === "/" ? "bg-[#F0FAFF] text-[#F16521]" : ""
-              } duration-700`}
+              className={`font-dosis px-3 py-2 text-[#3E445A] hover:bg-[#F0FAFF] hover:text-[#F16521] rounded-full cursor-pointer ${pathName === "/" ? "bg-[#F0FAFF] text-[#F16521]" : ""
+                } duration-700`}
             >
               <Link href="/">Home</Link>
             </span>
@@ -370,9 +370,8 @@ export default function NavigationBar() {
               <div
                 onMouseEnter={() => setIsAllProductCategoriesOpen(true)}
                 onMouseLeave={() => setIsAllProductCategoriesOpen(false)}
-                className={`${
-                  isAllProductCategoriesOpen ? "block" : "hidden"
-                } group-hover:block absolute left-0 w-60 bg-white rounded-lg border border-gray-200 shadow-xl z-10 capitalize`}
+                className={`${isAllProductCategoriesOpen ? "block" : "hidden"
+                  } group-hover:block absolute left-0 w-60 bg-white rounded-lg border border-gray-200 shadow-xl z-10 capitalize`}
               >
                 <ul className="text-sm py-5 text-[#3E445A]">
                   {category
@@ -390,7 +389,10 @@ export default function NavigationBar() {
                       >
                         <Link
                           href={`/${categories?.slug}`}
-                          className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer"
+                          className={`flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer ${hoveredAlProductCategoryId === categories._id
+                            ? "text-[#F16521]"
+                            : "hover:text-[#F16521]"
+                            }`}
                         >
                           <span>{categories?.categoryName}</span>
 
@@ -398,11 +400,10 @@ export default function NavigationBar() {
                             categories?.subCategories.length > 0 && (
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                className={`h-4 w-4 transition-transform duration-300 transform ${
-                                  hoveredAlProductCategoryId === categories._id
-                                    ? "rotate-[90]"
-                                    : "-rotate-90"
-                                }`}
+                                className={`h-4 w-4 transition-transform duration-300 transform ${hoveredAlProductCategoryId === categories._id
+                                  ? "rotate-[90]"
+                                  : "-rotate-90"
+                                  }`}
                                 viewBox="0 0 20 20"
                                 fill="currentColor"
                               >
@@ -434,7 +435,10 @@ export default function NavigationBar() {
                                   <div className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer">
                                     <Link
                                       href={`/${categories?.slug}/${category?.slug}`}
-                                      className="flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer"
+                                      className={`flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer ${hoveredSubProductCategoryId === category._id
+                                        ? "text-[#F16521]"
+                                        : "hover:text-[#F16521]"
+                                        }`}
                                     >
                                       <span>{category?.categoryName}</span>
 
@@ -442,12 +446,11 @@ export default function NavigationBar() {
                                         category?.subCategories.length > 0 && (
                                           <svg
                                             xmlns="http://www.w3.org/2000/svg"
-                                            className={`h-4 w-4 transition-transform duration-300 transform ${
-                                              hoveredSubProductCategoryId ===
+                                            className={`h-4 w-4 transition-transform duration-300 transform ${hoveredSubProductCategoryId ===
                                               category._id
-                                                ? "rotate-[90]"
-                                                : "-rotate-90"
-                                            }`}
+                                              ? "rotate-[90]"
+                                              : "-rotate-90"
+                                              }`}
                                             viewBox="0 0 20 20"
                                             fill="currentColor"
                                           >
@@ -502,9 +505,8 @@ export default function NavigationBar() {
               </div>
             </div>
             <span
-              className={`font-dosis text-[#3E445A] hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer ${
-                pathName === "/shop" ? "bg-[#F0FAFF] text-[#F16521]" : ""
-              } duration-700`}
+              className={`font-dosis text-[#3E445A] hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer ${pathName === "/shop" ? "bg-[#F0FAFF] text-[#F16521]" : ""
+                } duration-700`}
             >
               <Link href="/shop">All Products</Link>
             </span>
@@ -522,13 +524,12 @@ export default function NavigationBar() {
               <button
                 onMouseEnter={() => setIsOrderMenuOpen(true)}
                 onMouseLeave={() => setIsOrderMenuOpen(false)}
-                className={`flex justify-start items-center font-dosis text-[#3E445A] group-hover:bg-[#F0FAFF] group-hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer ${
-                  pathName === "/my-account" ||
+                className={`flex justify-start items-center font-dosis text-[#3E445A] group-hover:bg-[#F0FAFF] group-hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer ${pathName === "/my-account" ||
                   pathName === "/my-account/orders" ||
                   pathName === "/my-account/wishlist"
-                    ? "bg-[#F0FAFF] text-[#F16521]"
-                    : ""
-                } duration-700 uppercase`}
+                  ? "bg-[#F0FAFF] text-[#F16521]"
+                  : ""
+                  } duration-700 uppercase`}
               >
                 Your Order
                 <Image
@@ -539,9 +540,8 @@ export default function NavigationBar() {
               </button>
               <div
                 onMouseLeave={() => setIsOrderMenuOpen(false)}
-                className={`${
-                  isOrderMenuOpen ? "block" : "hidden"
-                } group-hover:block absolute left-0 w-64 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
+                className={`${isOrderMenuOpen ? "block" : "hidden"
+                  } group-hover:block absolute left-0 w-64 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
               >
                 <ul className="text-sm capitalize text-[#3E445A]">
                   <li className="py-2 px-3 hover:text-[#F16521] cursor-pointer">
