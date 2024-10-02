@@ -118,11 +118,11 @@ export default function CompareProduct({ open, setOpen, currentProduct }) {
                 </tr>
                 <tr>
                   <td className="border px-5 py-2">Product Name</td>
-                  <td className="border px-5 py-2">
+                  <td className="border px-5 py-2 text-nowrap md:text-balance">
                     {currentProduct?.productName}
                   </td>
                   {similarProducts.map((product, index) => (
-                    <td key={index} className="border px-5 py-2">
+                    <td key={index} className="border px-5 py-2 text-nowrap md:text-balance">
                       {product?.productName}
                     </td>
                   ))}

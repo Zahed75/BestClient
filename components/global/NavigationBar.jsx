@@ -152,15 +152,15 @@ export default function NavigationBar() {
             onMouseEnter={() => setIsAllCategoriesOpen(true)}
             onMouseLeave={() => setIsAllCategoriesOpen(false)}
             className={`${isAllCategoriesOpen ? "block" : "hidden"
-              } group-hover:block absolute left-0 w-60 bg-white rounded-lg border border-gray-200 shadow-xl z-10`}
+              } group-hover:block absolute left-0 w-auto min-w-52 h-96 bg-white rounded-lg border border-gray-200 shadow-xl z-10 flex flex-col`}
           >
-            <ul className="text-sm py-5 text-[#3E445A]">
+            <ul className="text-sm py-5 text-[#3E445A] w-full">
               {category
                 .filter((categories) => !categories.subCategories?.categoryName)
                 .map((categories) => (
                   <li
                     key={categories?._id}
-                    className="py-2 px-3 relative"
+                    className="py-2 px-3 flex justify-between items-center group cursor-pointer"
                     onMouseEnter={() => setHoveredCategoryId(categories?._id)}
                     onMouseLeave={() => setHoveredCategoryId(null)}
                   >
@@ -195,14 +195,14 @@ export default function NavigationBar() {
                     {hoveredCategoryId === categories._id &&
                       categories?.subCategories &&
                       categories?.subCategories.length > 0 && (
-                        <ul className="absolute left-full top-0 mt-0 py-5 w-auto min-w-52 bg-white rounded-lg border border-gray-200 shadow-xl">
+                        <ul className="absolute top-0 left-full mt-0 py-5 w-auto min-w-52 h-96 bg-white rounded-lg border border-gray-200 shadow-xl">
                           {categories.subCategories.map((category) => (
                             <li
                               onMouseEnter={() =>
                                 setHoveredSubCategoryId(category._id)
                               }
                               onMouseLeave={() => setHoveredSubCategoryId(null)}
-                              className="py-2 px-3 cursor-pointer relative"
+                              className="py-2 px-3 flex justify-between items-center group cursor-pointer"
                               key={category?._id}
                             >
                               <div className={`flex items-center justify-between w-full hover:text-[#F16521] cursor-pointer ${hoveredSubCategoryId === category._id
@@ -245,7 +245,7 @@ export default function NavigationBar() {
                                     onMouseLeave={() =>
                                       setHoveredSubCategoryId(null)
                                     }
-                                    className="absolute left-full top-0 px-3 py-5 w-auto min-w-52 bg-white rounded-lg border border-gray-200 shadow-xl"
+                                    className="absolute top-0 left-full px-3 py-5 w-auto min-w-52 h-96 bg-white rounded-lg border border-gray-200 shadow-xl"
                                   >
                                     {category.subCategories.map(
                                       (subCategory) => (
