@@ -302,7 +302,7 @@ export default function BottomNavigation() {
             <ul className="my-5">
               {navigationLink.map((link, i) => (
                 <li
-                  className={`font-dosis py-2 border-b ${i === 0 ? "border-t" : ""}`}
+                  className={`py-2 border-b ${i === 0 ? "border-t" : ""}`}
                   key={i}
                 >
                   {link.link ? (
@@ -316,7 +316,7 @@ export default function BottomNavigation() {
                     <div>
                       <div
                         onClick={() => setCategoryProduct(!categoryProduct)}
-                        className="flex items-center justify-between w-full text-gray-500 hover:text-[#F16521] duration-700"
+                        className="font-dosis flex items-center justify-between w-full text-gray-500 hover:text-[#F16521] duration-700"
                       >
                         {link.title}
                         <span>
@@ -335,7 +335,7 @@ export default function BottomNavigation() {
                         </span>
                       </div>
                       {categoryProduct && (
-                        <div className="font-inter bg-white px-3 transition-all duration-700">
+                        <div className="bg-white px-3 transition-all duration-700">
                           <ul>
                             {category.filter((categories) => !categories.subCategories?.categoryName).map((categories) => (
                               <li key={categories?._id} className="py-2">
