@@ -61,7 +61,7 @@ export default function Footer_2() {
                         Need Help?
                     </h2>
                     <ul className="text-[#3E445A]">
-                        <li className="mt-5 text-[#3E445A]">
+                        <li className="mt-1 text-[#3E445A]">
                             <Link
                                 href=" "
                                 className="text-[15px] hover:underline duration-700 font-inter"
@@ -69,28 +69,28 @@ export default function Footer_2() {
                                 Help & FAQs
                             </Link>
                         </li>
-                        <li className="mt-5 text-[#3E445A]">
+                        <li className="mt-1 text-[#3E445A]">
                             <Link
                                 href=" "
                                 className="text-[15px] hover:underline duration-700 font-inter"
                             >Contact us
                             </Link>
                         </li>
-                        <li className="mt-5 text-[#3E445A]">
+                        <li className="mt-1 text-[#3E445A]">
                             <Link
                                 href=" "
                                 className="text-[15px] hover:underline duration-700 font-inter"
                             >   Store finder
                             </Link>
                         </li>
-                        <li className="mt-5 text-[#3E445A]">
+                        <li className="mt-1 text-[#3E445A]">
                             <Link
                                 href=" "
                                 className="text-[15px] hover:underline duration-700 font-inter"
                             >   Account
                             </Link>
                         </li>
-                        <li className="mt-5 text-[#3E445A]">
+                        <li className="mt-1 text-[#3E445A]">
                             <Link
                                 href=" "
                                 className="font-inter text-[15px] hover:underline duration-700"
@@ -105,7 +105,7 @@ export default function Footer_2() {
                             Delivery & Returns
                         </h2>
                         <ul className="text-[#3E445A]">
-                            <li className="mt-5 text-[#3E445A]">
+                            <li className="mt-1 text-[#3E445A]">
                                 <Link
                                     href=" "
                                     className="font-inter text-[15px] hover:underline duration-700"
@@ -113,14 +113,14 @@ export default function Footer_2() {
                                     Delivery & collection
                                 </Link>
                             </li>
-                            <li className="mt-5 text-[#3E445A]">
+                            <li className="mt-1 text-[#3E445A]">
                                 <Link
                                     href=" "
                                     className="font-inter text-[15px] hover:underline duration-700"
                                 >   Returns & refunds
                                 </Link>
                             </li>
-                            <li className="mt-5 text-[#3E445A]">
+                            <li className="mt-1 text-[#3E445A]">
                                 <Link
                                     href=" "
                                     className="font-inter text-[15px] hover:underline duration-700"
@@ -130,11 +130,11 @@ export default function Footer_2() {
                         </ul>
                     </div>
                     <div className="flex flex-col items-start mb-5 w-full">
-                        <h2 className="text-[23px] text-[#3E445A] font-dosis mt-5">
+                        <h2 className="text-[23px] text-[#3E445A] font-dosis mt-2">
                             Product Care
                         </h2>
                         <ul>
-                            <li className="mt-5 text-[#3E445A]">
+                            <li className="mt-1 text-[#3E445A]">
                                 <Link
                                     href=" "
                                     className="font-inter text-[15px] hover:underline duration-700"
@@ -142,21 +142,21 @@ export default function Footer_2() {
                                     Best Electronics Care
                                 </Link>
                             </li>
-                            <li className="mt-5 text-[#3E445A]">
+                            <li className="mt-1 text-[#3E445A]">
                                 <Link
                                     href=" "
                                     className="font-inter text-[15px] hover:underline duration-700"
                                 >   Product Support
                                 </Link>
                             </li>
-                            <li className="mt-5 text-[#3E445A]">
+                            <li className="mt-1 text-[#3E445A]">
                                 <Link
                                     href=" "
                                     className="font-inter text-[15px] hover:underline duration-700"
                                 >   Product recall
                                 </Link>
                             </li>
-                            <li className="mt-5 text-[#3E445A]">
+                            <li className="mt-1 text-[#3E445A]">
                                 <Link
                                     href=" "
                                     className="font-inter text-[15px] hover:underline duration-700"
@@ -171,7 +171,7 @@ export default function Footer_2() {
                         Payment & Services
                     </h2>
                     <ul>
-                        <li className="mt-5 text-[#3E445A]">
+                        <li className="mt-1 text-[#3E445A]">
                             <Link
                                 href=" "
                                 className="font-inter text-[15px] hover:underline duration-700"
@@ -179,21 +179,21 @@ export default function Footer_2() {
                                 Payment types
                             </Link>
                         </li>
-                        <li className="mt-5 text-[#3E445A]">
+                        <li className="mt-1 text-[#3E445A]">
                             <Link
                                 href=" "
                                 className="font-inter text-[15px] hover:underline duration-700"
                             >   Gift cards
                             </Link>
                         </li>
-                        <li className="mt-5 text-[#3E445A]">
+                        <li className="mt-1 text-[#3E445A]">
                             <Link
                                 href=" "
                                 className="font-inter text-[15px] hover:underline duration-700"
                             >   eGift Card Rewards
                             </Link>
                         </li>
-                        <li className="mt-5 text-[#3E445A]">
+                        <li className="mt-1 text-[#3E445A]">
                             <Link
                                 href=" "
                                 className="font-inter text-[15px] hover:underline duration-700"
@@ -201,21 +201,21 @@ export default function Footer_2() {
                                 Best Electronics Card
                             </Link>
                         </li>
-                        <li className="mt-5 text-[#3E445A]">
+                        <li className="mt-1 text-[#3E445A]">
                             <Link
                                 href=" "
                                 className="font-inter text-[15px] hover:underline duration-700"
                             >   Nectar at Best Electronics
                             </Link>
                         </li>
-                        <li className="mt-5 text-[#3E445A]">
+                        <li className="mt-1 text-[#3E445A]">
                             <Link
                                 href=" "
                                 className="font-inter text-[15px] hover:underline duration-700"
                             >   Pet Insurance
                             </Link>
                         </li>
-                        <li className="mt-5 text-[#3E445A]">
+                        <li className="mt-1 text-[#3E445A]">
                             <Link
                                 href=" "
                                 className="font-inter text-[15px] hover:underline duration-700"
@@ -229,7 +229,7 @@ export default function Footer_2() {
                         About Best Electronics
                     </h2>
                     <ul className="items-start">
-                        <li className="mt-5 text-[#3E445A]">
+                        <li className="mt-1 text-[#3E445A]">
                             <Link
                                 href=" "
                                 className="font-inter text-[15px] hover:underline duration-700"
@@ -237,28 +237,28 @@ export default function Footer_2() {
                                 About us
                             </Link>
                         </li>
-                        <li className="mt-5 text-[#3E445A]">
+                        <li className="mt-1 text-[#3E445A]">
                             <Link
                                 href=" "
                                 className="font-inter text-[15px] hover:underline duration-700"
                             >   Best Electronics for Business
                             </Link>
                         </li>
-                        <li className="mt-5 text-[#3E445A]">
+                        <li className="mt-1 text-[#3E445A]">
                             <Link
                                 href=" "
                                 className="font-inter text-[15px] hover:underline duration-700"
                             >   Careers
                             </Link>
                         </li>
-                        <li className="mt-5 text-[#3E445A]">
+                        <li className="mt-1 text-[#3E445A]">
                             <Link
                                 href=" "
                                 className="font-inter text-[15px] hover:underline duration-700"
                             >   Press enquiries
                             </Link>
                         </li>
-                        <li className="mt-5 text-[#3E445A]">
+                        <li className="mt-1 text-[#3E445A]">
                             <Link
                                 href=" "
                                 className="font-inter text-[15px] hover:underline duration-700"
