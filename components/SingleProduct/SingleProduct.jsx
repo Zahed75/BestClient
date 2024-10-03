@@ -18,6 +18,8 @@ import { addRelatedProduct } from "@/redux/slice/relatedSlice";
 import { fetchBrands } from "@/redux/slice/brandSlice";
 import { fetchApi } from "@/utils/FetchApi";
 import { usePathname } from "next/navigation";
+import shopSvg from "@/public/images/shop-svgrepo.svg";
+import deliverySvg from "@/public/images/delivery-van.svg";
 
 export default function SingleProduct({ product, categoryName }) {
   const [favorite, setFavorite] = useState(false);
@@ -164,19 +166,22 @@ export default function SingleProduct({ product, categoryName }) {
             <div className="my-5 md:w-full lg:w-1/3 ">
               <p
                 className={`
-                ${product?.inventory?.stockStatus === "In Stock"
+                ${
+                  product?.inventory?.stockStatus === "In Stock"
                     ? "text-[#70BE38] bg-[#E5F8ED]"
                     : "text-red-400 bg-red-100"
-                  }  text-xs font-semibold px-3 py-1 inline-block rounded-full
+                }  text-xs font-semibold px-3 py-1 inline-block rounded-full
                 `}
               >
                 {product?.inventory?.stockStatus}
               </p>
               <p className="text-[#202435] font-semibold my-2">
-                MRP Price: ৳{product?.general?.regularPrice.toLocaleString('en-BD')}
+                MRP Price: ৳
+                {product?.general?.regularPrice.toLocaleString("en-BD")}
               </p>
               <p className="text-[#F16521] font-semibold mb-2">
-                Offer Price: ৳{product?.general?.salePrice.toLocaleString('en-BD')}
+                Offer Price: ৳
+                {product?.general?.salePrice.toLocaleString("en-BD")}
               </p>
               <section
                 className="my-5 min-h-48 [&_ul]:list-disc [&_ol]:list-decimal [&_li]:ml-10"
@@ -185,14 +190,102 @@ export default function SingleProduct({ product, categoryName }) {
                 }}
               />
 
+              <div className="my-10">
+                <div className="mb-2 flex items-center justify-between text-sm">
+                  <span className="font-semibold">How to get it</span>
+                  <Link href="/cart" className="underline">
+                    Change store
+                  </Link>
+                </div>
+                <div className="border rounded-md text-sm p-3 default-transition divide-y-2 divide-gray-300 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-start gap-3">
+                      <div className="w-10">
+                        <Image
+                          src={deliverySvg}
+                          alt="delivery Icon"
+                          className="w-8 flex mx-auto"
+                        />
+                      </div>
+
+                      <div className="flex flex-col items-start">
+                        <h6 className="font-semibold">Deliver to DDK</h6>
+                        <div className="flex items-center">
+                          <div className="w-3 h-3 bg-[#70BE38] rounded-full mr-2"></div>
+                          <span>Available</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        className="w-5 h-5 text-gray-400"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between pt-3">
+                    <div className="flex items-start gap-3">
+                      <div className="w-10">
+                        <Image
+                          src={shopSvg}
+                          alt="Shop Icon"
+                          className="w-6 flex mx-auto"
+                        />
+                      </div>
+
+                      <div className="flex flex-col items-start">
+                        <h6 className="font-semibold">Dhaka Dokhhin Khan</h6>
+                        <div className="flex items-center">
+                          <div className="w-3 h-3 bg-[#70BE38] rounded-full mr-2"></div>
+                          <span>Click and collect - Available</span>
+                        </div>
+                        <div className="flex items-center">
+                          <div className="w-3 h-3 bg-[#70BE38] rounded-full mr-2"></div>
+                          <span>Store - In Stock</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        className="w-5 h-5 text-gray-400"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div className="flex justify-start items-center border-b-2 pb-10">
                 <button
                   onClick={() => {
                     dispatch(addToWishlist(product));
                   }}
                   disabled={favorite}
-                  className={`text-xs text-[#9B9BB4] border px-3 py-2 rounded-full flex justify-center items-center uppercase ${favorite ? "cursor-not-allowed" : "cursor-pointer"
-                    }`}
+                  className={`text-xs text-[#9B9BB4] border px-3 py-2 rounded-full flex justify-center items-center uppercase ${
+                    favorite ? "cursor-not-allowed" : "cursor-pointer"
+                  }`}
                 >
                   <svg
                     width="20"

@@ -67,10 +67,10 @@ export default function ShowCart() {
   const discount = discounts?.discount || 0;
   const totalProductPrice = Array.isArray(cart)
     ? cart.reduce((acc, item) => {
-      const price =
-        discount > 0 ? item.general.regularPrice : item.general.salePrice;
-      return acc + price * item.quantity;
-    }, 0)
+        const price =
+          discount > 0 ? item.general.regularPrice : item.general.salePrice;
+        return acc + price * item.quantity;
+      }, 0)
     : 0;
 
   const totalPrice = totalProductPrice - discount;
@@ -129,7 +129,10 @@ export default function ShowCart() {
                 </svg>
                 <p className="font-semibold">Delivery To Home</p>
               </button>
-              <button className="flex justify-center items-center gap-5 py-2 px-3 border-2 border-[#71778E] text-[#71778E] rounded-md w-full" onClick={toggleFilterDrawer(true)}>
+              <button
+                className="flex justify-center items-center gap-5 py-2 px-3 border-2 border-[#71778E] text-[#71778E] rounded-md w-full"
+                onClick={toggleFilterDrawer(true)}
+              >
                 <svg
                   width="25"
                   height="24"
@@ -196,7 +199,9 @@ export default function ShowCart() {
             <div className="my-5">
               <div className="flex justify-between items-center my-3">
                 <p>Products price</p>
-                <p className="font-semibold">৳{totalProductPrice.toLocaleString('en-BD')}</p>
+                <p className="font-semibold">
+                  ৳{totalProductPrice.toLocaleString("en-BD")}
+                </p>
               </div>
               <div className="flex justify-between items-center my-3">
                 <p>VAT</p>
@@ -205,7 +210,11 @@ export default function ShowCart() {
               <div className="border"></div>
               <div className="flex justify-between items-center my-3">
                 <p>Total (Incl. VAT)</p>
-                {cart && <p className="font-semibold">৳{totalPrice.toLocaleString('en-BD')}</p>}
+                {cart && (
+                  <p className="font-semibold">
+                    ৳{totalPrice.toLocaleString("en-BD")}
+                  </p>
+                )}
               </div>
             </div>
           ) : (
@@ -294,13 +303,103 @@ export default function ShowCart() {
               </button>
             </div>
 
-            <h2 className="text-lg text-gray-800 mb-4">Choose From Available Stores</h2>
+            <h2 className="text-lg text-gray-800 mb-4">
+              Choose From Available Stores
+            </h2>
+
+            <div className="mb-4">
+              <div className="grid grid-cols-3 justify-center items-center gap-3 text-sm">
+                <div className="relative">
+                  <button className="w-full flex items-center justify-between bg-gray-200 px-2 py-2 rounded-full text-gray-700 hover:bg-gray-300">
+                    <span>Sort</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      className="w-4 h-4"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </button>
+
+                  <div className="absolute left-0 mt-2 w-full bg-white border rounded-lg shadow-lg z-10 hidden">
+                    <label className="block px-4 py-2 text-sm text-gray-700">
+                      <input type="checkbox" className="mr-2" /> Available Now
+                    </label>
+                  </div>
+                </div>
+
+                <div className="relative">
+                  <button className="w-full flex items-center justify-between bg-gray-200 px-2 py-2 rounded-full text-gray-700 hover:bg-gray-300">
+                    <span>Material </span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      className="w-4 h-4"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </button>
+
+                  <div className="absolute left-0 mt-2 w-full bg-white border rounded-lg shadow-lg z-10 hidden">
+                    <label className="block px-4 py-2 text-sm text-gray-700">
+                      <input type="checkbox" className="mr-2" /> Within 5 km
+                    </label>
+                  </div>
+                </div>
+
+                <div className="relative">
+                  <button className="w-full flex items-center justify-between bg-gray-200 px-2 py-2 rounded-full  text-gray-700 hover:bg-gray-300">
+                    <span>Size</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      className="w-4 h-4"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </button>
+
+                  <div className="absolute left-0 mt-2 w-full bg-white border rounded-lg shadow-lg z-10 hidden">
+                    <label className="block px-4 py-2 text-sm text-gray-700">
+                      <input type="checkbox" className="mr-2" /> Discount
+                      Available
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="space-y-4">
               <div className="p-4 bg-gray-100 border-2 border-black rounded-lg text-gray-500">
                 <div className="flex flex-col items-start justify-between">
                   <div>
-                    <h3 className="font-inter font-semibold text-[16px] text-[#202435]">BEL Banani</h3>
-                    <p className="font-inter text-[14px] text-[#202435]">Road-02, Banani Dhaka</p>
+                    <h3 className="font-inter font-semibold text-[16px] text-[#202435]">
+                      BEL Banani
+                    </h3>
+                    <p className="font-inter text-[14px] text-[#202435]">
+                      Road-02, Banani Dhaka
+                    </p>
                   </div>
                   <div className="flex items-start space-x-2 mt-3">
                     <span className="h-4 w-4 bg-green-500 rounded-full"></span>
@@ -311,8 +410,12 @@ export default function ShowCart() {
               <div className="p-4 border rounded-lg bg-gray-100">
                 <div className="flex flex-col items-start justify-between">
                   <div>
-                    <h3 className="font-inter font-semibold text-[16px] text-[#202435]">BEL Banani</h3>
-                    <p className="font-inter text-[14px] text-[#202435]">Road-02, Banani Dhaka</p>
+                    <h3 className="font-inter font-semibold text-[16px] text-[#202435]">
+                      BEL Banani
+                    </h3>
+                    <p className="font-inter text-[14px] text-[#202435]">
+                      Road-02, Banani Dhaka
+                    </p>
                   </div>
                   <div className="flex items-start space-x-2 mt-3">
                     <span className="h-4 w-4 bg-green-500 rounded-full"></span>
@@ -323,12 +426,18 @@ export default function ShowCart() {
               <div className="p-3 border rounded-lg bg-gray-100">
                 <div className="flex flex-col items-start justify-between">
                   <div>
-                    <h3 className="font-inter font-semibold text-[16px] text-[#202435]">BEL Banani</h3>
-                    <p className="font-inter text-[14px] text-[#202435]">Road-02, Banani Dhaka</p>
+                    <h3 className="font-inter font-semibold text-[16px] text-[#202435]">
+                      BEL Banani
+                    </h3>
+                    <p className="font-inter text-[14px] text-[#202435]">
+                      Road-02, Banani Dhaka
+                    </p>
                   </div>
                   <div className="flex items-start space-x-2 mt-3">
                     <span className="h-4 w-4 bg-red-500 rounded-full"></span>
-                    <span className="text-sm text-[#202435]">Not Available</span>
+                    <span className="text-sm text-[#202435]">
+                      Not Available
+                    </span>
                   </div>
                 </div>
               </div>
@@ -341,9 +450,7 @@ export default function ShowCart() {
             </button>
           </div>
         </Box>
-
       </Drawer>
     </section>
-
   );
 }

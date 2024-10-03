@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, updateQuantity } from "@/redux/slice/cartSlice";
 import { motion, AnimatePresence } from "framer-motion";
 import { fetchApi } from "@/utils/FetchApi";
+import { usePathname } from "next/navigation";
 
 export default function ProductCard({ product }) {
   const [productImage, setProductImage] = useState("");
@@ -13,7 +14,7 @@ export default function ProductCard({ product }) {
   const [subCategory, setSubCategory] = useState([]);
 
   const cart = useSelector((state) => state.cart.items);
-
+  const pathName = usePathname();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -150,16 +151,18 @@ export default function ProductCard({ product }) {
           <div className="mt-5 text-slate-500 text-[13px] md:text-[14px]">
             <div className=" ">
               Offer Price:{" "}
-              <span className="font-extrabold text-black ml-1">
-                ৳{product?.general?.salePrice.toLocaleString("en-BD")}
+              <span className="font-bold text-black ml-1">
+                ৳ {product?.general?.salePrice.toLocaleString("en-BD")}
               </span>{" "}
             </div>
             <div className="">
               M.R.P:
-              <del className="ml-1">৳{product?.general?.regularPrice.toLocaleString('en-BD')}</del>
+              <del className="ml-1">
+                ৳ {product?.general?.regularPrice.toLocaleString("en-BD")}
+              </del>
             </div>
             <div className="flex justify-start items-center text-nowrap">
-              Your Save:
+              You Save:
               <div className="ml-1 flex justify-start items-center">
                 {product?.general?.salePrice ? (
                   <p className="font-semibold">
@@ -169,21 +172,23 @@ export default function ProductCard({ product }) {
                         product?.general?.regularPrice) *
                       100
                     ).toFixed(1)}
-                    %
+                    %{" "}
                   </p>
                 ) : (
                   <></>
                 )}
-                <p>
+                <p className="ml-1">
                   (৳
-                  {(product?.general?.regularPrice - product?.general?.salePrice).toLocaleString('en-BD')}
+                  {(
+                    product?.general?.regularPrice - product?.general?.salePrice
+                  ).toLocaleString("en-BD")}
                   )
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="mt-5 w-full text-[14px]">
+          <div className={`mt-5 w-full text-[14px] ${pathName === "/" ? "hidden" : ""}`}>
             <AnimatePresence mode="wait">
               {isInCart ? (
                 <motion.div
