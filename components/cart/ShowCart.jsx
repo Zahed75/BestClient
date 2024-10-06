@@ -69,10 +69,10 @@ export default function ShowCart() {
   const discount = discounts?.discount || 0;
   const totalProductPrice = Array.isArray(cart)
     ? cart.reduce((acc, item) => {
-        const price =
-          discount > 0 ? item.general.regularPrice : item.general.salePrice;
-        return acc + price * item.quantity;
-      }, 0)
+      const price =
+        discount > 0 ? item.general.regularPrice : item.general.salePrice;
+      return acc + price * item.quantity;
+    }, 0)
     : 0;
 
   const totalPrice = totalProductPrice - discount;
@@ -298,7 +298,7 @@ export default function ShowCart() {
           </div>
         </div>
       </div>
-      <Drawer anchor="right" open={open} onClose={toggleFilterDrawer(false)}>
+      {/* <Drawer anchor="right" open={open} onClose={toggleFilterDrawer(false)}>
         <Box
           role="presentation"
           className="w-[378px] bg-[#F3F4F7] h-full flex flex-col justify-between"
@@ -525,7 +525,7 @@ export default function ShowCart() {
             </button>
           </div>
         </Box>
-      </Drawer>
+      </Drawer> */}
     </section>
   );
 }
