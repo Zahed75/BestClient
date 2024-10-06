@@ -9,13 +9,14 @@ import { fetchApi } from "@/utils/FetchApi";
 import { useEffect, useState } from "react";
 import { Box, Drawer } from "@mui/material";
 import { addDiscount } from "@/redux/slice/discountSlice";
+import { openOutletDrawer } from "@/redux/slice/outletSlice";
 export default function ShowCart() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [openDropdown, setOpenDropdown] = useState(null);
-  const [showDetails, setShowDetails] = useState(false);
+
 
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.items) || [];
@@ -69,10 +70,10 @@ export default function ShowCart() {
   const discount = discounts?.discount || 0;
   const totalProductPrice = Array.isArray(cart)
     ? cart.reduce((acc, item) => {
-      const price =
-        discount > 0 ? item.general.regularPrice : item.general.salePrice;
-      return acc + price * item.quantity;
-    }, 0)
+        const price =
+          discount > 0 ? item.general.regularPrice : item.general.salePrice;
+        return acc + price * item.quantity;
+      }, 0)
     : 0;
 
   const totalPrice = totalProductPrice - discount;
@@ -138,7 +139,7 @@ export default function ShowCart() {
               </button>
               <button
                 className="flex justify-center items-center gap-5 py-2 px-3 border-2 border-[#71778E] text-[#71778E] rounded-md w-full"
-                onClick={toggleFilterDrawer(true)}
+                onClick={() => dispatch(openOutletDrawer())}
               >
                 <svg
                   width="25"
@@ -298,234 +299,6 @@ export default function ShowCart() {
           </div>
         </div>
       </div>
-      {/* <Drawer anchor="right" open={open} onClose={toggleFilterDrawer(false)}>
-        <Box
-          role="presentation"
-          className="w-[378px] bg-[#F3F4F7] h-full flex flex-col justify-between"
-        >
-          <div className="flex-grow p-3">
-            <div className="flex justify-end items-end mb-2">
-              <button className="inline-block hover:text-[#F16521] duration-700" onClick={toggleDrawer(false)}>
-                <CloseIcon />
-              </button>
-            </div>
-            {!showDetails && (
-              <div>
-                <h2 className="text-lg text-gray-800 mb-4">
-                  Choose From Available Stores
-                </h2>
-                <div className="mb-4">
-                  <div className="grid grid-cols-3 justify-center items-center gap-3 text-sm">
-                    <div className="relative">
-                      <button
-                        className="w-full flex items-center justify-between bg-gray-200 px-2 py-2 rounded-full text-gray-700 hover:bg-gray-300"
-                        onClick={() => toggleDropdown("sort")}
-                      >
-                        <span>Sort</span>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          className="w-4 h-4"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M19 9l-7 7-7-7"
-                          />
-                        </svg>
-                      </button>
-                      {openDropdown === "sort" && (
-                        <div className="absolute left-0 mt-2 w-full bg-white border rounded-lg shadow-lg z-10">
-                          <label className="block px-4 py-2 text-sm text-gray-700 hover:text-[#F26522] duration-700">
-                            Available Now
-                          </label>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="relative">
-                      <button
-                        className="w-full flex items-center justify-between bg-gray-200 px-2 py-2 rounded-full text-gray-700 hover:bg-gray-300"
-                        onClick={() => toggleDropdown("material")}
-                      >
-                        <span>Material</span>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          className="w-4 h-4"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M19 9l-7 7-7-7"
-                          />
-                        </svg>
-                      </button>
-                      {openDropdown === "material" && (
-                        <div className="absolute left-0 mt-2 w-full bg-white border rounded-lg shadow-lg z-10">
-                          <label className="block px-4 py-2 text-sm text-gray-700 hover:text-[#F26522] duration-700">
-                            Within 5 km
-                          </label>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="relative">
-                      <button
-                        className="w-full flex items-center justify-between bg-gray-200 px-2 py-2 rounded-full  text-gray-700 hover:bg-gray-300"
-                        onClick={() => toggleDropdown("size")}
-                      >
-                        <span>Size</span>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          className="w-4 h-4"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M19 9l-7 7-7-7"
-                          />
-                        </svg>
-                      </button>
-                      {openDropdown === "size" && (
-                        <div className="absolute left-0 mt-2 w-full bg-white border rounded-lg shadow-lg z-10">
-                          <label className="block px-4 py-2 text-sm text-gray-700 hover:text-[#F26522] duration-700">
-                            Discount Available
-                          </label>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <div
-                    onClick={() => setShowDetails(true)}
-                    className="p-4 border-2 rounded-lg bg-gray-100  hover:border-[#F16521] duration-700 cursor-pointer"
-                  >
-                    <div className="flex flex-col items-start justify-between">
-                      <div>
-                        <h3 className="font-inter font-semibold text-[16px] text-[#202435]">
-                          BEL Banani
-                        </h3>
-                        <p className="font-inter text-[14px] text-[#202435]">
-                          Road-02, Banani Dhaka
-                        </p>
-                      </div>
-                      <div className="flex items-center space-x-2 mt-3">
-                        <span className="h-4 w-4 bg-green-500 rounded-full"></span>
-                        <span className="text-sm text-[#202435]">
-                          Available
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    onClick={() => setShowDetails(true)}
-                    className="p-4 border-2 rounded-lg bg-gray-100 hover:border-[#F16521] duration-700 cursor-pointer"
-                  >
-                    <div className="flex flex-col items-start justify-between">
-                      <div>
-                        <h3 className="font-inter font-semibold text-[16px] text-[#202435]">
-                          BEL Banani
-                        </h3>
-                        <p className="font-inter text-[14px] text-[#202435]">
-                          Road-02, Banani Dhaka
-                        </p>
-                      </div>
-                      <div className="flex items-center space-x-2 mt-3">
-                        <span className="h-4 w-4 bg-green-500 rounded-full"></span>
-                        <span className="text-sm text-[#202435]">
-                          Available
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    onClick={() => setShowDetails(true)}
-                    className="p-3 border-2 rounded-lg bg-gray-100 hover:border-[#F16521] duration-700 cursor-pointer"
-                  >
-                    <div className="flex flex-col items-start justify-between">
-                      <div>
-                        <h3 className="font-inter font-semibold text-[16px] text-[#202435]">
-                          BEL Banani
-                        </h3>
-                        <p className="font-inter text-[14px] text-[#202435]">
-                          Road-02, Banani Dhaka
-                        </p>
-                      </div>
-                      <div className="flex items-center space-x-2 mt-3">
-                        <span className="h-4 w-4 bg-red-500 rounded-full"></span>
-                        <span className="text-sm text-[#202435]">
-                          Not Available
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-            {showDetails && (
-              <div>
-                <h2 className="text-lg font-bold mb-4">DDK Banani</h2>
-
-                <div className="text-md my-5">
-                  <span className="font-semibold">Open until 10:00 PM</span>{" "}
-                  <br />
-                  <span className="">15/2 Nursery Street, Dhaka</span> <br />
-                </div>
-
-                <div className="my-10">
-                  <span
-                    onClick={() => setShowDetails(false)}
-                    className="text-md font-semibold underline cursor-pointer hover:text-[#F26522] duration-700"
-                  >
-                    select a different store
-                  </span>
-                </div>
-
-                <div className="text-md my-5">
-                  <span className="font-bold">Normal opening hours</span>{" "}
-                  <div className="grid grid-cols-2 gap-2 text-sm">
-                    <span>Mon - Fri</span>
-                    <span className="ml-5">10:00 AM - 10:00 PM</span>
-                    <span>Sat</span>
-                    <span className="ml-5">09:00 AM - 09:00 PM</span>
-                    <span>Sun</span>
-                    <span className="ml-5">09:00 AM - 07:00 PM</span>
-                  </div>
-                </div>
-
-                <div className="text-md mt-10">
-                  <span className="font-bold">Holiday hours</span>{" "}
-                  <div className="grid grid-cols-2 gap-2 text-sm">
-                    <span>2024-10-13</span>
-                    <span className="ml-5">09:00 AM - 09:00 PM</span>
-                    <span>2024-10-14</span>
-                    <span className="ml-5">Closed</span>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          <div className="mt-6 p-3">
-            <button className="w-full py-3 bg-[#F16521] text-white font-semibold rounded-lg hover:bg-[#F16521]">
-              Continue With Selection
-            </button>
-          </div>
-        </Box>
-      </Drawer> */}
     </section>
   );
 }

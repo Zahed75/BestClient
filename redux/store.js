@@ -9,6 +9,7 @@ import discountReducer from "./slice/discountSlice";
 import shopReducer from "./slice/shopSlice";
 import brandReducer from "./slice/brandSlice";
 import orderResponseReducer from "./slice/orderResponseSlice";
+import outletReducer from "./slice/outletSlice";
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     shop: shopReducer,
     brand: brandReducer,
     orderResponse: orderResponseReducer,
+    outlet: outletReducer,
   },
 });
 
