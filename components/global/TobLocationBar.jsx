@@ -6,11 +6,19 @@ import { Box, Drawer } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import shopSvg from "@/public/images/shop-svgrepo.svg";
 import deliverySvg from "@/public/images/delivery-van.svg";
+import { closeOutletDrawer, openOutletDrawer } from "@/redux/slice/outletSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function TopLocationBar() {
   const [open, setOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState(null);
+  const [openOutletDropdown, setOpenOutletDropdown] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
+
+  const dispatch = useDispatch();
+  const outletDrawerOpen = useSelector(
+    (state) => state.outlet.outletDrawerOpen
+  );
+
   const linkData = [
     { name: "My Account", url: "/my-account" },
     { name: "Wishlist", url: "/my-account/wishlist" },
@@ -26,7 +34,7 @@ export default function TopLocationBar() {
   };
 
   const toggleDropdown = (dropdown) => {
-    setOpenDropdown(openDropdown === dropdown ? null : dropdown);
+    setOpenOutletDropdown(openOutletDropdown === dropdown ? null : dropdown);
   };
 
   return (
@@ -48,7 +56,10 @@ export default function TopLocationBar() {
         </div>
         <div className="flex justify-end items-center gap-2 divide-x-2 w-full">
           <div className="flex justify-center gap-3 cursor-pointer">
-            <div className="flex justify-start items-center" onClick={toggleFilterDrawer(true)}>
+            <div
+              className="flex justify-start items-center"
+              onClick={() => dispatch(openOutletDrawer())}
+            >
               <Image
                 src={deliverySvg}
                 width={25}
@@ -85,14 +96,21 @@ export default function TopLocationBar() {
           </div>
         </div>
       </div>
-      <Drawer anchor="right" open={open} onClose={toggleFilterDrawer(false)}>
+      <Drawer
+        anchor="right"
+        open={outletDrawerOpen}
+        onClose={() => dispatch(closeOutletDrawer())}
+      >
         <Box
           role="presentation"
           className="w-[378px] bg-[#F3F4F7] h-full flex flex-col justify-between"
         >
           <div className="flex-grow p-3">
             <div className="flex justify-end items-end mb-2">
-              <button className="inline-block hover:text-[#F16521] duration-700" onClick={toggleDrawer(false)}>
+              <button
+                className="inline-block hover:text-[#F16521] duration-700"
+                onClick={() => dispatch(closeOutletDrawer())}
+              >
                 <CloseIcon />
               </button>
             </div>
@@ -124,7 +142,7 @@ export default function TopLocationBar() {
                           />
                         </svg>
                       </button>
-                      {openDropdown === "sort" && (
+                      {openOutletDropdown === "sort" && (
                         <div className="absolute left-0 mt-2 w-full bg-white border rounded-lg shadow-lg z-10">
                           <label className="block px-4 py-2 text-sm text-gray-700 hover:text-[#F26522] duration-700">
                             Available Now
@@ -154,7 +172,7 @@ export default function TopLocationBar() {
                           />
                         </svg>
                       </button>
-                      {openDropdown === "material" && (
+                      {openOutletDropdown === "material" && (
                         <div className="absolute left-0 mt-2 w-full bg-white border rounded-lg shadow-lg z-10">
                           <label className="block px-4 py-2 text-sm text-gray-700 hover:text-[#F26522] duration-700">
                             Within 5 km
@@ -184,7 +202,7 @@ export default function TopLocationBar() {
                           />
                         </svg>
                       </button>
-                      {openDropdown === "size" && (
+                      {openOutletDropdown === "size" && (
                         <div className="absolute left-0 mt-2 w-full bg-white border rounded-lg shadow-lg z-10">
                           <label className="block px-4 py-2 text-sm text-gray-700 hover:text-[#F26522] duration-700">
                             Discount Available
