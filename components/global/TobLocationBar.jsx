@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { Box, Drawer } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import shopSvg from "@/public/images/shop-svgrepo.svg";
-import deliverySvg from "@/public/images/delivery-van.svg";
+import shopSvg from "@/public/images/Retail.svg";
+import deliverySvg from "@/public/images/Delivery-01.svg";
 import { closeOutletDrawer, openOutletDrawer } from "@/redux/slice/outletSlice";
 import { useDispatch, useSelector } from "react-redux";
 
