@@ -68,13 +68,16 @@ export default function TopLocationBar() {
                 className="mr-2"
               />
               {/* To Locate Store:{" "} */}
-              Select area
+              Enter Area
               {/* <Link className="text-[#F16521]" href="/store-locator">
               <strong className="ml-1"> Click Here</strong>
             </Link> */}
             </div>
 
-            <div className="flex justify-start items-center">
+            <div
+              className="flex justify-start items-center"
+              onClick={() => dispatch(openOutletDrawer())}
+            >
               <Image
                 src={shopSvg}
                 width={18}
@@ -83,7 +86,7 @@ export default function TopLocationBar() {
                 className="mr-2"
               />
               {/* To Locate Store:{" "} */}
-              DDK Outlet
+              Select Showroom
               {/* <Link className="text-[#F16521]" href="/store-locator">
               <strong className="ml-1"> Click Here</strong>
             </Link> */}

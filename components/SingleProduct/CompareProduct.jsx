@@ -142,7 +142,7 @@ export default function CompareProduct({ open, setOpen, currentProduct }) {
                   <td className="border px-5 py-3 align-top"> Key Features</td>
 
                   <td
-                    className="border px-5 py-3 align-top "
+                    className="border px-5 py-3 align-top [&_ul]:list-disc [&_ol]:list-decimal [&_li]:ml-5"
                     dangerouslySetInnerHTML={{
                       __html:
                         currentProduct?.productShortDescription ||
@@ -153,7 +153,7 @@ export default function CompareProduct({ open, setOpen, currentProduct }) {
                   {similarProducts.map((product, index) => (
                     <td
                       key={index}
-                      className="border px-5 py-3 align-top "
+                      className="border px-5 py-3 align-top [&_ul]:list-disc [&_ol]:list-decimal [&_li]:ml-5"
                       dangerouslySetInnerHTML={{
                         __html:
                           product?.productShortDescription ||

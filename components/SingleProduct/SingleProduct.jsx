@@ -20,6 +20,7 @@ import { fetchApi } from "@/utils/FetchApi";
 import { usePathname } from "next/navigation";
 import shopSvg from "@/public/images/Retail.svg";
 import deliverySvg from "@/public/images/Delivery-01.svg";
+import { openOutletDrawer } from "@/redux/slice/outletSlice";
 
 export default function SingleProduct({ product, categoryName }) {
   const [favorite, setFavorite] = useState(false);
@@ -166,10 +167,11 @@ export default function SingleProduct({ product, categoryName }) {
             <div className="my-5 md:w-full lg:w-1/3 ">
               <p
                 className={`
-                ${product?.inventory?.stockStatus === "In Stock"
+                ${
+                  product?.inventory?.stockStatus === "In Stock"
                     ? "text-[#70BE38] bg-[#E5F8ED]"
                     : "text-red-400 bg-red-100"
-                  }  text-xs font-semibold px-3 py-1 inline-block rounded-full
+                }  text-xs font-semibold px-3 py-1 inline-block rounded-full
                 `}
               >
                 {product?.inventory?.stockStatus}
@@ -192,11 +194,14 @@ export default function SingleProduct({ product, categoryName }) {
               <div className="my-10">
                 <div className="mb-2 flex items-center justify-between text-sm">
                   <span className="font-semibold">How to get it</span>
-                  <Link href="/cart" className="underline">
+                  <button
+                    onClick={() => dispatch(openOutletDrawer())}
+                    className="underline"
+                  >
                     Change store
-                  </Link>
+                  </button>
                 </div>
-                <div className="border rounded-md text-sm p-3 default-transition divide-y-2 divide-gray-300 space-y-3">
+                <div className="border rounded-md text-sm p-3 default-transition divide-y-2 divide-gray-100 space-y-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-start gap-3">
                       <div className="w-10">
@@ -222,7 +227,8 @@ export default function SingleProduct({ product, categoryName }) {
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
-                        className="w-5 h-5 text-gray-400"
+                        className="w-5 h-5 text-gray-300 cursor-pointer"
+                        onClick={() => dispatch(openOutletDrawer())}
                       >
                         <path
                           strokeLinecap="round"
@@ -262,7 +268,8 @@ export default function SingleProduct({ product, categoryName }) {
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
-                        className="w-5 h-5 text-gray-400"
+                        className="w-5 h-5 text-gray-300 cursor-pointer"
+                        onClick={() => dispatch(openOutletDrawer())}
                       >
                         <path
                           strokeLinecap="round"
@@ -282,8 +289,9 @@ export default function SingleProduct({ product, categoryName }) {
                     dispatch(addToWishlist(product));
                   }}
                   disabled={favorite}
-                  className={`text-xs text-[#9B9BB4] border px-3 py-2 rounded-full flex justify-center items-center uppercase ${favorite ? "cursor-not-allowed" : "cursor-pointer"
-                    }`}
+                  className={`text-xs text-[#9B9BB4] border px-3 py-2 rounded-full flex justify-center items-center uppercase ${
+                    favorite ? "cursor-not-allowed" : "cursor-pointer"
+                  }`}
                 >
                   <svg
                     width="20"
