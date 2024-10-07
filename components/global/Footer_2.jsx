@@ -56,7 +56,7 @@ export default function Footer_2() {
     <footer className="bg-[#f1f1f1]">
       <section className="container grid grid-cols-1 md:grid-cols-4 justify-between items-start pt-20 pb-10  text-[#3E445A] gap-20">
         <div className="flex flex-col justify-between items-start w-full mb-5">
-          <h2 className="font-dosis text-[23px] text-[#3E445A]">Need Help?</h2>
+          <h2 className="font-dosis text-[23px] text-[#3E445A] uppercase">Need Help?</h2>
           <ul className="text-[#3E445A]">
             <li className="mt-1 text-[#3E445A]">
               <Link
@@ -106,7 +106,7 @@ export default function Footer_2() {
         </div>
         <div className="flex flex-col">
           <div className="flex flex-col items-start w-full mb-3">
-            <h2 className="text-[23px] text-[#3E445A] font-dosis ">
+            <h2 className="text-[23px] text-[#3E445A] font-dosis uppercase">
               Delivery & Returns
             </h2>
             <ul className="text-[#3E445A]">
@@ -139,7 +139,7 @@ export default function Footer_2() {
             </ul>
           </div>
           <div className="flex flex-col items-start mb-5 w-full">
-            <h2 className="text-[23px] text-[#3E445A] font-dosis mt-2">
+            <h2 className="text-[23px] text-[#3E445A] font-dosis mt-2 uppercase">
               Product Care
             </h2>
             <ul>
@@ -182,7 +182,7 @@ export default function Footer_2() {
           </div>
         </div>
         <div className="flex flex-col justify-between items-start w-full mb-5">
-          <h2 className="text-[23px] text-[#3E445A] font-dosis">
+          <h2 className="text-[23px] text-[#3E445A] font-dosis uppercase">
             Payment & Services
           </h2>
           <ul>
@@ -250,7 +250,7 @@ export default function Footer_2() {
           </ul>
         </div>
         <div className="flex flex-col justify-between items-start w-full mb-5">
-          <h2 className="text-[23px] text-[#3E445A] font-dosis">
+          <h2 className="text-[23px] text-[#3E445A] font-dosis uppercase text-nowrap">
             About Best Electronics
           </h2>
           <ul className="items-start">
