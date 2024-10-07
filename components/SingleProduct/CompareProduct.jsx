@@ -89,7 +89,7 @@ export default function CompareProduct({ open, setOpen, currentProduct }) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box className="" sx={style}>
+        <Box className="mx-5 sm:mx-auto" sx={style}>
           <div className="overflow-auto max-h-[570px]">
             <table className="table-auto w-full">
               <tbody>
