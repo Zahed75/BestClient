@@ -35,6 +35,7 @@ export default function NavigationBar() {
   const productsLength = products?.products?.length;
   const brandsState = useSelector((state) => state.brand);
   const brands = brandsState?.brands || [];
+  
 
   const pathName = usePathname();
 
@@ -538,7 +539,7 @@ export default function NavigationBar() {
                 onMouseLeave={() => setIsOrderMenuOpen(false)}
                 className={`${
                   isOrderMenuOpen ? "block" : "hidden"
-                } group-hover:block absolute left-0 w-64 bg-white rounded-lg border border-gray-200 z-10`}
+                } group-hover:block absolute left-0 w-64 bg-white border border-gray-200 z-10`}
               >
                 <ul className="text-sm capitalize text-[#3E445A]">
                   <li className="py-2 px-3 hover:text-[#F16521] cursor-pointer">

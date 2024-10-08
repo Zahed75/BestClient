@@ -1,13 +1,11 @@
 "use client";
-import fbLogin from "@/public/images/fblogin.png";
-import googleLogin from "@/public/images/googlelogin.png";
-import appleLogin from "@/public/images/applelogin.png";
+
 import Image from "next/image";
 import Link from "next/link";
 import view from "@/public/images/view.svg";
 import hidden from "@/public/images/view-off.svg";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useReducer, useRef, useState } from "react";
 import { fetchApi } from "@/utils/FetchApi";
 import { useDispatch } from "react-redux";
 import { addCustomerInfo } from "@/redux/slice/customerSlice";
@@ -16,20 +14,33 @@ export default function UserLogin() {
   const router = useRouter();
   const formRef = useRef(null);
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  const dispatch = useDispatch();
-
-  const handlePasswordToggle = () => {
-    setShowPassword(!showPassword);
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case "TOGGLE_PASSWORD":
+        return { ...state, showPassword: !state.showPassword };
+      case "SET_LOADING":
+        return { ...state, isLoading: action.payload };
+      case "SET_ERROR":
+        return { ...state, error: action.payload };
+      default:
+        return state;
+    }
   };
+
+  const INITIAL_STATE = {
+    showPassword: false,
+    isLoading: false,
+    error: "",
+  };
+
+  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
+
+  const reduxDispatch = useDispatch();
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    setError("");
+    dispatch({ type: "SET_LOADING", payload: true });
+    dispatch({ type: "SET_ERROR", payload: "" });
 
     const email = formRef.current.email.value;
     const password = formRef.current.password.value;
@@ -44,17 +55,24 @@ export default function UserLogin() {
         );
 
         if (response) {
-          dispatch(addCustomerInfo(response?.user));
-          setIsLoading(false);
+          reduxDispatch(addCustomerInfo(response?.user));
+          dispatch({ type: "SET_LOADING", payload: false });
+
           router.push("/checkout");
         } else {
-          setError("Something went wrong. Please try again.");
+          dispatch({ type: "SET_LOADING", payload: false });
+          dispatch({ type: "SET_ERROR", payload: "Invalid email or password" });
         }
       } catch (error) {
-        setError("An error occurred. Please try again.");
+        dispatch({ type: "SET_LOADING", payload: false });
+        dispatch({
+          type: "SET_ERROR",
+          payload: "An error occurred. Please try again.",
+        });
       }
     }
-    setIsLoading(false);
+
+    dispatch({ type: "SET_LOADING", payload: false });
   };
 
   return (
@@ -62,9 +80,7 @@ export default function UserLogin() {
       <div className="mx-auto flex justify-center py-20">
         <div className="flex justify-center shadow-md bg-white rounded-md">
           <div className="flex flex-col p-5 w-[26rem] space-y-4">
-            <h1 className="text-xl font-semibold">
-              Sign in
-            </h1>
+            <h1 className="text-xl font-semibold">Sign in</h1>
             <form ref={formRef} onSubmit={onSubmit} className="space-y-5">
               <div>
                 <label className="text-sm" htmlFor="email">
@@ -85,7 +101,7 @@ export default function UserLogin() {
                 </label>
                 <div className="relative">
                   <input
-                    type={showPassword ? "text" : "password"}
+                    type={state.showPassword === true ? "text" : "password"}
                     id="password"
                     name="password"
                     required
@@ -96,9 +112,9 @@ export default function UserLogin() {
                   />
                   <span
                     className="absolute right-2 top-2 cursor-pointer"
-                    onClick={handlePasswordToggle}
+                    onClick={() => dispatch({ type: "TOGGLE_PASSWORD" })}
                   >
-                    {showPassword ? (
+                    {state.showPassword ? (
                       <Image src={view} alt="view" width={24} height={24} />
                     ) : (
                       <Image src={hidden} alt="hidden" width={24} height={24} />
@@ -114,12 +130,14 @@ export default function UserLogin() {
                   Forgot Password?
                 </Link>
               </div>
-              {error && <div className="text-red-500 text-sm">{error}</div>}
+              {state.error && (
+                <div className="text-red-500 text-sm">{state.error}</div>
+              )}
               <button
                 type="submit"
                 className="flex justify-center w-full py-3 text-white bg-[#F16521] rounded-md text-sm"
               >
-                {isLoading ? "Submitting..." : "Sign in"}
+                {state.isLoading ? "Submitting..." : "Sign in"}
               </button>
             </form>
 
@@ -139,11 +157,17 @@ export default function UserLogin() {
 
             <div className="text-center text-sm">
               By signing in or creating an account, you agree with our
-              <Link href="https://www.bestelectronics.com.bd/warranty-policy/" className="text-[#F16521] pl-1 pr-1">
+              <Link
+                href="https://www.bestelectronics.com.bd/warranty-policy/"
+                className="text-[#F16521] pl-1 pr-1"
+              >
                 Terms & Conditions
               </Link>
               and
-              <Link href="https://www.bestelectronics.com.bd/privacy-policy/" className="text-[#F16521] pl-1">
+              <Link
+                href="https://www.bestelectronics.com.bd/privacy-policy/"
+                className="text-[#F16521] pl-1"
+              >
                 Privacy Statement
               </Link>
             </div>

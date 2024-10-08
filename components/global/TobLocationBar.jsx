@@ -67,11 +67,7 @@ export default function TopLocationBar() {
                 alt="location Icon"
                 className="mr-2"
               />
-              {/* To Locate Store:{" "} */}
               Enter Area
-              {/* <Link className="text-[#F16521]" href="/store-locator">
-              <strong className="ml-1"> Click Here</strong>
-            </Link> */}
             </div>
 
             <div
@@ -85,11 +81,7 @@ export default function TopLocationBar() {
                 alt="location Icon"
                 className="mr-2"
               />
-              {/* To Locate Store:{" "} */}
               Select Showroom
-              {/* <Link className="text-[#F16521]" href="/store-locator">
-              <strong className="ml-1"> Click Here</strong>
-            </Link> */}
             </div>
           </div>
 

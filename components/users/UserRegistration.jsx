@@ -1,31 +1,42 @@
 "use client";
-import fbLogin from "@/public/images/fblogin.png";
-import googleLogin from "@/public/images/googlelogin.png";
-import appleLogin from "@/public/images/applelogin.png";
+
 import Image from "next/image";
 import Link from "next/link";
 import view from "@/public/images/view.svg";
 import hidden from "@/public/images/view-off.svg";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useReducer, useRef, useState } from "react";
 import { fetchApi } from "@/utils/FetchApi";
 
 export default function UserRegistration() {
   const router = useRouter();
   const formRef = useRef(null);
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  const handlePasswordToggle = () => {
-    setShowPassword(!showPassword);
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case "TOGGLE_PASSWORD":
+        return { ...state, showPassword: !state.showPassword };
+      case "SET_LOADING":
+        return { ...state, isLoading: action.payload };
+      case "SET_ERROR":
+        return { ...state, error: action.payload };
+      default:
+        return state;
+    }
   };
+
+  const INITIAL_STATE = {
+    showPassword: false,
+    isLoading: false,
+    error: "",
+  };
+
+  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    setError("");
+    dispatch({ type: "SET_LOADING", payload: true });
+    dispatch({ type: "SET_ERROR", payload: "" });
 
     const email = formRef.current.email.value;
     const phoneNumber = formRef.current.mobile.value;
@@ -42,17 +53,18 @@ export default function UserRegistration() {
 
         if (response) {
           localStorage.setItem("customer", JSON.stringify(response.customer));
-          setIsLoading(false);
+          dispatch({ type: "SET_LOADING", payload: false });
           router.push("/otp");
         } else {
-          setError("Something went wrong. Please try again.");
+          dispatch({ type: "SET_LOADING", payload: false });
         }
       } catch (error) {
-        console.error(error);
-        setError("An error occurred. Please try again.");
+        dispatch({ type: "SET_LOADING", payload: false });
+        dispatch({ type: "SET_ERROR", payload: "Please try again later" });
       }
     }
-    setIsLoading(false);
+
+    dispatch({ type: "SET_LOADING", payload: false });
   };
 
   return (
@@ -87,7 +99,7 @@ export default function UserRegistration() {
                 </label>
                 <div className="relative">
                   <input
-                    type={showPassword ? "text" : "password"}
+                    type={state.showPassword ? "text" : "password"}
                     id="password"
                     name="password"
                     required
@@ -98,9 +110,9 @@ export default function UserRegistration() {
                   />
                   <span
                     className="absolute right-2 top-2 cursor-pointer"
-                    onClick={handlePasswordToggle}
+                    onClick={() =>dispatch({ type: "TOGGLE_PASSWORD" })}
                   >
-                    {showPassword ? (
+                    {state.showPassword ? (
                       <Image src={view} alt="view" width={24} height={24} />
                     ) : (
                       <Image src={hidden} alt="hidden" width={24} height={24} />
@@ -132,11 +144,13 @@ export default function UserRegistration() {
                 type="submit"
                 className="flex justify-center w-full py-3 text-white bg-[#F16521] rounded-md text-sm"
               >
-                {isLoading ? "Loading..." : "Continue"}
+                {state.isLoading ? "Loading..." : "Continue"}
               </button>
             </form>
 
-            {error && <div className="text-red-500 text-sm">{error}</div>}
+            {state.error && (
+              <div className="text-red-500 text-sm">{state.error}</div>
+            )}
 
             <div className="flex justify-center items-center gap-2 mb-5">
               <div className="border w-20 h-0"></div>
@@ -154,11 +168,17 @@ export default function UserRegistration() {
 
             <div className="text-center text-sm">
               By signing in or creating an account, you agree with our
-              <Link href="https://www.bestelectronics.com.bd/warranty-policy/" className="text-[#F16521] pr-1 pl-1">
+              <Link
+                href="https://www.bestelectronics.com.bd/warranty-policy/"
+                className="text-[#F16521] pr-1 pl-1"
+              >
                 Terms & Conditions
               </Link>
               and{" "}
-              <Link href="https://www.bestelectronics.com.bd/privacy-policy/" className="text-[#F16521] pl-1">
+              <Link
+                href="https://www.bestelectronics.com.bd/privacy-policy/"
+                className="text-[#F16521] pl-1"
+              >
                 Privacy Statement
               </Link>
             </div>
