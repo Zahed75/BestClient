@@ -10,6 +10,14 @@ import { fetchApi } from "@/utils/FetchApi";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "@/redux/slice/productsSlice";
 import { fetchBrands } from "@/redux/slice/brandSlice";
+import Fan from "@/public/images/Fan.svg";
+import brand from "@/public/images/Brands-01.svg";
+import tv from "@/public/images/TV & Entertainment-01.svg";
+import home from "@/public/images/Home Appliances-01.svg";
+import kitchen from "@/public/images/Kitchen-01-01.svg";
+import small from "@/public/images/Small Appliances-01.svg";
+import electric from "@/public/images/Electrical-01.svg";
+
 
 export default function NavigationBar() {
   const [isBrowseProducts, setIsBrowseProducts] = useState(false);
@@ -172,7 +180,27 @@ export default function NavigationBar() {
                         : "hover:text-[#F16521]"
                         }`}
                     >
-                      <span>{categories?.categoryName}</span>
+                      <div className="flex justify-start items-start">
+                        <Image
+                          src={
+                            categories?.categoryName === "Fan"
+                              ? Fan
+                              : categories?.categoryName === "TV & Entertainment"
+                                ? tv
+                                : categories?.categoryName === "Home Appliances"
+                                  ? home
+                                  : categories?.categoryName === "Small Appliances"
+                                    ? small
+                                    : categories?.categoryName === "Kitchen Appliances"
+                                      ? kitchen
+                                      : electric
+
+                          }
+                          className="w-5 h-5"
+                          alt={categories?.categoryName}
+                        />
+                        <span className="ml-2">{categories?.categoryName}</span>
+                      </div>
 
                       {categories?.subCategories &&
                         categories?.subCategories.length > 0 && (
@@ -286,7 +314,10 @@ export default function NavigationBar() {
                 onMouseLeave={() => setIsBrandsMenuOpen(false)}
               >
                 <div className="flex items-center justify-between w-full">
-                  <span>Brands</span>
+                  <div className="flex justify-start items-start">
+                    <Image src={brand} className="w-5 h-5 " alt="Brand" />
+                    <span className="ml-2">Brands</span>
+                  </div>
                   {brands.length > 0 && (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
