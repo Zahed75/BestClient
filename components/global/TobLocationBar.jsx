@@ -1,23 +1,34 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, Drawer } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import shopSvg from "@/public/images/Retail.svg";
 import deliverySvg from "@/public/images/Delivery-01.svg";
 import { closeOutletDrawer, openOutletDrawer } from "@/redux/slice/outletSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchCities } from "@/redux/slice/citiesSlice";
 
 export default function TopLocationBar() {
   const [open, setOpen] = useState(false);
-  const [openOutletDropdown, setOpenOutletDropdown] = useState(null);
+  const [availability, setAvailability] = useState("Status");
+  const [selectedCity, setSelectedCity] = useState("City");
+  const [selectedArea, setSelectedArea] = useState("Area");
+  const [openOutletDropdown, setOpenOutletDropdown] = useState(false);
+  const [openCityDropdown, setOpenCityDropdown] = useState(false); // Manage city dropdown visibility
+  const [openAreaDropdown, setOpenAreaDropdown] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
 
   const dispatch = useDispatch();
   const outletDrawerOpen = useSelector(
     (state) => state.outlet.outletDrawerOpen
   );
+  const cities = useSelector((state) => state.cities);
+
+  useEffect(() => {
+    dispatch(fetchCities());
+  }, [dispatch]);
 
   const linkData = [
     { name: "My Account", url: "/my-account" },
@@ -33,10 +44,36 @@ export default function TopLocationBar() {
     setOpen(newOpen);
   };
 
-  const toggleDropdown = (dropdown) => {
-    setOpenOutletDropdown(openOutletDropdown === dropdown ? null : dropdown);
+  // const toggleDropdown = (dropdown) => {
+  //   setOpenOutletDropdown(openOutletDropdown === dropdown ? null : dropdown);
+  // };
+  const toggleDropdown = () => {
+    setOpenOutletDropdown((prev) => !prev); // Toggle dropdown visibility
   };
-
+  const toggleCityDropdown = () => {
+    setOpenCityDropdown((prev) => !prev); // Toggle city dropdown visibility
+    setOpenAreaDropdown(false); // Close area dropdown when toggling city dropdown
+  };
+  const toggleAreaDropdown = () => {
+    setOpenAreaDropdown((prev) => !prev); // Toggle area dropdown visibility
+  };
+  const handleOptionClick = (option) => {
+    setAvailability(option); // Update selected option
+    setOpenOutletDropdown(false); // Close dropdown after selection
+    setSelectedCity("City"); // Update selected city
+    setOpenCityDropdown(false);
+  };
+  const handleCitySelect = (cityName) => {
+    setSelectedCity(cityName); // Update selected city
+    setOpenCityDropdown(false); // Close city dropdown
+    setSelectedArea("Area"); // Reset area selection
+    setOpenAreaDropdown(false);
+  };
+  const handleAreaSelect = (areaName) => {
+    setSelectedArea(areaName); // Update selected area
+    setOpenAreaDropdown(false); // Close area dropdown after selection
+  };
+  const areas = cities?.cities?.find((city) => city.cityName === selectedCity)?.areas || [];
   return (
     <section className="container">
       <div className="text-[#3E445A] text-xs py-3 hidden md:hidden lg:grid grid-cols-2 justify-between items-center">
@@ -119,9 +156,9 @@ export default function TopLocationBar() {
                     <div className="relative">
                       <button
                         className="w-full flex items-center justify-between bg-gray-200 px-2 py-2 rounded-full text-gray-700 hover:bg-gray-300"
-                        onClick={() => toggleDropdown("sort")}
+                        onClick={toggleDropdown}
                       >
-                        <span>Sort</span>
+                        <span>{availability}</span>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -137,11 +174,22 @@ export default function TopLocationBar() {
                           />
                         </svg>
                       </button>
-                      {openOutletDropdown === "sort" && (
-                        <div className="absolute left-0 mt-2 w-full bg-white border rounded-lg shadow-lg z-10">
-                          <label className="block px-4 py-2 text-sm text-gray-700 hover:text-[#F26522] duration-700">
-                            Available Now
-                          </label>
+
+                      {/* Custom dropdown showing availability options */}
+                      {openOutletDropdown && (
+                        <div className="absolute left-0 mt-2 w-full bg-white rounded-lg z-10 shadow-lg">
+                          <div
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 cursor-pointer"
+                            onClick={() => handleOptionClick("Available")}
+                          >
+                            Available
+                          </div>
+                          <div
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 cursor-pointer text-nowrap"
+                            onClick={() => handleOptionClick("Not Available")}
+                          >
+                            Not Available
+                          </div>
                         </div>
                       )}
                     </div>
@@ -149,9 +197,9 @@ export default function TopLocationBar() {
                     <div className="relative">
                       <button
                         className="w-full flex items-center justify-between bg-gray-200 px-2 py-2 rounded-full text-gray-700 hover:bg-gray-300"
-                        onClick={() => toggleDropdown("material")}
+                        onClick={toggleCityDropdown}
                       >
-                        <span>Material</span>
+                        <span>{selectedCity}</span>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -167,21 +215,29 @@ export default function TopLocationBar() {
                           />
                         </svg>
                       </button>
-                      {openOutletDropdown === "material" && (
+
+                      {/* Dropdown showing cities */}
+                      {openCityDropdown && (
                         <div className="absolute left-0 mt-2 w-full bg-white border rounded-lg shadow-lg z-10">
-                          <label className="block px-4 py-2 text-sm text-gray-700 hover:text-[#F26522] duration-700">
-                            Within 5 km
-                          </label>
+                          {cities?.cities?.map((item, i) => (
+                            <label
+                              key={i}
+                              className="block px-4 py-2 text-sm text-gray-700 hover:text-[#F26522] duration-700 cursor-pointer"
+                              onClick={() => handleCitySelect(item?.cityName)} // Handle city selection
+                            >
+                              {item?.cityName}
+                            </label>
+                          ))}
                         </div>
                       )}
                     </div>
 
                     <div className="relative">
                       <button
-                        className="w-full flex items-center justify-between bg-gray-200 px-2 py-2 rounded-full  text-gray-700 hover:bg-gray-300"
-                        onClick={() => toggleDropdown("size")}
+                        className="w-full flex items-center justify-between bg-gray-200 px-2 py-2 rounded-full text-gray-700 hover:bg-gray-300"
+                        onClick={toggleAreaDropdown}
                       >
-                        <span>Size</span>
+                        <span>{selectedArea}</span>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -197,11 +253,18 @@ export default function TopLocationBar() {
                           />
                         </svg>
                       </button>
-                      {openOutletDropdown === "size" && (
+
+                      {openAreaDropdown && (
                         <div className="absolute left-0 mt-2 w-full bg-white border rounded-lg shadow-lg z-10">
-                          <label className="block px-4 py-2 text-sm text-gray-700 hover:text-[#F26522] duration-700">
-                            Discount Available
-                          </label>
+                          {areas.map((area, i) => (
+                            <label
+                              key={i}
+                              className="block px-4 py-2 text-sm text-gray-700 hover:text-[#F26522] duration-700 cursor-pointer"
+                              onClick={() => handleAreaSelect(area.areaName)} // Handle area selection
+                            >
+                              {area.areaName}
+                            </label>
+                          ))}
                         </div>
                       )}
                     </div>
