@@ -6,7 +6,7 @@ import { Box, Drawer } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import shopSvg from "@/public/images/Retail.svg";
 import deliverySvg from "@/public/images/Delivery-01.svg";
-import { closeOutletDrawer, openOutletDrawer } from "@/redux/slice/outletSlice";
+import { fetchOutlets, closeOutletDrawer, openOutletDrawer } from "@/redux/slice/outletSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCities } from "@/redux/slice/citiesSlice";
 
@@ -20,14 +20,18 @@ export default function TopLocationBar() {
   const [openAreaDropdown, setOpenAreaDropdown] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
 
+
   const dispatch = useDispatch();
   const outletDrawerOpen = useSelector(
     (state) => state.outlet.outletDrawerOpen
   );
   const cities = useSelector((state) => state.cities);
+  const outlets = useSelector((state) => state.outlet);
 
   useEffect(() => {
     dispatch(fetchCities());
+    dispatch(fetchOutlets());
+    console.log(outlets);
   }, [dispatch]);
 
   const linkData = [
@@ -74,6 +78,17 @@ export default function TopLocationBar() {
     setOpenAreaDropdown(false); // Close area dropdown after selection
   };
   const areas = cities?.cities?.find((city) => city.cityName === selectedCity)?.areas || [];
+  // const filteredOutlets = outlets?.outlets?.outlet?.filter(outlet => outlet.cityName === selectedCity);
+  const filteredOutlets = outlets?.outlets?.outlet?.filter(outlet => {
+    const matchesCity = outlet.cityName === selectedCity;
+    const isAreaInvalid = !selectedArea || selectedArea === "Area";
+    if (isAreaInvalid) {
+      return matchesCity;
+    }
+    const matchesArea = outlet.areaName === selectedArea;
+    return matchesCity && matchesArea;
+  }) || [];
+
   return (
     <section className="container">
       <div className="text-[#3E445A] text-xs py-3 hidden md:hidden lg:grid grid-cols-2 justify-between items-center">
@@ -272,48 +287,34 @@ export default function TopLocationBar() {
                 </div>
 
                 <div className="space-y-4">
-                  <div
-                    onClick={() => setShowDetails(true)}
-                    className="p-4 border-2 rounded-lg bg-gray-100  hover:border-[#F16521] duration-700 cursor-pointer"
-                  >
-                    <div className="flex flex-col items-start justify-between">
-                      <div>
-                        <h3 className="font-inter font-semibold text-[16px] text-[#202435]">
-                          BEL Banani
-                        </h3>
-                        <p className="font-inter text-[14px] text-[#202435]">
-                          Road-02, Banani Dhaka
-                        </p>
+                  {filteredOutlets?.map((item, i) => (
+                    <div
+                      key={i}
+                      onClick={() => setShowDetails(true)}
+                      className="p-4 border-2 rounded-lg bg-gray-100  hover:border-[#F16521] duration-700 cursor-pointer"
+                    >
+                      <div className="flex flex-col items-start justify-between">
+                        <div>
+                          <h3 className="font-inter font-semibold text-[16px] text-[#202435]">
+                            {/* BEL Banani */}
+                            {item.outletName}
+                          </h3>
+                          <p className="font-inter text-[14px] text-[#202435]">
+                            {/* Road-02, Banani Dhaka */}
+                            {item.outletLocation}
+                          </p>
+                        </div>
+
+                        <div className="flex items-center space-x-2 mt-3">
+                          <span className="h-4 w-4 bg-green-500 rounded-full"></span>
+                          <span className="text-sm text-[#202435]">
+                            Available
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex items-center space-x-2 mt-3">
-                        <span className="h-4 w-4 bg-green-500 rounded-full"></span>
-                        <span className="text-sm text-[#202435]">
-                          Available
-                        </span>
-                      </div>
+
                     </div>
-                  </div>
-                  <div
-                    onClick={() => setShowDetails(true)}
-                    className="p-4 border-2 rounded-lg bg-gray-100 hover:border-[#F16521] duration-700 cursor-pointer"
-                  >
-                    <div className="flex flex-col items-start justify-between">
-                      <div>
-                        <h3 className="font-inter font-semibold text-[16px] text-[#202435]">
-                          BEL Banani
-                        </h3>
-                        <p className="font-inter text-[14px] text-[#202435]">
-                          Road-02, Banani Dhaka
-                        </p>
-                      </div>
-                      <div className="flex items-center space-x-2 mt-3">
-                        <span className="h-4 w-4 bg-green-500 rounded-full"></span>
-                        <span className="text-sm text-[#202435]">
-                          Available
-                        </span>
-                      </div>
-                    </div>
-                  </div>
+                  ))}
                   <div
                     onClick={() => setShowDetails(true)}
                     className="p-3 border-2 rounded-lg bg-gray-100 hover:border-[#F16521] duration-700 cursor-pointer"
@@ -321,7 +322,7 @@ export default function TopLocationBar() {
                     <div className="flex flex-col items-start justify-between">
                       <div>
                         <h3 className="font-inter font-semibold text-[16px] text-[#202435]">
-                          BEL Banani
+                          BEL Default
                         </h3>
                         <p className="font-inter text-[14px] text-[#202435]">
                           Road-02, Banani Dhaka
@@ -337,6 +338,7 @@ export default function TopLocationBar() {
                   </div>
                 </div>
               </div>
+
             )}
             {showDetails && (
               <div>
