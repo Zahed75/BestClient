@@ -5,6 +5,7 @@ const initialState = {
   status: "idle",
   error: null,
   outletDrawerOpen: false,
+  selectedOutlet:null,
 };
 
 export const fetchOutlets = createAsyncThunk(
@@ -49,6 +50,11 @@ const outletSlice = createSlice({
     closeOutletDrawer: (state) => {
       state.outletDrawerOpen = false;
     },
+    setSelectedOutlet:(state,action)=>{
+      const outlet = action.payload;
+      state.selectedOutlet=outlet?._id;
+    }
+    
   },
   extraReducers: (builder) => {
     builder
@@ -70,6 +76,7 @@ export const {
     openOutletDrawer,
     closeOutletDrawer,
     getAllOutlets,
+    setSelectedOutlet,
 } = outletSlice.actions;
 
 export default outletSlice.reducer;

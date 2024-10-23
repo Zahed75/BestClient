@@ -6,6 +6,7 @@ import { getIPAddress } from "@/utils/getIP";
 import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchOutlets } from "@/redux/slice/outletSlice";
 
 export default function CheckOutCart() {
   const [districts, setDistricts] = useState([]);
@@ -17,6 +18,7 @@ export default function CheckOutCart() {
   const cart = useSelector((state) => state.cart.items) || [];
   const customer = useSelector((state) => state.customer) || {};
   const discounts = useSelector((state) => state.discount?.discounts) || {};
+  const selectedOutlet = useSelector((state) => state.outlet);
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -25,15 +27,18 @@ export default function CheckOutCart() {
   const discount = discounts?.discount || 0;
   const totalProductPrice = Array.isArray(cart)
     ? cart.reduce((acc, item) => {
-        const price =
-          discount > 0 ? item.general.regularPrice : item.general.salePrice;
-        return acc + price * item.quantity;
-      }, 0)
+      const price =
+        discount > 0 ? item.general.regularPrice : item.general.salePrice;
+      return acc + price * item.quantity;
+    }, 0)
     : 0;
 
   const totalPrice = totalProductPrice - discount;
 
- 
+
+  useEffect(() => {
+    dispatch(fetchOutlets());
+  }, [dispatch]);
 
   useEffect(() => {
     const fetchDistricts = async () => {
@@ -89,6 +94,7 @@ export default function CheckOutCart() {
       fetchData();
     }
   }, []);
+  console.log(selectedOutlet?.selectedOutlet);
 
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
@@ -116,7 +122,7 @@ export default function CheckOutCart() {
       totalPrice: totalProductPrice,
       couponName: discounts?.name || "",
       channel: isMobileDevice() ? "mobile" : "web",
-      outlet: "",
+      outlet: { selectedOutlet },
       orderNote: formData.get("orderNote") || "",
     };
 
@@ -126,7 +132,7 @@ export default function CheckOutCart() {
     }
 
     console.log("Order data:", data);
-    
+
 
     try {
       const response = await fetchApi("/order/orderCreate", "POST", data);
