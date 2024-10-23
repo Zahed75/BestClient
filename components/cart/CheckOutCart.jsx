@@ -18,7 +18,7 @@ export default function CheckOutCart() {
   const cart = useSelector((state) => state.cart.items) || [];
   const customer = useSelector((state) => state.customer) || {};
   const discounts = useSelector((state) => state.discount?.discounts) || {};
-  const selectedOutlet = useSelector((state) => state.outlet);
+  const outlet = useSelector((state) => state.outlet);
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -94,7 +94,8 @@ export default function CheckOutCart() {
       fetchData();
     }
   }, []);
-  console.log(selectedOutlet?.selectedOutlet);
+
+  const selectedOutlet = outlet?.selectedOutlet;
 
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
@@ -122,7 +123,7 @@ export default function CheckOutCart() {
       totalPrice: totalProductPrice,
       couponName: discounts?.name || "",
       channel: isMobileDevice() ? "mobile" : "web",
-      outlet: { selectedOutlet },
+      outlet: selectedOutlet,
       orderNote: formData.get("orderNote") || "",
     };
 
@@ -150,6 +151,7 @@ export default function CheckOutCart() {
       setLoading(false);
     }
   };
+
 
   return (
     <section className="">
