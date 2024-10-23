@@ -8,10 +8,13 @@ import shopSvg from "@/public/images/Retail.svg";
 import deliverySvg from "@/public/images/Delivery-01.svg";
 import { fetchOutlets, closeOutletDrawer, openOutletDrawer, setSelectedOutlet } from "@/redux/slice/outletSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 import { fetchCities } from "@/redux/slice/citiesSlice";
 
 export default function TopLocationBar() {
   const [open, setOpen] = useState(false);
+  const [area, setArea] = useState("Enter Area");
+  const [showroom, setShowroom] = useState("Select Showroom");
   const [availability, setAvailability] = useState("Status");
   const [selectedCity, setSelectedCity] = useState("City");
   const [selectedArea, setSelectedArea] = useState("Area");
@@ -21,7 +24,7 @@ export default function TopLocationBar() {
   const [openAreaDropdown, setOpenAreaDropdown] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
 
-
+  const router = useRouter();
   const dispatch = useDispatch();
   const outletDrawerOpen = useSelector(
     (state) => state.outlet.outletDrawerOpen
@@ -65,17 +68,28 @@ export default function TopLocationBar() {
     setAvailability(option); // Update selected option
     setOpenOutletDropdown(false); // Close dropdown after selection
     setSelectedCity("City"); // Update selected city
+    setArea("Enter Area");
+    setShowroom("Select Showroom");
     setOpenCityDropdown(false);
   };
   const handleCitySelect = (cityName) => {
     setSelectedCity(cityName); // Update selected city
+    setArea(cityName);
     setOpenCityDropdown(false); // Close city dropdown
     setSelectedArea("Area"); // Reset area selection
+    setShowroom("Select Showroom");
     setOpenAreaDropdown(false);
   };
   const handleAreaSelect = (areaName) => {
     setSelectedArea(areaName); // Update selected area
+    setArea(areaName);
+    setShowroom("Select Showroom");
     setOpenAreaDropdown(false); // Close area dropdown after selection
+  };
+
+  const handleGoToCheckout = () => {
+    setOpen(false);
+    router.push("/checkout");
   };
   const areas = cities?.cities?.find((city) => city.cityName === selectedCity)?.areas || [];
   // const filteredOutlets = outlets?.outlets?.outlet?.filter(outlet => outlet.cityName === selectedCity);
@@ -119,7 +133,17 @@ export default function TopLocationBar() {
                 alt="location Icon"
                 className="mr-2"
               />
-              Enter Area
+              {/* Enter Area */}
+              {area}
+              {/* {area === "Enter Area" ? (
+                <span>{area}</span>
+              ) : selectedArea === "Area" ? (
+                <span>{area}</span>
+              ) : (
+                <span className="text-nowrap">
+                  {area}, {selectedCity}
+                </span>
+              )} */}
             </div>
 
             <div
@@ -133,7 +157,8 @@ export default function TopLocationBar() {
                 alt="location Icon"
                 className="mr-2"
               />
-              Select Showroom
+              {/* Select Showroom */}
+              {showroom}
             </div>
           </div>
 
@@ -292,6 +317,7 @@ export default function TopLocationBar() {
                       key={i}
                       onClick={() => {
                         setShowDetails(true);
+                        setShowroom(item?.outletName);
                         dispatch(setSelectedOutlet(item));
                       }}
                       className="p-4 border-2 rounded-lg bg-gray-100  hover:border-[#F16521] duration-700 cursor-pointer"
@@ -388,7 +414,12 @@ export default function TopLocationBar() {
           </div>
 
           <div className="mt-6 p-3">
-            <button className="w-full py-3 bg-[#F16521] text-white font-semibold rounded-lg hover:bg-[#F16521]">
+            <button
+              onClick={() => {
+                handleGoToCheckout();
+                dispatch(closeOutletDrawer());
+              }}
+              className="w-full py-3 bg-[#F16521] text-white font-semibold rounded-lg hover:bg-[#F16521]">
               Continue With Selection
             </button>
           </div>
