@@ -6,7 +6,7 @@ import { Box, Drawer } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import shopSvg from "@/public/images/Retail.svg";
 import deliverySvg from "@/public/images/Delivery-01.svg";
-import { fetchOutlets, closeOutletDrawer, openOutletDrawer } from "@/redux/slice/outletSlice";
+import { fetchOutlets, closeOutletDrawer, openOutletDrawer, setSelectedOutlet } from "@/redux/slice/outletSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCities } from "@/redux/slice/citiesSlice";
 
@@ -15,6 +15,7 @@ export default function TopLocationBar() {
   const [availability, setAvailability] = useState("Status");
   const [selectedCity, setSelectedCity] = useState("City");
   const [selectedArea, setSelectedArea] = useState("Area");
+  // const [selectedOutlet, setSelectedOutlet] = useState(null);
   const [openOutletDropdown, setOpenOutletDropdown] = useState(false);
   const [openCityDropdown, setOpenCityDropdown] = useState(false); // Manage city dropdown visibility
   const [openAreaDropdown, setOpenAreaDropdown] = useState(false);
@@ -31,7 +32,6 @@ export default function TopLocationBar() {
   useEffect(() => {
     dispatch(fetchCities());
     dispatch(fetchOutlets());
-    console.log(outlets);
   }, [dispatch]);
 
   const linkData = [
@@ -290,7 +290,10 @@ export default function TopLocationBar() {
                   {filteredOutlets?.map((item, i) => (
                     <div
                       key={i}
-                      onClick={() => setShowDetails(true)}
+                      onClick={() => {
+                        setShowDetails(true);
+                        dispatch(setSelectedOutlet(item));
+                      }}
                       className="p-4 border-2 rounded-lg bg-gray-100  hover:border-[#F16521] duration-700 cursor-pointer"
                     >
                       <div className="flex flex-col items-start justify-between">
