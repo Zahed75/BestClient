@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import CartProductSuccess from "../productCard/CartProductSuccess";
 
 import Image from "next/image";
+import CloseIcon from "@mui/icons-material/Close";
 import useImgBBUpload from "@/utils/useImgBBUpload";
 import { useRouter } from "next/navigation";
 import { fetchApi } from "@/utils/FetchApi";
@@ -54,7 +55,7 @@ export default function OrderInfo() {
           );
 
           setOrderHistory(res?.data);
-          
+
         } catch (error) {
           console.error("Error fetching order history:", error);
         }
@@ -97,25 +98,22 @@ export default function OrderInfo() {
         <div className="flex justify-start items-center uppercase text-slate-500 text-xs">
           <div
             onClick={handleGotoPersonal}
-            className={`cursor-pointer inline-block px-5 py-2 rounded-md duration-700 ${
-              active === "personal" ? "bg-[#F16521] text-white shadow-md" : ""
-            }`}
+            className={`cursor-pointer inline-block px-5 py-2 rounded-md duration-700 ${active === "personal" ? "bg-[#F16521] text-white shadow-md" : ""
+              }`}
           >
             personal
           </div>
           <div
             onClick={handleGotoOrders}
-            className={`cursor-pointer inline-block px-5 py-2 rounded-md duration-700 ${
-              active === "orders" ? "bg-[#F16521] text-white shadow-md" : ""
-            }`}
+            className={`cursor-pointer inline-block px-5 py-2 rounded-md duration-700 ${active === "orders" ? "bg-[#F16521] text-white shadow-md" : ""
+              }`}
           >
             Orders
           </div>
           <div
             onClick={handleGotoWishlist}
-            className={`cursor-pointer inline-block px-5 py-2 rounded-md duration-700 ${
-              active === "wishlist" ? "bg-[#F16521] text-white shadow-md" : ""
-            }`}
+            className={`cursor-pointer inline-block px-5 py-2 rounded-md duration-700 ${active === "wishlist" ? "bg-[#F16521] text-white shadow-md" : ""
+              }`}
           >
             Wishlist
           </div>
@@ -180,17 +178,16 @@ export default function OrderInfo() {
       {/* Modal */}
       {selectedOrder && (
         <div
-          className={`fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50 ${
-            openModal ? "block" : "hidden"
-          }`}
+          className={`fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50 ${openModal ? "block" : "hidden"
+            }`}
         >
           <div className="bg-white p-5 rounded-md relative w-11/12 sm:w-3/4 md:w-1/2 lg:w-2/3">
-            <div className="flex justify-between items-center">
+            <div className="flex justify-end items-center">
               <button
+                className="inline-block hover:text-[#F16521] duration-700"
                 onClick={() => setOpenModal(false)}
-                className="text-md font-bold text-[#F26522] flex flex-col items-center justify-center w-7 h-7 rounded-full bg-gray-100 hover:bg-gray-200 duration-700 ml-auto absolute right-1 top-1"
               >
-                X
+                <CloseIcon />
               </button>
             </div>
             <div className="text-md my-5">
