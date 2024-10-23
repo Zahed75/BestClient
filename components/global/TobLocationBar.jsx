@@ -18,7 +18,7 @@ export default function TopLocationBar() {
   const [availability, setAvailability] = useState("Status");
   const [selectedCity, setSelectedCity] = useState("City");
   const [selectedArea, setSelectedArea] = useState("Area");
-  // const [selectedOutlet, setSelectedOutlet] = useState(null);
+  const [selectOutlet, setSelectOutlet] = useState(null);
   const [openOutletDropdown, setOpenOutletDropdown] = useState(false);
   const [openCityDropdown, setOpenCityDropdown] = useState(false); // Manage city dropdown visibility
   const [openAreaDropdown, setOpenAreaDropdown] = useState(false);
@@ -318,6 +318,7 @@ export default function TopLocationBar() {
                       onClick={() => {
                         setShowDetails(true);
                         setShowroom(item?.outletName);
+                        setSelectOutlet(item);
                         dispatch(setSelectedOutlet(item));
                       }}
                       className="p-4 border-2 rounded-lg bg-gray-100  hover:border-[#F16521] duration-700 cursor-pointer"
@@ -371,12 +372,12 @@ export default function TopLocationBar() {
             )}
             {showDetails && (
               <div>
-                <h2 className="text-lg font-bold mb-4">DDK Banani</h2>
+                <h2 className="text-lg font-bold mb-4">{selectOutlet?.outletName}</h2>
 
                 <div className="text-md my-5">
                   <span className="font-semibold">Open until 10:00 PM</span>{" "}
                   <br />
-                  <span className="">15/2 Nursery Street, Dhaka</span> <br />
+                  <span className="">{selectOutlet?.outletLocation}</span> <br />
                 </div>
 
                 <div className="my-10">
