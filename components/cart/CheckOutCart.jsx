@@ -286,7 +286,7 @@ export default function CheckOutCart() {
                     <option value="">Select City</option>
                   )}
                   {cities?.cities?.map((item, i) => (
-                    <option key={i} value={district.district} onClick={() => handleCitySelect(item?.cityName)}>
+                    <option key={i} onClick={() => handleCitySelect(item?.cityName)}>
                       {item?.cityName}
                     </option>
                   ))}
@@ -311,7 +311,7 @@ export default function CheckOutCart() {
                     <option value="">Select Area</option>
                   )}
                   {areas?.map((item, i) => (
-                    <option key={i} value={district.district} onClick={() => handleAreaSelect(item?.areaName)}>
+                    <option key={i} onClick={() => handleAreaSelect(item?.areaName)}>
                       {item?.areaName}
                     </option>
                   ))}
