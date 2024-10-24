@@ -37,6 +37,7 @@ export default function TopLocationBar() {
     dispatch(fetchOutlets());
   }, [dispatch]);
 
+
   const linkData = [
     { name: "My Account", url: "/my-account" },
     { name: "Wishlist", url: "/my-account/wishlist" },
@@ -74,15 +75,17 @@ export default function TopLocationBar() {
   };
   const handleCitySelect = (cityName) => {
     setSelectedCity(cityName); // Update selected city
-    setArea(cityName);
+    // setArea(cityName);
     setOpenCityDropdown(false); // Close city dropdown
     setSelectedArea("Area"); // Reset area selection
+    setArea("Enter Area");
     setShowroom("Select Showroom");
     setOpenAreaDropdown(false);
   };
   const handleAreaSelect = (areaName) => {
     setSelectedArea(areaName); // Update selected area
-    setArea(areaName);
+    // setArea(areaName);
+    setArea("Enter Area");
     setShowroom("Select Showroom");
     setOpenAreaDropdown(false); // Close area dropdown after selection
   };
@@ -93,12 +96,22 @@ export default function TopLocationBar() {
   };
   const areas = cities?.cities?.find((city) => city.cityName === selectedCity)?.areas || [];
   // const filteredOutlets = outlets?.outlets?.outlet?.filter(outlet => outlet.cityName === selectedCity);
-  const filteredOutlets = outlets?.outlets?.outlet?.filter(outlet => {
-    const matchesCity = outlet.cityName === selectedCity;
-    const isAreaInvalid = !selectedArea || selectedArea === "Area";
+  // const filteredOutlets = outlets?.outlets?.outlet?.filter(outlet => {
+  const filteredOutlets = outlets?.outlets?.availability?.filter(outlet => {
+    // const matchesCity = outlet.cityName === selectedCity;
+    // const isAreaInvalid = !selectedArea || selectedArea === "Area";
+    // if (isAreaInvalid) {
+    //   return matchesCity;
+    // }
+    // const matchesArea = outlet.areaName === selectedArea;
+    // return matchesCity && matchesArea;
+    const matchesCity = outlet?.outletDetails?.cityName === selectedCity;
+    const isAreaInvalid = (!selectedArea || selectedArea === "Area") && outlet.available == true;
+
     if (isAreaInvalid) {
       return matchesCity;
     }
+
     const matchesArea = outlet.areaName === selectedArea;
     return matchesCity && matchesArea;
   }) || [];
@@ -134,16 +147,14 @@ export default function TopLocationBar() {
                 className="mr-2"
               />
               {/* Enter Area */}
-              {area}
-              {/* {area === "Enter Area" ? (
-                <span>{area}</span>
-              ) : selectedArea === "Area" ? (
+              {/* {area} */}
+              {area === "Enter Area" ? (
                 <span>{area}</span>
               ) : (
                 <span className="text-nowrap">
                   {area}, {selectedCity}
                 </span>
-              )} */}
+              )}
             </div>
 
             <div
@@ -181,7 +192,7 @@ export default function TopLocationBar() {
             <div className="flex justify-end items-end mb-2">
               <button
                 className="inline-block hover:text-[#F16521] duration-700"
-                onClick={() => dispatch(closeOutletDrawer())}
+                onClick={() => { dispatch(closeOutletDrawer()); }}
               >
                 <CloseIcon />
               </button>
@@ -317,9 +328,10 @@ export default function TopLocationBar() {
                       key={i}
                       onClick={() => {
                         setShowDetails(true);
-                        setShowroom(item?.outletName);
-                        setSelectOutlet(item);
-                        dispatch(setSelectedOutlet(item));
+                        setShowroom(item?.outletDetails?.outletName);
+                        setSelectOutlet(item?.outletDetails);
+                        setArea(item?.outletDetails?.areaName);
+                        dispatch(setSelectedOutlet(item?.outletDetails));
                       }}
                       className="p-4 border-2 rounded-lg bg-gray-100  hover:border-[#F16521] duration-700 cursor-pointer"
                     >
@@ -327,11 +339,11 @@ export default function TopLocationBar() {
                         <div>
                           <h3 className="font-inter font-semibold text-[16px] text-[#202435]">
                             {/* BEL Banani */}
-                            {item.outletName}
+                            {item?.outletDetails?.outletName}
                           </h3>
                           <p className="font-inter text-[14px] text-[#202435]">
                             {/* Road-02, Banani Dhaka */}
-                            {item.outletLocation}
+                            {item?.outletDetails?.outletLocation}
                           </p>
                         </div>
 
@@ -345,27 +357,7 @@ export default function TopLocationBar() {
 
                     </div>
                   ))}
-                  <div
-                    onClick={() => setShowDetails(true)}
-                    className="p-3 border-2 rounded-lg bg-gray-100 hover:border-[#F16521] duration-700 cursor-pointer"
-                  >
-                    <div className="flex flex-col items-start justify-between">
-                      <div>
-                        <h3 className="font-inter font-semibold text-[16px] text-[#202435]">
-                          BEL Default
-                        </h3>
-                        <p className="font-inter text-[14px] text-[#202435]">
-                          Road-02, Banani Dhaka
-                        </p>
-                      </div>
-                      <div className="flex items-center space-x-2 mt-3">
-                        <span className="h-4 w-4 bg-red-500 rounded-full"></span>
-                        <span className="text-sm text-[#202435]">
-                          Not Available
-                        </span>
-                      </div>
-                    </div>
-                  </div>
+
                 </div>
               </div>
 
