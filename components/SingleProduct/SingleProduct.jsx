@@ -167,11 +167,10 @@ export default function SingleProduct({ product, categoryName }) {
             <div className="my-5 md:w-full lg:w-1/3 ">
               <p
                 className={`
-                ${
-                  product?.inventory?.stockStatus === "In Stock"
+                ${product?.inventory?.stockStatus === "In Stock"
                     ? "text-[#70BE38] bg-[#E5F8ED]"
                     : "text-red-400 bg-red-100"
-                }  text-xs font-semibold px-3 py-1 inline-block rounded-full
+                  }  text-xs font-semibold px-3 py-1 inline-block rounded-full
                 `}
               >
                 {product?.inventory?.stockStatus}
@@ -213,7 +212,7 @@ export default function SingleProduct({ product, categoryName }) {
                       </div>
 
                       <div className="flex flex-col items-start">
-                        <h6 className="font-semibold">Deliver to DDK</h6>
+                        <h6 className="font-semibold">Delivery Area</h6>
                         <div className="flex items-center">
                           <div className="w-3 h-3 bg-[#70BE38] rounded-full mr-2"></div>
                           <span>Available</span>
@@ -250,7 +249,7 @@ export default function SingleProduct({ product, categoryName }) {
                       </div>
 
                       <div className="flex flex-col items-start">
-                        <h6 className="font-semibold">Dhaka Dokhhin Khan</h6>
+                        <h6 className="font-semibold">Select Showroom</h6>
                         <div className="flex items-center">
                           <div className="w-3 h-3 bg-[#70BE38] rounded-full mr-2"></div>
                           <span>Click and collect - Available</span>
@@ -289,9 +288,8 @@ export default function SingleProduct({ product, categoryName }) {
                     dispatch(addToWishlist(product));
                   }}
                   disabled={favorite}
-                  className={`text-xs text-[#9B9BB4] border px-3 py-2 rounded-full flex justify-center items-center uppercase ${
-                    favorite ? "cursor-not-allowed" : "cursor-pointer"
-                  }`}
+                  className={`text-xs text-[#9B9BB4] border px-3 py-2 rounded-full flex justify-center items-center uppercase ${favorite ? "cursor-not-allowed" : "cursor-pointer"
+                    }`}
                 >
                   <svg
                     width="20"

@@ -7,6 +7,7 @@ import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOutlets } from "@/redux/slice/outletSlice";
+import { fetchCities } from "@/redux/slice/citiesSlice";
 
 export default function CheckOutCart() {
   const [districts, setDistricts] = useState([]);
@@ -14,11 +15,16 @@ export default function CheckOutCart() {
   const [customerInfo, setCustomerInfo] = useState({});
   const [IP, setIP] = useState("");
   const [loading, setLoading] = useState(false);
+  const [selectedCity, setSelectedCity] = useState("City");
+  const [selectedArea, setSelectedArea] = useState("Area");
+
 
   const cart = useSelector((state) => state.cart.items) || [];
   const customer = useSelector((state) => state.customer) || {};
   const discounts = useSelector((state) => state.discount?.discounts) || {};
   const outlet = useSelector((state) => state.outlet);
+  const cities = useSelector((state) => state.cities);
+  const areas = cities?.cities?.find((city) => city.cityName === selectedCity)?.areas || [];
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -36,6 +42,9 @@ export default function CheckOutCart() {
   const totalPrice = totalProductPrice - discount;
 
 
+  useEffect(() => {
+    dispatch(fetchCities());
+  }, [dispatch]);
   useEffect(() => {
     dispatch(fetchOutlets());
   }, [dispatch]);
@@ -96,6 +105,14 @@ export default function CheckOutCart() {
   }, []);
 
   const selectedOutlet = outlet?.selectedOutlet;
+
+  const handleCitySelect = (cityName) => {
+    setSelectedCity(cityName); // Update selected city
+    setSelectedArea(""); // Reset area selection
+  };
+  const handleAreaSelect = (areaName) => {
+    setSelectedArea(areaName); // Update selected area
+  };
 
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
@@ -246,6 +263,56 @@ export default function CheckOutCart() {
                   {districts?.map((district, index) => (
                     <option key={index} value={district.district}>
                       {district.district}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="col-span-1">
+                <label className="text-sm" htmlFor="district">
+                  City *
+                </label>
+                <select
+                  className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
+                  name="district"
+                  id="district"
+                  defaultValue={customerInfo?.billingInfo?.district}
+                  required
+                >
+                  {customerInfo?.billingInfo?.district ? (
+                    <option value={customerInfo?.billingInfo?.district}>
+                      {customerInfo?.billingInfo?.district}
+                    </option>
+                  ) : (
+                    <option value="">Select City</option>
+                  )}
+                  {cities?.cities?.map((item, i) => (
+                    <option key={i} value={district.district} onClick={() => handleCitySelect(item?.cityName)}>
+                      {item?.cityName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="col-span-1">
+                <label className="text-sm" htmlFor="district">
+                  Area *
+                </label>
+                <select
+                  className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
+                  name="district"
+                  id="district"
+                  defaultValue={customerInfo?.billingInfo?.district}
+                  required
+                >
+                  {customerInfo?.billingInfo?.district ? (
+                    <option value={customerInfo?.billingInfo?.district}>
+                      {customerInfo?.billingInfo?.district}
+                    </option>
+                  ) : (
+                    <option value="">Select Area</option>
+                  )}
+                  {areas?.map((item, i) => (
+                    <option key={i} value={district.district} onClick={() => handleAreaSelect(item?.areaName)}>
+                      {item?.areaName}
                     </option>
                   ))}
                 </select>
