@@ -5,14 +5,16 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/slice/cartSlice";
-import Link from "next/link";
+import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
 export default function ImageShow({ productImage, productGallery, product }) {
   const combinedGallery = [productImage, ...productGallery];
-  const initialIndex = 0; // Start with the first image
+  const initialIndex = 0;
   const [wordData, setWordData] = useState(combinedGallery[initialIndex]);
   const [val, setVal] = useState(initialIndex);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isAdded, setIsAdded] = useState(false);
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -38,6 +40,20 @@ export default function ImageShow({ productImage, productGallery, product }) {
   const handleBuyNow = () => {
     dispatch(addToCart(product));
     router.push("/checkout");
+  };
+
+  const handleAddToCart = () => {
+    setIsLoading(true);
+
+    setTimeout(() => {
+      dispatch(addToCart(product));
+      setIsLoading(false);
+      setIsAdded(true);
+
+      setTimeout(() => {
+        setIsAdded(false);
+      }, 1500);
+    }, 2000);
   };
   return (
     <section className="flex justify-center items-start gap-5 my-5">
@@ -74,13 +90,34 @@ export default function ImageShow({ productImage, productGallery, product }) {
           </Zoom>
         </div>
         <div className="flex justify-between gap-3 my-5">
-          <button
+          <motion.button
             type="button"
-            onClick={() => dispatch(addToCart(product))}
-            className="flex justify-center w-full py-2 bg-[#FFCD00] rounded-md text-sm"
+            onClick={handleAddToCart}
+            className="flex justify-center items-center w-full py-2 bg-[#FFCD00] rounded-md text-sm"
+            whileTap={{ scale: 0.95 }}
+            disabled={isLoading || isAdded}
           >
-            Add to Cart
-          </button>
+            {isLoading ? (
+              <motion.div
+                className="w-5 h-5 bg-[#78766eb1]"
+                style={{ borderRadius: "5px" }}
+                animate={{ rotate: 360 }}
+                transition={{
+                  duration: 0.8,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+              />
+            ) : isAdded ? (
+              <div className="flex items-center">
+                <span className="text-black font-bold text-sm mr-2">✓</span>
+                <span>Added!</span>
+              </div>
+            ) : (
+              "Add to Cart"
+            )}
+          </motion.button>
+
           <button
             onClick={handleBuyNow}
             className="flex justify-center w-full py-2 text-white bg-[#F16521] rounded-md text-sm"
