@@ -312,7 +312,8 @@ export default function CheckOutCart() {
                   )}
                   {areas?.map((item, i) => (
                     <option key={i} onClick={() => handleAreaSelect(item?.areaName)}>
-                      {item?.areaName}
+                      {/* {item?.areaName} */}
+                      Item
                     </option>
                   ))}
                 </select>
