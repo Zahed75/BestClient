@@ -17,6 +17,8 @@ export default function CheckOutCart() {
   const [loading, setLoading] = useState(false);
   const [selectedCity, setSelectedCity] = useState("City");
   const [selectedArea, setSelectedArea] = useState("Area");
+  const [areas, setAreas] = useState(null);
+
 
 
   const cart = useSelector((state) => state.cart.items) || [];
@@ -24,7 +26,6 @@ export default function CheckOutCart() {
   const discounts = useSelector((state) => state.discount?.discounts) || {};
   const outlet = useSelector((state) => state.outlet);
   const cities = useSelector((state) => state.cities);
-  const areas = cities?.cities?.find((city) => city.cityName === selectedCity)?.areas || [];
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -48,6 +49,11 @@ export default function CheckOutCart() {
   useEffect(() => {
     dispatch(fetchOutlets());
   }, [dispatch]);
+
+  // useEffect(() => {
+  //   const areas = cities?.cities?.find((city) => city.cityName === selectedCity)?.areas || [];
+  //   setAreas(areas);
+  // }, [selectedCity, cities]);
 
   useEffect(() => {
     const fetchDistricts = async () => {
@@ -108,7 +114,7 @@ export default function CheckOutCart() {
 
   const handleCitySelect = (cityName) => {
     setSelectedCity(cityName); // Update selected city
-    setSelectedArea(""); // Reset area selection
+    setAreas(cities?.cities?.find((city) => city.cityName === cityName)?.areas || []);
   };
   const handleAreaSelect = (areaName) => {
     setSelectedArea(areaName); // Update selected area
@@ -268,52 +274,53 @@ export default function CheckOutCart() {
                 </select>
               </div>
               <div className="col-span-1">
-                <label className="text-sm" htmlFor="district">
+                <label className="text-sm" htmlFor="city">
                   City *
                 </label>
                 <select
                   className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
-                  name="district"
-                  id="district"
-                  defaultValue={customerInfo?.billingInfo?.district}
+                  name="city"
+                  id="city"
+                  value={selectedCity}
+                  onChange={(e) => handleCitySelect(e.target.value)}
                   required
                 >
                   {customerInfo?.billingInfo?.district ? (
-                    <option value={customerInfo?.billingInfo?.district}>
-                      {customerInfo?.billingInfo?.district}
+                    <option>
+
                     </option>
                   ) : (
                     <option value="">Select City</option>
                   )}
                   {cities?.cities?.map((item, i) => (
-                    <option key={i} onClick={() => handleCitySelect(item?.cityName)}>
+                    <option key={i} value={item.cityName}>
                       {item?.cityName}
                     </option>
                   ))}
                 </select>
               </div>
               <div className="col-span-1">
-                <label className="text-sm" htmlFor="district">
+                <label className="text-sm" htmlFor="area">
                   Area *
                 </label>
                 <select
                   className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
-                  name="district"
-                  id="district"
-                  defaultValue={customerInfo?.billingInfo?.district}
+                  name="area"
+                  id="area"
+                  value={selectedArea}
+                  onChange={(e) => handleAreaSelect(e.target.value)}
                   required
                 >
                   {customerInfo?.billingInfo?.district ? (
-                    <option value={customerInfo?.billingInfo?.district}>
-                      {customerInfo?.billingInfo?.district}
+                    <option>
+
                     </option>
                   ) : (
                     <option value="">Select Area</option>
                   )}
                   {areas?.map((item, i) => (
-                    <option key={i} onClick={() => handleAreaSelect(item?.areaName)}>
-                      {/* {item?.areaName} */}
-                      Item
+                    <option key={i} value={item?.areaName}>
+                      {item?.areaName}
                     </option>
                   ))}
                 </select>
