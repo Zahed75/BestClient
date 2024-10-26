@@ -6,7 +6,7 @@ import { Box, Drawer } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import shopSvg from "@/public/images/Retail.svg";
 import deliverySvg from "@/public/images/Delivery-01.svg";
-import { fetchOutlets, closeOutletDrawer, openOutletDrawer, setSelectedOutlet } from "@/redux/slice/outletSlice";
+import { fetchOutlets, fetchProductAvailability, closeOutletDrawer, openOutletDrawer, setSelectedOutlet } from "@/redux/slice/outletSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { fetchCities } from "@/redux/slice/citiesSlice";
@@ -19,6 +19,7 @@ export default function TopLocationBar() {
   const [selectedCity, setSelectedCity] = useState("City");
   const [selectedArea, setSelectedArea] = useState("Area");
   const [selectOutlet, setSelectOutlet] = useState(null);
+  const [openDropdown, setOpenDropdown] = useState(null);
   const [openOutletDropdown, setOpenOutletDropdown] = useState(false);
   const [openCityDropdown, setOpenCityDropdown] = useState(false); // Manage city dropdown visibility
   const [openAreaDropdown, setOpenAreaDropdown] = useState(false);
@@ -30,13 +31,21 @@ export default function TopLocationBar() {
     (state) => state.outlet.outletDrawerOpen
   );
   const cities = useSelector((state) => state.cities);
+  const productAvailability = useSelector((state) => state.outlet);
   const outlets = useSelector((state) => state.outlet);
 
   useEffect(() => {
     dispatch(fetchCities());
+    dispatch(fetchProductAvailability());
     dispatch(fetchOutlets());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (!outletDrawerOpen) {
+      // Ensure showroom is updated only when drawer is closed
+      setShowroom(selectOutlet?.outletName || "Select Showroom");
+    }
+  }, [outletDrawerOpen, selectOutlet]);
 
   const linkData = [
     { name: "My Account", url: "/my-account" },
@@ -52,25 +61,13 @@ export default function TopLocationBar() {
     setOpen(newOpen);
   };
 
-  // const toggleDropdown = (dropdown) => {
-  //   setOpenOutletDropdown(openOutletDropdown === dropdown ? null : dropdown);
-  // };
-  const toggleDropdown = () => {
-    setOpenOutletDropdown((prev) => !prev); // Toggle dropdown visibility
+  const toggleDropdown = (dropdownName) => {
+    setOpenDropdown(openDropdown === dropdownName ? null : dropdownName);
   };
-  const toggleCityDropdown = () => {
-    setOpenCityDropdown((prev) => !prev); // Toggle city dropdown visibility
-    setOpenAreaDropdown(false); // Close area dropdown when toggling city dropdown
-  };
-  const toggleAreaDropdown = () => {
-    setOpenAreaDropdown((prev) => !prev); // Toggle area dropdown visibility
-  };
+
   const handleOptionClick = (option) => {
     setAvailability(option); // Update selected option
     setOpenOutletDropdown(false); // Close dropdown after selection
-    setSelectedCity("City"); // Update selected city
-    setArea("Enter Area");
-    setShowroom("Select Showroom");
     setOpenCityDropdown(false);
   };
   const handleCitySelect = (cityName) => {
@@ -78,43 +75,46 @@ export default function TopLocationBar() {
     // setArea(cityName);
     setOpenCityDropdown(false); // Close city dropdown
     setSelectedArea("Area"); // Reset area selection
-    setArea("Enter Area");
-    setShowroom("Select Showroom");
     setOpenAreaDropdown(false);
   };
   const handleAreaSelect = (areaName) => {
     setSelectedArea(areaName); // Update selected area
     // setArea(areaName);
-    setArea("Enter Area");
-    setShowroom("Select Showroom");
     setOpenAreaDropdown(false); // Close area dropdown after selection
   };
-
+  const handleCloseDrawer = () => {
+    // Update showroom here or reset it if necessary
+    setShowroom(selectOutlet?.outletName || "Select Showroom");
+    dispatch(closeOutletDrawer());
+  };
   const handleGoToCheckout = () => {
     setOpen(false);
     router.push("/checkout");
   };
   const areas = cities?.cities?.find((city) => city.cityName === selectedCity)?.areas || [];
+  const filteredOutlets = productAvailability?.productAvailability?.availability;
   // const filteredOutlets = outlets?.outlets?.outlet?.filter(outlet => outlet.cityName === selectedCity);
   // const filteredOutlets = outlets?.outlets?.outlet?.filter(outlet => {
-  const filteredOutlets = outlets?.outlets?.availability?.filter(outlet => {
-    // const matchesCity = outlet.cityName === selectedCity;
-    // const isAreaInvalid = !selectedArea || selectedArea === "Area";
-    // if (isAreaInvalid) {
-    //   return matchesCity;
-    // }
-    // const matchesArea = outlet.areaName === selectedArea;
-    // return matchesCity && matchesArea;
-    const matchesCity = outlet?.outletDetails?.cityName === selectedCity;
-    const isAreaInvalid = (!selectedArea || selectedArea === "Area") && outlet.available == true;
+  // const filteredOutlets = productAvailability?.availability?.filter(outlet => {
+  // const matchesCity = outlet.cityName === selectedCity;
+  // const isAreaInvalid = !selectedArea || selectedArea === "Area";
+  // if (isAreaInvalid) {
+  //   return matchesCity;
+  // }
+  // const matchesArea = outlet.areaName === selectedArea;
+  // return matchesCity && matchesArea;
 
-    if (isAreaInvalid) {
-      return matchesCity;
-    }
+  //   const matchesCity = outlet?.outletDetails?.cityName === selectedCity;
+  //   const isAreaInvalid = (!selectedArea || selectedArea === "Area") && outlet.available == true;
 
-    const matchesArea = outlet.areaName === selectedArea;
-    return matchesCity && matchesArea;
-  }) || [];
+  //   if (isAreaInvalid) {
+  //     return matchesCity;
+  //   }
+
+  //   const matchesArea = outlet.areaName === selectedArea;
+  //   return matchesCity && matchesArea;
+  // }) || [];
+
 
   return (
     <section className="container">
@@ -152,7 +152,7 @@ export default function TopLocationBar() {
                 <span>{area}</span>
               ) : (
                 <span className="text-nowrap">
-                  {area}, {selectedCity}
+                  {area}
                 </span>
               )}
             </div>
@@ -182,7 +182,7 @@ export default function TopLocationBar() {
       <Drawer
         anchor="right"
         open={outletDrawerOpen}
-        onClose={() => dispatch(closeOutletDrawer())}
+        onClose={handleCloseDrawer}
       >
         <Box
           role="presentation"
@@ -207,7 +207,7 @@ export default function TopLocationBar() {
                     <div className="relative">
                       <button
                         className="w-full flex items-center justify-between bg-gray-200 px-2 py-2 rounded-full text-gray-700 hover:bg-gray-300"
-                        onClick={toggleDropdown}
+                        onClick={() => toggleDropdown("availability")}
                       >
                         <span>{availability}</span>
                         <svg
@@ -227,7 +227,7 @@ export default function TopLocationBar() {
                       </button>
 
                       {/* Custom dropdown showing availability options */}
-                      {openOutletDropdown && (
+                      {openDropdown === "availability" && (
                         <div className="absolute left-0 mt-2 w-full bg-white rounded-lg z-10 shadow-lg">
                           <div
                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 cursor-pointer"
@@ -248,7 +248,7 @@ export default function TopLocationBar() {
                     <div className="relative">
                       <button
                         className="w-full flex items-center justify-between bg-gray-200 px-2 py-2 rounded-full text-gray-700 hover:bg-gray-300"
-                        onClick={toggleCityDropdown}
+                        onClick={() => toggleDropdown("city")}
                       >
                         <span>{selectedCity}</span>
                         <svg
@@ -268,7 +268,7 @@ export default function TopLocationBar() {
                       </button>
 
                       {/* Dropdown showing cities */}
-                      {openCityDropdown && (
+                      {openDropdown === "city" && (
                         <div className="absolute left-0 mt-2 w-full bg-white border rounded-lg shadow-lg z-10">
                           {cities?.cities?.map((item, i) => (
                             <label
@@ -286,7 +286,7 @@ export default function TopLocationBar() {
                     <div className="relative">
                       <button
                         className="w-full flex items-center justify-between bg-gray-200 px-2 py-2 rounded-full text-gray-700 hover:bg-gray-300"
-                        onClick={toggleAreaDropdown}
+                        onClick={() => toggleDropdown("area")}
                       >
                         <span>{selectedArea}</span>
                         <svg
@@ -305,7 +305,7 @@ export default function TopLocationBar() {
                         </svg>
                       </button>
 
-                      {openAreaDropdown && (
+                      {openDropdown === "area" && (
                         <div className="absolute left-0 mt-2 w-full bg-white border rounded-lg shadow-lg z-10">
                           {areas.map((area, i) => (
                             <label
@@ -328,9 +328,6 @@ export default function TopLocationBar() {
                       key={i}
                       onClick={() => {
                         setShowDetails(true);
-                        setShowroom(item?.outletDetails?.outletName);
-                        setSelectOutlet(item?.outletDetails);
-                        setArea(item?.outletDetails?.areaName);
                         dispatch(setSelectedOutlet(item?.outletDetails));
                       }}
                       className="p-4 border-2 rounded-lg bg-gray-100  hover:border-[#F16521] duration-700 cursor-pointer"
@@ -418,6 +415,6 @@ export default function TopLocationBar() {
           </div>
         </Box>
       </Drawer>
-    </section>
+    </section >
   );
 }
