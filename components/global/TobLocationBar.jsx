@@ -92,7 +92,7 @@ export default function TopLocationBar() {
     router.push("/checkout");
   };
   const areas = cities?.cities?.find((city) => city.cityName === selectedCity)?.areas || [];
-  const filteredOutlets = productAvailability?.productAvailability?.availability;
+  const filteredOutlets = outlets?.outlets?.outlet;
   // const filteredOutlets = outlets?.outlets?.outlet?.filter(outlet => outlet.cityName === selectedCity);
   // const filteredOutlets = outlets?.outlets?.outlet?.filter(outlet => {
   // const filteredOutlets = productAvailability?.availability?.filter(outlet => {
@@ -114,6 +114,7 @@ export default function TopLocationBar() {
   //   const matchesArea = outlet.areaName === selectedArea;
   //   return matchesCity && matchesArea;
   // }) || [];
+  // console.log(filteredOutlets);
 
 
   return (
@@ -328,7 +329,8 @@ export default function TopLocationBar() {
                       key={i}
                       onClick={() => {
                         setShowDetails(true);
-                        dispatch(setSelectedOutlet(item?.outletDetails));
+                        setSelectOutlet(item);
+                        dispatch(setSelectedOutlet(item));
                       }}
                       className="p-4 border-2 rounded-lg bg-gray-100  hover:border-[#F16521] duration-700 cursor-pointer"
                     >
@@ -336,11 +338,11 @@ export default function TopLocationBar() {
                         <div>
                           <h3 className="font-inter font-semibold text-[16px] text-[#202435]">
                             {/* BEL Banani */}
-                            {item?.outletDetails?.outletName}
+                            {item?.outletName}
                           </h3>
                           <p className="font-inter text-[14px] text-[#202435]">
                             {/* Road-02, Banani Dhaka */}
-                            {item?.outletDetails?.outletLocation}
+                            {item?.outletLocation}
                           </p>
                         </div>
 
