@@ -6,7 +6,7 @@ import { Box, Drawer } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import shopSvg from "@/public/images/Retail.svg";
 import deliverySvg from "@/public/images/Delivery-01.svg";
-import { fetchOutlets, fetchProductAvailability, closeOutletDrawer, openOutletDrawer, setSelectedOutlet } from "@/redux/slice/outletSlice";
+import { fetchOutlets, fetchProductAvailability, closeOutletDrawer, openOutletDrawer, closeAreaDrawer, openAreaDrawer, setSelectedOutlet } from "@/redux/slice/outletSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { fetchCities } from "@/redux/slice/citiesSlice";
@@ -19,6 +19,7 @@ export default function TopLocationBar() {
   const [selectedCity, setSelectedCity] = useState("City");
   const [selectedArea, setSelectedArea] = useState("Area");
   const [selectOutlet, setSelectOutlet] = useState(null);
+  const [selectCity, setSelectCity] = useState(null);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [openOutletDropdown, setOpenOutletDropdown] = useState(false);
   const [openCityDropdown, setOpenCityDropdown] = useState(false); // Manage city dropdown visibility
@@ -29,6 +30,9 @@ export default function TopLocationBar() {
   const dispatch = useDispatch();
   const outletDrawerOpen = useSelector(
     (state) => state.outlet.outletDrawerOpen
+  );
+  const areaDrawerOpen = useSelector(
+    (state) => state.outlet.areaDrawerOpen
   );
   const cities = useSelector((state) => state.cities);
   const productAvailability = useSelector((state) => state.outlet);
@@ -46,6 +50,13 @@ export default function TopLocationBar() {
       setShowroom(selectOutlet?.outletName || "Select Showroom");
     }
   }, [outletDrawerOpen, selectOutlet]);
+
+  useEffect(() => {
+    if (!areaDrawerOpen) {
+      // Ensure showroom is updated only when drawer is closed
+      setArea(selectCity?.areaName || "Enter Area");
+    }
+  }, [areaDrawerOpen, selectCity]);
 
   const linkData = [
     { name: "My Account", url: "/my-account" },
@@ -87,12 +98,18 @@ export default function TopLocationBar() {
     setShowroom(selectOutlet?.outletName || "Select Showroom");
     dispatch(closeOutletDrawer());
   };
+  const handleAreaCloseDrawer = () => {
+    // Update showroom here or reset it if necessary
+    setArea("Enter Area");
+    dispatch(closeAreaDrawer());
+  };
   const handleGoToCheckout = () => {
     setOpen(false);
     router.push("/checkout");
   };
   const areas = cities?.cities?.find((city) => city.cityName === selectedCity)?.areas || [];
-  const filteredOutlets = outlets?.outlets?.outlet;
+  const allOutlets = outlets?.outlets?.outlet;
+  const filteredOutlets = productAvailability?.productAvailability?.availability;
   // const filteredOutlets = outlets?.outlets?.outlet?.filter(outlet => outlet.cityName === selectedCity);
   // const filteredOutlets = outlets?.outlets?.outlet?.filter(outlet => {
   // const filteredOutlets = productAvailability?.availability?.filter(outlet => {
@@ -114,7 +131,13 @@ export default function TopLocationBar() {
   //   const matchesArea = outlet.areaName === selectedArea;
   //   return matchesCity && matchesArea;
   // }) || [];
-  // console.log(filteredOutlets);
+  console.log("filteredOutlets", filteredOutlets);
+
+  const matchingOutlets = allOutlets?.filter(item =>
+    filteredOutlets?.some(
+      filter => filter.outletDetails?.outletName === item.outletName
+    )
+  );
 
 
   return (
@@ -138,7 +161,7 @@ export default function TopLocationBar() {
           <div className="flex justify-center gap-3 cursor-pointer">
             <div
               className="flex justify-start items-center"
-              onClick={() => dispatch(openOutletDrawer())}
+              onClick={() => dispatch(openAreaDrawer())}
             >
               <Image
                 src={deliverySvg}
@@ -324,12 +347,13 @@ export default function TopLocationBar() {
                 </div>
 
                 <div className="space-y-4">
-                  {filteredOutlets?.map((item, i) => (
+                  {matchingOutlets?.map((item, i) => (
                     <div
                       key={i}
                       onClick={() => {
                         setShowDetails(true);
                         setSelectOutlet(item);
+                        setSelectedCity(item?.cityName);
                         dispatch(setSelectedOutlet(item));
                       }}
                       className="p-4 border-2 rounded-lg bg-gray-100  hover:border-[#F16521] duration-700 cursor-pointer"
@@ -345,15 +369,18 @@ export default function TopLocationBar() {
                             {item?.outletLocation}
                           </p>
                         </div>
-
-                        <div className="flex items-center space-x-2 mt-3">
-                          <span className="h-4 w-4 bg-green-500 rounded-full"></span>
-                          <span className="text-sm text-[#202435]">
-                            Available
-                          </span>
-                        </div>
+                        {filteredOutlets.some(filter => filter.outletDetails?.outletName === item.outletName && filter.available) ? (
+                          <div className="flex items-center space-x-2 mt-3">
+                            <span className="h-4 w-4 rounded-full bg-green-500"></span>
+                            <span className="text-sm text-[#202435]">Available</span>
+                          </div>
+                        ) : (
+                          <div className="flex items-center space-x-2 mt-3">
+                            <span className="h-4 w-4 rounded-full bg-red-500"></span>
+                            <span className="text-sm text-[#202435]">Not Available</span>
+                          </div>
+                        )}
                       </div>
-
                     </div>
                   ))}
 
@@ -413,6 +440,104 @@ export default function TopLocationBar() {
               }}
               className="w-full py-3 bg-[#F16521] text-white font-semibold rounded-lg hover:bg-[#F16521]">
               Continue With Selection
+            </button>
+          </div>
+        </Box>
+      </Drawer>
+      <Drawer
+        anchor="right"
+        open={areaDrawerOpen}
+        onClose={handleAreaCloseDrawer}
+      >
+        <Box
+          role="presentation"
+          className="w-[378px] bg-[#F3F4F7] h-full flex flex-col justify-between"
+        >
+          <div className="flex-grow p-3">
+            <div className="flex justify-end items-end mb-2">
+              <button
+                className="inline-block hover:text-[#F16521] duration-700"
+                onClick={() => { dispatch(closeAreaDrawer()); }}
+              >
+                <CloseIcon />
+              </button>
+            </div>
+            {!showDetails && (
+              <div>
+                <h2 className="text-lg text-gray-800 mb-4">
+                  Enter your location
+                </h2>
+                <div className="mb-4">
+                  <div className="">
+                    <h2>Give updated information for product delivery.</h2>
+                  </div>
+                </div>
+                <div className="my-3">
+                  <label className="text-sm" htmlFor="city">
+                    City *
+                  </label>
+                  <select
+                    className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
+                    name="city"
+                    id="city"
+                    value={selectedCity}
+                    onChange={(e) => handleCitySelect(e.target.value)}
+                    required
+                  >
+                    <option value="Select City">Select City</option>
+                    {cities?.cities?.map((item, i) => (
+                      <option key={i} value={item.cityName}>
+                        {item?.cityName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="my-3">
+                  <label className="text-sm" htmlFor="area">
+                    Area *
+                  </label>
+                  <select
+                    className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
+                    name="area"
+                    id="area"
+                    value={selectedArea}
+                    onChange={(e) => handleAreaSelect(e.target.value)}
+                    required
+                  >
+                    <option value="Select Area">Select Area</option>
+                    {areas?.map((item, i) => (
+                      <option key={i} value={item?.areaName}>
+                        {item?.areaName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="my-3">
+                  <label className="text-sm" htmlFor="fullAddress">
+                    Enter Full Address*
+                  </label>
+                  <input
+                    className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
+                    type="text"
+                    name="fullAddress"
+                    id="fullAddress"
+                    defaultValue={""}
+                    required
+                    placeholder="House name & no., Road no., Village name, Ward no., Thana, Upazilla"
+                  />
+                </div>
+              </div>
+
+            )}
+          </div>
+
+          <div className="mt-6 p-3">
+            <button
+              onClick={() => {
+                dispatch(closeAreaDrawer());
+              }}
+              className="w-full py-3 bg-[#F16521] text-white font-semibold rounded-lg hover:bg-[#F16521]">
+              Save
             </button>
           </div>
         </Box>

@@ -20,7 +20,7 @@ import { fetchApi } from "@/utils/FetchApi";
 import { usePathname } from "next/navigation";
 import shopSvg from "@/public/images/Retail.svg";
 import deliverySvg from "@/public/images/Delivery-01.svg";
-import { openOutletDrawer } from "@/redux/slice/outletSlice";
+import { openOutletDrawer, openAreaDrawer } from "@/redux/slice/outletSlice";
 import NotificationToast from "../global/NotificationToast";
 
 export default function SingleProduct({ product, categoryName }) {
@@ -169,11 +169,10 @@ export default function SingleProduct({ product, categoryName }) {
             <div className="my-5 md:w-full lg:w-1/3 ">
               <p
                 className={`
-                ${
-                  product?.inventory?.stockStatus === "In Stock"
+                ${product?.inventory?.stockStatus === "In Stock"
                     ? "text-[#70BE38] bg-[#E5F8ED]"
                     : "text-red-400 bg-red-100"
-                }  text-xs font-semibold px-3 py-1 inline-block rounded-full
+                  }  text-xs font-semibold px-3 py-1 inline-block rounded-full
                 `}
               >
                 {product?.inventory?.stockStatus}
@@ -230,7 +229,7 @@ export default function SingleProduct({ product, categoryName }) {
                         viewBox="0 0 24 24"
                         stroke="currentColor"
                         className="w-5 h-5 text-gray-300 cursor-pointer"
-                        onClick={() => dispatch(openOutletDrawer())}
+                        onClick={() => dispatch(openAreaDrawer())}
                       >
                         <path
                           strokeLinecap="round"
@@ -258,8 +257,13 @@ export default function SingleProduct({ product, categoryName }) {
                           <span>Click and collect - Available</span>
                         </div>
                         <div className="flex items-center">
-                          <div className="w-3 h-3 bg-[#70BE38] rounded-full mr-2"></div>
-                          <span>Store - In Stock</span>
+                          <div className={`
+                ${product?.inventory?.stockStatus === "In Stock"
+                              ? "bg-[#70BE38]"
+                              : "bg-red-400"
+                            }  w-3 h-3 rounded-full mr-2
+                `}></div>
+                          <span>Store - {product?.inventory?.stockStatus}</span>
                         </div>
                       </div>
                     </div>
@@ -291,9 +295,8 @@ export default function SingleProduct({ product, categoryName }) {
                     dispatch(addToWishlist(product));
                   }}
                   disabled={favorite}
-                  className={`text-xs text-[#9B9BB4] border px-3 py-2 rounded-full flex justify-center items-center uppercase ${
-                    favorite ? "cursor-not-allowed" : "cursor-pointer"
-                  }`}
+                  className={`text-xs text-[#9B9BB4] border px-3 py-2 rounded-full flex justify-center items-center uppercase ${favorite ? "cursor-not-allowed" : "cursor-pointer"
+                    }`}
                 >
                   <svg
                     width="20"
