@@ -6,9 +6,9 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Success() {
-  const orderResponse = useSelector((state) => state.orderResponse) || [];
+  const orderResponse = useSelector((state) => state.orderResponse);
 
-  console.log("orderResponse product", orderResponse?.products);
+  // console.log("orderResponse product", orderResponse?.products);
 
 
 
