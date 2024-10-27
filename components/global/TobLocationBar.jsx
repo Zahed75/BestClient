@@ -109,7 +109,7 @@ export default function TopLocationBar() {
   };
   const areas = cities?.cities?.find((city) => city.cityName === selectedCity)?.areas || [];
   const allOutlets = outlets?.outlets?.outlet;
-  const filteredOutlets = productAvailability?.productAvailability?.availability;
+  const filteredOutlets = productAvailability?.productAvailability?.availability || [];
   // const filteredOutlets = outlets?.outlets?.outlet?.filter(outlet => outlet.cityName === selectedCity);
   // const filteredOutlets = outlets?.outlets?.outlet?.filter(outlet => {
   // const filteredOutlets = productAvailability?.availability?.filter(outlet => {
