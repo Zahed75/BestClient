@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/slice/cartSlice";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { showNotificationWithTimeout } from "@/redux/slice/notificationSlice";
 
 export default function ImageShow({ productImage, productGallery, product }) {
   const combinedGallery = [productImage, ...productGallery];
@@ -18,6 +19,12 @@ export default function ImageShow({ productImage, productGallery, product }) {
 
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const showNotification = (message) => {
+    console.log("showNotification called", message);
+
+    dispatch(showNotificationWithTimeout(message));
+  };
 
   const handleClick = (index) => {
     setVal(index);
@@ -44,7 +51,7 @@ export default function ImageShow({ productImage, productGallery, product }) {
 
   const handleAddToCart = () => {
     setIsLoading(true);
-
+    showNotification("Product Add to Cart successfully!");
     setTimeout(() => {
       dispatch(addToCart(product));
       setIsLoading(false);
@@ -55,6 +62,7 @@ export default function ImageShow({ productImage, productGallery, product }) {
       }, 1500);
     }, 2000);
   };
+
   return (
     <section className="flex justify-center items-start gap-5 my-5">
       <div className="flex flex-col gap-2 max-h-[387px] overflow-y-scroll scrollbar_hidden">

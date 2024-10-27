@@ -19,8 +19,6 @@ export default function CheckOutCart() {
   const [selectedArea, setSelectedArea] = useState("Area");
   const [areas, setAreas] = useState(null);
 
-
-
   const cart = useSelector((state) => state.cart.items) || [];
   const customer = useSelector((state) => state.customer) || {};
   const discounts = useSelector((state) => state.discount?.discounts) || {};
@@ -34,14 +32,13 @@ export default function CheckOutCart() {
   const discount = discounts?.discount || 0;
   const totalProductPrice = Array.isArray(cart)
     ? cart.reduce((acc, item) => {
-      const price =
-        discount > 0 ? item.general.regularPrice : item.general.salePrice;
-      return acc + price * item.quantity;
-    }, 0)
+        const price =
+          discount > 0 ? item.general.regularPrice : item.general.salePrice;
+        return acc + price * item.quantity;
+      }, 0)
     : 0;
 
   const totalPrice = totalProductPrice - discount;
-
 
   useEffect(() => {
     dispatch(fetchCities());
@@ -114,7 +111,9 @@ export default function CheckOutCart() {
 
   const handleCitySelect = (cityName) => {
     setSelectedCity(cityName); // Update selected city
-    setAreas(cities?.cities?.find((city) => city.cityName === cityName)?.areas || []);
+    setAreas(
+      cities?.cities?.find((city) => city.cityName === cityName)?.areas || []
+    );
   };
   const handleAreaSelect = (areaName) => {
     setSelectedArea(areaName); // Update selected area
@@ -157,7 +156,6 @@ export default function CheckOutCart() {
 
     console.log("Order data:", data);
 
-
     try {
       const response = await fetchApi("/order/orderCreate", "POST", data);
 
@@ -174,7 +172,6 @@ export default function CheckOutCart() {
       setLoading(false);
     }
   };
-
 
   return (
     <section className="">
@@ -286,9 +283,7 @@ export default function CheckOutCart() {
                   required
                 >
                   {customerInfo?.billingInfo?.district ? (
-                    <option>
-
-                    </option>
+                    <option></option>
                   ) : (
                     <option value="">Select City</option>
                   )}
@@ -312,9 +307,7 @@ export default function CheckOutCart() {
                   required
                 >
                   {customerInfo?.billingInfo?.district ? (
-                    <option>
-
-                    </option>
+                    <option></option>
                   ) : (
                     <option value="">Select Area</option>
                   )}
@@ -374,7 +367,8 @@ export default function CheckOutCart() {
                     ৳
                     {(discount > 0
                       ? item.general.regularPrice
-                      : item.general.salePrice * item.quantity).toLocaleString('en-BD')}
+                      : item.general.salePrice * item.quantity
+                    ).toLocaleString("en-BD")}
                   </p>
                 </div>
               ))}
@@ -417,7 +411,9 @@ export default function CheckOutCart() {
           <div className="my-5">
             <div className="flex justify-between items-center my-3">
               <p>Products price</p>
-              <p className="font-semibold">৳{totalProductPrice.toLocaleString('en-BD')}</p>
+              <p className="font-semibold">
+                ৳{totalProductPrice.toLocaleString("en-BD")}
+              </p>
             </div>
 
             <div className="flex justify-between items-center my-3">
@@ -427,7 +423,9 @@ export default function CheckOutCart() {
             <div className="border"></div>
             <div className="flex justify-between items-center my-3">
               <p>Total (Incl. VAT)</p>
-              <p className="font-semibold">৳{totalPrice.toLocaleString('en-BD')}</p>
+              <p className="font-semibold">
+                ৳{totalPrice.toLocaleString("en-BD")}
+              </p>
             </div>
           </div>
           {/* order note textarea */}
@@ -487,4 +485,3 @@ export default function CheckOutCart() {
     </section>
   );
 }
-

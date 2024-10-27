@@ -11,6 +11,7 @@ import brandReducer from "./slice/brandSlice";
 import orderResponseReducer from "./slice/orderResponseSlice";
 import outletReducer from "./slice/outletSlice";
 import citiesReducer from "./slice/citiesSlice";
+import notificationReducer from "./slice/notificationSlice";
 
 const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ const store = configureStore({
     orderResponse: orderResponseReducer,
     outlet: outletReducer,
     cities: citiesReducer,
+    notification: notificationReducer,
   },
 });
 
