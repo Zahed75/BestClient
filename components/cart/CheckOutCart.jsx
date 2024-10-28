@@ -32,13 +32,14 @@ export default function CheckOutCart() {
   const discount = discounts?.discount || 0;
   const totalProductPrice = Array.isArray(cart)
     ? cart.reduce((acc, item) => {
-        const price =
-          discount > 0 ? item.general.regularPrice : item.general.salePrice;
-        return acc + price * item.quantity;
-      }, 0)
+      const price =
+        discount > 0 ? item.general.regularPrice : item.general.salePrice;
+      return acc + price * item.quantity;
+    }, 0)
     : 0;
 
   const totalPrice = totalProductPrice - discount;
+  const selectedOutlet = outlet?.selectedOutlet;
 
   useEffect(() => {
     dispatch(fetchCities());
@@ -107,7 +108,6 @@ export default function CheckOutCart() {
     }
   }, []);
 
-  const selectedOutlet = outlet?.selectedOutlet;
 
   const handleCitySelect = (cityName) => {
     setSelectedCity(cityName); // Update selected city
@@ -136,6 +136,8 @@ export default function CheckOutCart() {
       lastName: formData.get("lastName"),
       deliveryAddress: formData.get("fullAddress"),
       district: formData.get("district"),
+      city: formData.get("city"),
+      area: formData.get("area"),
       phoneNumber: formData.get("phone"),
       paymentMethod:
         formData.get("paymentMethod") === "cashOnDelivery"

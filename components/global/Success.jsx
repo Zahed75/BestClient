@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 export default function Success() {
   const orderResponse = useSelector((state) => state.orderResponse);
 
-  console.log("orderResponse product", orderResponse?.products);
+  // console.log("orderResponse product", orderResponse?.products);
 
 
 
@@ -62,9 +62,8 @@ export default function Success() {
           {orderResponse?.products?.map((product, i) => (
             <div
               key={i}
-              className={`flex justify-start items-start gap-5 my-5 ${
-                i !== product?.length - 1 ? "border-b-2" : ""
-              }`}
+              className={`flex justify-start items-start gap-5 my-5 ${i !== product?.length - 1 ? "border-b-2" : ""
+                }`}
             >
               <div className="w-[150px] h-[150px]">
                 <Image

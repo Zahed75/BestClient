@@ -6,6 +6,7 @@ const initialState = {
   status: "idle",
   error: null,
   outletDrawerOpen: false,
+  areaDrawerOpen: false,
   selectedOutlet:null,
 };
 
@@ -107,6 +108,12 @@ const outletSlice = createSlice({
     closeOutletDrawer: (state) => {
       state.outletDrawerOpen = false;
     },
+    openAreaDrawer: (state) => {
+      state.areaDrawerOpen = true;
+    },
+    closeAreaDrawer: (state) => {
+      state.areaDrawerOpen = false;
+    },
     setSelectedOutlet:(state,action)=>{
       const outlet = action.payload;
       state.selectedOutlet=outlet?._id;
@@ -144,6 +151,8 @@ const outletSlice = createSlice({
 export const {
     openOutletDrawer,
     closeOutletDrawer,
+    openAreaDrawer,
+    closeAreaDrawer,
     getAllOutlets,
     setSelectedOutlet,
 } = outletSlice.actions;
