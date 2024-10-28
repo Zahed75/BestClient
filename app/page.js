@@ -20,12 +20,11 @@ export default async function Home() {
     );
 
     const data = await response.json();
-    events = data.grids  || []; 
+    events = data.grids || [];
   } catch (error) {
     console.error("Error fetching events:", error);
   }
 
-  
   const sortedEvents = events.sort((a, b) => a.ordersBy - b.ordersBy);
 
   const eventCategories = sortedEvents.reduce(
@@ -62,15 +61,10 @@ export default async function Home() {
       <ImageSlider />
       <div className="container">
         <div className="">
-     
           {eventCategories.before.map((event, index) => (
             <EventProduct key={index} event={event} />
           ))}
 
-          {/* <Categories />
-          <RecentAdded /> */}
-
-          
           {eventCategories.after.map((event, index) => (
             <EventProduct key={index} event={event} />
           ))}
