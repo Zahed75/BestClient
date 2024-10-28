@@ -54,7 +54,7 @@ export default function TopLocationBar() {
   useEffect(() => {
     if (!areaDrawerOpen) {
       // Ensure showroom is updated only when drawer is closed
-      setArea(selectCity?.areaName || "Enter Area");
+      setArea(area || "Enter Area");
     }
   }, [areaDrawerOpen, selectCity]);
 
@@ -79,28 +79,27 @@ export default function TopLocationBar() {
   const handleOptionClick = (option) => {
     setAvailability(option); // Update selected option
     setOpenOutletDropdown(false); // Close dropdown after selection
-    setOpenCityDropdown(false);
+    setOpenDropdown(null);
   };
   const handleCitySelect = (cityName) => {
     setSelectedCity(cityName); // Update selected city
-    // setArea(cityName);
     setOpenCityDropdown(false); // Close city dropdown
     setSelectedArea("Area"); // Reset area selection
-    setOpenAreaDropdown(false);
+    setOpenDropdown(null);
   };
   const handleAreaSelect = (areaName) => {
     setSelectedArea(areaName); // Update selected area
-    // setArea(areaName);
-    setOpenAreaDropdown(false); // Close area dropdown after selection
+    setArea(areaName);
+    setOpenDropdown(null);  // Close area dropdown after selection
   };
   const handleCloseDrawer = () => {
     // Update showroom here or reset it if necessary
     setShowroom(selectOutlet?.outletName || "Select Showroom");
+    setOpenDropdown(null);
     dispatch(closeOutletDrawer());
   };
   const handleAreaCloseDrawer = () => {
     // Update showroom here or reset it if necessary
-    setArea("Enter Area");
     dispatch(closeAreaDrawer());
   };
   const handleGoToCheckout = () => {
@@ -176,7 +175,7 @@ export default function TopLocationBar() {
                 <span>{area}</span>
               ) : (
                 <span className="text-nowrap">
-                  {area}
+                  {area}, {selectedCity}
                 </span>
               )}
             </div>
@@ -216,7 +215,9 @@ export default function TopLocationBar() {
             <div className="flex justify-end items-end mb-2">
               <button
                 className="inline-block hover:text-[#F16521] duration-700"
-                onClick={() => { dispatch(closeOutletDrawer()); }}
+                onClick={() => {
+                  dispatch(closeOutletDrawer());
+                }}
               >
                 <CloseIcon />
               </button>
@@ -346,7 +347,7 @@ export default function TopLocationBar() {
                   </div>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-4" onClick={() => { setOpenDropdown(null) }}>
                   {matchingOutlets?.map((item, i) => (
                     <div
                       key={i}
@@ -462,73 +463,56 @@ export default function TopLocationBar() {
                 <CloseIcon />
               </button>
             </div>
-            {!showDetails && (
-              <div>
-                <h2 className="text-lg text-gray-800 mb-4">
-                  Enter your location
-                </h2>
-                <div className="mb-4">
-                  <div className="">
-                    <h2>Give updated information for product delivery.</h2>
-                  </div>
-                </div>
-                <div className="my-3">
-                  <label className="text-sm" htmlFor="city">
-                    City *
-                  </label>
-                  <select
-                    className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
-                    name="city"
-                    id="city"
-                    value={selectedCity}
-                    onChange={(e) => handleCitySelect(e.target.value)}
-                    required
-                  >
-                    <option value="Select City">Select City</option>
-                    {cities?.cities?.map((item, i) => (
-                      <option key={i} value={item.cityName}>
-                        {item?.cityName}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="my-3">
-                  <label className="text-sm" htmlFor="area">
-                    Area *
-                  </label>
-                  <select
-                    className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
-                    name="area"
-                    id="area"
-                    value={selectedArea}
-                    onChange={(e) => handleAreaSelect(e.target.value)}
-                    required
-                  >
-                    <option value="Select Area">Select Area</option>
-                    {areas?.map((item, i) => (
-                      <option key={i} value={item?.areaName}>
-                        {item?.areaName}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="my-3">
-                  <label className="text-sm" htmlFor="fullAddress">
-                    Enter Full Address*
-                  </label>
-                  <input
-                    className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
-                    type="text"
-                    name="fullAddress"
-                    id="fullAddress"
-                    defaultValue={""}
-                    required
-                    placeholder="House name & no., Road no., Village name, Ward no., Thana, Upazilla"
-                  />
+
+            <div>
+              <h2 className="text-lg text-gray-800 mb-4">
+                Enter your location
+              </h2>
+              <div className="mb-4">
+                <div className="">
+                  <h2>Give updated information for product delivery.</h2>
                 </div>
               </div>
+              <div className="my-3">
+                <label className="text-sm" htmlFor="city">
+                  City *
+                </label>
+                <select
+                  className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
+                  name="city"
+                  id="city"
+                  value={selectedCity}
+                  onChange={(e) => handleCitySelect(e.target.value)}
+                  required
+                >
+                  {cities?.cities?.map((item, i) => (
+                    <option key={i} value={item.cityName}>
+                      {item?.cityName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="my-3">
+                <label className="text-sm" htmlFor="area">
+                  Area *
+                </label>
+                <select
+                  className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
+                  name="area"
+                  id="area"
+                  value={selectedArea}
+                  onChange={(e) => handleAreaSelect(e.target.value)}
+                  required
+                >
 
-            )}
+                  {areas?.map((item, i) => (
+                    <option key={i} value={item?.areaName}>
+                      {item?.areaName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
           </div>
 
           <div className="mt-6 p-3">

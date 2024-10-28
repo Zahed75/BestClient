@@ -135,7 +135,6 @@ export default function CheckOutCart() {
       firstName: formData.get("firstName"),
       lastName: formData.get("lastName"),
       deliveryAddress: formData.get("fullAddress"),
-      district: formData.get("district"),
       city: formData.get("city"),
       area: formData.get("area"),
       phoneNumber: formData.get("phone"),
@@ -246,31 +245,6 @@ export default function CheckOutCart() {
                   required
                   placeholder="House name & no., Road no., Village name, Ward no., Thana, Upazilla"
                 />
-              </div>
-              <div className="col-span-2">
-                <label className="text-sm" htmlFor="district">
-                  District *
-                </label>
-                <select
-                  className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
-                  name="district"
-                  id="district"
-                  defaultValue={customerInfo?.billingInfo?.district}
-                  required
-                >
-                  {customerInfo?.billingInfo?.district ? (
-                    <option value={customerInfo?.billingInfo?.district}>
-                      {customerInfo?.billingInfo?.district}
-                    </option>
-                  ) : (
-                    <option value="">Select District</option>
-                  )}
-                  {districts?.map((district, index) => (
-                    <option key={index} value={district.district}>
-                      {district.district}
-                    </option>
-                  ))}
-                </select>
               </div>
               <div className="col-span-1">
                 <label className="text-sm" htmlFor="city">
