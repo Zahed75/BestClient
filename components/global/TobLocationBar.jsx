@@ -16,6 +16,7 @@ export default function TopLocationBar() {
 
   const [showroom, setShowroom] = useState("Select Showroom");
   const [availability, setAvailability] = useState("Status");
+  const [selectedOutletCity, setSelectedOutletCity] = useState("City");
   const [selectedCity, setSelectedCity] = useState("City");
   const [selectedArea, setSelectedArea] = useState("Area");
   const [selectOutlet, setSelectOutlet] = useState(null);
@@ -80,6 +81,7 @@ export default function TopLocationBar() {
   };
   const handleCitySelect = (cityName) => {
     setSelectedCity(cityName); // Update selected city
+    setSelectedOutletCity(cityName);
     setOpenCityDropdown(false); // Close city dropdown
     setSelectedArea("Area"); // Reset area selection
     setOpenDropdown(null);
@@ -105,6 +107,7 @@ export default function TopLocationBar() {
     setOpen(false);
     router.push("/checkout");
   };
+  const outletAreas = cities?.cities?.find((city) => city.cityName === selectedOutletCity)?.areas || [];
   const areas = cities?.cities?.find((city) => city.cityName === selectedCity)?.areas || [];
   const allOutlets = outlets?.outlets?.outlet;
   const filteredOutlets = productAvailability?.productAvailability?.availability || [];
@@ -274,7 +277,7 @@ export default function TopLocationBar() {
                         className="w-full flex items-center justify-between bg-gray-200 px-2 py-2 rounded-full text-gray-700 hover:bg-gray-300"
                         onClick={() => toggleDropdown("city")}
                       >
-                        <span>{selectedCity}</span>
+                        <span>{selectedOutletCity}</span>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -331,7 +334,7 @@ export default function TopLocationBar() {
 
                       {openDropdown === "area" && (
                         <div className="absolute left-0 mt-2 w-full bg-white border rounded-lg shadow-lg z-10">
-                          {areas.map((area, i) => (
+                          {outletAreas.map((area, i) => (
                             <label
                               key={i}
                               className="block px-4 py-2 text-sm text-gray-700 hover:text-[#F26522] duration-700 cursor-pointer"
@@ -353,7 +356,7 @@ export default function TopLocationBar() {
                       onClick={() => {
                         setShowDetails(true);
                         setSelectOutlet(item);
-                        setSelectedCity(item?.cityName);
+                        setSelectedOutletCity(item?.cityName);
                         dispatch(setSelectedOutlet(item));
                       }}
                       className="p-4 border-2 rounded-lg bg-gray-100  hover:border-[#F16521] duration-700 cursor-pointer"
