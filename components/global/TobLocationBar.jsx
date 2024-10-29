@@ -6,20 +6,21 @@ import { Box, Drawer } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import shopSvg from "@/public/images/Retail.svg";
 import deliverySvg from "@/public/images/Delivery-01.svg";
-import { fetchOutlets, fetchProductAvailability, closeOutletDrawer, openOutletDrawer, closeAreaDrawer, openAreaDrawer, setSelectedOutlet } from "@/redux/slice/outletSlice";
+import { fetchOutlets, fetchProductAvailability, setSelectArea, setSelectCity, closeOutletDrawer, openOutletDrawer, closeAreaDrawer, openAreaDrawer, setSelectedOutlet } from "@/redux/slice/outletSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { fetchCities } from "@/redux/slice/citiesSlice";
 
 export default function TopLocationBar() {
   const [open, setOpen] = useState(false);
-  const [area, setArea] = useState("Enter Area");
+
   const [showroom, setShowroom] = useState("Select Showroom");
   const [availability, setAvailability] = useState("Status");
   const [selectedCity, setSelectedCity] = useState("City");
   const [selectedArea, setSelectedArea] = useState("Area");
   const [selectOutlet, setSelectOutlet] = useState(null);
-  const [selectCity, setSelectCity] = useState(null);
+
+
   const [openDropdown, setOpenDropdown] = useState(null);
   const [openOutletDropdown, setOpenOutletDropdown] = useState(false);
   const [openCityDropdown, setOpenCityDropdown] = useState(false); // Manage city dropdown visibility
@@ -37,6 +38,8 @@ export default function TopLocationBar() {
   const cities = useSelector((state) => state.cities);
   const productAvailability = useSelector((state) => state.outlet);
   const outlets = useSelector((state) => state.outlet);
+  const selectCity = outlets?.selectCity;
+  const selectArea = outlets?.selectArea;
 
   useEffect(() => {
     dispatch(fetchCities());
@@ -51,12 +54,6 @@ export default function TopLocationBar() {
     }
   }, [outletDrawerOpen, selectOutlet]);
 
-  useEffect(() => {
-    if (!areaDrawerOpen) {
-      // Ensure showroom is updated only when drawer is closed
-      setArea(area || "Enter Area");
-    }
-  }, [areaDrawerOpen, selectCity]);
 
   const linkData = [
     { name: "My Account", url: "/my-account" },
@@ -89,7 +86,6 @@ export default function TopLocationBar() {
   };
   const handleAreaSelect = (areaName) => {
     setSelectedArea(areaName); // Update selected area
-    setArea(areaName);
     setOpenDropdown(null);  // Close area dropdown after selection
   };
   const handleCloseDrawer = () => {
@@ -100,6 +96,9 @@ export default function TopLocationBar() {
   };
   const handleAreaCloseDrawer = () => {
     // Update showroom here or reset it if necessary
+    console.log("select", areaSelect);
+    setArea(areaSelect?.areaName || "Enter Area");
+    dispatch(setSelectArea(areaSelect));
     dispatch(closeAreaDrawer());
   };
   const handleGoToCheckout = () => {
@@ -130,7 +129,7 @@ export default function TopLocationBar() {
   //   const matchesArea = outlet.areaName === selectedArea;
   //   return matchesCity && matchesArea;
   // }) || [];
-  console.log("filteredOutlets", filteredOutlets);
+  // console.log("filteredOutlets", filteredOutlets);
 
   const matchingOutlets = allOutlets?.filter(item =>
     filteredOutlets?.some(
@@ -171,11 +170,11 @@ export default function TopLocationBar() {
               />
               {/* Enter Area */}
               {/* {area} */}
-              {area === "Enter Area" ? (
-                <span>{area}</span>
+              {selectArea === "Enter Area" ? (
+                <span>{selectArea}</span>
               ) : (
                 <span className="text-nowrap">
-                  {area}, {selectedCity}
+                  {selectArea}
                 </span>
               )}
             </div>
@@ -458,7 +457,7 @@ export default function TopLocationBar() {
             <div className="flex justify-end items-end mb-2">
               <button
                 className="inline-block hover:text-[#F16521] duration-700"
-                onClick={() => { dispatch(closeAreaDrawer()); }}
+                onClick={() => { dispatch(closeAreaDrawer()) }}
               >
                 <CloseIcon />
               </button>
@@ -481,10 +480,19 @@ export default function TopLocationBar() {
                   className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
                   name="city"
                   id="city"
-                  value={selectedCity}
-                  onChange={(e) => handleCitySelect(e.target.value)}
                   required
+                  defaultValue={selectCity}
+                  onChange={(e) => {
+                    const selectedItem = cities?.cities.find(item => item.cityName === e.target.value);
+                    setSelectedCity(selectedItem?.cityName);
+                    dispatch(setSelectCity(selectedItem?.cityName));
+
+                  }}
+
                 >
+                  <option>
+                    Select an city
+                  </option>
                   {cities?.cities?.map((item, i) => (
                     <option key={i} value={item.cityName}>
                       {item?.cityName}
@@ -500,11 +508,17 @@ export default function TopLocationBar() {
                   className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
                   name="area"
                   id="area"
-                  value={selectedArea}
-                  onChange={(e) => handleAreaSelect(e.target.value)}
                   required
+                  defaultValue={selectArea}
+                  // onChange={(e) => handleAreaSelect(e.target.value)}
+                  onChange={(e) => {
+                    const selectedItem = areas.find(item => item?.areaName === e.target.value);
+                    dispatch(setSelectArea(selectedItem?.areaName));
+                  }}
                 >
-
+                  <option>
+                    Select an area
+                  </option>
                   {areas?.map((item, i) => (
                     <option key={i} value={item?.areaName}>
                       {item?.areaName}

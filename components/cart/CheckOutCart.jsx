@@ -6,7 +6,7 @@ import { getIPAddress } from "@/utils/getIP";
 import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchOutlets } from "@/redux/slice/outletSlice";
+import { fetchOutlets, setSelectCity, setSelectArea } from "@/redux/slice/outletSlice";
 import { fetchCities } from "@/redux/slice/citiesSlice";
 
 export default function CheckOutCart() {
@@ -15,15 +15,14 @@ export default function CheckOutCart() {
   const [customerInfo, setCustomerInfo] = useState({});
   const [IP, setIP] = useState("");
   const [loading, setLoading] = useState(false);
-  const [selectedCity, setSelectedCity] = useState("City");
-  const [selectedArea, setSelectedArea] = useState("Area");
-  const [areas, setAreas] = useState(null);
+
 
   const cart = useSelector((state) => state.cart.items) || [];
   const customer = useSelector((state) => state.customer) || {};
   const discounts = useSelector((state) => state.discount?.discounts) || {};
   const outlet = useSelector((state) => state.outlet);
   const cities = useSelector((state) => state.cities);
+
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -40,6 +39,9 @@ export default function CheckOutCart() {
 
   const totalPrice = totalProductPrice - discount;
   const selectedOutlet = outlet?.selectedOutlet;
+  const selectCity = outlet?.selectCity;
+  const selectArea = outlet?.selectArea;
+  const areas = cities?.cities?.find((city) => city.cityName === selectCity)?.areas || [];
 
   useEffect(() => {
     dispatch(fetchCities());
@@ -103,22 +105,24 @@ export default function CheckOutCart() {
           console.error("Error fetching product data:", error);
         }
       };
-
       fetchData();
     }
   }, []);
 
 
   const handleCitySelect = (cityName) => {
-    setSelectedCity(cityName); // Update selected city
-    setAreas(
-      cities?.cities?.find((city) => city.cityName === cityName)?.areas || []
-    );
+    const selectedItem = cities?.cities.find(item => item.cityName === cityName);
+
+    // setAreas(
+    //   cities?.cities?.find((city) => city.cityName === selectCity)?.areas || []
+    // );
+    dispatch(setSelectCity(selectedItem?.cityName));
   };
   const handleAreaSelect = (areaName) => {
-    setSelectedArea(areaName); // Update selected area
+    // setSelectedArea(areaName); // Update selected area
+    // console.log(areas);
   };
-
+  console.log(areas);
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -254,15 +258,17 @@ export default function CheckOutCart() {
                   className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
                   name="city"
                   id="city"
-                  value={selectedCity}
+                  value={selectCity}
                   onChange={(e) => handleCitySelect(e.target.value)}
                   required
+                // onChange={(e) => {
+                //   const selectedItem = cities?.cities.find(item => item.cityName === e.target.value);
+                //   handleCitySelect(selectedItem?.cityName);
+                //   // setSelectedCity(selectedItem?.cityName);
+                //   dispatch(setSelectCity(selectedItem?.cityName));
+
+                // }}
                 >
-                  {customerInfo?.billingInfo?.district ? (
-                    <option></option>
-                  ) : (
-                    <option value="">Select City</option>
-                  )}
                   {cities?.cities?.map((item, i) => (
                     <option key={i} value={item.cityName}>
                       {item?.cityName}
@@ -278,15 +284,10 @@ export default function CheckOutCart() {
                   className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
                   name="area"
                   id="area"
-                  value={selectedArea}
+                  value={selectArea}
                   onChange={(e) => handleAreaSelect(e.target.value)}
                   required
                 >
-                  {customerInfo?.billingInfo?.district ? (
-                    <option></option>
-                  ) : (
-                    <option value="">Select Area</option>
-                  )}
                   {areas?.map((item, i) => (
                     <option key={i} value={item?.areaName}>
                       {item?.areaName}
