@@ -8,6 +8,8 @@ const initialState = {
   outletDrawerOpen: false,
   areaDrawerOpen: false,
   selectedOutlet:null,
+  selectCity:"",
+  selectArea:"Enter Area",
 };
 
 export const fetchOutlets = createAsyncThunk(
@@ -117,7 +119,16 @@ const outletSlice = createSlice({
     setSelectedOutlet:(state,action)=>{
       const outlet = action.payload;
       state.selectedOutlet=outlet?._id;
-      console.log(outlet?._id);
+    },
+    setSelectCity:(state,action)=>{
+      const city = action.payload;
+      state.selectCity=city;
+      console.log("City",city);
+    },
+    setSelectArea:(state,action)=>{
+      const area = action.payload;
+      state.selectArea=area;
+      console.log("Area",area);
     }
     
   },
@@ -155,6 +166,8 @@ export const {
     closeAreaDrawer,
     getAllOutlets,
     setSelectedOutlet,
+    setSelectCity,
+    setSelectArea,
 } = outletSlice.actions;
 
 export default outletSlice.reducer;
