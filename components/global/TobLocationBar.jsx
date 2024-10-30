@@ -107,10 +107,47 @@ export default function TopLocationBar() {
     setOpen(false);
     router.push("/checkout");
   };
+
+  const allOutlets = outlets?.outlets?.outlet;
   const outletAreas = cities?.cities?.find((city) => city.cityName === selectedOutletCity)?.areas || [];
   const areas = cities?.cities?.find((city) => city.cityName === selectedCity)?.areas || [];
-  const allOutlets = outlets?.outlets?.outlet;
   const filteredOutlets = productAvailability?.productAvailability?.availability || [];
+
+  // Filter outlets based on selected filters (availability, city, area)
+  const matchingOutlets = allOutlets?.filter(outlet => {
+    // Check if no filters are applied
+    const noFiltersApplied =
+      (!availability || availability === "All") &&
+      (!selectedCity || selectedCity === "City") &&
+      (!selectedArea || selectedArea === "Area");
+
+    if (noFiltersApplied) return true; // Show all outlets if no filters are applied
+
+    // Filter based on city, area, and availability if filters are selected
+    const matchesCity = selectedCity && selectedCity !== "City" ? outlet.cityName === selectedCity : true;
+    const matchesArea = selectedArea && selectedArea !== "Area" ? outlet.areaName === selectedArea : true;
+
+    // Update matchesAvailability to handle "Not Available" explicitly
+    const matchesAvailability = availability === "Available"
+      ? filteredOutlets.some(filter => filter.outletDetails?.outletName === outlet.outletName && filter.available)
+      : availability === "Not Available"
+        ? filteredOutlets.some(filter => filter.outletDetails?.outletName === outlet.outletName && !filter.available)
+        : true; // If availability is not set, include all outlets
+
+    return matchesCity && matchesArea && matchesAvailability;
+  }) || [];
+
+
+
+
+
+  // const outletAreas = cities?.cities?.find((city) => city.cityName === selectedOutletCity)?.areas || [];
+  // const areas = cities?.cities?.find((city) => city.cityName === selectedCity)?.areas || [];
+  // const allOutlets = outlets?.outlets?.outlet;
+  // const filteredOutlets = productAvailability?.productAvailability?.availability || [];
+
+
+
   // const filteredOutlets = outlets?.outlets?.outlet?.filter(outlet => outlet.cityName === selectedCity);
   // const filteredOutlets = outlets?.outlets?.outlet?.filter(outlet => {
   // const filteredOutlets = productAvailability?.availability?.filter(outlet => {
@@ -134,11 +171,13 @@ export default function TopLocationBar() {
   // }) || [];
   // console.log("filteredOutlets", filteredOutlets);
 
-  const matchingOutlets = allOutlets?.filter(item =>
-    filteredOutlets?.some(
-      filter => filter.outletDetails?.outletName === item.outletName
-    )
-  );
+
+
+  // const matchingOutlets = allOutlets?.filter(item =>
+  //   filteredOutlets?.some(
+  //     filter => filter.outletDetails?.outletName === item.outletName
+  //   )
+  // );
 
 
   return (
@@ -218,6 +257,7 @@ export default function TopLocationBar() {
               <button
                 className="inline-block hover:text-[#F16521] duration-700"
                 onClick={() => {
+                  setOpenDropdown(null);
                   dispatch(closeOutletDrawer());
                 }}
               >
@@ -356,6 +396,7 @@ export default function TopLocationBar() {
                       onClick={() => {
                         setShowDetails(true);
                         setSelectOutlet(item);
+                        setOpenDropdown(null);
                         setSelectedOutletCity(item?.cityName);
                         dispatch(setSelectedOutlet(item));
                       }}
