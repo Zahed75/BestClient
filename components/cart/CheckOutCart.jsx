@@ -6,7 +6,7 @@ import { getIPAddress } from "@/utils/getIP";
 import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchOutlets, setSelectCity, setSelectArea } from "@/redux/slice/outletSlice";
+import { fetchOutlets, setSelectCity, setSelectArea, setItems } from "@/redux/slice/outletSlice";
 import { fetchCities } from "@/redux/slice/citiesSlice";
 
 export default function CheckOutCart() {
@@ -76,6 +76,7 @@ export default function CheckOutCart() {
         quantity: item.quantity,
       }));
       setProductItems(updatedItems);
+      dispatch(setItems(updatedItems));
     }
   }, []);
 
@@ -122,7 +123,7 @@ export default function CheckOutCart() {
     // setSelectedArea(areaName); // Update selected area
     // console.log(areas);
   };
-  console.log(areas);
+  // console.log(areas);
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
     setLoading(true);

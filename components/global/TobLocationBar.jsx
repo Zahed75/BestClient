@@ -17,7 +17,7 @@ export default function TopLocationBar() {
   const [showroom, setShowroom] = useState("Select Showroom");
   const [availability, setAvailability] = useState("Status");
   const [selectedOutletCity, setSelectedOutletCity] = useState("City");
-  const [selectedCity, setSelectedCity] = useState("City");
+  const [selectedCity, setSelectedCity] = useState("");
   const [selectedArea, setSelectedArea] = useState("Area");
   const [selectOutlet, setSelectOutlet] = useState(null);
 
@@ -37,14 +37,16 @@ export default function TopLocationBar() {
     (state) => state.outlet.areaDrawerOpen
   );
   const cities = useSelector((state) => state.cities);
+  const cart = useSelector((state) => state.cart.items) || [];
   const productAvailability = useSelector((state) => state.outlet);
   const outlets = useSelector((state) => state.outlet);
   const selectCity = outlets?.selectCity;
   const selectArea = outlets?.selectArea;
+  const productId = outlets?.productId;
 
   useEffect(() => {
     dispatch(fetchCities());
-    dispatch(fetchProductAvailability());
+    // dispatch(fetchProductAvailability());
     dispatch(fetchOutlets());
   }, [dispatch]);
 
@@ -54,6 +56,30 @@ export default function TopLocationBar() {
       setShowroom(selectOutlet?.outletName || "Select Showroom");
     }
   }, [outletDrawerOpen, selectOutlet]);
+
+  // useEffect(() => {
+  //   if (Array.isArray(cart)) {
+  //     const updatedItems = cart?.map(item => item._id);
+  //     console.log("updatedItems", updatedItems);
+  //     dispatch(fetchProductAvailability(updatedItems));
+  //     // dispatch(setItems(updatedItems));
+  //   }
+  // }, [cart, dispatch]);
+
+  useEffect(() => {
+    if (Array.isArray(cart)) {
+      if (productId === "") {
+        // Dispatch with cart items if productId is empty
+        const updatedItems = cart.map(item => item._id);
+        console.log("Dispatching with updatedItems from cart:", updatedItems);
+        dispatch(fetchProductAvailability(updatedItems));
+      } else {
+        // Dispatch with productId if it is not empty
+        console.log("Dispatching with single productId:", productId);
+        dispatch(fetchProductAvailability([productId]));
+      }
+    }
+  }, [cart, productId, dispatch]);
 
 
   const linkData = [
@@ -98,7 +124,7 @@ export default function TopLocationBar() {
   };
   const handleAreaCloseDrawer = () => {
     // Update showroom here or reset it if necessary
-    console.log("select", areaSelect);
+    // console.log("select", areaSelect);
     setArea(areaSelect?.areaName || "Enter Area");
     dispatch(setSelectArea(areaSelect));
     dispatch(closeAreaDrawer());
@@ -112,30 +138,40 @@ export default function TopLocationBar() {
   const outletAreas = cities?.cities?.find((city) => city.cityName === selectedOutletCity)?.areas || [];
   const areas = cities?.cities?.find((city) => city.cityName === selectedCity)?.areas || [];
   const filteredOutlets = productAvailability?.productAvailability?.availability || [];
+  console.log("filter", filteredOutlets);
 
   // Filter outlets based on selected filters (availability, city, area)
   const matchingOutlets = allOutlets?.filter(outlet => {
     // Check if no filters are applied
-    const noFiltersApplied =
-      (!availability || availability === "All") &&
-      (!selectedCity || selectedCity === "City") &&
-      (!selectedArea || selectedArea === "Area");
+    // const noFiltersApplied =
+    //   (!availability || availability === "Status") &&
+    //   (!selectedOutletCity || selectedOutletCity === "City") &&
+    //   (!selectedArea || selectedArea === "Area");
 
-    if (noFiltersApplied) return true; // Show all outlets if no filters are applied
+    // if (noFiltersApplied) return true; // Show all outlets if no filters are applied
 
     // Filter based on city, area, and availability if filters are selected
-    const matchesCity = selectedCity && selectedCity !== "City" ? outlet.cityName === selectedCity : true;
+    const matchesCity = selectedOutletCity && selectedOutletCity !== "City" ? outlet.cityName === selectedOutletCity : true;
     const matchesArea = selectedArea && selectedArea !== "Area" ? outlet.areaName === selectedArea : true;
 
     // Update matchesAvailability to handle "Not Available" explicitly
     const matchesAvailability = availability === "Available"
-      ? filteredOutlets.some(filter => filter.outletDetails?.outletName === outlet.outletName && filter.available)
+      ? filteredOutlets.some(filter => {
+        const match = filter.outletDetails?.outletName === outlet.outletName && filter.available;
+        // console.log(`Checking Available: ${filter.outletDetails?.outletName} -> ${match}`);
+        return match;
+      })
       : availability === "Not Available"
-        ? filteredOutlets.some(filter => filter.outletDetails?.outletName === outlet.outletName && !filter.available)
+        ? filteredOutlets.some(filter => {
+          const match = filter.outletDetails?.outletName === outlet.outletName && !filter.available;
+          // console.log(`Checking Not Available: ${filter.outletDetails?.outletName} -> ${match}`);
+          return match;
+        })
         : true; // If availability is not set, include all outlets
 
     return matchesCity && matchesArea && matchesAvailability;
   }) || [];
+  // console.log("match", matchingOutlets);
 
 
 
