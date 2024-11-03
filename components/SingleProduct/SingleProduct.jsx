@@ -20,7 +20,7 @@ import { fetchApi } from "@/utils/FetchApi";
 import { usePathname } from "next/navigation";
 import shopSvg from "@/public/images/Retail.svg";
 import deliverySvg from "@/public/images/Delivery-01.svg";
-import { openOutletDrawer, openAreaDrawer } from "@/redux/slice/outletSlice";
+import { fetchProductAvailability, openOutletDrawer, openAreaDrawer, setProductId } from "@/redux/slice/outletSlice";
 import NotificationToast from "../global/NotificationToast";
 
 export default function SingleProduct({ product, categoryName }) {
@@ -42,6 +42,7 @@ export default function SingleProduct({ product, categoryName }) {
   useEffect(() => {
     if (product) {
       dispatch(addRelatedProduct(product));
+      fetchProductAvailability(product?._id);
       dispatch(fetchBrands());
     }
   }, [dispatch]);
@@ -275,7 +276,10 @@ export default function SingleProduct({ product, categoryName }) {
                         viewBox="0 0 24 24"
                         stroke="currentColor"
                         className="w-5 h-5 text-gray-300 cursor-pointer"
-                        onClick={() => dispatch(openOutletDrawer())}
+                        onClick={() => {
+                          dispatch(setProductId(product?._id));
+                          dispatch(openOutletDrawer());
+                        }}
                       >
                         <path
                           strokeLinecap="round"
