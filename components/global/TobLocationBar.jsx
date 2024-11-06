@@ -57,14 +57,25 @@ export default function TopLocationBar() {
     }
   }, [outletDrawerOpen, selectOutlet]);
 
+  // useEffect(() => {
+  //   if (Array.isArray(cart)) {
+  //     const updatedItems = cart?.map(item => item._id);
+  //     console.log("updatedItems", updatedItems);
+  //     dispatch(fetchProductAvailability(updatedItems));
+  //     // dispatch(setItems(updatedItems));
+  //   }
+  // }, [cart, dispatch]);
+
   useEffect(() => {
     if (Array.isArray(cart)) {
       if (productId === "") {
         // Dispatch with cart items if productId is empty
         const updatedItems = cart.map(item => item._id);
+        console.log("Dispatching with updatedItems from cart:", updatedItems);
         dispatch(fetchProductAvailability(updatedItems));
       } else {
         // Dispatch with productId if it is not empty
+        console.log("Dispatching with single productId:", productId);
         dispatch(fetchProductAvailability([productId]));
       }
     }
@@ -107,6 +118,7 @@ export default function TopLocationBar() {
   };
   const handleCloseDrawer = () => {
     // Update showroom here or reset it if necessary
+    setShowDetails(false);
     setShowroom(selectOutlet?.outletName || "Select Showroom");
     setOpenDropdown(null);
     dispatch(closeOutletDrawer());
@@ -127,10 +139,18 @@ export default function TopLocationBar() {
   const outletAreas = cities?.cities?.find((city) => city.cityName === selectedOutletCity)?.areas || [];
   const areas = cities?.cities?.find((city) => city.cityName === selectedCity)?.areas || [];
   const filteredOutlets = productAvailability?.productAvailability?.availability || [];
-  // console.log("filter", filteredOutlets);
+  console.log("filter", filteredOutlets);
 
   // Filter outlets based on selected filters (availability, city, area)
   const matchingOutlets = allOutlets?.filter(outlet => {
+    // Check if no filters are applied
+    // const noFiltersApplied =
+    //   (!availability || availability === "Status") &&
+    //   (!selectedOutletCity || selectedOutletCity === "City") &&
+    //   (!selectedArea || selectedArea === "Area");
+
+    // if (noFiltersApplied) return true; // Show all outlets if no filters are applied
+
     // Filter based on city, area, and availability if filters are selected
     const matchesCity = selectedOutletCity && selectedOutletCity !== "City" ? outlet.cityName === selectedOutletCity : true;
     const matchesArea = selectedArea && selectedArea !== "Area" ? outlet.areaName === selectedArea : true;
@@ -153,6 +173,49 @@ export default function TopLocationBar() {
     return matchesCity && matchesArea && matchesAvailability;
   }) || [];
   // console.log("match", matchingOutlets);
+
+
+
+
+
+  // const outletAreas = cities?.cities?.find((city) => city.cityName === selectedOutletCity)?.areas || [];
+  // const areas = cities?.cities?.find((city) => city.cityName === selectedCity)?.areas || [];
+  // const allOutlets = outlets?.outlets?.outlet;
+  // const filteredOutlets = productAvailability?.productAvailability?.availability || [];
+
+
+
+  // const filteredOutlets = outlets?.outlets?.outlet?.filter(outlet => outlet.cityName === selectedCity);
+  // const filteredOutlets = outlets?.outlets?.outlet?.filter(outlet => {
+  // const filteredOutlets = productAvailability?.availability?.filter(outlet => {
+  // const matchesCity = outlet.cityName === selectedCity;
+  // const isAreaInvalid = !selectedArea || selectedArea === "Area";
+  // if (isAreaInvalid) {
+  //   return matchesCity;
+  // }
+  // const matchesArea = outlet.areaName === selectedArea;
+  // return matchesCity && matchesArea;
+
+  //   const matchesCity = outlet?.outletDetails?.cityName === selectedCity;
+  //   const isAreaInvalid = (!selectedArea || selectedArea === "Area") && outlet.available == true;
+
+  //   if (isAreaInvalid) {
+  //     return matchesCity;
+  //   }
+
+  //   const matchesArea = outlet.areaName === selectedArea;
+  //   return matchesCity && matchesArea;
+  // }) || [];
+  // console.log("filteredOutlets", filteredOutlets);
+
+
+
+  // const matchingOutlets = allOutlets?.filter(item =>
+  //   filteredOutlets?.some(
+  //     filter => filter.outletDetails?.outletName === item.outletName
+  //   )
+  // );
+
 
   return (
     <section className="container">
@@ -232,6 +295,7 @@ export default function TopLocationBar() {
                 className="inline-block hover:text-[#F16521] duration-700"
                 onClick={() => {
                   setOpenDropdown(null);
+                  setShowDetails(false);
                   dispatch(closeOutletDrawer());
                 }}
               >
@@ -454,6 +518,7 @@ export default function TopLocationBar() {
             <button
               onClick={() => {
                 handleGoToCheckout();
+                setShowDetails(false);
                 dispatch(closeOutletDrawer());
               }}
               className="w-full py-3 bg-[#F16521] text-white font-semibold rounded-lg hover:bg-[#F16521]">
