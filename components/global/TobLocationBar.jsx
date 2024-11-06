@@ -81,7 +81,6 @@ export default function TopLocationBar() {
     }
   }, [cart, productId, dispatch]);
 
-
   const linkData = [
     { name: "My Account", url: "/my-account" },
     { name: "Wishlist", url: "/my-account/wishlist" },
@@ -120,6 +119,7 @@ export default function TopLocationBar() {
     // Update showroom here or reset it if necessary
     setShowDetails(false);
     setShowroom(selectOutlet?.outletName || "Select Showroom");
+    setSelectedOutletCity("City");
     setOpenDropdown(null);
     dispatch(closeOutletDrawer());
   };
@@ -296,6 +296,7 @@ export default function TopLocationBar() {
                 onClick={() => {
                   setOpenDropdown(null);
                   setShowDetails(false);
+                  setSelectedOutletCity("City");
                   dispatch(closeOutletDrawer());
                 }}
               >
