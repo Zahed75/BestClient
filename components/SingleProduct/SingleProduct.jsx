@@ -20,7 +20,7 @@ import { fetchApi } from "@/utils/FetchApi";
 import { usePathname } from "next/navigation";
 import shopSvg from "@/public/images/Retail.svg";
 import deliverySvg from "@/public/images/Delivery-01.svg";
-import { fetchProductAvailability, openOutletDrawer, openAreaDrawer, setProductId } from "@/redux/slice/outletSlice";
+import { fetchOutlets, fetchProductAvailability, openOutletDrawer, openAreaDrawer, setProductId, setSelectedOutlet } from "@/redux/slice/outletSlice";
 import NotificationToast from "../global/NotificationToast";
 
 export default function SingleProduct({ product, categoryName }) {
@@ -37,12 +37,20 @@ export default function SingleProduct({ product, categoryName }) {
   const customer = useSelector((state) => state.customer);
   const customerId = customer.items.userId;
   const wishlist = useSelector((state) => state.wishlist.items);
+  const productAvailability = useSelector((state) => state.outlet);
+  const outlets = useSelector((state) => state.outlet);
   const favoriteProduct = wishlist.find((item) => item._id === product?._id);
+  const filteredOutlets = productAvailability?.productAvailability?.availability || [];
+  const productId = useSelector((state) => state.outlet.productId);
+  const outletName = useSelector((state) => state.outlet.selectedOutlet);
+  // console.log("filter_Single", filteredOutlets);
+
 
   useEffect(() => {
     if (product) {
       dispatch(addRelatedProduct(product));
-      fetchProductAvailability(product?._id);
+      dispatch(fetchProductAvailability(product?._id));
+      dispatch(fetchOutlets());
       dispatch(fetchBrands());
     }
   }, [dispatch]);
@@ -69,6 +77,39 @@ export default function SingleProduct({ product, categoryName }) {
 
     fetchTagValues();
   }, [product]);
+
+  // Reset `outletNAme` when `productId` changes
+  useEffect(() => {
+    if (productId) {
+      dispatch(setSelectedOutlet(null));
+    }
+  }, [productId, dispatch]);
+  useEffect(() => {
+    if (productId && productId !== product?._id) {
+      dispatch(setProductId("")); // Set `productId` to an empty string if they don't match
+    }
+  }, [productId, product?._id, dispatch]);
+
+  const getOutletName = (outletId) => {
+    const outlet = outlets?.outlets?.outlet?.find((outlet) => outlet?._id === outletId);
+    return outlet ? outlet.outletName : null;
+  };
+
+  const isAvailable = filteredOutlets.some(
+    outlet => productId === outlet.productId && outlet.available
+  );
+  // const productId = useSelector((state) => state.outlet.productId);
+  // const outletNAme = useSelector((state) => state.outlet.selectedOutlet);
+  // const showroom = getOutletName(outletNAme) || "Select Showroom";
+  // console.log(showroom);
+
+  // const productId = useSelector((state) => state.product.productId);
+
+
+
+
+  // Only call `getOutletName` if `productId` exists
+  const showroom = productId ? getOutletName(outletName) || "Select Showroom" : "Select Showroom";
 
   const logoSrc = [
     { src: FacebookLogo, alt: "Facebook Logo", link: "/product" },
@@ -252,10 +293,14 @@ export default function SingleProduct({ product, categoryName }) {
                       </div>
 
                       <div className="flex flex-col items-start">
-                        <h6 className="font-semibold">Select Showroom</h6>
+                        <h6 className="font-semibold">{showroom}</h6>
                         <div className="flex items-center">
-                          <div className="w-3 h-3 bg-[#70BE38] rounded-full mr-2"></div>
-                          <span>Click and collect - Available</span>
+                          <div className={`w-3 h-3 rounded-full mr-2 ${productId ? (isAvailable ? "bg-[#70BE38]" : "bg-red-400") : "bg-gray-300"
+                            }`}></div>
+                          <span className="cursor-pointer" onClick={() => {
+                            dispatch(setProductId(product?._id));
+                            dispatch(openOutletDrawer());
+                          }}>Click and collect {productId ? (isAvailable ? "- Available" : "-Not Available") : ""}</span>
                         </div>
                         <div className="flex items-center">
                           <div className={`
