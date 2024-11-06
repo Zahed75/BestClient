@@ -53,42 +53,8 @@ export const fetchProductAvailability = createAsyncThunk(
     const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
     const path = "/inventory/check-products-availability";
 
-    // Retrieve cartItems from local storage
-    // const cartItems = localStorage.getItem("cartItems");
-
-    // // Initialize productIds array
-    // let productIds = [];
-
-    // Check if cartItems exist
-    // if (cartItems) {
-    //   // Parse the retrieved JSON string
-    //   const parsedCartItems = JSON.parse(cartItems);
-      
-    //   Extract product IDs into an array
-    //   productIds = parsedCartItems.map(item => item._id);
-    // }
-    // Check for cart items in local storage, ensure this is in a browser environment
-    // if (typeof window === "undefined") return rejectWithValue("Window is not defined");
-
-    //  const cartItems = localStorage.getItem("cartItems");
-    //  const productIds = items;
-
-    //  if (!productIds.length) return rejectWithValue("No products found in cart.");
-    // Construct the payload for productIds as a JSON string
-
-    // let productIds = [];
-
-    // Check if cartItems exist
-    // if (items) {
-      // Parse the retrieved JSON string
-      
-    // Extract product IDs into an array
-      // productIds = items.map(item => item._id);
-    // }
-
-   
    // Check for valid items
-   console.log("Received items for availability check:", items);
+  //  console.log("Received items for availability check:", items);
    if (!items || items.length === 0) {
      console.error("No products found in cart.");
      return rejectWithValue("No products found in cart.");
@@ -98,7 +64,8 @@ export const fetchProductAvailability = createAsyncThunk(
      "productIds": items
    };
 
-   console.log("Request Body:", requestBody); // Log the request body
+  //  console.log("Request Body:", requestBody); // Log the request body
+  // console.log("Product ID",productId);
     // Construct the URL without the productIds parameter for the body
       const url = `${API_ENDPOINT}${path}`; // Keep the URL as required
 
@@ -115,7 +82,7 @@ export const fetchProductAvailability = createAsyncThunk(
         body: JSON.stringify(requestBody), // Send payload in the body
         redirect: "follow",
       };
-      console.log(requestBody);
+      // console.log(requestBody);
       try {
         const response = await fetch(url, requestOptions);
         if (!response.ok) {
@@ -128,58 +95,6 @@ export const fetchProductAvailability = createAsyncThunk(
       }
     }
   );
-
-
-// export const fetchProductIdAvailability = createAsyncThunk(
-//   "productAvailability/fetchProductAvailability",
-//   async (product, { rejectWithValue }) => {
-//     const API_ENDPOINT = process.env.NEXT_PUBLIC_API_ENDPOINT;
-//     const path = "/inventory/check-products-availability";
-    
-
-//     console.log("Received Product for availability check:", product);
-//    if (!items) {
-//      console.error("No products found in cart.");
-//      return rejectWithValue("No products found in cart.");
-//    }
-
-//    const requestBody = {
-//      productIds: product
-//    };
-
-//    console.log("Request Body:", requestBody); // Log the request body
-//     // Construct the URL without the productIds parameter for the body
-//       const url = `${API_ENDPOINT}${path}`; // Keep the URL as required
-
-//       const user = localStorage.getItem("customer");
-//       const token = user ? JSON.parse(user).accessToken : "";
-
-//       const myHeaders = new Headers();
-//       myHeaders.append("Authorization", `Bearer ${token}`);
-//       myHeaders.append("Content-Type", "application/json"); // Add this header
-
-//       const requestOptions = {
-//         method: "POST", // You mentioned this should remain GET
-//         headers: myHeaders,
-//         body: JSON.stringify(requestBody), // Send payload in the body
-//         redirect: "follow",
-//       };
-//       console.log(requestBody);
-//       try {
-//         const response = await fetch(url, requestOptions);
-//         if (!response.ok) {
-//           throw new Error(`API request failed with status ${response.status}`);
-//         }
-//         return await response.json();
-//       } catch (error) {
-//         console.error("Error fetching product availability:", error);
-//         return rejectWithValue(error.message);
-//       }
-//     }
-// );
-
-
-
 
 const outletSlice = createSlice({
   name: "modal",
@@ -213,12 +128,11 @@ const outletSlice = createSlice({
     setProductId:(state,action)=>{
       const product = action.payload;
       state.productId=product;
-      console.log("Product Id",product);
     },
     setItems:(state,action)=>{
       const items = action.payload;
       state.items=items;
-      console.log("Items_Slice",state.items);
+    
     },   
   },
   extraReducers: (builder) => {
