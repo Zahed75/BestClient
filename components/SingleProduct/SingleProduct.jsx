@@ -42,7 +42,8 @@ export default function SingleProduct({ product, categoryName }) {
   const favoriteProduct = wishlist.find((item) => item._id === product?._id);
   const filteredOutlets = productAvailability?.productAvailability?.availability || [];
   const productId = useSelector((state) => state.outlet.productId);
-  const outletName = useSelector((state) => state.outlet.selectedOutlet);
+  const outletName = useSelector((state) => state.outlet.selectedProductOutlet);
+  const selectArea = useSelector((state) => state.outlet.selectArea);
   // console.log("filter_Single", filteredOutlets);
 
 
@@ -89,6 +90,14 @@ export default function SingleProduct({ product, categoryName }) {
       dispatch(setProductId("")); // Set `productId` to an empty string if they don't match
     }
   }, [productId, product?._id, dispatch]);
+
+  useEffect(() => {
+    return () => {
+      // Clear selectedOutlet when the component unmounts (e.g., page close/navigation)
+      dispatch(setSelectedOutlet(null));
+      dispatch(setProductId(""));
+    };
+  }, [dispatch]);
 
   const getOutletName = (outletId) => {
     const outlet = outlets?.outlets?.outlet?.find((outlet) => outlet?._id === outletId);
@@ -256,7 +265,13 @@ export default function SingleProduct({ product, categoryName }) {
                       </div>
 
                       <div className="flex flex-col items-start">
-                        <h6 className="font-semibold">Delivery Area</h6>
+                        <h6 className="font-semibold">{selectArea === "Enter Area" ? (
+                          <span>{selectArea}</span>
+                        ) : (
+                          <span className="text-nowrap">
+                            {selectArea}
+                          </span>
+                        )}</h6>
                         <div className="flex items-center">
                           <div className="w-3 h-3 bg-[#70BE38] rounded-full mr-2"></div>
                           <span>Available</span>

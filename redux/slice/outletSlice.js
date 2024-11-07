@@ -8,6 +8,7 @@ const initialState = {
   outletDrawerOpen: false,
   areaDrawerOpen: false,
   selectedOutlet:null,
+  selectedProductOutlet:null,
   selectCity:"",
   selectArea:"Enter Area",
   productId:"",
@@ -112,9 +113,15 @@ const outletSlice = createSlice({
     closeAreaDrawer: (state) => {
       state.areaDrawerOpen = false;
     },
-    setSelectedOutlet:(state,action)=>{
+    setSelectedOutlet: (state, action) => {
       const outlet = action.payload;
-      state.selectedOutlet=outlet?._id;
+      if (state.productId !== "") {
+        state.selectedProductOutlet = outlet?._id;
+        console.log("selectedProductOutlet",state.selectedProductOutlet);
+      } else {
+        state.selectedOutlet = outlet?._id;
+        console.log("selectedOutlet",state.selectedOutlet);
+      }
     },
     setSelectCity:(state,action)=>{
       const city = action.payload;
@@ -132,7 +139,6 @@ const outletSlice = createSlice({
     setItems:(state,action)=>{
       const items = action.payload;
       state.items=items;
-    
     },   
   },
   extraReducers: (builder) => {
