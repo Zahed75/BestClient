@@ -588,7 +588,7 @@ export default function TopLocationBar() {
 
                 >
                   <option>
-                    Select an city
+                    Select a city
                   </option>
                   {cities?.cities?.map((item, i) => (
                     <option key={i} value={item.cityName}>
