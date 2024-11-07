@@ -11,6 +11,8 @@ const initialState = {
   selectedProductOutlet:null,
   selectCity:"",
   selectArea:"Enter Area",
+  selectProductArea:"Enter Area",
+  productName:"",
   productId:"",
   items: null,
 };
@@ -130,11 +132,21 @@ const outletSlice = createSlice({
     },
     setSelectArea:(state,action)=>{
       const area = action.payload;
-      state.selectArea=area;
+      if (state.productName !== "") {
+        state.selectProductArea = area;
+        console.log("selectProductArea",state.selectProductArea);
+      } else {
+        state.selectArea=area;
+        console.log("selectArea",state.selectArea);
+      }
     },
     setProductId:(state,action)=>{
       const product = action.payload;
       state.productId=product;
+    },
+    setProductName:(state,action)=>{
+      const product = action.payload;
+      state.productName=product;
     },
     setItems:(state,action)=>{
       const items = action.payload;
@@ -180,6 +192,7 @@ export const {
     setSelectArea,
     setProductId,
     setItems,
+    setProductName,
 } = outletSlice.actions;
 
 export default outletSlice.reducer;

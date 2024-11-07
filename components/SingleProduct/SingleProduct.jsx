@@ -20,7 +20,7 @@ import { fetchApi } from "@/utils/FetchApi";
 import { usePathname } from "next/navigation";
 import shopSvg from "@/public/images/Retail.svg";
 import deliverySvg from "@/public/images/Delivery-01.svg";
-import { fetchOutlets, fetchProductAvailability, openOutletDrawer, openAreaDrawer, setProductId, setSelectedOutlet } from "@/redux/slice/outletSlice";
+import { fetchOutlets, fetchProductAvailability, openOutletDrawer, openAreaDrawer, setProductId, setSelectedOutlet, setSelectArea, setProductName } from "@/redux/slice/outletSlice";
 import NotificationToast from "../global/NotificationToast";
 
 export default function SingleProduct({ product, categoryName }) {
@@ -43,7 +43,7 @@ export default function SingleProduct({ product, categoryName }) {
   const filteredOutlets = productAvailability?.productAvailability?.availability || [];
   const productId = useSelector((state) => state.outlet.productId);
   const outletName = useSelector((state) => state.outlet.selectedProductOutlet);
-  const selectArea = useSelector((state) => state.outlet.selectArea);
+  const selectArea = useSelector((state) => state.outlet.selectProductArea);
   // console.log("filter_Single", filteredOutlets);
 
 
@@ -95,6 +95,8 @@ export default function SingleProduct({ product, categoryName }) {
     return () => {
       // Clear selectedOutlet when the component unmounts (e.g., page close/navigation)
       dispatch(setSelectedOutlet(null));
+      dispatch(setProductName(""));
+      dispatch(setSelectArea("Enter Area"));
       dispatch(setProductId(""));
     };
   }, [dispatch]);
@@ -266,7 +268,7 @@ export default function SingleProduct({ product, categoryName }) {
 
                       <div className="flex flex-col items-start">
                         <h6 className="font-semibold">{selectArea === "Enter Area" ? (
-                          <span>{selectArea}</span>
+                          <span>Delivery Area</span>
                         ) : (
                           <span className="text-nowrap">
                             {selectArea}
@@ -286,7 +288,10 @@ export default function SingleProduct({ product, categoryName }) {
                         viewBox="0 0 24 24"
                         stroke="currentColor"
                         className="w-5 h-5 text-gray-300 cursor-pointer"
-                        onClick={() => dispatch(openAreaDrawer())}
+                        onClick={() => {
+                          dispatch(setProductName(product?.productName));
+                          dispatch(openAreaDrawer());
+                        }}
                       >
                         <path
                           strokeLinecap="round"
