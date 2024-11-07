@@ -43,6 +43,8 @@ export default function TopLocationBar() {
   const selectCity = outlets?.selectCity;
   const selectArea = outlets?.selectArea;
   const productId = outlets?.productId;
+  const selectedOutlet = outlets?.selectedOutlet;
+  console.log("productId", productId);
 
   useEffect(() => {
     dispatch(fetchCities());
@@ -80,6 +82,11 @@ export default function TopLocationBar() {
       }
     }
   }, [cart, productId, dispatch]);
+
+  const getOutletName = (outletId) => {
+    const outlet = outlets?.outlets?.outlet?.find((outlet) => outlet?._id === outletId);
+    return outlet ? outlet.outletName : null;
+  };
 
   const linkData = [
     { name: "My Account", url: "/my-account" },
@@ -126,8 +133,8 @@ export default function TopLocationBar() {
   const handleAreaCloseDrawer = () => {
     // Update showroom here or reset it if necessary
     // console.log("select", areaSelect);
-    setArea(areaSelect?.areaName || "Enter Area");
-    dispatch(setSelectArea(areaSelect));
+    // setArea(areaSelect?.areaName || "Enter Area");
+    // dispatch(setSelectArea(areaSelect));
     dispatch(closeAreaDrawer());
   };
   const handleGoToCheckout = () => {
@@ -270,7 +277,8 @@ export default function TopLocationBar() {
                 className="mr-2"
               />
               {/* Select Showroom */}
-              {showroom}
+              {/* {showroom} */}
+              {selectedOutlet ? getOutletName(selectedOutlet) : "Select Showroom"}
             </div>
           </div>
 
@@ -452,16 +460,18 @@ export default function TopLocationBar() {
                             {item?.outletLocation}
                           </p>
                         </div>
-                        {filteredOutlets.some(filter => filter.outletDetails?.outletName === item.outletName && filter.available) ? (
-                          <div className="flex items-center space-x-2 mt-3">
-                            <span className="h-4 w-4 rounded-full bg-green-500"></span>
-                            <span className="text-sm text-[#202435]">Available</span>
-                          </div>
-                        ) : (
-                          <div className="flex items-center space-x-2 mt-3">
-                            <span className="h-4 w-4 rounded-full bg-red-500"></span>
-                            <span className="text-sm text-[#202435]">Not Available</span>
-                          </div>
+                        {productId !== "" && (
+                          filteredOutlets.some(filter => filter.outletDetails?.outletName === item.outletName && filter.available) ? (
+                            <div className="flex items-center space-x-2 mt-3">
+                              <span className="h-4 w-4 rounded-full bg-green-500"></span>
+                              <span className="text-sm text-[#202435]">Available</span>
+                            </div>
+                          ) : (
+                            <div className="flex items-center space-x-2 mt-3">
+                              <span className="h-4 w-4 rounded-full bg-red-500"></span>
+                              <span className="text-sm text-[#202435]">Not Available</span>
+                            </div>
+                          )
                         )}
                       </div>
                     </div>
@@ -541,7 +551,10 @@ export default function TopLocationBar() {
             <div className="flex justify-end items-end mb-2">
               <button
                 className="inline-block hover:text-[#F16521] duration-700"
-                onClick={() => { dispatch(closeAreaDrawer()) }}
+                onClick={() => {
+                  setOpenDropdown(null);
+                  dispatch(closeAreaDrawer());
+                }}
               >
                 <CloseIcon />
               </button>
