@@ -436,7 +436,7 @@ export default function TopLocationBar() {
                   </div>
                 </div>
 
-                <div className="space-y-4" onClick={() => { setOpenDropdown(null) }}>
+                {/* <div className="space-y-4" onClick={() => { setOpenDropdown(null) }}>
                   {matchingOutlets?.map((item, i) => (
                     <div
                       key={i}
@@ -451,13 +451,13 @@ export default function TopLocationBar() {
                     >
                       <div className="flex flex-col items-start justify-between">
                         <div>
-                          <h3 className="font-inter font-semibold text-[16px] text-[#202435]">
-                            {/* BEL Banani */}
-                            {item?.outletName}
+                          <h3 className="font-inter font-semibold text-[16px] text-[#202435]"> */}
+                {/* BEL Banani */}
+                {/* {item?.outletName}
                           </h3>
-                          <p className="font-inter text-[14px] text-[#202435]">
-                            {/* Road-02, Banani Dhaka */}
-                            {item?.outletLocation}
+                          <p className="font-inter text-[14px] text-[#202435]"> */}
+                {/* Road-02, Banani Dhaka */}
+                {/* {item?.outletLocation}
                           </p>
                         </div>
                         {productId !== "" && (
@@ -473,11 +473,69 @@ export default function TopLocationBar() {
                             </div>
                           )
                         )}
-                      </div>
-                    </div>
-                  ))}
+                      </div> */}
+                {/* </div> */}
+                {/* ))} */}
 
+                {/* </div> */}
+
+                <div className="space-y-4" onClick={() => { setOpenDropdown(null); }}>
+                  {(productId !== "" ? matchingOutlets : allOutlets)?.map((item, i) => {
+                    // Check availability only if productId is an empty string
+                    // const isAvailable = productId !== "" && filteredOutlets.some(
+                    //   filter => filter.outletDetails?.outletName === item.outletName && filter.available
+                    // );
+                    const isAvailable = productId !== ""
+                      ? filteredOutlets.some(
+                        filter => filter.outletDetails?.outletName === item.outletName && filter.available
+                      )
+                      : !!item?._id;
+
+                    return (
+                      <div
+                        key={i}
+                        onClick={() => {
+                          if (isAvailable) {
+                            setShowDetails(true);
+                            setSelectOutlet(item);
+                            setOpenDropdown(null);
+                            setSelectedOutletCity(item?.cityName);
+                            dispatch(setSelectedOutlet(item));
+                          }
+                        }}
+                        className={`p-4 border-2 rounded-lg bg-gray-100 ${isAvailable ? "hover:border-[#F16521] cursor-pointer" : "cursor-not-allowed"} duration-700`}
+                      >
+                        <div className="flex flex-col items-start justify-between">
+                          <div>
+                            <h3 className="font-inter font-semibold text-[16px] text-[#202435]">
+                              {item?.outletName}
+                            </h3>
+                            <p className="font-inter text-[14px] text-[#202435]">
+                              {item?.outletLocation}
+                            </p>
+                          </div>
+                          {productId && (
+                            isAvailable ? (
+                              <div className="flex items-center space-x-2 mt-3">
+                                <span className="h-4 w-4 rounded-full bg-green-500"></span>
+                                <span className="text-sm text-[#202435]">Available</span>
+                              </div>
+                            ) : (
+                              <div className="flex items-center space-x-2 mt-3">
+                                <span className="h-4 w-4 rounded-full bg-red-500"></span>
+                                <span className="text-sm text-[#202435]">Not Available</span>
+                              </div>
+                            )
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
+
+
+
+
               </div>
 
             )}

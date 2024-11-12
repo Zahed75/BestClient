@@ -276,6 +276,8 @@ export default function SingleProduct({ product, categoryName }) {
                         )}</h6>
                         <div className="flex items-center">
                           <div className="w-3 h-3 bg-[#70BE38] rounded-full mr-2"></div>
+                          {/* <div className={`w-3 h-3 rounded-full mr-2 ${product?.productName ? (isAvailable ? "bg-[#70BE38]" : "bg-red-400") : "bg-gray-300"
+                            }`}></div> */}
                           <span>Available</span>
                         </div>
                       </div>
