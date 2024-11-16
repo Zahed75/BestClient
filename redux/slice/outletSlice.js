@@ -64,10 +64,10 @@ export const fetchProductAvailability = createAsyncThunk(
    }
 
    const requestBody = {
-     "productIds": items
+     "productIds": [items]
    };
 
-  //  console.log("Request Body:", requestBody); // Log the request body
+   console.log("Request Body:", requestBody); // Log the request body
   // console.log("Product ID",productId);
     // Construct the URL without the productIds parameter for the body
       const url = `${API_ENDPOINT}${path}`; // Keep the URL as required
@@ -117,13 +117,10 @@ const outletSlice = createSlice({
     },
     setSelectedOutlet: (state, action) => {
       const outlet = action.payload;
-      if (state.productId !== "") {
-        state.selectedProductOutlet = outlet?._id;
-        console.log("selectedProductOutlet",state.selectedProductOutlet);
-      } else {
+      
         state.selectedOutlet = outlet?._id;
         console.log("selectedOutlet",state.selectedOutlet);
-      }
+      
     },
     setSelectCity:(state,action)=>{
       const city = action.payload;
@@ -132,7 +129,7 @@ const outletSlice = createSlice({
     },
     setSelectArea:(state,action)=>{
       const area = action.payload;
-      if (state.productName !== "") {
+      if ((state.productName) || (state.selectProductArea!=="Enter Area")) {
         state.selectProductArea = area;
         console.log("selectProductArea",state.selectProductArea);
       } else {
@@ -147,6 +144,7 @@ const outletSlice = createSlice({
     setProductName:(state,action)=>{
       const product = action.payload;
       state.productName=product;
+      console.log("product",product);
     },
     setItems:(state,action)=>{
       const items = action.payload;

@@ -44,7 +44,7 @@ export default function TopLocationBar() {
   const selectArea = outlets?.selectArea;
   const productId = outlets?.productId;
   const selectedOutlet = outlets?.selectedOutlet;
-  console.log("productId", productId);
+
 
   useEffect(() => {
     dispatch(fetchCities());
@@ -68,20 +68,20 @@ export default function TopLocationBar() {
   //   }
   // }, [cart, dispatch]);
 
-  useEffect(() => {
-    if (Array.isArray(cart)) {
-      if (productId === "") {
-        // Dispatch with cart items if productId is empty
-        const updatedItems = cart.map(item => item._id);
-        console.log("Dispatching with updatedItems from cart:", updatedItems);
-        dispatch(fetchProductAvailability(updatedItems));
-      } else {
-        // Dispatch with productId if it is not empty
-        console.log("Dispatching with single productId:", productId);
-        dispatch(fetchProductAvailability([productId]));
-      }
-    }
-  }, [cart, productId, dispatch]);
+  // useEffect(() => {
+  //   if (Array.isArray(cart)) {
+  //     if (productId === "") {
+  //       // Dispatch with cart items if productId is empty
+  //       const updatedItems = cart.map(item => item._id);
+  //       console.log("Dispatching with updatedItems from cart:", updatedItems);
+  //       dispatch(fetchProductAvailability(updatedItems));
+  //     } else {
+  //       // Dispatch with productId if it is not empty
+  //       console.log("Dispatching with single productId:", productId);
+  //       dispatch(fetchProductAvailability([productId]));
+  //     }
+  //   }
+  // }, [cart, productId, dispatch]);
 
   const getOutletName = (outletId) => {
     const outlet = outlets?.outlets?.outlet?.find((outlet) => outlet?._id === outletId);
@@ -480,30 +480,28 @@ export default function TopLocationBar() {
                 {/* </div> */}
 
                 <div className="space-y-4" onClick={() => { setOpenDropdown(null); }}>
-                  {(productId !== "" ? matchingOutlets : allOutlets)?.map((item, i) => {
+                  {allOutlets?.map((item, i) => {
                     // Check availability only if productId is an empty string
                     // const isAvailable = productId !== "" && filteredOutlets.some(
                     //   filter => filter.outletDetails?.outletName === item.outletName && filter.available
                     // );
-                    const isAvailable = productId !== ""
-                      ? filteredOutlets.some(
-                        filter => filter.outletDetails?.outletName === item.outletName && filter.available
-                      )
-                      : !!item?._id;
+                    // const isAvailable = filteredOutlets.some(
+                    //   filter => filter.outletDetails?.outletName === item.outletName && filter.available
+                    // );
 
                     return (
                       <div
                         key={i}
                         onClick={() => {
-                          if (isAvailable) {
-                            setShowDetails(true);
-                            setSelectOutlet(item);
-                            setOpenDropdown(null);
-                            setSelectedOutletCity(item?.cityName);
-                            dispatch(setSelectedOutlet(item));
-                          }
+                          // if (isAvailable) {
+                          setShowDetails(true);
+                          setSelectOutlet(item);
+                          setOpenDropdown(null);
+                          setSelectedOutletCity(item?.cityName);
+                          dispatch(setSelectedOutlet(item));
+                          // }
                         }}
-                        className={`p-4 border-2 rounded-lg bg-gray-100 ${isAvailable ? "hover:border-[#F16521] cursor-pointer" : "cursor-not-allowed"} duration-700`}
+                        className={"p-4 border-2 rounded-lg bg-gray-100 hover:border-[#F16521] cursor-pointer duration-700"}
                       >
                         <div className="flex flex-col items-start justify-between">
                           <div>
@@ -514,7 +512,7 @@ export default function TopLocationBar() {
                               {item?.outletLocation}
                             </p>
                           </div>
-                          {productId && (
+                          {/* {productId && (
                             isAvailable ? (
                               <div className="flex items-center space-x-2 mt-3">
                                 <span className="h-4 w-4 rounded-full bg-green-500"></span>
@@ -526,7 +524,7 @@ export default function TopLocationBar() {
                                 <span className="text-sm text-[#202435]">Not Available</span>
                               </div>
                             )
-                          )}
+                          )} */}
                         </div>
                       </div>
                     );
