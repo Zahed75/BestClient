@@ -9,15 +9,18 @@ import { fetchApi } from "@/utils/FetchApi";
 import { useEffect, useState } from "react";
 import { Box, Drawer } from "@mui/material";
 import { addDiscount } from "@/redux/slice/discountSlice";
-import { openOutletDrawer } from "@/redux/slice/outletSlice";
+import { openOutletDrawer, setOrderType } from "@/redux/slice/outletSlice";
 export default function ShowCart() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const [activeButton, setActiveButton] = useState("Delivery");
   const [openDropdown, setOpenDropdown] = useState(null);
+  const outlets = useSelector((state) => state.outlet);
 
 
+  const selectedOutlet = outlets?.selectedOutlet;
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.items) || [];
   const discounts = useSelector((state) => state.discount?.discounts) || {};
@@ -70,10 +73,10 @@ export default function ShowCart() {
   const discount = discounts?.discount || 0;
   const totalProductPrice = Array.isArray(cart)
     ? cart.reduce((acc, item) => {
-        const price =
-          discount > 0 ? item.general.regularPrice : item.general.salePrice;
-        return acc + price * item.quantity;
-      }, 0)
+      const price =
+        discount > 0 ? item.general.regularPrice : item.general.salePrice;
+      return acc + price * item.quantity;
+    }, 0)
     : 0;
 
   const totalPrice = totalProductPrice - discount;
@@ -90,6 +93,11 @@ export default function ShowCart() {
     setOpenDropdown(openDropdown === dropdown ? null : dropdown);
   };
 
+  const getOutletName = (outletId) => {
+    const outlet = outlets?.outlets?.outlet?.find((outlet) => outlet?._id === outletId);
+    return outlet ? outlet.outletName : null;
+  };
+
   return (
     <section className="">
       <div className="my-10 grid grid-cols-1 md:grid-cols-3 justify-between items-start gap-10">
@@ -102,7 +110,14 @@ export default function ShowCart() {
               How would you like to receive your order?
             </p>
             <div className="grid grid-cols-2 justify-start items-center gap-x-5 my-5 max-w-screen-md">
-              <button className="flex justify-center items-center gap-5 py-2 px-3 border-2 border-black rounded-md w-full">
+              <button className={`flex justify-center items-center gap-5 py-2 px-3 border-2 rounded-md w-full ${activeButton === "Delivery"
+                ? "border-black text-black"
+                : "border-[#71778E] text-[#71778E]"
+                }`}
+                onClick={() => {
+                  setActiveButton("Delivery");
+                  dispatch(setOrderType("Delivery"));
+                }}>
                 <svg
                   width="24"
                   height="24"
@@ -112,24 +127,28 @@ export default function ShowCart() {
                 >
                   <path
                     d="M19.5 17.5C19.5 18.8807 18.3807 20 17 20C15.6193 20 14.5 18.8807 14.5 17.5C14.5 16.1193 15.6193 15 17 15C18.3807 15 19.5 16.1193 19.5 17.5Z"
-                    stroke="black"
+                    // stroke="black"
+                    stroke={activeButton === "Delivery" ? "black" : "#71778E"}
                     strokeWidth="1.5"
                   />
                   <path
                     d="M9.5 17.5C9.5 18.8807 8.38071 20 7 20C5.61929 20 4.5 18.8807 4.5 17.5C4.5 16.1193 5.61929 15 7 15C8.38071 15 9.5 16.1193 9.5 17.5Z"
-                    stroke="black"
+                    // stroke="black"
+                    stroke={activeButton === "Delivery" ? "black" : "#71778E"}
                     strokeWidth="1.5"
                   />
                   <path
                     d="M14.5 17.5H9.5M19.5 17.5H20.2632C20.4831 17.5 20.5931 17.5 20.6855 17.4885C21.3669 17.4036 21.9036 16.8669 21.9885 16.1855C22 16.0931 22 15.9831 22 15.7632V13C22 9.41015 19.0899 6.5 15.5 6.5M15 15.5V7C15 5.58579 15 4.87868 14.5607 4.43934C14.1213 4 13.4142 4 12 4H5C3.58579 4 2.87868 4 2.43934 4.43934C2 4.87868 2 5.58579 2 7V15C2 15.9346 2 16.4019 2.20096 16.75C2.33261 16.978 2.52197 17.1674 2.75 17.299C3.09808 17.5 3.56538 17.5 4.5 17.5"
-                    stroke="black"
+                    // stroke="black"
+                    stroke={activeButton === "Delivery" ? "black" : "#71778E"}
                     strokeWidth="1.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
                   <path
                     d="M9.32653 12L10.8131 10.8258C11.6044 10.2008 12 9.88833 12 9.5M12 9.5C12 9.11168 11.6044 8.79917 10.8131 8.17417L9.32653 7M12 9.5H5"
-                    stroke="black"
+                    // stroke="black"
+                    stroke={activeButton === "Delivery" ? "black" : "#71778E"}
                     strokeWidth="1.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -138,8 +157,15 @@ export default function ShowCart() {
                 <p className="font-semibold">Delivery To Home</p>
               </button>
               <button
-                className="flex justify-center items-center gap-5 py-2 px-3 border-2 border-[#71778E] text-[#71778E] rounded-md w-full"
-                onClick={() => dispatch(openOutletDrawer())}
+                className={`flex justify-center items-center gap-5 py-2 px-3 border-2 rounded-md w-full ${activeButton === "Pickup"
+                  ? "border-black text-black"
+                  : "border-[#71778E] text-[#71778E]"
+                  }`}
+                onClick={() => {
+                  setActiveButton("Pickup");
+                  dispatch(setOrderType("Pickup"));
+                  dispatch(openOutletDrawer());
+                }}
               >
                 <svg
                   width="25"
@@ -150,39 +176,45 @@ export default function ShowCart() {
                 >
                   <path
                     d="M3.4668 10.002V15.002C3.4668 17.8304 3.4668 19.2446 4.34548 20.1233C5.22416 21.002 6.63837 21.002 9.4668 21.002H12.4668"
-                    stroke="#71778E"
+                    // stroke="#71778E"
+                    stroke={activeButton === "Pickup" ? "black" : "#71778E"}
                     strokeWidth="1.5"
                     strokeLinecap="round"
                   />
                   <path
                     d="M7.4668 17.002H11.4668"
-                    stroke="#71778E"
+                    // stroke="#71778E"
+                    stroke={activeButton === "Pickup" ? "black" : "#71778E"}
                     strokeWidth="1.5"
                     strokeLinecap="round"
                   />
                   <path
                     d="M18.9668 13.502C20.8998 13.502 22.4668 15.0396 22.4668 16.9363C22.4668 19.0818 20.3511 20.1366 19.3418 21.7449C19.1267 22.0877 18.8224 22.0877 18.5918 21.7449C17.551 20.1977 15.4668 19.0371 15.4668 16.9363C15.4668 15.0396 17.0338 13.502 18.9668 13.502Z"
-                    stroke="#71778E"
+                    // stroke="#71778E"
+                    stroke={activeButton === "Pickup" ? "black" : "#71778E"}
                     strokeWidth="1.5"
                     strokeLinejoin="round"
                   />
                   <path
                     d="M18.9668 17.002H18.9758"
-                    stroke="#71778E"
+                    // stroke="#71778E"
+                    stroke={activeButton === "Pickup" ? "black" : "#71778E"}
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
                   <path
                     d="M10.6038 7.92324C10.3218 8.94288 9.29628 10.7018 7.34777 10.9567C5.62733 11.1817 4.32246 10.4299 3.98916 10.1155C3.62168 9.86056 2.78416 9.04485 2.57906 8.53503C2.37395 8.02521 2.61324 6.9206 2.78416 6.47026L3.46743 4.48946C3.63423 3.99194 4.0247 2.81521 4.42501 2.4172C4.82533 2.01918 5.63581 2.00187 5.9694 2.00187H12.9749C14.7781 2.02737 18.7209 1.98577 19.5003 2.00187C20.2797 2.01797 20.7481 2.67211 20.8848 2.95251C22.0477 5.77276 22.5 7.38793 22.5 8.07619C22.3482 8.8104 21.72 10.1948 19.5003 10.8037C17.1933 11.4366 15.8854 10.2057 15.4751 9.7331M9.65522 9.7331C9.97997 10.1325 10.9987 10.9363 12.4754 10.9567C13.9522 10.9771 15.2273 9.94553 15.6802 9.42721C15.8084 9.27426 16.0853 8.82053 16.3725 7.92324"
-                    stroke="#71778E"
+                    // stroke="#71778E"
+                    stroke={activeButton === "Pickup" ? "black" : "#71778E"}
                     strokeWidth="1.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
                 </svg>
 
-                <p className="font-semibold">Pickup from Outlet</p>
+                {/* <p className="font-semibold">Pickup from Outlet</p> */}
+                <p className="font-semibold">{selectedOutlet ? `Pickup from ${getOutletName(selectedOutlet)}` : "Pickup from Outlet"}</p>
               </button>
             </div>
             {cart?.length > 0 ? (
