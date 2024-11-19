@@ -14,6 +14,7 @@ const initialState = {
   selectProductArea:"Enter Area",
   productName:"",
   productId:"",
+  orderType:"Delivery",
   items: null,
 };
 
@@ -149,6 +150,10 @@ const outletSlice = createSlice({
     setItems:(state,action)=>{
       const items = action.payload;
       state.items=items;
+    },
+    setOrderType:(state,action)=>{
+      const items = action.payload;
+      state.orderType=items;
     },   
   },
   extraReducers: (builder) => {
@@ -191,6 +196,7 @@ export const {
     setProductId,
     setItems,
     setProductName,
+    setOrderType,
 } = outletSlice.actions;
 
 export default outletSlice.reducer;

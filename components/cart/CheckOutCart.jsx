@@ -41,6 +41,7 @@ export default function CheckOutCart() {
   const selectedOutlet = outlet?.selectedOutlet;
   const selectCity = outlet?.selectCity;
   const selectArea = outlet?.selectArea;
+  const orderType = outlet?.orderType;
   const areas = cities?.cities?.find((city) => city.cityName === selectCity)?.areas || [];
 
   useEffect(() => {
@@ -135,7 +136,8 @@ export default function CheckOutCart() {
     const data = {
       customer: customerInfo?.userId,
       email: formData.get("orderEmail"),
-      orderType: "Delivery",
+      // orderType: "Delivery",
+      orderType: orderType,
       customerIp: IP,
       firstName: formData.get("firstName"),
       lastName: formData.get("lastName"),
