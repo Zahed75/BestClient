@@ -16,6 +16,9 @@ export default function InfoSection() {
   const [orderHistory, setOrderHistory] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const { error, handleUpload, imageUrl, uploading } = useImgBBUpload();
   const router = useRouter();
@@ -196,25 +199,22 @@ export default function InfoSection() {
         <div className="flex justify-start items-center uppercase text-slate-500 text-xs">
           <div
             onClick={() => setActive("personal")}
-            className={`cursor-pointer inline-block font-dosis px-5 py-2 rounded-md duration-700 ${
-              active === "personal" ? "bg-[#F16521] text-white shadow-md" : ""
-            }`}
+            className={`cursor-pointer inline-block font-dosis px-5 py-2 rounded-md duration-700 ${active === "personal" ? "bg-[#F16521] text-white shadow-md" : ""
+              }`}
           >
             personal
           </div>
           <div
             onClick={handleGotoOrders}
-            className={`cursor-pointer inline-block px-5 py-2 rounded-md duration-700 ${
-              active === "orders" ? "bg-[#F16521] text-white shadow-md" : ""
-            }`}
+            className={`cursor-pointer inline-block px-5 py-2 rounded-md duration-700 ${active === "orders" ? "bg-[#F16521] text-white shadow-md" : ""
+              }`}
           >
             Orders
           </div>
           <div
             onClick={handleGotoWishlist}
-            className={`cursor-pointer inline-block font-dosis px-5 py-2 rounded-md duration-700 ${
-              active === "wishlist" ? "bg-[#F16521] text-white shadow-md" : ""
-            }`}
+            className={`cursor-pointer inline-block font-dosis px-5 py-2 rounded-md duration-700 ${active === "wishlist" ? "bg-[#F16521] text-white shadow-md" : ""
+              }`}
           >
             Wishlist
           </div>
@@ -694,7 +694,7 @@ export default function InfoSection() {
                 </div>
               </div>
 
-              {customer?.email === "" && (
+              {customer?.email !== "" && (
                 <div className="p-5 border bg-white rounded-md shadow-md w-full">
                   <div className="flex justify-between items-center mb-5">
                     <h5 className="text-md font-bold ">Change Password</h5>
@@ -712,6 +712,7 @@ export default function InfoSection() {
                         id="currentPassword"
                         name="currentPassword"
                         placeholder="*********"
+                        onChange={(e) => setCurrentPassword(e.target.value)}
                         className="border border-gray-300 rounded-md p-2 focus:outline-none "
                       />
                     </div>
@@ -727,7 +728,7 @@ export default function InfoSection() {
                         <input
                           type={showPassword ? "text" : "password"}
                           id="password"
-                          required
+                          required={!!currentPassword}
                           placeholder="*********"
                           minLength={6}
                           maxLength={12}
@@ -768,7 +769,7 @@ export default function InfoSection() {
                         <input
                           type={showConfirmPassword ? "text" : "password"}
                           id="confirmPassword"
-                          required
+                          required={!!currentPassword}
                           placeholder="*********"
                           minLength={6}
                           maxLength={12}
