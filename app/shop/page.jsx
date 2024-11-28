@@ -43,8 +43,8 @@ export default async function Page() {
 
   const products = publishedProductsArray?.flat();
 
- 
-  
+
+
 
   return (
     <main>

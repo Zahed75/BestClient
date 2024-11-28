@@ -6,7 +6,7 @@ import { Box, Drawer } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import shopSvg from "@/public/images/Retail.svg";
 import deliverySvg from "@/public/images/Delivery-01.svg";
-import { fetchOutlets, fetchProductAvailability, setSelectArea, setSelectCity, closeOutletDrawer, openOutletDrawer, closeAreaDrawer, openAreaDrawer, setSelectedOutlet } from "@/redux/slice/outletSlice";
+import { fetchOutlets, fetchProductAvailability, setSelectArea, setSelectCity, closeOutletDrawer, openOutletDrawer, closeAreaDrawer, openAreaDrawer, setSelectedOutlet, setSelectedProductOutlet } from "@/redux/slice/outletSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { fetchCities } from "@/redux/slice/citiesSlice";
@@ -44,6 +44,7 @@ export default function TopLocationBar() {
   const selectArea = outlets?.selectArea;
   const productId = outlets?.productId;
   const selectedOutlet = outlets?.selectedOutlet;
+
 
 
   useEffect(() => {
@@ -480,16 +481,16 @@ export default function TopLocationBar() {
                 {/* </div> */}
 
                 <div className="space-y-4" onClick={() => { setOpenDropdown(null); }}>
-                  {allOutlets?.map((item, i) => {
+                  {/* {allOutlets?.map((item, i) => {
                     // Check availability only if productId is an empty string
-                    // const isAvailable = productId !== "" && filteredOutlets.some(
-                    //   filter => filter.outletDetails?.outletName === item.outletName && filter.available
-                    // );
+                    const isAvailable = productId !== "" && filteredOutlets.some(
+                      filter => filter.outletDetails?.outletName === item.outletName && filter.available
+                    );
                     // const isAvailable = filteredOutlets.some(
                     //   filter => filter.outletDetails?.outletName === item.outletName && filter.available
-                    // );
+                    // ); */}
 
-                    return (
+                  {/* return (
                       <div
                         key={i}
                         onClick={() => {
@@ -503,16 +504,17 @@ export default function TopLocationBar() {
                         }}
                         className={"p-4 border-2 rounded-lg bg-gray-100 hover:border-[#F16521] cursor-pointer duration-700"}
                       >
-                        <div className="flex flex-col items-start justify-between">
-                          <div>
+                        <div className="flex flex-col items-start justify-between"> */}
+
+                  {/* <div>
                             <h3 className="font-inter font-semibold text-[16px] text-[#202435]">
                               {item?.outletName}
                             </h3>
                             <p className="font-inter text-[14px] text-[#202435]">
                               {item?.outletLocation}
                             </p>
-                          </div>
-                          {/* {productId && (
+                          </div> */}
+                  {/* {productId && (
                             isAvailable ? (
                               <div className="flex items-center space-x-2 mt-3">
                                 <span className="h-4 w-4 rounded-full bg-green-500"></span>
@@ -525,10 +527,95 @@ export default function TopLocationBar() {
                               </div>
                             )
                           )} */}
+
+                  {/* </div>
+                      </div>
+                    );
+                  })} */}
+
+                  {matchingOutlets?.map((item, i) => {
+
+                    // const isAvailable = filteredOutlets.some(
+                    //   outlet => productId === outlet.productId && outlet.available
+                    // );
+
+                    const isAvailable = productId !== "" && filteredOutlets.some(
+                      filter => filter.outletDetails?.outletName === item.outletName && filter.available
+                    );
+
+                    const outletInfo = {
+                      outletName: item?.outletName,
+                      outletLocation: item?.outletLocation,
+                      pickUpAvailable: filteredOutlets.some(
+                        (filter) =>
+                          filter.outletDetails?.outletName === item.outletName && filter.available
+                      ),
+                      inStoreStock: filteredOutlets.some(
+                        (filter) =>
+                          filter.outletDetails?.outletName === item.outletName && !!filter.quantity
+                      ),
+                    };
+
+
+
+                    return (
+                      <div
+                        key={i}
+                        onClick={() => {
+                          setShowDetails(true);
+                          setSelectOutlet(item);
+                          setOpenDropdown(null);
+                          setSelectedOutletCity(item?.cityName);
+                          dispatch(setSelectedProductOutlet(outletInfo));
+                          dispatch(setSelectedOutlet(item));
+                        }}
+                        className={"p-4 border-2 rounded-lg bg-gray-100 hover:border-[#F16521] cursor-pointer  duration-700"}
+                      >
+                        <div className="flex flex-col items-start justify-between">
+                          <div>
+                            <h3 className="font-inter font-semibold text-[16px] text-[#202435]">
+                              {item?.outletName}
+                            </h3>
+                            <p className="font-inter text-[14px] text-[#202435]">
+                              {item?.outletLocation}
+                            </p>
+                          </div>
+                          {
+                            productId && (
+                              isAvailable ? (
+                                <div className="flex items-center space-x-2 mt-3">
+                                  <span className="h-3 w-3 rounded-full bg-green-500"></span>
+                                  <span className="text-sm text-[#202435]">Pick up - Available</span>
+                                </div>
+                              ) : (
+                                <div className="flex items-center space-x-2 mt-3">
+                                  <span className="h-3 w-3 rounded-full bg-red-500"></span>
+                                  <span className="text-sm text-[#202435]">Pick up - Unavailable</span>
+                                </div>
+                              )
+                            )
+                          }
+                          {
+                            productId && (
+                              isAvailable ? (
+                                <div className="flex items-center space-x-2 mt-3">
+                                  <span className="h-3 w-3 rounded-full bg-green-500"></span>
+                                  <span className="text-sm text-[#202435]">In store - In stock</span>
+                                </div>
+                              ) : (
+                                <div className="flex items-center space-x-2 mt-3">
+                                  <span className="h-3 w-3 rounded-full bg-red-500"></span>
+                                  <span className="text-sm text-[#202435]">In store - Out of stock</span>
+                                </div>
+                              )
+                            )
+                          }
+
                         </div>
                       </div>
                     );
                   })}
+
                 </div>
 
 
