@@ -97,7 +97,7 @@ export default function ImageShow({ productImage, productGallery, product }) {
             />
           </Zoom>
         </div>
-        <div className="flex justify-between gap-3 my-5">
+        {/* <div className="flex justify-between gap-3 my-5">
           <motion.button
             type="button"
             onClick={handleAddToCart}
@@ -132,7 +132,7 @@ export default function ImageShow({ productImage, productGallery, product }) {
           >
             Buy Now
           </button>
-        </div>
+        </div> */}
       </div>
     </section>
   );

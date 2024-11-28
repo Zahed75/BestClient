@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import ProductTabs from "./ProductTabs";
 import CompareProduct from "./CompareProduct";
 import { useDispatch, useSelector } from "react-redux";
-import { addToWishlist } from "@/redux/slice/wishlistSlice";
+import { addToWishlist, removeFromWishlist } from "@/redux/slice/wishlistSlice";
 import { addRelatedProduct } from "@/redux/slice/relatedSlice";
 import { fetchBrands } from "@/redux/slice/brandSlice";
 import { fetchCities } from "@/redux/slice/citiesSlice";
@@ -25,6 +25,10 @@ import shopSvg from "@/public/images/Retail.svg";
 import deliverySvg from "@/public/images/Delivery-01.svg";
 import { fetchOutlets, fetchProductAvailability, openOutletDrawer, openAreaDrawer, setProductId, setSelectedOutlet, setSelectArea, setProductName } from "@/redux/slice/outletSlice";
 import NotificationToast from "../global/NotificationToast";
+import { motion } from "framer-motion";
+import { updateQuantity } from "@/redux/slice/cartSlice";
+import { showNotificationWithTimeout } from "@/redux/slice/notificationSlice";
+import { addToCart } from "@/redux/slice/cartSlice";
 
 export default function SingleProduct({ product, categoryName }) {
   const [favorite, setFavorite] = useState(false);
@@ -35,13 +39,15 @@ export default function SingleProduct({ product, categoryName }) {
   const [showDetails, setShowDetails] = useState(false);
   const [availability, setAvailability] = useState("Status");
   const [selectedCity, setSelectedCity] = useState("");
-  const [selectArea, setSelectArea] = useState("Enter Area");
+  // const [selectArea, setSelectArea] = useState("Enter Area");
   const [selectedOutletCity, setSelectedOutletCity] = useState("City");
   const [selectedArea, setSelectedArea] = useState("Area");
   const [selectOutlet, setSelectOutlet] = useState(null);
   const [openCityDropdown, setOpenCityDropdown] = useState(false); // Manage city dropdown visibility
   const [error, setError] = useState(null);
   const [openDropdown, setOpenDropdown] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isAdded, setIsAdded] = useState(false);
 
   const [outletInfo, setOutletInfo] = useState(null);
 
@@ -55,16 +61,23 @@ export default function SingleProduct({ product, categoryName }) {
   const wishlist = useSelector((state) => state.wishlist.items);
   const productAvailability = useSelector((state) => state.outlet);
   const outlets = useSelector((state) => state.outlet);
+  // const selectedOutlet = outlets.selectedOutlet;
   const favoriteProduct = wishlist.find((item) => item._id === product?._id);
   const productId = useSelector((state) => state.outlet.productId);
-  const outletName = useSelector((state) => state.outlet.selectedProductOutlet);
+  const outletName = useSelector((state) => state.outlet.selectedOutlet);
+  const productOutlet = outlets?.selectedProductOutlet;
+  const selectArea = outlets?.selectArea;
   // const selectArea = useSelector((state) => state.outlet.selectProductArea);
   const cities = useSelector((state) => state.cities);
   // console.log("filter_Single", filteredOutlets);
+  const cart = useSelector((state) => state.cart.items) || [];
+  const cartItem = cart?.find((cartItem) => cartItem._id === product?._id) || [];
 
   const filteredOutlets = productAvailability?.productAvailability?.availability || [];
   console.log("filter_Single_Product", filteredOutlets);
+  console.log("favoriteProduct", favoriteProduct);
 
+  console.log("selectArea", selectArea);
 
 
 
@@ -127,6 +140,31 @@ export default function SingleProduct({ product, categoryName }) {
   const getOutletName = (outletId) => {
     const outlet = outlets?.outlets?.outlet?.find((outlet) => outlet?._id === outletId);
     return outlet ? outlet.outletName : null;
+  };
+
+  // const handleBuyNow = () => {
+  //   dispatch(addToCart(product));
+  //   router.push("/checkout");
+  // };
+
+  const showNotification = (message) => {
+    console.log("showNotification called", message);
+
+    dispatch(showNotificationWithTimeout(message));
+  };
+
+  const handleAddToCart = () => {
+    setIsLoading(true);
+    showNotification("Product Add to Cart successfully!");
+    setTimeout(() => {
+      dispatch(addToCart(product));
+      setIsLoading(false);
+      setIsAdded(true);
+
+      setTimeout(() => {
+        setIsAdded(false);
+      }, 1500);
+    }, 2000);
   };
 
   const outletAreas = cities?.cities?.find((city) => city.cityName === selectedOutletCity)?.areas || [];
@@ -348,12 +386,12 @@ export default function SingleProduct({ product, categoryName }) {
               <div className="my-10">
                 <div className="mb-2 flex items-center justify-between text-sm">
                   <span className="font-semibold">How to get it</span>
-                  <button
+                  {/* <button
                     onClick={() => dispatch(openOutletDrawer())}
                     className="underline"
                   >
                     Change store
-                  </button>
+                  </button> */}
                 </div>
                 <div className="border rounded-md text-sm p-3 default-transition divide-y-2 divide-gray-100 space-y-3">
                   <div className="flex items-center justify-between">
@@ -399,11 +437,11 @@ export default function SingleProduct({ product, categoryName }) {
                         viewBox="0 0 24 24"
                         stroke="currentColor"
                         className="w-5 h-5 text-gray-300 cursor-pointer"
-                        // onClick={() => {
-                        //   dispatch(setProductName(product?.productName));
-                        //   dispatch(openAreaDrawer());
-                        // }}
-                        onClick={handleOpenAreaDrawer}
+                        onClick={() => {
+                          dispatch(setProductName(product?.productName));
+                          dispatch(openAreaDrawer());
+                        }}
+                      // onClick={handleOpenAreaDrawer}
                       >
                         <path
                           strokeLinecap="round"
@@ -425,34 +463,69 @@ export default function SingleProduct({ product, categoryName }) {
                       </div>
 
                       <div className="flex flex-col items-start">
-                        {/* <h6 className="font-semibold">{outletInfo?.outletName || showroom}</h6>
-                        <div className="flex items-center">
-                          <div className={`w-3 h-3 rounded-full mr-2 ${outletInfo?.pickUpAvailable ? "bg-[#70BE38]" : "bg-red-400"
+                        <h6 className="font-semibold">{productOutlet?.outletName || showroom}</h6>
+                        {productId && productOutlet?.outletName ? (
+                          <>
+                            {/* <div className="flex items-center">
+                          <div className={`w-3 h-3 rounded-full mr-2 ${productOutlet?.pickUpAvailable ? "bg-[#70BE38]" : "bg-red-400"
                             }`}></div>
                           <span className="cursor-pointer" onClick={() => {
                             dispatch(setProductId(product?._id));
                             dispatch(openOutletDrawer());
-                          }}>Click and collect {outletInfo?.pickUpAvailable ? "Pick up - Available" : "Pick up - Unavailable"}</span>
-                        </div>
-                        <div className="flex items-center">
-                          <div className={`
-                ${outletInfo?.inStoreStock
-                              ? "bg-[#70BE38]"
-                              : "bg-red-400"
-                            }  w-3 h-3 rounded-full mr-2
-                `}></div>
-                          <span>Store - {outletInfo?.inStoreStock ? "In stock" : "Out of stock"}</span>
+                          }}> Click and collect {productOutlet?.pickUpAvailable ? "Pick up - Available" : "Pick up - Unavailable"}</span>
                         </div> */}
 
+                            {/* Pickup Availability */}
+                            <div className="flex items-center">
+                              <div
+                                className={`w-3 h-3 rounded-full mr-2 ${productOutlet?.pickUpAvailable ? "bg-[#70BE38]" : "bg-red-400"
+                                  }`}
+                              ></div>
+                              <span>
+                                Pick up - {productOutlet?.pickUpAvailable ? "Available" : "Unavailable"}
+                              </span>
+                            </div>
 
-                        <h6 className="font-semibold">
+                            {/* Store Stock */}
+                            <div className="flex items-center mt-2">
+                              <div
+                                className={`w-3 h-3 rounded-full mr-2 ${productOutlet?.inStoreStock ? "bg-[#70BE38]" : "bg-red-400"
+                                  }`}
+                              ></div>
+                              <span>Store - {productOutlet?.inStoreStock ? "In stock" : "Out of stock"}</span>
+                            </div>
+                          </>
+                        ) : (
+                          <div className="flex items-center">
+                            <div className={"w-3 h-3 rounded-full mr-2  bg-gray-300"
+                            }></div>
+                            <span className="cursor-pointer" onClick={() => {
+                              dispatch(setProductId(product?._id));
+                              dispatch(openOutletDrawer());
+                            }}>Click and collect </span>
+                          </div>
+                        )}
+
+
+                        {/* <div className="flex items-center">
+                              <div className={`
+                ${productOutlet?.inStoreStock
+                                  ? "bg-[#70BE38]"
+                                  : "bg-red-400"
+                                }  w-3 h-3 rounded-full mr-2
+                `}></div>
+                              <span>Store - {productOutlet?.inStoreStock ? "In stock" : "Out of stock"}</span>
+                            </div> */}
+
+
+                        {/* <h6 className="font-semibold">
                           {outletInfo?.outletName || showroom}
                         </h6>
 
                         {productId && outletInfo?.outletName ? (
-                          <>
-                            {/* Pickup Availability */}
-                            <div className="flex items-center">
+                          <> */}
+                        {/* Pickup Availability */}
+                        {/* <div className="flex items-center">
                               <div
                                 className={`w-3 h-3 rounded-full mr-2 ${outletInfo?.pickUpAvailable ? "bg-[#70BE38]" : "bg-red-400"
                                   }`}
@@ -460,10 +533,10 @@ export default function SingleProduct({ product, categoryName }) {
                               <span>
                                 Pick up - {outletInfo?.pickUpAvailable ? "Available" : "Unavailable"}
                               </span>
-                            </div>
+                            </div> */}
 
-                            {/* Store Stock */}
-                            <div className="flex items-center mt-2">
+                        {/* Store Stock */}
+                        {/* <div className="flex items-center mt-2">
                               <div
                                 className={`w-3 h-3 rounded-full mr-2 ${outletInfo?.inStoreStock ? "bg-[#70BE38]" : "bg-red-400"
                                   }`}
@@ -480,7 +553,7 @@ export default function SingleProduct({ product, categoryName }) {
                               dispatch(openOutletDrawer());
                             }}>Click and collect </span>
                           </div>
-                        )}
+                        )} */}
 
 
 
@@ -494,11 +567,11 @@ export default function SingleProduct({ product, categoryName }) {
                         viewBox="0 0 24 24"
                         stroke="currentColor"
                         className="w-5 h-5 text-gray-300 cursor-pointer"
-                        // onClick={() => {
-                        //   dispatch(setProductId(product?._id));
-                        //   dispatch(openOutletDrawer());
-                        // }}
-                        onClick={handleOpenDrawer}
+                        onClick={() => {
+                          dispatch(setProductId(product?._id));
+                          dispatch(openOutletDrawer());
+                        }}
+                      // onClick={handleOpenDrawer}
                       >
                         <path
                           strokeLinecap="round"
@@ -512,13 +585,72 @@ export default function SingleProduct({ product, categoryName }) {
                 </div>
               </div>
 
+              <div className="flex justify-between gap-3 my-5">
+                <div className="flex justify-start items-center gap-x-5">
+                  <div>
+                    <button
+                      onClick={() =>
+                        dispatch(updateQuantity({ id: cartItem?._id, quantity: -1 }))
+                      }
+                      className="w-[44px] h-[44px] rounded-full shadow-sm bg-[#EDEEF5] font-semibold"
+                    >
+                      -
+                    </button>
+                  </div>
+                  {/* <div>{product?.quantity}</div> */}
+                  <div> {cartItem?.quantity} </div>
+                  <div>
+                    <button
+                      onClick={() =>
+                        dispatch(updateQuantity({ id: cartItem?._id, quantity: 1 }))
+                      }
+                      className="w-[44px] h-[44px] rounded-full shadow-sm bg-[#EDEEF5] font-semibold"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+
+                <motion.button
+                  type="button"
+                  onClick={handleAddToCart}
+                  className="flex justify-center items-center w-full py-2 text-white bg-[#F16521] rounded-full text-sm"
+                  whileTap={{ scale: 0.95 }}
+                  disabled={isLoading || isAdded}
+                >
+                  {isLoading ? (
+                    <motion.div
+                      className="w-5 h-5 bg-[#78766eb1]"
+                      style={{ borderRadius: "5px" }}
+                      animate={{ rotate: 360 }}
+                      transition={{
+                        duration: 0.8,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
+                    />
+                  ) : isAdded ? (
+                    <div className="flex items-center">
+                      <span className="text-black font-bold text-sm mr-2">✓</span>
+                      <span>Added!</span>
+                    </div>
+                  ) : (
+                    "Add to Cart"
+                  )}
+                </motion.button>
+              </div>
+
               <div className="flex justify-start items-center border-b-2 pb-10">
                 <button
                   onClick={() => {
-                    dispatch(addToWishlist(product));
+                    if (favorite) {
+                      dispatch(removeFromWishlist(product._id)); // Dispatch the remove action
+                    } else {
+                      dispatch(addToWishlist(product)); // Dispatch the add action
+                    }
                   }}
-                  disabled={favorite}
-                  className={`text-xs text-[#9B9BB4] border px-3 py-2 rounded-full flex justify-center items-center uppercase ${favorite ? "cursor-not-allowed" : "cursor-pointer"
+                  // disabled={favorite}
+                  className={`text-xs text-[#9B9BB4] border px-3 py-2 rounded-full flex justify-center items-center uppercase ${favorite ? "cursor-pointer" : "cursor-pointer"
                     }`}
                 >
                   <svg
@@ -536,7 +668,8 @@ export default function SingleProduct({ product, categoryName }) {
                       strokeLinecap="round"
                     />
                   </svg>
-                  Add to Wishlist
+                  {/* Add to Wishlist */}
+                  {favorite ? "Remove from Wishlist" : "Add to Wishlist"}
                 </button>
                 <button
                   onClick={() => setOpen(true)}
@@ -558,10 +691,20 @@ export default function SingleProduct({ product, categoryName }) {
                 </div>
               </div>
 
-              <div className="mt-10 text-[#9B9BB4] ">
+              <div className="mt-10 text-[#9B9BB4]  ">
                 <p>
                   <span className="mr-1">Categories:</span>{" "}
                   {categoryName?.join(", ")}
+                  {/* {categoryName?.map((category, index) => (
+
+                    <>
+                      <Link href={`/${category}`} className="text-[#9B9BB4] hover:underline">
+                        {category}
+                      </Link>
+                      {index < categoryName.length - 1 && ", "}
+                    </>
+
+                  ))} */}
                 </p>
               </div>
 
@@ -570,7 +713,7 @@ export default function SingleProduct({ product, categoryName }) {
                   <Link
                     href={src.link}
                     key={index}
-                    className="w-8 h-8 object-cover"
+                    className="w-8 h-8 object-cover cursor-pointer u"
                   >
                     <Image
                       src={src.src}
@@ -685,7 +828,7 @@ export default function SingleProduct({ product, categoryName }) {
           <ProductTabs tabs={productDataTabs} />
         </section>
       </div>
-      <Drawer
+      {/* <Drawer
         anchor="right"
         open={outletDrawerOpen}
         onClose={handleCloseDrawer}
@@ -738,8 +881,8 @@ export default function SingleProduct({ product, categoryName }) {
                         </svg>
                       </button>
 
-                      {/* Custom dropdown showing availability options */}
-                      {openDropdown === "availability" && (
+                      // {/* Custom dropdown showing availability options */}
+      {/* {openDropdown === "availability" && (
                         <div className="absolute left-0 mt-2 w-full bg-white rounded-lg z-10 shadow-lg">
                           <div
                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 cursor-pointer"
@@ -777,10 +920,10 @@ export default function SingleProduct({ product, categoryName }) {
                             d="M19 9l-7 7-7-7"
                           />
                         </svg>
-                      </button>
+                      </button> */}
 
-                      {/* Dropdown showing cities */}
-                      {openDropdown === "city" && (
+      {/* Dropdown showing cities */}
+      {/* {openDropdown === "city" && (
                         <div className="absolute left-0 mt-2 w-full bg-white border rounded-lg shadow-lg z-10">
                           {cities?.cities?.map((item, i) => (
                             <label
@@ -905,16 +1048,16 @@ export default function SingleProduct({ product, categoryName }) {
                             )
                           } */}
 
-                          <div>
+      {/* <div>
                             <h3 className="font-inter font-semibold text-[16px] text-[#202435]">
                               {outletInfo.outletName}
                             </h3>
                             <p className="font-inter text-[14px] text-[#202435]">
                               {outletInfo.outletLocation}
-                            </p>
+                            </p>  */}
 
-                            {/* Pick up Availability */}
-                            <div className="flex items-center space-x-2 mt-3">
+      {/* Pick up Availability */}
+      {/* <div className="flex items-center space-x-2 mt-3">
                               <span
                                 className={`h-3 w-3 rounded-full ${outletInfo.pickUpAvailable ? "bg-green-500" : "bg-red-500"
                                   }`}
@@ -924,10 +1067,10 @@ export default function SingleProduct({ product, categoryName }) {
                                   ? "Pick up - Available"
                                   : "Pick up - Unavailable"}
                               </span>
-                            </div>
+                            </div> */}
 
-                            {/* In store Stock */}
-                            <div className="flex items-center space-x-2 mt-3">
+      {/* In store Stock */}
+      {/* <div className="flex items-center space-x-2 mt-3">
                               <span
                                 className={`h-3 w-3 rounded-full ${outletInfo.inStoreStock ? "bg-green-500" : "bg-red-500"
                                   }`}
@@ -938,8 +1081,8 @@ export default function SingleProduct({ product, categoryName }) {
                                   : "In store - Out of stock"}
                               </span>
                             </div>
-                          </div>
-
+                          </div> */}
+      {/* 
                         </div>
                       </div>
                     );
@@ -1004,8 +1147,8 @@ export default function SingleProduct({ product, categoryName }) {
             </button>
           </div>
         </Box>
-      </Drawer>
-      <Drawer
+      </Drawer> */}
+      {/* <Drawer
         anchor="right"
         open={areaDrawerOpen}
         onClose={handleAreaCloseDrawer}
@@ -1103,7 +1246,7 @@ export default function SingleProduct({ product, categoryName }) {
             </button>
           </div>
         </Box>
-      </Drawer>
+      </Drawer> */}
     </section>
   );
 }

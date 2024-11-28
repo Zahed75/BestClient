@@ -23,6 +23,7 @@ import { useRouter } from "next/navigation";
 
 export default function Categories({ products, AllCategories }) {
   const [dynamicGrid, setDynamicGrid] = useState(3);
+  const [gridLoading, setGridLoading] = useState(false); // Loading state
   const [open, setOpen] = useState(false);
 
   const router = useRouter();
@@ -107,7 +108,11 @@ export default function Categories({ products, AllCategories }) {
 
   const handleDynamicGrid = ({ value }) => {
     if (value) {
-      setDynamicGrid(value);
+      setGridLoading(true); // Start the loading state
+      setTimeout(() => {
+        setDynamicGrid(value); // Update grid layout after delay
+        setGridLoading(false); // End the loading state
+      }, 200); // 500ms delay
     }
   };
 
@@ -195,7 +200,7 @@ export default function Categories({ products, AllCategories }) {
               </div>
             </div>
             <div className="md:col-span-5">
-              <div className="bg-[#f7f8fd] py-4 px-5 w-full rounded-md flex justify-between items-center text-[17px]">
+              <div className="bg-[#f7f8fd] py-4 px-5 w-full rounded-md flex justify-between items-center text-[17px] cursor-pointer">
                 <div className="hidden md:hidden lg:flex justify-start items-center gap-5">
                   <TiThMenu
                     onClick={() => handleDynamicGrid({ value: 1 })}
@@ -246,7 +251,33 @@ export default function Categories({ products, AllCategories }) {
                   </div>
                 </div>
               </div>
-              {filteredProducts?.length === 0 ? (
+              {/* {filteredProducts?.length === 0 ? (
+                <div className="text-center py-10">
+                  <p>No products were found matching your selection.</p>
+                </div>
+              ) : (
+                <div className="my-10">
+                  <div
+                    className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${dynamicGrid} justify-between items-center gap-5`}
+                  >
+                    {paginatedProducts?.map((product, index) => (
+                      <ProductCard key={index} product={product} />
+                    ))}
+                  </div>
+                  <Pagination
+                    currentPage={pagination.currentPage}
+                    totalItems={filteredProducts.length}
+                    itemsPerPage={pagination.itemsPerPage}
+                    onPageChange={handlePageChange}
+                  />
+                </div>
+              )} */}
+              {gridLoading ? (
+                <div className="my-10">
+                  {/* Blank layout or loading spinner */}
+                  <div className="h-[300px] bg-white"></div>
+                </div>
+              ) : filteredProducts?.length === 0 ? (
                 <div className="text-center py-10">
                   <p>No products were found matching your selection.</p>
                 </div>
@@ -267,6 +298,7 @@ export default function Categories({ products, AllCategories }) {
                   />
                 </div>
               )}
+
             </div>
           </section>
           <Drawer anchor="left" open={open} onClose={toggleFilterDrawer(false)}>

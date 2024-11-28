@@ -109,6 +109,7 @@ const outletSlice = createSlice({
     },
     closeOutletDrawer: (state) => {
       state.outletDrawerOpen = false;
+      setProductId("");
     },
     openAreaDrawer: (state) => {
       state.areaDrawerOpen = true;
@@ -123,20 +124,31 @@ const outletSlice = createSlice({
         console.log("selectedOutlet",state.selectedOutlet);
       
     },
+
+    setSelectedProductOutlet: (state, action) => {
+      const outlet = action.payload;
+      state.selectedProductOutlet = outlet;  
+    },
     setSelectCity:(state,action)=>{
       const city = action.payload;
       state.selectCity=city;
       // console.log("City",city);
     },
+    // setSelectArea:(state,action)=>{
+    //   const area = action.payload;
+    //   if ((state.productName) || (state.selectProductArea!=="Enter Area")) {
+    //     state.selectProductArea = area;
+    //     console.log("selectProductArea",state.selectProductArea);
+    //   } else {
+    //     state.selectArea=area;
+    //     console.log("selectArea",state.selectArea);
+    //   }
+    // },
     setSelectArea:(state,action)=>{
       const area = action.payload;
-      if ((state.productName) || (state.selectProductArea!=="Enter Area")) {
-        state.selectProductArea = area;
-        console.log("selectProductArea",state.selectProductArea);
-      } else {
-        state.selectArea=area;
-        console.log("selectArea",state.selectArea);
-      }
+      state.selectArea=area;
+      console.log("selectArea",state.selectArea);
+      
     },
     setProductId:(state,action)=>{
       const product = action.payload;
@@ -197,6 +209,7 @@ export const {
     setItems,
     setProductName,
     setOrderType,
+    setSelectedProductOutlet,
 } = outletSlice.actions;
 
 export default outletSlice.reducer;
