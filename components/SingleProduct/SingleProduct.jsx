@@ -23,7 +23,7 @@ import { fetchApi } from "@/utils/FetchApi";
 import { usePathname } from "next/navigation";
 import shopSvg from "@/public/images/Retail.svg";
 import deliverySvg from "@/public/images/Delivery-01.svg";
-import { fetchOutlets, fetchProductAvailability, openOutletDrawer, openAreaDrawer, setProductId, setSelectedOutlet, setSelectArea, setProductName } from "@/redux/slice/outletSlice";
+import { fetchOutlets, fetchProductAvailability, openOutletDrawer, openAreaDrawer, setProductId, setSelectedOutlet, setSelectArea, setProductName, setSelectProductStatus } from "@/redux/slice/outletSlice";
 import NotificationToast from "../global/NotificationToast";
 import { motion } from "framer-motion";
 import { updateQuantity } from "@/redux/slice/cartSlice";
@@ -66,6 +66,7 @@ export default function SingleProduct({ product, categoryName }) {
   const productId = useSelector((state) => state.outlet.productId);
   const outletName = useSelector((state) => state.outlet.selectedOutlet);
   const productOutlet = outlets?.selectedProductOutlet;
+  const productStatus = outlets?.selectProductStatus;
   const selectArea = outlets?.selectArea;
   // const selectArea = useSelector((state) => state.outlet.selectProductArea);
   const cities = useSelector((state) => state.cities);
@@ -78,6 +79,8 @@ export default function SingleProduct({ product, categoryName }) {
   console.log("favoriteProduct", favoriteProduct);
 
   console.log("selectArea", selectArea);
+
+  console.log("categoryName", categoryName);
 
 
 
@@ -118,14 +121,16 @@ export default function SingleProduct({ product, categoryName }) {
   useEffect(() => {
     if (productId) {
       // dispatch(setSelectedOutlet(null));
+      dispatch(setSelectProductStatus(null));
     }
   }, [productId, dispatch]);
 
   useEffect(() => {
     if (productId && productId !== product?._id) {
       dispatch(setProductId("")); // Set `productId` to an empty string if they don't match
+      dispatch(setSelectProductStatus(null));
     }
-  }, [productId, product?._id, dispatch]);
+  }, [productId, dispatch]);
 
 
   useEffect(() => {
@@ -133,6 +138,7 @@ export default function SingleProduct({ product, categoryName }) {
       // Clear selectedOutlet when the component unmounts (e.g., page close/navigation)
       // dispatch(setSelectedOutlet(null));
       dispatch(setProductId(""));
+      dispatch(setSelectProductStatus(null));
       dispatch(setProductName(""));
     };
   }, [dispatch]);
@@ -464,7 +470,7 @@ export default function SingleProduct({ product, categoryName }) {
 
                       <div className="flex flex-col items-start">
                         <h6 className="font-semibold">{productOutlet?.outletName || showroom}</h6>
-                        {productId && productOutlet?.outletName ? (
+                        {productId && productStatus !== null && productOutlet?.outletName ? (
                           <>
                             {/* <div className="flex items-center">
                           <div className={`w-3 h-3 rounded-full mr-2 ${productOutlet?.pickUpAvailable ? "bg-[#70BE38]" : "bg-red-400"
@@ -478,21 +484,21 @@ export default function SingleProduct({ product, categoryName }) {
                             {/* Pickup Availability */}
                             <div className="flex items-center">
                               <div
-                                className={`w-3 h-3 rounded-full mr-2 ${productOutlet?.pickUpAvailable ? "bg-[#70BE38]" : "bg-red-400"
+                                className={`w-3 h-3 rounded-full mr-2 ${productStatus?.pickUpAvailable ? "bg-[#70BE38]" : "bg-red-400"
                                   }`}
                               ></div>
                               <span>
-                                Pick up - {productOutlet?.pickUpAvailable ? "Available" : "Unavailable"}
+                                Pick up - {productStatus?.pickUpAvailable ? "Available" : "Unavailable"}
                               </span>
                             </div>
 
                             {/* Store Stock */}
                             <div className="flex items-center mt-2">
                               <div
-                                className={`w-3 h-3 rounded-full mr-2 ${productOutlet?.inStoreStock ? "bg-[#70BE38]" : "bg-red-400"
+                                className={`w-3 h-3 rounded-full mr-2 ${productStatus?.inStoreStock ? "bg-[#70BE38]" : "bg-red-400"
                                   }`}
                               ></div>
-                              <span>Store - {productOutlet?.inStoreStock ? "In stock" : "Out of stock"}</span>
+                              <span>Store - {productStatus?.inStoreStock ? "In stock" : "Out of stock"}</span>
                             </div>
                           </>
                         ) : (
@@ -694,17 +700,17 @@ export default function SingleProduct({ product, categoryName }) {
               <div className="mt-10 text-[#9B9BB4]  ">
                 <p>
                   <span className="mr-1">Categories:</span>{" "}
-                  {categoryName?.join(", ")}
-                  {/* {categoryName?.map((category, index) => (
+                  {/* {categoryName?.join(", ")} */}
+                  {categoryName?.map((category, index) => (
 
                     <>
-                      <Link href={`/${category}`} className="text-[#9B9BB4] hover:underline">
-                        {category}
+                      <Link href={`/${category.link}`} className="text-[#9B9BB4] hover:underline">
+                        {category.categoryName}
                       </Link>
                       {index < categoryName.length - 1 && ", "}
                     </>
 
-                  ))} */}
+                  ))}
                 </p>
               </div>
 

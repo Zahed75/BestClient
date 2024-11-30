@@ -37,10 +37,10 @@ export default async function Page({ params }) {
 
 
   const category = await Promise.all(categories);
-  const categoryName = category?.map((cat) => cat?.category?.categoryName);
+  const categoryName = category?.map((cat) => cat?.category);
 
- 
-  
+
+
 
   return (
     <>
