@@ -6,7 +6,7 @@ import { Box, Drawer } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import shopSvg from "@/public/images/Retail.svg";
 import deliverySvg from "@/public/images/Delivery-01.svg";
-import { fetchOutlets, fetchProductAvailability, setSelectArea, setSelectCity, closeOutletDrawer, openOutletDrawer, closeAreaDrawer, openAreaDrawer, setSelectedOutlet, setSelectedProductOutlet } from "@/redux/slice/outletSlice";
+import { fetchOutlets, fetchProductAvailability, setSelectArea, setSelectCity, closeOutletDrawer, openOutletDrawer, closeAreaDrawer, openAreaDrawer, setSelectedOutlet, setSelectedProductOutlet, setSelectProductStatus } from "@/redux/slice/outletSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { fetchCities } from "@/redux/slice/citiesSlice";
@@ -567,6 +567,7 @@ export default function TopLocationBar() {
                           setOpenDropdown(null);
                           setSelectedOutletCity(item?.cityName);
                           dispatch(setSelectedProductOutlet(outletInfo));
+                          dispatch(setSelectProductStatus(outletInfo));
                           dispatch(setSelectedOutlet(item));
                         }}
                         className={"p-4 border-2 rounded-lg bg-gray-100 hover:border-[#F16521] cursor-pointer  duration-700"}
