@@ -108,10 +108,9 @@ export default function ProductCard({ product }) {
         ) : (
           <></>
         )}
-        <Link
-          href={`/${subCategory?.[0] ?? ""}/${subCategory?.[1] ?? ""}/${
-            subCategory?.[2] ?? ""
-          }/${product?.productSlug}`}
+        {/* <Link
+          href={`/${subCategory?.[0] ?? ""}/${subCategory?.[1] ?? ""}/${subCategory?.[2] ?? ""
+            }/${product?.productSlug}`}
         >
           <div className="object-cover min-h-[200px] flex justify-center overflow-hidden">
             <Image
@@ -122,27 +121,24 @@ export default function ProductCard({ product }) {
               className="hover:scale-105 duration-700"
             />
           </div>
-        </Link>
-        <div className="mt-5 flex justify-start items-center">
+        </Link> */}
+        {/* <div className="mt-5 flex justify-start items-center">
           <p
-            className={`${
-              product?.inventory?.stockStatus === "In Stock"
+            className={`${product?.inventory?.stockStatus === "In Stock"
                 ? "text-[#70BE38]"
                 : "text-red-400"
-            } text-[11px] md:text-[12px] font-semibold ${
-              product?.inventory?.stockStatus === "In Stock"
+              } text-[11px] md:text-[12px] font-semibold ${product?.inventory?.stockStatus === "In Stock"
                 ? "border border-[#70BE38]"
                 : "border border-red-400 bg-red-100"
-            } rounded-md px-2 md:px-3 md:py-1`}
+              } rounded-md px-2 md:px-3 md:py-1`}
           >
             {product?.inventory?.stockStatus}
           </p>
         </div>
         <div className="mt-3">
           <Link
-            href={`/${subCategory?.[0] ?? ""}/${subCategory?.[1] ?? ""}/${
-              subCategory?.[2] ?? ""
-            }/${product?.productSlug}`}
+            href={`/${subCategory?.[0] ?? ""}/${subCategory?.[1] ?? ""}/${subCategory?.[2] ?? ""
+              }/${product?.productSlug}`}
           >
             <h4 className="text-[#202435] hover:text-[#F16521] duration-700 text-[14px] md:text-[15px] font-semibold h-10 md:h-[45px] text-ellipsis overflow-hidden line-clamp-2">
               {product?.productName}
@@ -260,7 +256,165 @@ export default function ProductCard({ product }) {
               )}
             </AnimatePresence>
           </div>
+        </div> */}
+
+
+        {/* New Demo  */}
+        <div className="group relative">
+          <Link
+            href={`/${subCategory?.[0] ?? ""}/${subCategory?.[1] ?? ""}/${subCategory?.[2] ?? ""
+              }/${product?.productSlug}`}
+          >
+            {/* Image - Shrinks on Hover */}
+            <div className="transition-all duration-500 group-hover:scale-90">
+              <Image
+                src={productImage}
+                width={200}
+                height={200}
+                alt="product"
+                className="w-full h-auto transition-transform duration-500 group-hover:scale-90"
+              />
+            </div>
+          </Link>
+          {/* Container for Stock Status and Product Details */}
+          <div
+            className="transition-transform transform group-hover:translate-y-[-45px] duration-500 ease-in-out"
+          >
+            <div className="flex justify-start items-center">
+              <p
+                className={`${product?.inventory?.stockStatus === "In Stock"
+                  ? "text-[#70BE38]"
+                  : "text-red-400"
+                  } text-[11px] md:text-[12px] font-semibold ${product?.inventory?.stockStatus === "In Stock"
+                    ? "border border-[#70BE38]"
+                    : "border border-red-400 bg-red-100"
+                  } rounded-md px-2 md:px-3 md:py-1`}
+              >
+                {product?.inventory?.stockStatus}
+              </p>
+            </div>
+            <div className="mt-3">
+              <Link
+                href={`/${subCategory?.[0] ?? ""}/${subCategory?.[1] ?? ""}/${subCategory?.[2] ?? ""}/${product?.productSlug}`}
+              >
+                <h4 className="text-[#202435] hover:text-[#F16521] duration-700 text-[14px] md:text-[15px] font-semibold h-10 md:h-[45px] text-ellipsis overflow-hidden line-clamp-2">
+                  {product?.productName}
+                </h4>
+              </Link>
+              <div className="mt-5 text-slate-500 text-[13px] md:text-[14px]">
+                <div>
+                  Offer Price:{" "}
+                  <span className="font-bold text-black ml-1">
+                    ৳ {product?.general?.salePrice.toLocaleString("en-BD")}
+                  </span>{" "}
+                </div>
+                <div>
+                  M.R.P:
+                  <del className="ml-1">
+                    ৳ {product?.general?.regularPrice.toLocaleString("en-BD")}
+                  </del>
+                </div>
+                <div className="flex justify-start items-center text-nowrap">
+                  You Save:
+                  <div className="ml-1 flex justify-start items-center">
+                    {product?.general?.salePrice ? (
+                      <p className="font-semibold">
+                        {(
+                          ((product?.general?.regularPrice -
+                            product?.general?.salePrice) /
+                            product?.general?.regularPrice) *
+                          100
+                        ).toFixed(1)}
+                        %{" "}
+                      </p>
+                    ) : (
+                      <></>
+                    )}
+                    <p className="ml-1">
+                      (৳
+                      {(
+                        product?.general?.regularPrice - product?.general?.salePrice
+                      ).toLocaleString("en-BD")}
+                      )
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Add to Cart Button - Visible only on hover */}
+          <div className="absolute bottom-0 left-0 w-full opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transform translate-y-5 transition-all duration-500 ease-in-out">
+            {/* <div className={`mt-5 w-full text-[14px] ${pathName === "/" ? "hidden" : ""}`}> */}
+            <AnimatePresence mode="wait">
+              {isInCart ? (
+                <motion.div
+                  key="inCart"
+                  className="bg-[#FFCD00] rounded-full w-full flex justify-between items-center font-semibold"
+                  initial={{ opacity: 0, translateY: 20 }}
+                  animate={{ opacity: 1, translateY: 0 }}
+                  exit={{ opacity: 0, translateY: 20 }}
+                  transition={{ duration: 0.7 }}
+                >
+                  <button
+                    onClick={() => {
+                      const currentQuantity = cart.find(
+                        (item) => item._id === product?._id
+                      )?.quantity;
+
+                      if (currentQuantity > 1) {
+                        dispatch(
+                          updateQuantity({ id: product?._id, quantity: -1 })
+                        );
+                      } else {
+                        setIsInCart(false);
+                        dispatch(
+                          updateQuantity({ id: product?._id, quantity: -1 })
+                        );
+                      }
+                    }}
+                    className="px-3 py-2"
+                  >
+                    -
+                  </button>
+                  <button className="w-full py-2">
+                    {cart.find((item) => item._id === product?._id)?.quantity}
+                  </button>
+                  <button
+                    onClick={() => {
+                      dispatch(
+                        updateQuantity({ id: product?._id, quantity: 1 })
+                      );
+                    }}
+                    className=""
+                  >
+                    <span className="bg-[#dbb51f] rounded-full w-2 h-2 px-3 py-2 mr-1 shadow-inner">
+                      +
+                    </span>
+                  </button>
+                </motion.div>
+              ) : (
+                <motion.button
+                  key="addToCart"
+                  onClick={() => {
+                    dispatch(addToCart(product));
+                    setIsInCart(true);
+                  }}
+                  className="bg-[#FFCD00] px-3 py-2 rounded-full w-full md:w-2/4"
+                  initial={{ opacity: 0, translateY: 20 }}
+                  animate={{ opacity: 1, translateY: 0 }}
+                  exit={{ opacity: 0, translateY: 20 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  Add to Cart
+                </motion.button>
+              )}
+            </AnimatePresence>
+            {/* </div> */}
+          </div>
         </div>
+        {/* Finish Demo  */}
+
       </div>
     </div>
   );
