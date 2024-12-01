@@ -261,6 +261,74 @@ export default function ProductCard({ product }) {
 
         {/* New Demo  */}
         <div className="group relative">
+          {/* <div className="absolute top-0 right-0 p-2 rounded-full shadow-md z-10 bg-[#F26522] cursor-pointer">
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 18 17"
+              fill="none"
+              className="cursor-pointer"
+              // onClick={() => dispatch(removeFromWishlist(product?._id))}
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15.0789 1.18277C11.5408 -0.714809 9.00042 2.08244 9.00042 2.08244C9.00042 2.08244 6.45986 -0.714818 2.92177 1.18276C-1.36355 3.4811 -1.67127 12.4815 9.00042 16.4773C19.6721 12.4815 19.3642 3.48111 15.0789 1.18277Z"
+                fill="white"
+              />
+            </svg>
+          </div> */}
+
+          {/* Child div: Visible when hovering over the parent */}
+          <div className="absolute top-0 right-0 p-2 rounded-full z-10 bg-white cursor-pointer transition-all group-hover:bg-[#F26522] group-hover:flex shadow-lg">
+            {/* Default Black SVG */}
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 22 22"
+              fill="none"
+              className="cursor-pointer transition-all group-hover:hidden"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11 20C11 20 3.5 13.6 2 9.4C0.6 5.6 3.2 3 6.2 3.6C8.2 4 9.8 5.8 11 7C12.2 5.8 13.8 4 15.8 3.6C18.8 3 21.4 5.6 20 9.4C18.5 13.6 11 20 11 20Z"
+                fill="none"
+                stroke="black"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+
+            {/* Hover White SVG */}
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 22 22"
+              fill="none"
+              className="cursor-pointer hidden group-hover:block"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11 20C11 20 3.5 13.6 2 9.4C0.6 5.6 3.2 3 6.2 3.6C8.2 4 9.8 5.8 11 7C12.2 5.8 13.8 4 15.8 3.6C18.8 3 21.4 5.6 20 9.4C18.5 13.6 11 20 11 20Z"
+                fill="none"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+
+
+
+
+
+
+
+
+
+
+
           <Link
             href={`/${subCategory?.[0] ?? ""}/${subCategory?.[1] ?? ""}/${subCategory?.[2] ?? ""
               }/${product?.productSlug}`}
