@@ -347,7 +347,8 @@ export default function ProductCard({ product }) {
             onClick={handleWishlistToggle}
           >
             <div
-              className={`absolute top-0 right-0 p-2 rounded-full z-10 ${isHovered ? "bg-[#F26522]" : "bg-white"
+              className={`absolute top-0 right-0 p-2 rounded-full z-10 
+                ${isHovered ? "bg-[#F26522]" : "bg-white"
                 } cursor-pointer transition-all shadow-lg`}
             >
               {!isHovered ? (
