@@ -7,13 +7,18 @@ import { addToCart, updateQuantity } from "@/redux/slice/cartSlice";
 import { motion, AnimatePresence } from "framer-motion";
 import { fetchApi } from "@/utils/FetchApi";
 import { usePathname } from "next/navigation";
+import { addToWishlist, removeFromWishlist } from "@/redux/slice/wishlistSlice";
 
 export default function ProductCard({ product }) {
   const [productImage, setProductImage] = useState("");
   const [isInCart, setIsInCart] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [favorite, setFavorite] = useState(false);
   const [subCategory, setSubCategory] = useState([]);
 
   const cart = useSelector((state) => state.cart.items);
+  const wishlist = useSelector((state) => state.wishlist.items);
+  const favoriteProduct = wishlist.find((item) => item._id === product?._id);
   const pathName = usePathname();
   const dispatch = useDispatch();
 
@@ -24,6 +29,14 @@ export default function ProductCard({ product }) {
   useEffect(() => {
     setIsInCart(!!cart.find((item) => item._id === product?._id));
   }, [cart, product?._id]);
+
+  useEffect(() => {
+    if (favoriteProduct) {
+      setFavorite(true);
+    } else {
+      setFavorite(false);
+    }
+  }, [favoriteProduct]);
 
   const fetchFullCategoryPath = async (
     categoryId,
@@ -87,6 +100,14 @@ export default function ProductCard({ product }) {
         console.error("Error fetching product category slugs:", error);
       });
   }, [product]);
+
+  const handleWishlistToggle = () => {
+    if (favorite) {
+      dispatch(removeFromWishlist(product._id)); // Remove from wishlist
+    } else {
+      dispatch(addToWishlist(product)); // Add to wishlist
+    }
+  };
 
   return (
     <div
@@ -279,9 +300,9 @@ export default function ProductCard({ product }) {
           </div> */}
 
           {/* Child div: Visible when hovering over the parent */}
-          <div className="absolute top-0 right-0 p-2 rounded-full z-10 bg-white cursor-pointer transition-all group-hover:bg-[#F26522] group-hover:flex shadow-lg">
-            {/* Default Black SVG */}
-            <svg
+          {/* <div className="absolute top-0 right-0 p-2 rounded-full z-10 bg-white cursor-pointer transition-all group-hover:bg-[#F26522] group-hover:flex shadow-lg"> */}
+          {/* Default Black SVG */}
+          {/* <svg
               width="20"
               height="20"
               viewBox="0 0 22 22"
@@ -297,10 +318,10 @@ export default function ProductCard({ product }) {
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
-            </svg>
+            </svg> */}
 
-            {/* Hover White SVG */}
-            <svg
+          {/* Hover White SVG */}
+          {/* <svg
               width="20"
               height="20"
               viewBox="0 0 22 22"
@@ -317,17 +338,55 @@ export default function ProductCard({ product }) {
                 strokeLinejoin="round"
               />
             </svg>
+          </div> */}
+
+          <div
+            className="relative"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            onClick={handleWishlistToggle}
+          >
+            <div
+              className={`absolute top-0 right-0 p-2 rounded-full z-10 ${isHovered ? "bg-[#F26522]" : "bg-white"
+                } cursor-pointer transition-all shadow-lg`}
+            >
+              {!isHovered ? (
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 22 22"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M11 20C11 20 3.5 13.6 2 9.4C0.6 5.6 3.2 3 6.2 3.6C8.2 4 9.8 5.8 11 7C12.2 5.8 13.8 4 15.8 3.6C18.8 3 21.4 5.6 20 9.4C18.5 13.6 11 20 11 20Z"
+                    fill={favorite ? "#F26522" : "none"}
+                    stroke={favorite ? "#F26522" : "black"}
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 22 22"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M11 20C11 20 3.5 13.6 2 9.4C0.6 5.6 3.2 3 6.2 3.6C8.2 4 9.8 5.8 11 7C12.2 5.8 13.8 4 15.8 3.6C18.8 3 21.4 5.6 20 9.4C18.5 13.6 11 20 11 20Z"
+                    fill={favorite ? "white" : "none"}
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              )}
+            </div>
           </div>
-
-
-
-
-
-
-
-
-
-
 
           <Link
             href={`/${subCategory?.[0] ?? ""}/${subCategory?.[1] ?? ""}/${subCategory?.[2] ?? ""
@@ -412,13 +471,15 @@ export default function ProductCard({ product }) {
           </div>
 
           {/* Add to Cart Button - Visible only on hover */}
-          <div className="absolute bottom-0 left-0 w-full opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transform translate-y-5 transition-all duration-500 ease-in-out">
+          {/* <div className="absolute bottom-0 left-0 w-full opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transform translate-y-5 transition-all duration-500 ease-in-out"> */}
+          <div className="absolute text-white bottom-0 left-0 w-full opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transform translate-y-5 transition-all duration-500 ease-in-out">
             {/* <div className={`mt-5 w-full text-[14px] ${pathName === "/" ? "hidden" : ""}`}> */}
             <AnimatePresence mode="wait">
               {isInCart ? (
                 <motion.div
                   key="inCart"
-                  className="bg-[#FFCD00] rounded-full w-full flex justify-between items-center font-semibold"
+                  // className="bg-[#FFCD00] rounded-full w-full flex justify-between items-center font-semibold"
+                  className="bg-[#F16521] rounded-full w-full flex justify-between items-center font-semibold"
                   initial={{ opacity: 0, translateY: 20 }}
                   animate={{ opacity: 1, translateY: 0 }}
                   exit={{ opacity: 0, translateY: 20 }}
@@ -456,7 +517,8 @@ export default function ProductCard({ product }) {
                     }}
                     className=""
                   >
-                    <span className="bg-[#dbb51f] rounded-full w-2 h-2 px-3 py-2 mr-1 shadow-inner">
+                    {/* <span className="bg-[#dbb51f] rounded-full w-2 h-2 px-3 py-2 mr-1 shadow-inner"> */}
+                    <span className="bg-[#F16521] rounded-full w-2 h-2 px-3 py-2 mr-1 shadow-inner">
                       +
                     </span>
                   </button>
@@ -468,7 +530,8 @@ export default function ProductCard({ product }) {
                     dispatch(addToCart(product));
                     setIsInCart(true);
                   }}
-                  className="bg-[#FFCD00] px-3 py-2 rounded-full w-full md:w-2/4"
+                  // className="bg-[#FFCD00] px-3 py-2 rounded-full w-full md:w-2/4"
+                  className="bg-[#F16521] px-3 py-2 rounded-full w-full md:w-2/4"
                   initial={{ opacity: 0, translateY: 20 }}
                   animate={{ opacity: 1, translateY: 0 }}
                   exit={{ opacity: 0, translateY: 20 }}
