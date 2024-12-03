@@ -480,7 +480,8 @@ export default function ProductCard({ product }) {
                 <motion.div
                   key="inCart"
                   // className="bg-[#FFCD00] rounded-full w-full flex justify-between items-center font-semibold"
-                  className="bg-[#F16521] rounded-full w-full flex justify-between items-center font-semibold"
+                  className="bg-[#F16521] rounded-full w-full 
+                  flex justify-between items-center font-semibold"
                   initial={{ opacity: 0, translateY: 20 }}
                   animate={{ opacity: 1, translateY: 0 }}
                   exit={{ opacity: 0, translateY: 20 }}
