@@ -19,6 +19,7 @@ import small from "@/public/images/Small Appliances-01.svg";
 import electric from "@/public/images/Electrical-01.svg";
 
 
+
 export default function NavigationBar() {
   const [isBrowseProducts, setIsBrowseProducts] = useState(false);
   const [isElectronicsSubMenuOpen, setIsElectronicsSubMenuOpen] =
@@ -519,9 +520,10 @@ export default function NavigationBar() {
             </div>
             <span
               className={`font-dosis text-[#3E445A] hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer ${pathName === "/shop" ? "bg-[#F0FAFF] text-[#F16521]" : ""
-                } duration-700`}
+                } duration-700`} onClick={handleGotoCategories}
             >
-              <Link href="/shop">All Products</Link>
+              {/* <Link href="/shop">All Products</Link> */}
+              All Products
             </span>
             <span className="font-dosis text-[#3E445A] hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer duration-700">
               <Link href="https://www.bestelectronics.com.bd/emi-facility">
