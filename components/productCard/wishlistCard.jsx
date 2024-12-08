@@ -198,12 +198,14 @@ export default function WishlistCard({ product }) {
             </div>
           </div>
 
-          <div className="mt-5 w-full text-[14px]">
+          <div className="mt-5 w-full text-[14px] text-white">
+            {/* <div className="mt-5 w-full text-[14px]"> */}
             <AnimatePresence mode="wait">
               {isInCart ? (
                 <motion.div
                   key="inCart"
-                  className="bg-[#FFCD00] rounded-full w-full flex justify-between items-center font-semibold"
+                  // className="bg-[#FFCD00] rounded-full w-full flex justify-between items-center font-semibold"
+                  className="bg-[#F16521] rounded-full w-full flex justify-between items-center font-semibold"
                   initial={{ width: "60%" }}
                   animate={{ width: "100%" }}
                   exit={{ width: "60%" }}
@@ -241,7 +243,8 @@ export default function WishlistCard({ product }) {
                     }}
                     className=""
                   >
-                    <span className="bg-[#dbb51f] rounded-full w-2 h-2 px-3 py-2 mr-1 shadow-inner">
+                    {/* <span className="bg-[#dbb51f] rounded-full w-2 h-2 px-3 py-2 mr-1 shadow-inner"> */}
+                    <span className="bg-[#F16521] rounded-full w-2 h-2 px-3 py-2 mr-1 shadow-inner">
                       +
                     </span>
                   </button>
@@ -253,7 +256,8 @@ export default function WishlistCard({ product }) {
                     dispatch(addToCart(product));
                     setIsInCart(true);
                   }}
-                  className="bg-[#FFCD00] px-3 py-2 rounded-full w-full md:w-2/4 transition-all duration-500"
+                  // className="bg-[#FFCD00] px-3 py-2 rounded-full w-full md:w-2/4 transition-all duration-500"
+                  className="bg-[#F16521] px-3 py-2 rounded-full w-full md:w-2/4"
                   initial={{ width: "60%" }}
                   animate={{ width: "60%" }}
                   exit={{ width: "60%" }}
