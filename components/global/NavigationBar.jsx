@@ -521,8 +521,8 @@ export default function NavigationBar() {
             <Link href="/shop">
               <span
                 className={`font-dosis text-[#3E445A] hover:bg-[#F0FAFF] hover:text-[#F16521] px-3 py-2 rounded-full cursor-pointer ${pathName === "/shop" ? "bg-[#F0FAFF] text-[#F16521]" : ""
+                  // } duration-700`} onClick={handleGotoCategories}
                   } duration-700`} onClick={handleGotoCategories}
-              // } duration-700`} onClick={handleGotoCategories}
               >
                 {/* <Link href="/shop">All Products</Link> */}
                 All Products
