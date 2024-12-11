@@ -6,7 +6,7 @@ import { getIPAddress } from "@/utils/getIP";
 import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchOutlets, setSelectCity, setSelectArea, setSelectedOutlet, setItems } from "@/redux/slice/outletSlice";
+import { fetchOutlets, setSelectCity, setSelectArea, setSelectedOutlet, setItems, openOutletDrawer } from "@/redux/slice/outletSlice";
 import { fetchCities } from "@/redux/slice/citiesSlice";
 
 
@@ -317,21 +317,49 @@ export default function CheckOutCart() {
                 <label className="text-sm" htmlFor="outlet">
                   Selected Showroom
                 </label>
-                <select
+                <div className="border-2 border-gray-400 bg-transparent rounded-md w-full flex justify-between py-2 px-3 focus:outline-0 cursor-pointer" onClick={() => {
+                  dispatch(openOutletDrawer());
+                }}><div>
+                    {(getOutletName(selectedOutlet)) || "Select Showroom"}</div>
+                  <div className="flex items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      className="w-5 h-5 text-gray-300 cursor-pointer"
+                      onClick={() => {
+                        dispatch(setProductId(product?._id));
+                        dispatch(openOutletDrawer());
+                      }}
+                    // onClick={handleOpenDrawer}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </div></div>
+
+                {/* <select
                   name="outlet"
                   id="outlet"
-                  // defaultValue={getOutletName(selectedOutlet)}
+                  defaultValue={getOutletName(selectedOutlet)}
                   // onChange={handleUpdateOutlet}
-                  onChange={(e) => {
-                    const selectedOutletId = e.target.value;
-                    const selectedOutlet = allOutlets?.find(outlet => outlet._id === selectedOutletId);
-                    if (selectedOutlet) {
-                      dispatch(setSelectedOutlet(selectedOutlet)); // Dispatch full outlet object
-                    }
-                  }}
+                  // onChange={(e) => {
+                  //   const selectedOutletId = e.target.value;
+                  //   const selectedOutlet = allOutlets?.find(outlet => outlet._id === selectedOutletId);
+                  //   if (selectedOutlet) {
+                  //     dispatch(setSelectedOutlet(selectedOutlet)); // Dispatch full outlet object
+                  //   }
+                  // }}
+                  onClick={() => dispatch(openOutletDrawer())}
                   className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
-                >
-                  {!selectedOutlet ? (
+                > */}
+
+                {/* {!selectedOutlet ? (
                     <option value="" >
                       Select a Showroom
                     </option>
@@ -351,8 +379,8 @@ export default function CheckOutCart() {
                       >
                         {outlet?.outletName}
                       </option>
-                    ))}
-                </select>
+                    ))} */}
+                {/* </select> */}
               </div>
               <div className="col-span-2">
                 <label className="text-sm" htmlFor="postalCode">
