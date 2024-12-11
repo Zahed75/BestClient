@@ -6,8 +6,9 @@ import { getIPAddress } from "@/utils/getIP";
 import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchOutlets, setSelectCity, setSelectArea, setItems } from "@/redux/slice/outletSlice";
+import { fetchOutlets, setSelectCity, setSelectArea, setSelectedOutlet, setItems } from "@/redux/slice/outletSlice";
 import { fetchCities } from "@/redux/slice/citiesSlice";
+
 
 export default function CheckOutCart() {
   const [districts, setDistricts] = useState([]);
@@ -15,6 +16,7 @@ export default function CheckOutCart() {
   const [customerInfo, setCustomerInfo] = useState({});
   const [IP, setIP] = useState("");
   const [loading, setLoading] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("cashOnDelivery");
 
 
   const cart = useSelector((state) => state.cart.items) || [];
@@ -42,6 +44,7 @@ export default function CheckOutCart() {
   const selectCity = outlet?.selectCity;
   const selectArea = outlet?.selectArea;
   const orderType = outlet?.orderType;
+  const allOutlets = outlet?.outlets?.outlet;
   const areas = cities?.cities?.find((city) => city.cityName === selectCity)?.areas || [];
 
   useEffect(() => {
@@ -111,6 +114,11 @@ export default function CheckOutCart() {
     }
   }, []);
 
+  const getOutletName = (outletId) => {
+    const outlet = allOutlets?.find((outlet) => outlet?._id === outletId);
+    return outlet ? outlet.outletName : null;
+  };
+
 
   const handleCitySelect = (cityName) => {
     const selectedItem = cities?.cities.find(item => item.cityName === cityName);
@@ -124,6 +132,10 @@ export default function CheckOutCart() {
     // setSelectedArea(areaName); // Update selected area
     // console.log(areas);
   };
+  const handlePaymentChange = (event) => {
+    setPaymentMethod(event.target.value);
+  };
+
   // console.log(areas);
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
@@ -272,6 +284,9 @@ export default function CheckOutCart() {
 
                 // }}
                 >
+                  <option key="" value="">
+                    Select a City
+                  </option>
                   {cities?.cities?.map((item, i) => (
                     <option key={i} value={item.cityName}>
                       {item?.cityName}
@@ -296,6 +311,47 @@ export default function CheckOutCart() {
                       {item?.areaName}
                     </option>
                   ))}
+                </select>
+              </div>
+              <div className="col-span-2">
+                <label className="text-sm" htmlFor="outlet">
+                  Selected Showroom
+                </label>
+                <select
+                  name="outlet"
+                  id="outlet"
+                  // defaultValue={getOutletName(selectedOutlet)}
+                  // onChange={handleUpdateOutlet}
+                  onChange={(e) => {
+                    const selectedOutletId = e.target.value;
+                    const selectedOutlet = allOutlets?.find(outlet => outlet._id === selectedOutletId);
+                    if (selectedOutlet) {
+                      dispatch(setSelectedOutlet(selectedOutlet)); // Dispatch full outlet object
+                    }
+                  }}
+                  className="border-2 border-gray-400 bg-transparent rounded-md w-full py-2 px-3 focus:outline-0"
+                >
+                  {!selectedOutlet ? (
+                    <option value="" >
+                      Select a Showroom
+                    </option>
+                  ) : (
+                    <option value={selectedOutlet} >
+                      {getOutletName(selectedOutlet)}
+                    </option>
+                  )}
+
+                  {allOutlets?.filter(
+                    (outlet) =>
+                      outlet?._id !== selectedOutlet)
+                    .map((outlet) => (
+                      <option
+                        key={outlet?._id}
+                        value={outlet?._id}
+                      >
+                        {outlet?.outletName}
+                      </option>
+                    ))}
                 </select>
               </div>
               <div className="col-span-2">
@@ -357,13 +413,14 @@ export default function CheckOutCart() {
           <div className="my-5">
             <div className="flex justify-start items-center">
               <input
-                className="rounded-md mr-3 focus:outline-0"
+                className="rounded-md mr-3 focus:outline-0 cursor-pointer"
                 type="radio"
                 name="paymentMethod"
                 id="cashOnDelivery"
                 value="cashOnDelivery"
                 required
                 defaultChecked={true}
+                onChange={handlePaymentChange}
               />
               <label className="text-sm" htmlFor="cashOnDelivery">
                 Cash on Delivery
@@ -371,12 +428,13 @@ export default function CheckOutCart() {
             </div>
             <div className="flex justify-start items-center mt-3">
               <input
-                className="rounded-md mr-3 focus:outline-0"
+                className="rounded-md mr-3 focus:outline-0 cursor-pointer"
                 type="radio"
                 name="paymentMethod"
                 id="onlinePayment"
                 value="onlinePayment"
                 required
+                onChange={handlePaymentChange}
               />
               <label className="text-sm" htmlFor="onlinePayment">
                 Debit/Credit Cards, Mobile Banking, Internet Banking
@@ -454,12 +512,28 @@ export default function CheckOutCart() {
               Check and Double-Check Your Product Details
             </p>
           </div>
-          <button
+          {/* Button Rendering Based on Payment Method */}
+          {paymentMethod === "cashOnDelivery" ? (
+            <button
+              type="submit"
+              className="bg-[#F16521] w-full py-2 rounded-md text-white"
+            >
+              {loading ? "Placing Order..." : "Place Order"}
+            </button>
+          ) : (
+            <button
+              type="submit"
+              className="bg-[#F16521] w-full py-2 rounded-md text-white"
+            >
+              {loading ? "Processing Payment..." : "Pay Now"}
+            </button>
+          )}
+          {/* <button
             type="submit"
             className="bg-[#F16521] w-full py-2 rounded-md text-white"
           >
             {loading ? "Placing Order..." : "Place Order"}
-          </button>
+          </button> */}
         </div>
       </form>
     </section>
