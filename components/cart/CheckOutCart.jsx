@@ -329,7 +329,6 @@ export default function CheckOutCart() {
                       stroke="currentColor"
                       className="w-5 h-5 text-gray-300 cursor-pointer"
                       onClick={() => {
-                        dispatch(setProductId(product?._id));
                         dispatch(openOutletDrawer());
                       }}
                     // onClick={handleOpenDrawer}
