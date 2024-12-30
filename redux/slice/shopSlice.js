@@ -3,7 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   filters: {
     category: "",
+    categoryName:"",
     brand: "",
+    brandName:"",
     priceRange: [0, 543200],
   },
   pagination: {
@@ -18,11 +20,16 @@ const shopSlice = createSlice({
   initialState,
   reducers: {
     setCategoryFilter: (state, action) => {
-      state.filters.category = action.payload;
+      // state.filters.category = action.payload;
+      const category = action.payload;
+      state.filters.category = category === "All Categories" ? "" : category?._id;
+      state.filters.categoryName = category === "All Categories" ? "" : category?.categoryName;
       state.pagination.currentPage = 1; // Reset page when filter changes
     },
     setBrandFilter: (state, action) => {
-      state.filters.brand = action.payload;
+      const brand = action.payload;
+      state.filters.brand = brand?._id ? brand._id :"";
+      state.filters.brandName = brand?.name;
       state.pagination.currentPage = 1; 
     },
     setPriceRange: (state, action) => {
