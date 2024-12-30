@@ -342,7 +342,7 @@ export default function NavigationBar() {
                         key={brand._id}
                         className="py-2 px-3 hover:text-[#F16521] cursor-pointer"
                       >
-                        <Link href={`/brand/${brand?.name?.toLowerCase()}`}>
+                        <Link href={`/${brand?.name?.toLowerCase()}`}>
                           {brand?.name}
                         </Link>
                       </li>

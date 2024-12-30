@@ -25,6 +25,9 @@ export default function ParentCat({ category, path }) {
   const { products, subCategories } = category;
   const [dynamicGrid, setDynamicGrid] = useState(3);
   const [open, setOpen] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
+  const [showFiltersBrand, setShowFiltersBrand] = useState(false);
+  const [showFiltersCategory, setShowFiltersCategory] = useState(false);
 
   const router = useRouter();
   const pathName = usePathname();
@@ -38,6 +41,10 @@ export default function ParentCat({ category, path }) {
     dispatch(fetchBrands());
   }, [dispatch]);
 
+  useEffect(() => {
+    clearFilter();
+  }, [pathName]); // Trigger clearFilter when pathname changes
+
   const filteredProducts = products
     ?.filter((product) => {
       const matchesCategory =
@@ -45,7 +52,7 @@ export default function ParentCat({ category, path }) {
         product?.categoryId.includes(filters.category);
       const matchesBrand =
         filters.brand === "" ||
-        product?.productBrand.toLowerCase() === filters.brand.toLowerCase();
+        product?.productBrand === filters.brand;
       const matchesPrice =
         product?.general?.regularPrice >= filters.priceRange[0] &&
         product?.general?.regularPrice <= filters.priceRange[1];
@@ -65,15 +72,37 @@ export default function ParentCat({ category, path }) {
     router.push(`/shop/${path}/${slug}`);
   };
 
+  // Function to toggle the visibility of the filter display
+  const brandFilter = () => {
+    setShowFiltersBrand(false);
+    dispatch(setBrandFilter(""));
+  };
+
+  const categoryFilter = () => {
+    setShowFiltersCategory(false);
+    dispatch(setCategoryFilter("All Categories"));
+  };
+
+  const clearFilter = () => {
+    setShowFilters(false);
+    setShowFiltersBrand(false);
+    dispatch(setCategoryFilter("All Categories"));
+    dispatch(setBrandFilter(""));
+  };
+
   const handleCategoryChange = (category) => {
-    const selectedCategory = category === "All Categories" ? "" : category;
-    dispatch(setCategoryFilter(selectedCategory));
+    // const selectedCategory = category === "All Categories" ? "" : category;
+    // dispatch(setCategoryFilter(selectedCategory._id));
+    setShowFilters(true);
+    setShowFiltersCategory(true);
+    dispatch(setCategoryFilter(category));
   };
 
   const handleBrandChange = (brand) => {
+    setShowFilters(true);
+    setShowFiltersBrand(true);
     dispatch(setBrandFilter(brand));
   };
-
   const handlePriceChange = (priceRange) => {
     dispatch(setPriceRange(priceRange));
   };
@@ -206,7 +235,8 @@ export default function ParentCat({ category, path }) {
                     <button
                       key={index}
                       className="flex justify-between items-center gap-3 py-1"
-                      onClick={() => handleBrandChange(brand.name)}
+                      // onClick={() => handleBrandChange(brand.name)}
+                      onClick={() => handleBrandChange(brand)}
                     >
                       {brand.name}
                       <p>({brand?.productCount ? brand.productCount : 0})</p>
@@ -220,21 +250,18 @@ export default function ParentCat({ category, path }) {
                 <div className="hidden md:hidden lg:flex justify-start items-center gap-5">
                   <TiThMenu
                     onClick={() => handleDynamicGrid({ value: 1 })}
-                    className={`text-2xl text-gray-400 hover:text-gray-700 ${
-                      dynamicGrid === 1 ? "text-gray-700" : ""
-                    } duration-700`}
+                    className={`text-2xl text-gray-400 hover:text-gray-700 ${dynamicGrid === 1 ? "text-gray-700" : ""
+                      } duration-700`}
                   />
                   <RiGridFill
                     onClick={() => handleDynamicGrid({ value: 3 })}
-                    className={`text-2xl text-gray-400 hover:text-gray-700 ${
-                      dynamicGrid === 3 ? "text-gray-700" : ""
-                    } duration-700`}
+                    className={`text-2xl text-gray-400 hover:text-gray-700 ${dynamicGrid === 3 ? "text-gray-700" : ""
+                      } duration-700`}
                   />
                   <TfiLayoutGrid4Alt
                     onClick={() => handleDynamicGrid({ value: 4 })}
-                    className={`text-xl text-gray-400 hover:text-gray-700 ${
-                      dynamicGrid === 4 ? "text-gray-700" : ""
-                    } duration-700`}
+                    className={`text-xl text-gray-400 hover:text-gray-700 ${dynamicGrid === 4 ? "text-gray-700" : ""
+                      } duration-700`}
                   />
                 </div>
                 <div className="flex justify-start md:block lg:hidden items-center gap-5">
@@ -270,6 +297,50 @@ export default function ParentCat({ category, path }) {
                   </div>
                 </div>
               </div>
+
+
+              {/* Filter Display */}
+              {showFilters && (
+                <div className="flex items-center gap-1 mt-2">
+                  {showFiltersCategory && (
+                    <div className="flex items-center gap-1 rounded-full bg-gray-200 py-1 px-3">
+                      <button className="py-2 bg-gray-200 rounded-full" onClick={categoryFilter}>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" className="w-4 h-4">
+                          <path d="M 7.9785156 5.9804688 A 2.0002 2.0002 0 0 0 6.5859375 9.4140625 L 12.171875 15 L 6.5859375 20.585938 A 2.0002 2.0002 0 1 0 9.4140625 23.414062 L 15 17.828125 L 20.585938 23.414062 A 2.0002 2.0002 0 1 0 23.414062 20.585938 L 17.828125 15 L 23.414062 9.4140625 A 2.0002 2.0002 0 0 0 21.960938 5.9804688 A 2.0002 2.0002 0 0 0 20.585938 6.5859375 L 15 12.171875 L 9.4140625 6.5859375 A 2.0002 2.0002 0 0 0 7.9785156 5.9804688 z" />
+                        </svg>
+                      </button>
+                      <span className="text-gray-700 text-sm">
+                        {filters.categoryName}
+                      </span>
+                    </div>
+                  )}
+
+                  {showFiltersBrand && (
+                    <div className="flex items-center gap-1 rounded-full bg-gray-200 py-1 px-3">
+                      <button className="py-2 bg-gray-200 rounded-full" onClick={brandFilter}>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" className="w-4 h-4">
+                          <path d="M 7.9785156 5.9804688 A 2.0002 2.0002 0 0 0 6.5859375 9.4140625 L 12.171875 15 L 6.5859375 20.585938 A 2.0002 2.0002 0 1 0 9.4140625 23.414062 L 15 17.828125 L 20.585938 23.414062 A 2.0002 2.0002 0 1 0 23.414062 20.585938 L 17.828125 15 L 23.414062 9.4140625 A 2.0002 2.0002 0 0 0 21.960938 5.9804688 A 2.0002 2.0002 0 0 0 20.585938 6.5859375 L 15 12.171875 L 9.4140625 6.5859375 A 2.0002 2.0002 0 0 0 7.9785156 5.9804688 z" />
+                        </svg>
+                      </button>
+                      <span className="text-gray-700 text-sm">
+                        {filters.brandName}
+                      </span>
+                    </div>
+                  )}
+
+                  <div className="flex items-center gap-1 rounded-full bg-gray-200 py-1 px-3">
+                    <button className="py-2 bg-gray-200 rounded-full" onClick={clearFilter}>
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" className="w-4 h-4">
+                        <path d="M 7.9785156 5.9804688 A 2.0002 2.0002 0 0 0 6.5859375 9.4140625 L 12.171875 15 L 6.5859375 20.585938 A 2.0002 2.0002 0 1 0 9.4140625 23.414062 L 15 17.828125 L 20.585938 23.414062 A 2.0002 2.0002 0 1 0 23.414062 20.585938 L 17.828125 15 L 23.414062 9.4140625 A 2.0002 2.0002 0 0 0 21.960938 5.9804688 A 2.0002 2.0002 0 0 0 20.585938 6.5859375 L 15 12.171875 L 9.4140625 6.5859375 A 2.0002 2.0002 0 0 0 7.9785156 5.9804688 z" />
+                      </svg>
+                    </button>
+                    <span className="text-gray-700 text-sm">
+                      Clear filters
+                    </span>
+                  </div>
+                </div>
+              )}
+
               {filteredProducts?.length === 0 ? (
                 <div className="text-center py-10">
                   <p>No products were found matching your selection.</p>
@@ -325,8 +396,9 @@ export default function ParentCat({ category, path }) {
                         type="checkbox"
                         id={category?._id}
                         className="w-4 h-4 bg-gray-100 rounded border-gray-300"
-                        // checked={filters.category === category?._id}
-                        onChange={() => handleGotoCategory(category?.slug)}
+                        checked={filters.category === category?._id}
+                        // onChange={() => handleGotoCategory(category?.slug)}
+                        onChange={() => handleCategoryChange(category)}
                       />
                       <label className="cursor-pointer" htmlFor={category?._id}>
                         {category?.categoryName}
